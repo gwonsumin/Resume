@@ -1,0 +1,131 @@
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-48);
+  min-height: min(760px, 100dvh);
+  padding: 96px 0 var(--space-80);
+  background: #fff4eb;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 560px;
+  width: 100%;
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: rgb(59 47 47 / 0.62);
+  margin-bottom: 24px;
+}
+
+.hero__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0 0 32px;
+  max-width: 560px;
+  font-size: clamp(4rem, 8vw, 4.5rem);
+  line-height: 1.22;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0;
+  word-break: keep-all;
+  color: #3b2f2f;
+}
+
+.hero__title span {
+  display: block;
+}
+
+.hero__title span:nth-child(1) {
+  margin-bottom: 16px;
+}
+
+.hero__title span:nth-child(2) {
+  margin-bottom: 24px;
+}
+
+.hero__title em {
+  color: #ff785d;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.hero__description {
+  margin: 0;
+  max-width: 560px;
+  font-size: clamp(1.125rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  color: #666;
+  font-weight: var(--font-weight-semibold);
+}
+
+.hero__media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.hero__image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: min(52vh, 540px);
+  object-fit: contain;
+}
+
+@media (min-width: 48rem) {
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+    align-items: center;
+    gap: max(80px, var(--space-80));
+    padding-top: 112px;
+  }
+
+  .hero__media {
+    justify-content: flex-end;
+  }
+
+  .hero__image {
+    height: min(60vh, 620px);
+  }
+}
+
+@media (min-width: 90rem) {
+  .hero {
+    min-height: 760px;
+    grid-template-columns: minmax(0, 560px) minmax(360px, 520px);
+    gap: 120px;
+    padding: 144px 0 120px;
+  }
+
+  .hero__content {
+    max-width: 560px;
+  }
+
+  .hero__eyebrow {
+    font-size: 16px;
+  }
+
+  .hero__title {
+    font-size: 72px;
+    line-height: 1.22;
+  }
+
+  .hero__description {
+    font-size: 20px;
+  }
+
+  .hero__image {
+    height: min(62vh, 660px);
+  }
+}

@@ -1,0 +1,118 @@
+.case-study {
+  width: 100%;
+  min-width: 0;
+}
+
+.case-study__header {
+  margin-bottom: var(--section-gap);
+  padding-bottom: var(--section-gap);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.case-study__back {
+  margin: 0 0 var(--space-2);
+}
+
+.case-study__title {
+  margin: 0 0 var(--space-2);
+}
+
+.case-study__summary {
+  margin: 0;
+  max-width: 40rem;
+}
+
+.case-study__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+  max-width: 40rem;
+}
+
+.case-study__block {
+  margin: 0;
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-soft);
+}
+
+.case-study__block-title {
+  margin: 0 0 var(--space-2);
+  color: transparent;
+}
+
+.case-study__block-title::after {
+  display: none;
+}
+
+.case-study__prose {
+  margin: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.case-study__live-action {
+  margin: var(--space-2) 0 0;
+}
+
+.case-study__placeholder {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: var(--color-border);
+}
+
+.case-study__placeholder--back {
+  width: 7.5rem;
+  height: 0.875rem;
+}
+
+.case-study__placeholder--title {
+  width: min(22rem, 100%);
+  height: 2rem;
+  border-radius: var(--radius-md);
+}
+
+.case-study__placeholder--line {
+  width: 100%;
+  height: 0.875rem;
+}
+
+.case-study__placeholder--short {
+  width: 72%;
+}
+
+.case-study__placeholder--button {
+  width: 8.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-md);
+}
+
+.ds-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font: inherit;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  text-decoration: none;
+  background: var(--bg);
+  color: var(--text-strong);
+}
+
+.ds-button:focus-visible {
+  outline: 2px solid var(--text-strong);
+  outline-offset: 3px;
+}
+
+.ds-button--primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+  box-shadow: var(--shadow-button);
+}

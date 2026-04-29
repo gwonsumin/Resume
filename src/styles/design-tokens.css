@@ -1,0 +1,120 @@
+:root {
+  /* Color */
+  --color-primary: #ff785d;
+  --color-secondary: #0aa5a5;
+  --color-background: #fff4eb;
+  --color-line: #3b2f2f;
+  --color-text: #3b2f2f;
+  --color-text-muted: rgb(59 47 47 / 0.72);
+  --color-surface: #fffaf5;
+  --color-surface-soft: #fff8f2;
+  --color-border: rgb(59 47 47 / 0.16);
+
+  /* Typography */
+  --font-family-base: 'Inter', 'Pretendard', 'Segoe UI', sans-serif;
+  --font-size-h1: 4.5rem; /* 72px */
+  --font-size-h2: 2.25rem; /* 36px */
+  --font-size-body: 1.125rem; /* 18px */
+  --font-size-caption: 0.875rem; /* 14px */
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --line-height-tight: 1.1;
+  --line-height-heading: 1.2;
+  --line-height-body: 1.6;
+
+  /* Spacing scale */
+  --space-8: 0.5rem;
+  --space-16: 1rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --space-80: 5rem;
+
+  /* Backward-compatible aliases */
+  --space-1: var(--space-8);
+  --space-2: var(--space-16);
+  --space-3: var(--space-24);
+  --space-4: var(--space-32);
+  --space-5: 2.5rem;
+  --space-6: var(--space-48);
+  --space-10: var(--space-80);
+
+  /* Radius + shadow */
+  --radius-card: 1rem; /* 16px */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: var(--radius-card);
+  --shadow-card: 0 2px 8px rgb(59 47 47 / 0.04);
+  --shadow-button: 0 1px 4px rgb(59 47 47 / 0.05);
+  --shadow-sm: none;
+
+  /* Semantic tokens */
+  --text: var(--color-text-muted);
+  --text-strong: var(--color-text);
+  --bg: var(--color-background);
+  --bg-elevated: var(--color-surface);
+  --border: var(--color-border);
+  --font-sans: var(--font-family-base);
+  --page-max-width: 72rem;
+  --page-padding-x: clamp(var(--space-16), 2.5vw + 0.5rem, var(--space-32));
+  --section-gap: clamp(var(--space-48), 6vw, var(--space-80));
+  --header-padding-y: clamp(var(--space-24), 3vw, var(--space-32));
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../assets/fonts/satoshi/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../assets/fonts/satoshi/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("../assets/fonts/satoshi/Satoshi-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+h1,
+.type-h1 {
+  margin: 0;
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-tight);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+h2,
+.type-h2 {
+  margin: 0;
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-heading);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0;
+  color: var(--color-text);
+}
+
+p,
+.type-body {
+  margin: 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+}
+
+small,
+.type-caption {
+  font-size: var(--font-size-caption);
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
