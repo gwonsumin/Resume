@@ -5,16 +5,15 @@ import './RootLayout.scss'
 
 type RootLayoutProps = {
   siteTitle: string
-  siteTagline?: string
 }
 
-export function RootLayout({ siteTitle, siteTagline }: RootLayoutProps) {
+export function RootLayout({ siteTitle }: RootLayoutProps) {
   return (
     <div className="page">
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>
-      <Header siteTitle={siteTitle} siteTagline={siteTagline} />
+      <Header siteTitle={siteTitle} />
       <main id="main-content" className="site-main" tabIndex={-1}>
         <Outlet />
       </main>
