@@ -7,7 +7,6 @@ import { HomePage } from './pages/home/HomePage'
 
 const site = {
   title: 'SUMIN',
-  tagline: 'UX / UI designer',
 } as const
 
 export default function App() {
@@ -15,9 +14,7 @@ export default function App() {
     <Routes>
       <Route
         path="/"
-        element={
-          <RootLayout siteTitle={site.title} siteTagline={site.tagline} />
-        }
+        element={<RootLayout siteTitle={site.title} />}
       >
         <Route index element={<HomePage />} />
         <Route path="case-study" element={<CaseStudyPage />} />

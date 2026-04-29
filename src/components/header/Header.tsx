@@ -6,7 +6,6 @@ import "./Header.scss";
 
 type HeaderProps = {
   siteTitle: string;
-  siteTagline?: string;
 };
 
 const SECTION_NAV = [

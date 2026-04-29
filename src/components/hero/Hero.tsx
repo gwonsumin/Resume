@@ -1,23 +1,16 @@
 import heroChr from "../../assets/images/heroChr.png";
+import heroRoofShape from "../../assets/shapes/hero-roof-shape.svg";
 import "./Hero.scss";
 
 export function Hero() {
   return (
     <div className="hero" aria-labelledby="hero-title">
-      <svg
-        className="hero__shape"
-        width="640"
-        height="520"
-        viewBox="0 0 640 520"
-        fill="none"
+      <img
+        src={heroRoofShape}
+        alt=""
         aria-hidden="true"
-      >
-        <path
-          d="M494.2 59.8C579.6 115.9 627.7 214 602.6 295.5C577.5 377 479.2 441.9 374.6 470.1C270.1 498.2 159.3 489.6 93.4 426.1C27.5 362.5 6.5 244 50.1 151.7C93.7 59.4 201.9 -6.7 306.4 4.3C410.8 15.3 408.8 3.7 494.2 59.8Z"
-          fill="currentColor"
-        />
-      </svg>
-
+        className="hero__shape"
+      />
       <div className="hero__inner">
         <div className="hero__content">
           <p className="hero__eyebrow">UX/UI Designer · Frontend Developer</p>
