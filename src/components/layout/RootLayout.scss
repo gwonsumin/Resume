@@ -4,21 +4,20 @@
   flex-direction: column;
   box-sizing: border-box;
   width: 100%;
-  max-width: var(--page-max-width);
+  max-width: 1440px;
   min-height: 100dvh;
   margin-inline: auto;
   padding-inline: var(--page-padding-x);
 }
 
 .site-main {
-  /* 플렉스 자식이 내용/그리드로 가로로 넘치지 않도록 */
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: var(--section-gap);
   width: 100%;
   min-width: 0;
-  padding-top: var(--section-gap);
+  padding-top: clamp(10px, 2vw, 24px);
   padding-bottom: var(--section-gap);
 }
 
@@ -56,6 +55,6 @@
 
 @media (min-width: 48rem) {
   .site-main {
-    padding-top: calc(var(--section-gap) * 1.1);
+    padding-top: clamp(14px, 1.8vw, 28px);
   }
 }

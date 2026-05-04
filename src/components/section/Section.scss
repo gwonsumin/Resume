@@ -1,6 +1,7 @@
 .content-section {
   margin: 0;
   padding: 0;
+  scroll-margin-top: calc(72px + var(--space-16));
 }
 
 .section-title {
