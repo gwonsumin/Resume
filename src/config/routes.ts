@@ -2,8 +2,7 @@
 
 export const ROUTES = {
   home: '/',
-  caseStudy: '/case-study',
-  /** TONE — emotion-based music UX */
+  caseStudyGoreon: '/case-study/goreon',
   caseStudyTone: '/case-study/tone',
-  archive: '/archive',
+  caseStudySangsangmadang: '/case-study/sangsangmadang',
 } as const

@@ -10,7 +10,7 @@ type HeaderProps = {
 
 const SECTION_NAV = [
   { id: "hero", label: "Home" },
-  { id: "projects", label: "Case Study" },
+  { id: "case-study", label: "Case Study" },
   { id: "archive", label: "Archive" },
   { id: "contact", label: "Contact" },
 ] as const;
@@ -21,7 +21,6 @@ export function Header({ siteTitle }: HeaderProps) {
   const headerRef = useRef<HTMLElement | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
-  const [isStatusHovered, setIsStatusHovered] = useState(false);
 
   const scrollToSection = (sectionId: string, smooth: boolean) => {
     const target = document.getElementById(sectionId);
@@ -105,48 +104,44 @@ export function Header({ siteTitle }: HeaderProps) {
 
   return (
     <header className={headerClassName} ref={headerRef}>
-      <div className="site-header__brand">
-        <Link to={ROUTES.home} className="site-header__title-link">
-          <img
-            src={logoDefault}
-            alt={`${siteTitle || "SUMIN"} home`}
-            className="site-header__logo"
-          />
-        </Link>
-      </div>
+      <div className="site-header__inner">
+        <div className="site-header__brand">
+          <Link to={ROUTES.home} className="site-header__title-link">
+            <img
+              src={logoDefault}
+              alt={`${siteTitle || "SUMIN"} home`}
+              className="site-header__logo"
+            />
+          </Link>
+        </div>
 
-      <nav className="site-nav" aria-label="Primary">
-        <ul className="site-nav__list" role="list">
-          {SECTION_NAV.map((item) => (
-            <li key={item.id} className="site-nav__item">
-              <a
-                href={`${ROUTES.home}#${item.id}`}
-                className={
+        <nav className="site-nav" aria-label="Primary">
+          <ul className="site-nav__list" role="list">
+            {SECTION_NAV.map((item) => (
+              <li key={item.id} className="site-nav__item">
+                <a
+                  href={`${ROUTES.home}#${item.id}`}
+                  className={
+                  (location.pathname.startsWith("/case-study/") &&
+                    item.id === "case-study") ||
                   activeSection === item.id
-                    ? "site-nav__link site-nav__link--active"
-                    : "site-nav__link"
-                }
-                onClick={onNavClick(item.id)}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+                      ? "site-nav__link site-nav__link--active"
+                      : "site-nav__link"
+                  }
+                  onClick={onNavClick(item.id)}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      <p
-        className={
-          isStatusHovered ? "site-status site-status--hovered" : "site-status"
-        }
-        onMouseEnter={() => setIsStatusHovered(true)}
-        onMouseLeave={() => setIsStatusHovered(false)}
-        onFocus={() => setIsStatusHovered(true)}
-        onBlur={() => setIsStatusHovered(false)}
-      >
-        {isStatusHovered ? "Open to work" : "Available"}
-        <span className="site-status__dot" aria-hidden="true" />
-      </p>
+        <p className="site-status">
+          Available
+          <span className="site-status__dot" aria-hidden="true" />
+        </p>
+      </div>
     </header>
   );
 }
