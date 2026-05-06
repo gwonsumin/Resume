@@ -1,9 +1,9 @@
 import profilePhoto from "../../assets/images/profile-photo.png";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import tomatoCan from "../../assets/images/tomatoCan.svg";
-import { useState } from "react";
+import tomatoIcon01 from "../../assets/icons/tamatoicon01.svg";
+import tomatoIcon02 from "../../assets/icons/tamatoicon02.svg";
 import aboutTitleIcon from "../../assets/about/about-title.svg";
-import iconCheck from "../../assets/icons/icon-check.svg";
 import "./About.scss";
 
 const ABOUT_KEYWORDS = [
@@ -18,56 +18,98 @@ const QUICK_INFO = [
   { label: "PHONE", value: "82+01-8327-8238" },
 ] as const;
 
-const ABOUT_DETAILS = [
+const FOUNDATION_GROUPS = [
   {
     id: "education",
-    label: "Education",
     title: "EDUCATION",
-    items: ["2019.03 ~ 2021.02 | 백석예술대학(영상미디어과)"],
+    summary: "디자인 기초와 시각 커뮤니케이션 기반 형성",
+    bullets: [
+      {
+        task: "2019.03 ~ 2021.02 | 백석예술대학(영상미디어과)",
+        insight: "시각 언어와 콘텐츠 구성의 기본기를 학습하며 사용자 전달 관점을 확장",
+      },
+    ],
   },
   {
     id: "license",
-    label: "License",
     title: "LICENSE",
-    items: [
-      "2022 | GTQ 1급",
-      "2022 | 컴퓨터 그래픽기능사",
-      "2022 | 운전면허 2종 보통",
-      "2026 | 웹디자인기능사(필기)",
+    summary: "실무 툴 활용과 제작 역량 검증",
+    bullets: [
+      {
+        task: "2022 | GTQ 1급",
+        insight: "디자인 툴 숙련도를 기반으로 시각 결과물의 정확도와 완성도를 강화",
+      },
+      {
+        task: "2022 | 컴퓨터 그래픽기능사",
+        insight: "그래픽 제작 프로세스와 출력 품질에 대한 실무 감각을 체계화",
+      },
+      {
+        task: "2022 | 운전면허 2종 보통",
+        insight: "현장 기반 업무 대응력과 실무 이동 유연성 확보",
+      },
+      {
+        task: "2026 | 웹디자인기능사(필기)",
+        insight: "웹 서비스 구조와 UI 제작 원리에 대한 이해를 확장",
+      },
     ],
   },
   {
     id: "training",
-    label: "Training",
     title: "TRAINING",
-    items: [
-      "2025.11 ~ 2026.06 | 생성형AI 활용 UX UI 디자인 & 프론트엔드 개발 과정 (ChatGPT, 일러 포토, 피그마, 자바스크립트, 리액트)-3차",
-    ],
-  },
-  {
-    id: "experience",
-    label: "Experience",
-    title: "EXPERIENCE",
-    items: [
-      "2022.01 ~ 2023.05 | P&L KOREA (그래픽 디자이너) - 상품 패키지 및 쇼핑몰 이미지 제작, 사용자 시선과 정보 전달 구조를 고려한 디자인",
-      "2023.06 ~ 2025.07 | 캐나다 워킹홀리데이 (현지 서비스 환경 경험) - 다양한 사용자와의 직접 소통을 통한 커뮤니케이션 역량 강화",
+    summary: "UX/UI와 프론트엔드 구현을 연결한 실전형 학습",
+    bullets: [
+      {
+        task: "2025.11 ~ 2026.06 | 생성형AI 활용 UX UI 디자인 & 프론트엔드 개발 과정 (ChatGPT, 일러 포토, 피그마, 자바스크립트, 리액트)-3차",
+        insight:
+          "디자인 의도를 코드로 연결하는 과정에서, 팀 프로젝트를 통해 기획–디자인–개발 간 커뮤니케이션 구조와 역할 흐름에 대한 이해를 확장",
+      },
     ],
   },
 ] as const;
 
+const EXPERIENCE_SECTIONS = [
+  {
+    periodCompany: "2022.01 ~ 2023.05 | P&L KOREA (그래픽 디자이너)",
+    summary: "그래픽 디자인 실무 경험",
+    bullets: [
+      {
+        task: "상품 패키지 및 쇼핑몰 이미지 제작",
+        insight: "사용자 시선과 정보 전달 구조를 고려한 디자인",
+      },
+      {
+        task: "다양한 매체 디자인 작업",
+        insight: "서비스 맥락에 맞는 시각 요소 설계 경험",
+      },
+    ],
+  },
+  {
+    periodCompany: "2023.06 ~ 2025.07 | 캐나다 워킹홀리데이",
+    summary: "서비스 환경 기반 사용자 경험 이해",
+    bullets: [
+      {
+        task: "다양한 사용자와의 직접적인 소통 경험",
+        insight: "상황에 따른 커뮤니케이션 및 대응 능력 강화",
+      },
+      {
+        task: "현지 서비스 환경 경험 (약 20개월)",
+        insight: "사용자 행동과 서비스 흐름에 대한 이해 확장",
+      },
+    ],
+  },
+] as const;
+
+const CAREER_CARDS = [
+  {
+    title: "FOUNDATION",
+    description: "UX/UI 설계를 위한 학습 기반과 디자인 툴 활용 역량을 정리했습니다.",
+  },
+  {
+    title: "EXPERIENCE",
+    description: "실무와 서비스 환경에서\n사용자의 행동과 흐름을 이해하는 경험을 쌓았습니다.",
+  },
+] as const;
+
 type KeywordIconType = (typeof ABOUT_KEYWORDS)[number]["type"];
-type AboutDetailId = (typeof ABOUT_DETAILS)[number]["id"];
-
-function splitDetailItem(item: string) {
-  const [meta, ...rest] = item.split("|");
-  const content = rest.join("|").trim();
-
-  if (!content) {
-    return { meta: "", content: meta.trim() };
-  }
-
-  return { meta: meta.trim(), content };
-}
 
 function KeywordIcon({ type }: { type: KeywordIconType }) {
   if (type === "toggle") {
@@ -140,20 +182,77 @@ function KeywordIcon({ type }: { type: KeywordIconType }) {
   );
 }
 
-export function About() {
-  const [activeDetail, setActiveDetail] = useState<AboutDetailId>("education");
-  const activeDetailData =
-    ABOUT_DETAILS.find((detail) => detail.id === activeDetail) ?? ABOUT_DETAILS[0];
-
+function CareerCardHeader({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
-    <section className="about-layout" aria-labelledby="about-heading">
+    <div className="about-career-card__header">
+      <p className="about-career-card__title">
+        <img src={aboutTitleIcon} alt="" aria-hidden="true" />
+        <span>{title}</span>
+      </p>
+      <p className="about-career-card__description">{description}</p>
+    </div>
+  );
+}
+
+function FoundationCard() {
+  return (
+    <article className="about-career-card about-career-card--foundation">
+      <CareerCardHeader {...CAREER_CARDS[0]} />
+      <div className="about-foundation-groups">
+        {FOUNDATION_GROUPS.map((group) => (
+          <section key={group.id} className="about-foundation-group">
+            <h4 className="about-foundation-group__title">{group.title}</h4>
+            <p className="about-foundation-group__summary">{group.summary}</p>
+            <ul className="about-foundation-group__bullet-list" role="list">
+              {group.bullets.map((bullet) => (
+                <li key={bullet.task}>
+                  <span className="about-foundation-group__task">{bullet.task}</span>
+                  <span className="about-foundation-group__insight">→ {bullet.insight}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+function ExperienceCard() {
+  return (
+    <article className="about-career-card about-career-card--experience">
+      <CareerCardHeader {...CAREER_CARDS[1]} />
+      <div className="about-experience-sections">
+        {EXPERIENCE_SECTIONS.map((section) => (
+          <section key={section.periodCompany} className="about-experience-section">
+            <p className="about-career-card__meta">{section.periodCompany}</p>
+            <h4 className="about-experience-section__summary">{section.summary}</h4>
+            <ul className="about-experience-section__bullet-list" role="list">
+              {section.bullets.map((bullet) => (
+                <li key={bullet.task}>
+                  <span className="about-experience-section__task">{bullet.task}</span>
+                  <span className="about-experience-section__insight">→ {bullet.insight}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    </article>
+  );
+}
+
+export function About() {
+  return (
+    <div className="about-layout">
       <div className="about-layout__top">
         <article className="about-summary">
-          <p className="about-summary__eyebrow">ABOUT</p>
-          <h3 id="about-heading" className="about-summary__title">
-            권수민<span aria-hidden="true">/</span>Sumin Kweon
-          </h3>
-          <p className="about-summary__lead">사용자의 상태를 설계하는 디자이너</p>
           <p className="about-summary__intro">
             사용자의 맥락을 이해하고 자연스럽게 선택할 수 있는 경험 흐름을
             설계합니다.
@@ -163,6 +262,14 @@ export function About() {
               <li key={keyword.label}>
                 <KeywordIcon type={keyword.type} />
                 <span>{keyword.label}</span>
+              </li>
+            ))}
+          </ul>
+          <ul className="about-quick-info" role="list" aria-label="기본 정보">
+            {QUICK_INFO.map((item) => (
+              <li key={item.label}>
+                <span className="about-quick-info__label">{item.label}</span>
+                <span className="about-quick-info__value">{item.value}</span>
               </li>
             ))}
           </ul>
@@ -176,69 +283,19 @@ export function About() {
         </figure>
       </div>
 
-      <ul className="about-quick-info" role="list" aria-label="기본 정보">
-        {QUICK_INFO.map((item) => (
-          <li key={item.label}>
-            <span className="about-quick-info__label">{item.label}</span>
-            <span className="about-quick-info__value">{item.value}</span>
-          </li>
-        ))}
-      </ul>
-
-      <section className="about-detail-can" aria-label="추가 이력 정보">
-        <p className="about-detail-can__hint">Hover or tap a can to preview details.</p>
-        <ul className="about-detail-can__topic-list" role="list">
-          {ABOUT_DETAILS.map((detail) => (
-            <li
-              key={detail.id}
-              className={`about-detail-topic${detail.id === activeDetail ? " about-detail-topic--active" : ""}`}
-            >
-              <button
-                type="button"
-                className="about-detail-topic__trigger"
-                onMouseEnter={() => setActiveDetail(detail.id)}
-                onFocus={() => setActiveDetail(detail.id)}
-                onClick={() => setActiveDetail(detail.id)}
-              >
-                <span className="about-detail-topic__label">{detail.label}</span>
-                <img src={tomatoCan} alt="" aria-hidden="true" />
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        <article
-          key={activeDetail}
-          className="about-detail-dock"
-          role="status"
-          aria-live="polite"
-        >
-          <div className="about-detail-topic__bar" aria-hidden="true" />
-          <div className="about-detail-topic__inner">
-            <p className="about-detail-topic__title">
-              <img src={aboutTitleIcon} alt="" aria-hidden="true" />
-              <span>{activeDetailData.title}</span>
-            </p>
-            <ul className="about-detail-topic__list" role="list">
-              {activeDetailData.items.map((item) => {
-                const parsed = splitDetailItem(item);
-
-                return (
-                  <li key={item}>
-                    <img src={iconCheck} alt="" aria-hidden="true" />
-                    <div>
-                      {parsed.meta ? (
-                        <span className="about-detail-topic__meta">{parsed.meta}</span>
-                      ) : null}
-                      <span className="about-detail-topic__content">{parsed.content}</span>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
+      <section className="about-career" aria-label="기반과 경험">
+        <FoundationCard />
+        <div className="about-experience-wrap">
+          <ExperienceCard />
+          <div className="about-career__decor" aria-hidden="true">
+            <div className="about-career__tomatoes">
+              <img className="about-career__tomato about-career__tomato--large" src={tomatoIcon01} alt="" />
+              <img className="about-career__tomato about-career__tomato--small" src={tomatoIcon02} alt="" />
+            </div>
+            <img className="about-career__can" src={tomatoCan} alt="" />
           </div>
-        </article>
+        </div>
       </section>
-    </section>
+    </div>
   );
 }
