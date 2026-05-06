@@ -66,10 +66,6 @@ function MarqueeRow({ direction, duration, items }: MarqueeRowProps) {
 export function Skills() {
   return (
     <div className="skills-layout">
-      <div className="skills-layout__header">
-        <p>디자인과 구현을 연결하는 도구들</p>
-      </div>
-
       <ul className="skills-layout__screen-reader-list" role="list">
         {skills.map((skill) => (
           <li key={skill.id}>

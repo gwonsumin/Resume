@@ -7,21 +7,6 @@
   color: var(--skills-text);
 }
 
-.skills-layout__header {
-  width: min(100%, 1240px);
-  margin: 0 auto clamp(20px, 2.8vw, 30px);
-  padding: 0 var(--page-padding-x);
-}
-
-.skills-layout__header p {
-  max-width: 30rem;
-  margin: 0;
-  color: var(--skills-subtext);
-  font-size: clamp(16px, 1.5vw, 19px);
-  font-weight: 600;
-  line-height: 1.45;
-}
-
 .skills-layout__screen-reader-list {
   position: absolute;
   width: 1px;
@@ -168,10 +153,6 @@
 }
 
 @media (max-width: 48rem) {
-  .skills-layout__header {
-    padding: 0 var(--page-padding-x);
-  }
-
   .skills-marquee {
     gap: 10px;
   }

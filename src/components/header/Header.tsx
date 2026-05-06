@@ -10,6 +10,7 @@ type HeaderProps = {
 
 const SECTION_NAV = [
   { id: "hero", label: "Home" },
+  { id: "about", label: "About" },
   { id: "case-study", label: "Case Study" },
   { id: "archive", label: "Archive" },
   { id: "contact", label: "Contact" },
@@ -61,23 +62,40 @@ export function Header({ siteTitle }: HeaderProps) {
     ).filter(Boolean) as HTMLElement[];
     if (!sections.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    let frameId = 0;
 
-        if (!visible.length) return;
-        setActiveSection(visible[0].target.id);
-      },
-      {
-        rootMargin: "-30% 0px -55% 0px",
-        threshold: [0.15, 0.35, 0.6],
-      },
-    );
+    const updateActiveSection = () => {
+      const headerHeight = headerRef.current?.offsetHeight ?? 0;
+      const scrollPoint = window.scrollY + headerHeight + 80;
+      const pageBottom = window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight - 2;
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+      if (pageBottom) {
+        setActiveSection(sections[sections.length - 1].id);
+        return;
+      }
+
+      const currentSection = sections.reduce((current, section) => {
+        return section.offsetTop <= scrollPoint ? section : current;
+      }, sections[0]);
+
+      setActiveSection(currentSection.id);
+    };
+
+    const requestUpdate = () => {
+      window.cancelAnimationFrame(frameId);
+      frameId = window.requestAnimationFrame(updateActiveSection);
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
   }, [location.pathname]);
 
   useEffect(() => {

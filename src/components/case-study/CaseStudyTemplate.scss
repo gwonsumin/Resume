@@ -199,27 +199,38 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   min-height: 40px;
-  padding: 0 14px;
-  color: #fffaf5;
+  padding: 0 16px;
+  color: #fff4eb;
   font-size: 0.82rem;
   font-weight: 700;
   line-height: 1;
   text-decoration: none;
   text-transform: uppercase;
-  background: var(--color-line);
-  border: 2px solid var(--color-line);
-  border-radius: 999px;
-  transition:
-    background-color 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+  background: #ff785d;
+  border: 1px solid rgb(255 120 93 / 0.7);
+  border-radius: 16px;
+  transition: all 0.25s ease-in-out;
+}
+
+.case-study__button::after {
+  content: "→";
+  display: inline-block;
+  line-height: 1;
+  transform: translateX(0);
+  transition: transform 0.25s ease-in-out;
 }
 
 .case-study__button:hover {
-  color: var(--color-line);
-  background: var(--color-background);
-  transform: translateY(-1px);
+  color: #fff4eb;
+  background: #ff8a6f;
+  border-color: rgb(255 138 111 / 0.88);
+  transform: translateY(-2px);
+}
+
+.case-study__button:hover::after {
+  transform: translateX(5px);
 }
 
 .case-study__button:focus-visible {
