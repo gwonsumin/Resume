@@ -6,19 +6,20 @@ type SectionProps = {
   id: string;
   title?: ReactNode;
   label?: string;
+  meta?: string;
   subtitle?: string;
   children: ReactNode;
   className?: string;
 };
 
-export function Section({ id, title, label, subtitle, children, className }: SectionProps) {
+export function Section({ id, title, label, meta, subtitle, children, className }: SectionProps) {
   const sectionClass = ["content-section", className].filter(Boolean).join(" ");
   const headingId = `${id}-heading`;
 
   return (
     <section id={id} className={sectionClass} aria-labelledby={headingId}>
       {label && title ? (
-        <SectionHeader id={headingId} label={label} title={title} subtitle={subtitle} />
+        <SectionHeader id={headingId} label={label} title={title} meta={meta} subtitle={subtitle} />
       ) : title ? (
         <h2 className="section-title" id={headingId}>
           {title}

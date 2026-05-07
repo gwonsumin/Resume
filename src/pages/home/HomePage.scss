@@ -12,8 +12,8 @@
 
 .home > #about.content-section {
   position: relative;
-  margin-top: calc(var(--space-32) * -1);
-  padding-top: calc(var(--section-gap) + var(--space-32));
+  margin-top: calc(var(--space-16) * -1);
+  padding-top: calc(var(--section-gap) + var(--space-16));
 }
 
 .home > #about.content-section::before {
@@ -919,5 +919,46 @@
   .archive-grid__item:nth-child(2) .archive-card__button,
   .archive-grid__item:nth-child(4) .archive-card__button {
     transform: none;
+  }
+}
+
+@media (max-width: 48rem) {
+  .project-filters {
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .project-filters__pill {
+    padding: 9px 14px;
+    font-size: 0.78rem;
+  }
+
+  .archive-grid {
+    gap: 18px;
+  }
+
+  .archive-card__button {
+    gap: 14px;
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .archive-panel {
+    padding: 14px;
+  }
+
+  .archive-panel__surface {
+    gap: 14px;
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .archive-panel__title {
+    font-size: clamp(1.45rem, 8vw, 2rem);
+  }
+
+  .archive-panel__description,
+  .archive-panel__notes {
+    font-size: 0.88rem;
   }
 }

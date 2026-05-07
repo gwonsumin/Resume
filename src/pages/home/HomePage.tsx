@@ -428,6 +428,7 @@ export function HomePage() {
         id="skills"
         label="SKILLS"
         title="디자인과 구현을 연결하는 도구들"
+        meta="Figma · Illustrator · Photoshop · React · Vue · JavaScript · HTML/CSS · PHP"
         subtitle="기획부터 디자인, 구현까지 흐름을 이어가기 위해 사용하는 툴과 기술입니다."
       >
         <Skills />

@@ -79,7 +79,7 @@ export function CaseStudyPage() {
     <section className="case-study-page" aria-labelledby="case-study-page-title">
       <div className="case-study-page__paper">
         <div className="case-study-page__topbar">
-          <span className="case-study-page__status">Case Study Page</span>
+          <span className="case-study-page__status">Portfolio Case Study</span>
           <button
             ref={closeButtonRef}
             className="case-study-page__back"
@@ -112,9 +112,9 @@ export function CaseStudyPage() {
                 >
                   <div
                     className="case-study-page__next-thumb"
-                    aria-label="썸네일 이미지 삽입 예정 구역"
+                    aria-label={`${item.title} 프로젝트 분류`}
                   >
-                    <span>THUMBNAIL AREA</span>
+                    <span>{item.visual.label}</span>
                   </div>
                   <p className="case-study-page__next-meta">
                     <span>{item.visual.label}</span>
