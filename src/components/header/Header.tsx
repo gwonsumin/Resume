@@ -22,6 +22,7 @@ export function Header({ siteTitle }: HeaderProps) {
   const headerRef = useRef<HTMLElement | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
+  const activeSectionRef = useRef<string>("hero");
 
   const scrollToSection = (sectionId: string, smooth: boolean) => {
     const target = document.getElementById(sectionId);
@@ -38,8 +39,13 @@ export function Header({ siteTitle }: HeaderProps) {
   };
 
   useEffect(() => {
+    activeSectionRef.current = activeSection;
+  }, [activeSection]);
+
+  useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 8);
+      const nextScrolled = window.scrollY > 8;
+      setIsScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled));
     };
 
     handleScroll();
@@ -71,7 +77,11 @@ export function Header({ siteTitle }: HeaderProps) {
         document.documentElement.scrollHeight - 2;
 
       if (pageBottom) {
-        setActiveSection(sections[sections.length - 1].id);
+        const lastSectionId = sections[sections.length - 1].id;
+        if (activeSectionRef.current !== lastSectionId) {
+          activeSectionRef.current = lastSectionId;
+          setActiveSection(lastSectionId);
+        }
         return;
       }
 
@@ -79,7 +89,10 @@ export function Header({ siteTitle }: HeaderProps) {
         return section.offsetTop <= scrollPoint ? section : current;
       }, sections[0]);
 
-      setActiveSection(currentSection.id);
+      if (activeSectionRef.current !== currentSection.id) {
+        activeSectionRef.current = currentSection.id;
+        setActiveSection(currentSection.id);
+      }
     };
 
     const requestUpdate = () => {
@@ -104,6 +117,7 @@ export function Header({ siteTitle }: HeaderProps) {
 
     window.requestAnimationFrame(() => {
       scrollToSection(sectionId, true);
+      activeSectionRef.current = sectionId;
       setActiveSection(sectionId);
     });
   }, [location.hash, location.pathname]);
@@ -117,14 +131,28 @@ export function Header({ siteTitle }: HeaderProps) {
     }
 
     scrollToSection(sectionId, true);
+    activeSectionRef.current = sectionId;
     setActiveSection(sectionId);
+  };
+
+  const onLogoClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname !== ROUTES.home) {
+      event.preventDefault();
+      navigate(`${ROUTES.home}#hero`);
+      return;
+    }
+
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    activeSectionRef.current = "hero";
+    setActiveSection("hero");
   };
 
   return (
     <header className={headerClassName} ref={headerRef}>
       <div className="site-header__inner">
         <div className="site-header__brand">
-          <Link to={ROUTES.home} className="site-header__title-link">
+          <Link to={ROUTES.home} className="site-header__title-link" onClick={onLogoClick}>
             <img
               src={logoDefault}
               alt={`${siteTitle || "SUMIN"} home`}

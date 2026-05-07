@@ -6,12 +6,12 @@ function p(...lines: string[]): readonly string[] {
 
 const placeholderIntro = (name: string) =>
   p(
-    `This page documents the ${name} project using a shared case study structure. Replace each block with research, screens, and outcomes as you publish.`,
+    `${name} 프로젝트의 문제 정의부터 결과까지를 동일한 케이스 스터디 구조로 정리한 페이지입니다.`,
   );
 
 const placeholderBlock = (label: string) =>
   p(
-    `${label}: add research notes, diagrams, or metrics. This template keeps sections consistent across projects.`,
+    `${label} 섹션은 현재 정리 중입니다. 리서치 근거, 의사결정 과정, 화면 결과와 성과를 순서대로 추가할 예정입니다.`,
   );
 
 function makeCaseStudy(
@@ -93,12 +93,12 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     iaUserFlow: p(
       "사용자는 검색 또는 카테고리로 상품을 탐색하고, AI 추천을 통해 자신에게 맞는 제품 후보를 확인합니다.",
       "추천 결과는 다시 확인할 수 있는 기록으로 남기고, 상품 상세, 찜, 장바구니, 주문 흐름으로 연결했습니다.",
-      "Flow: 탐색 → AI 추천 → 비교 → 저장 → 구매",
+      "전체 여정은 탐색 → AI 추천 → 비교 → 저장 → 구매 순서로 설계했습니다.",
     ),
     solution: p(
       "GOREON은 사용자의 선택 정보를 바탕으로 AI 추천 흐름을 제공해 상품 탐색의 진입 장벽을 낮췄습니다.",
       "추천 결과를 기록으로 다시 확인하고, 찜/장바구니/상세 페이지로 연결해 탐색이 실제 구매 행동으로 이어지도록 설계했습니다.",
-      "Core Features: AI 기반 상품 추천 / 상품 검색 및 카테고리 탐색 / 추천 상품 기록 / 찜과 장바구니 기반 구매 흐름",
+      "핵심 기능은 AI 기반 상품 추천, 카테고리 탐색, 추천 기록, 찜/장바구니 기반 구매 연결로 구성했습니다.",
     ),
     uiDesign: p(
       "카드에는 프로젝트의 핵심만 보이도록 AI 추천, 커머스, UX 흐름을 중심으로 정보를 압축했습니다.",
@@ -184,9 +184,8 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
 
       "→ 기록된 감정은 음악 추천으로 연결되며, 캘린더에 누적되어 개인 감정 아카이브를 형성한다.",
 
-      "Flow: 감정 선택 → 톤 기록 → 음악 추천 → 캘린더 저장 → 히스토리 확인",
+      "핵심 흐름은 감정 선택 → 톤 기록 → 음악 추천 → 캘린더 저장 → 히스토리 확인으로 이어진다.",
     ),
-    // Figma 프로토타입 URL로 교체하세요.
     prototype: {
       href: "https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1",
     },
@@ -217,7 +216,6 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "또한 사용자가 자신의 상태를 표현할 수 있는 인터페이스가 제이처 기반 추천보다 먼저 설계되어야 한다는 점을 배웠다.",
       "특히 '기록'이라는 행동이 단순 기능이 아니라 사용자의 경험을 지속시키는 핵심 요소라는 것을 느꼈다.",
     ),
-    // 배포 URL로 교체하세요.
     livePreview: {
       href: "https://toneapp.dothome.co.kr/",
       description:
@@ -287,12 +285,12 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     iaUserFlow: p(
       "사용자는 메인에서 상상마당의 핵심 공간과 운영 정보를 먼저 확인하고, 프로그램, 공간, 뉴스/공지로 이동해 필요한 상세 정보를 탐색합니다.",
       "공지사항은 DB와 연동해 최신 게시글이 메인에 자동 출력되도록 구성해 정적인 소개 사이트가 아닌 운영형 웹사이트 흐름으로 확장했습니다.",
-      "Flow: 메인 진입 → 지점/공간 확인 → 프로그램 탐색 → 뉴스/공지 확인 → 상세 정보 확인",
+      "주요 흐름은 메인 진입 → 지점/공간 확인 → 프로그램 탐색 → 뉴스/공지 확인 → 상세 정보 확인으로 구성했습니다.",
     ),
     solution: p(
       "문화공간의 핵심 정보를 프로그램, 공간, 뉴스 흐름으로 재정리하고, 메인에서 주요 콘텐츠와 최신 공지를 바로 확인할 수 있도록 탐색 구조를 개선했습니다.",
       "PHP와 MySQL 기반 게시판 CRUD를 직접 구현해 공지 작성, 목록 조회, 상세 조회, 수정, 삭제, 이미지 업로드까지 가능한 운영 기능을 추가했습니다.",
-      "Core Features: 지점/공간 정보 구성 / 프로그램 콘텐츠 탐색 / 공지사항 CRUD / 이미지 업로드 / 메인 최신 공지 4개 자동 출력",
+      "핵심 기능은 지점/공간 정보 구조화, 프로그램 탐색, 공지사항 CRUD, 이미지 업로드, 메인 최신 공지 자동 노출로 구성했습니다.",
     ),
     uiDesign: p(
       "메인 화면은 문화공간의 분위기와 현재 진행 중인 콘텐츠를 빠르게 인지할 수 있도록 구성했습니다.",

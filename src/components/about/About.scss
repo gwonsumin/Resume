@@ -9,13 +9,13 @@
   max-width: 1120px;
   margin: 0 auto;
   display: grid;
-  gap: clamp(22px, 4vw, 38px);
+  gap: clamp(28px, 4.4vw, 46px);
   color: var(--about-text);
 }
 
 .about-layout__top {
   display: grid;
-  gap: clamp(20px, 3.2vw, 36px);
+  gap: clamp(24px, 3.4vw, 40px);
 }
 
 .about-summary {
@@ -27,9 +27,9 @@
 .about-summary__intro {
   max-width: 38ch;
   margin: 0;
-  font-size: clamp(16px, 1.9vw, 20px);
+  font-size: clamp(16px, 1.7vw, 19px);
   font-weight: 500;
-  line-height: 1.65;
+  line-height: 1.7;
   opacity: 0.9;
   word-break: keep-all;
 }
@@ -131,9 +131,9 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 14px;
+  gap: 16px;
   margin-top: clamp(18px, 2.8vw, 28px);
-  padding: 24px;
+  padding: 26px;
   border: 1px solid rgba(59, 47, 47, 0.18);
   border-radius: 20px;
   background: #fffdf8;
@@ -157,9 +157,9 @@
 
 .about-quick-info__label {
   font-family: "Satoshi", var(--font-family-base);
-  font-size: 11px;
+  font-size: 0.7rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.09em;
   line-height: 1.2;
   opacity: 0.56;
   text-transform: uppercase;
@@ -186,7 +186,7 @@
 
 .about-career {
   display: grid;
-  gap: 14px;
+  gap: 18px;
   position: relative;
   padding-bottom: 0;
 }
@@ -201,9 +201,9 @@
 .about-career-card {
   position: relative;
   display: grid;
-  gap: 18px;
+  gap: 22px;
   min-width: 0;
-  padding: 16px;
+  padding: 20px;
   background: var(--about-surface);
   border: 1px solid rgba(59, 47, 47, 0.18);
   border-radius: 18px;
@@ -249,7 +249,7 @@
   color: rgba(59, 47, 47, 0.76);
   font-size: clamp(14px, 1.06vw, 16px);
   font-weight: 600;
-  line-height: 1.55;
+  line-height: 1.6;
   word-break: keep-all;
 }
 
@@ -259,12 +259,12 @@
 
 .about-foundation-groups {
   display: grid;
-  gap: 18px;
+  gap: 22px;
 }
 
 .about-foundation-group {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
   padding-top: 2px;
 }
@@ -298,10 +298,10 @@
 }
 
 .about-foundation-group__bullet-list li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: rgba(59, 47, 47, 0.95);
   font-size: clamp(14px, 1.02vw, 16px);
-  line-height: 1.7;
+  line-height: 1.78;
 }
 
 .about-foundation-group__bullet-list li:last-child {
@@ -322,7 +322,7 @@
 
 .about-experience-sections {
   display: grid;
-  gap: 28px;
+  gap: 32px;
   opacity: 0.9;
   transform: translateY(0);
   transition:
@@ -332,11 +332,11 @@
 
 .about-experience-section {
   display: grid;
-  gap: 10px;
+  gap: 12px;
 }
 
 .about-experience-section + .about-experience-section {
-  padding-top: 28px;
+  padding-top: 30px;
   border-top: 1px solid rgba(59, 47, 47, 0.16);
   transition: border-top-color 0.25s ease-in-out;
 }
@@ -362,10 +362,10 @@
 }
 
 .about-experience-section__bullet-list li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: rgba(59, 47, 47, 0.95);
   font-size: clamp(14px, 1.02vw, 16px);
-  line-height: 1.7;
+  line-height: 1.78;
 }
 
 .about-experience-section__bullet-list li:last-child {
@@ -493,11 +493,51 @@
   }
 
   .about-career-card {
-    padding: 18px;
+    padding: 22px;
   }
 }
 
 @media (max-width: 48rem) {
+  .about-layout {
+    gap: 32px;
+  }
+
+  .about-layout__top {
+    gap: 22px;
+  }
+
+  .about-summary__intro {
+    font-size: 16px;
+    line-height: 1.72;
+  }
+
+  .about-summary__keywords {
+    gap: 10px;
+  }
+
+  .about-summary__keywords li {
+    padding: 8px 12px;
+  }
+
+  .about-quick-info {
+    gap: 14px;
+    padding: 20px;
+  }
+
+  .about-career {
+    gap: 14px;
+  }
+
+  .about-career-card {
+    gap: 18px;
+    padding: 18px;
+  }
+
+  .about-foundation-groups,
+  .about-experience-sections {
+    gap: 22px;
+  }
+
   .about-experience-wrap {
     gap: 10px;
   }
