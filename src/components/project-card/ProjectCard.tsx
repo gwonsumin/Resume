@@ -15,6 +15,10 @@ export function ProjectCard({
   role,
   visual,
   to,
+  githubUrl,
+  prototypeUrl,
+  planningUrl,
+  deployUrl,
   onOpenCaseStudy,
   linkLabel = 'Open case study',
 }: ProjectCardProps) {
@@ -26,6 +30,12 @@ export function ProjectCard({
         .filter(Boolean)
         .slice(0, 4)
     : []
+  const quickLinks = [
+    { label: '프로토타입', href: prototypeUrl },
+    { label: '배포', href: deployUrl },
+    { label: 'GitHub', href: githubUrl },
+    { label: '기획서', href: planningUrl },
+  ].filter((link): link is { label: string; href: string } => Boolean(link.href))
 
   const cardInner = (
     <>
@@ -85,6 +95,22 @@ export function ProjectCard({
           {cardInner}
         </Link>
       )}
+      {quickLinks.length > 0 ? (
+        <div className="project-card__actions" aria-label={`${title} 빠른 링크`}>
+          {quickLinks.map((link) => (
+            <a
+              key={link.label}
+              className="project-card__action-button"
+              href={link.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={`${title} ${link.label} 열기`}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
     </article>
   )
 }

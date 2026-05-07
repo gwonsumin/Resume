@@ -11,14 +11,10 @@ import "./HomePage.scss";
 
 const PROJECT_FILTERS = [
   "All",
-  "React",
-  "Vue",
-  "PHP",
+  "React + Vue",
+  "PHP + MySQL",
   "HTML + CSS",
   "Next.js + MongoDB",
-  "Figma",
-  "Photoshop",
-  "Illustrator",
 ] as const;
 
 type ProjectFilter = (typeof PROJECT_FILTERS)[number];
@@ -346,6 +342,26 @@ export function HomePage() {
   const filteredProjects = useMemo(() => {
     if (activeFilter === "All") {
       return selectedProjects;
+    }
+
+    if (activeFilter === "React + Vue") {
+      return selectedProjects.filter(
+        (project) => project.techStack.includes("React") || project.techStack.includes("Vue"),
+      );
+    }
+
+    if (activeFilter === "PHP + MySQL") {
+      return selectedProjects.filter(
+        (project) => project.techStack.includes("PHP") && project.techStack.includes("MySQL"),
+      );
+    }
+
+    if (activeFilter === "Next.js + MongoDB") {
+      return selectedProjects.filter(
+        (project) =>
+          project.techStack.includes("MongoDB") &&
+          (project.techStack.includes("Next.js") || project.techStack.includes("Node.js")),
+      );
     }
 
     return selectedProjects.filter((project) => project.techStack.includes(activeFilter));

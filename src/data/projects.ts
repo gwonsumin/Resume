@@ -37,6 +37,10 @@ export const selectedProjects: readonly ProjectPreview[] = [
       variant: 'teal',
     },
     to: ROUTES.caseStudyTone,
+    prototypeUrl:
+      'https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1',
+    planningUrl:
+      'https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1',
     githubUrl: 'https://github.com/urusekai/TONE.git',
     deployUrl: 'https://toneapp.dothome.co.kr',
   },
