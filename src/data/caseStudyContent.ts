@@ -115,16 +115,22 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "커머스 UX에서는 많은 기능을 보여주는 것보다 탐색, 비교, 저장, 구매의 흐름을 끊기지 않게 연결하는 구조가 중요하다는 것을 확인했습니다.",
     ),
     livePreview: {
-      href: "https://goreon-0x90.onrender.com/",
+      href: "https://goreon.vercel.app/",
       description:
         "배포된 GOREON 서비스입니다. AI 추천, 상품 탐색, 상세 확인, 찜/장바구니 흐름을 실제 화면에서 확인할 수 있습니다.",
       buttonLabel: "라이브 사이트 열기",
     },
     prototype: {
-      href: "https://github.com/muteLJS/GOREON.git",
+      href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=430-5154&t=3c6ZDjaV8B54Ibax-0&scaling=min-zoom&content-scaling=fixed&page-id=172%3A1911&starting-point-node-id=430%3A5154&desktop-link-click-timestamp=1778262100308&desktop-ul-exp-bucket=po",
       description:
-        "프로젝트 저장소입니다. React, Redux Toolkit, Node.js, Express, MongoDB 기반의 프론트엔드와 백엔드 구조를 확인할 수 있습니다.",
-      buttonLabel: "GitHub 열기",
+        "PC/모바일 두 가지 버전의 Figma 프로토타입을 통해 핵심 사용자 흐름과 인터랙션 구성을 확인할 수 있습니다.",
+      buttonLabel: "PC 프로토타입 보기",
+      extraLinks: [
+        {
+          href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=1085-7486&t=3c6ZDjaV8B54Ibax-0&scaling=scale-down&content-scaling=fixed&page-id=1085%3A6750&starting-point-node-id=1085%3A7486&desktop-link-click-timestamp=1778262097242&desktop-ul-exp-bucket=po",
+          buttonLabel: "모바일 프로토타입 보기",
+        },
+      ],
     },
   }),
   tone: makeCaseStudy("TONE", {
@@ -188,6 +194,9 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     ),
     prototype: {
       href: "https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1",
+      description:
+        "모바일 기준으로 제작된 Figma 프로토타입입니다. 감정 기록부터 추천 흐름까지 핵심 여정을 검증했습니다.",
+      buttonLabel: "모바일 프로토타입 보기",
     },
     solution: p(
       "감정 기록을 중심으로 음악 경험을 재구성했다.",
@@ -217,7 +226,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "특히 '기록'이라는 행동이 단순 기능이 아니라 사용자의 경험을 지속시키는 핵심 요소라는 것을 느꼈다.",
     ),
     livePreview: {
-      href: "https://toneapp.dothome.co.kr/",
+      href: "https://tone.dothome.co.kr/splash",
       description:
         "실제로 구현된 인터랙티브 빌드입니다. 배포된 사이트에서 감정 기록부터 추천 흐름까지 직접 사용해 볼 수 있습니다.",
       buttonLabel: "라이브 사이트 열기",
@@ -311,12 +320,6 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       description:
         "배포된 상상마당 리브랜딩 웹사이트입니다. 메인 콘텐츠 구성, 프로그램/공간 탐색, 공지사항 흐름을 실제 화면에서 확인할 수 있습니다.",
       buttonLabel: "라이브 사이트 열기",
-    },
-    prototype: {
-      href: "https://github.com/gwonsumin/sangsangmadang-rebranding.git",
-      description:
-        "프로젝트 저장소입니다. HTML, CSS, JavaScript, jQuery, PHP, MySQL 기반 화면 구성과 공지사항 CRUD 구현 구조를 확인할 수 있습니다.",
-      buttonLabel: "GitHub 열기",
     },
   }),
 };

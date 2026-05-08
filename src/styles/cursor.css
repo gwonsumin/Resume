@@ -1,0 +1,75 @@
+:root {
+  --cursor-default: auto;
+  --cursor-hover: pointer;
+}
+
+body {
+  cursor: var(--cursor-default);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  :root {
+    /* Hotspot tuned to keep click point visually centered. */
+    --cursor-default: url("../assets/cursor/Default-cousor.svg") 54 10, auto;
+    --cursor-hover: url("../assets/cursor/Hover-cousor.svg") 24 14, pointer;
+  }
+
+  :where(
+      a,
+      button,
+      [role="button"],
+      .clickable,
+      .site-nav__item,
+      .site-nav__link,
+      .project-card,
+      .project-card__link,
+      .project-card__action-button,
+      .archive-card,
+      .archive-card__button,
+      .archive-grid__item,
+      .archive-panel__overlay,
+      .archive-panel__close,
+      .case-study-page__next-card,
+      .resume-download-button,
+      .project-filters__pill,
+      [data-interactive="true"]
+    ) {
+    cursor: var(--cursor-hover) !important;
+  }
+
+  :where(
+      a,
+      button,
+      [role="button"],
+      .clickable,
+      .site-nav__item,
+      .site-nav__link,
+      .project-card,
+      .project-card__link,
+      .project-card__action-button,
+      .archive-card,
+      .archive-card__button,
+      .archive-grid__item,
+      .archive-panel__overlay,
+      .archive-panel__close,
+      .case-study-page__next-card,
+      .resume-download-button,
+      .project-filters__pill,
+      [data-interactive="true"]
+    )
+    * {
+    cursor: inherit !important;
+  }
+}
+
+body.custom-cursor-enabled,
+body.custom-cursor-enabled * {
+  cursor: none !important;
+}
+
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
+  :root {
+    --cursor-default: auto;
+    --cursor-hover: pointer;
+  }
+}

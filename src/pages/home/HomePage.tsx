@@ -9,6 +9,8 @@ import { home } from "../../data/home";
 import { selectedProjects } from "../../data/projects";
 import "./HomePage.scss";
 
+const RESUME_DOWNLOAD_PATH = `${import.meta.env.BASE_URL}assets/files/KwonSumin-Resume.pdf`;
+
 const PROJECT_FILTERS = [
   "All",
   "React + Vue",
@@ -436,6 +438,11 @@ export function HomePage() {
           </>
         }
         subtitle="사용자의 상태를 설계하는 디자이너"
+        headerAction={
+          <a className="resume-download-button" href={RESUME_DOWNLOAD_PATH} download="KwonSumin-Resume.pdf">
+            Resume Download
+          </a>
+        }
       >
         <About />
       </Section>
@@ -527,7 +534,16 @@ export function HomePage() {
         title="함께 만들 흐름을 이야기해요"
         subtitle="사용자 경험을 더 명확하게 만드는 프로젝트와 협업에 열려 있습니다."
       >
-        <p className="section-lede">{home.contact}</p>
+        <div className="home-contact">
+          <p className="section-lede">{home.contact}</p>
+          <a
+            className="resume-download-button home-contact__resume-button"
+            href={RESUME_DOWNLOAD_PATH}
+            download="KwonSumin-Resume.pdf"
+          >
+            Resume Download
+          </a>
+        </div>
       </Section>
     </div>
   );

@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import { CustomCursor } from '../cursor/CustomCursor'
 import { Footer } from '../footer/Footer'
 import { Header } from '../header/Header'
 import './RootLayout.scss'
@@ -10,6 +11,7 @@ type RootLayoutProps = {
 export function RootLayout({ siteTitle }: RootLayoutProps) {
   return (
     <div className="page">
+      <CustomCursor />
       <a className="skip-link" href="#main-content">
         Skip to main content
       </a>

@@ -24,8 +24,8 @@ export type ProjectPreview = {
   githubUrl?: string
   /** Optional prototype link (e.g. Figma prototype). */
   prototypeUrl?: string
-  /** Optional planning/spec document link. */
-  planningUrl?: string
+  /** Optional proposal PDF link. */
+  proposalUrl?: string
   /** Optional deployed site link. */
   deployUrl?: string
   /** Label for the card CTA (default in `ProjectCard`). */
