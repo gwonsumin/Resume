@@ -1,5 +1,7 @@
 # Portfolio Website
 
+**배포 URL:** [https://gwonsumin.github.io/Resume/](https://gwonsumin.github.io/Resume/)
+
 ## Overview
 이 프로젝트는 UX/UI 디자이너 포트폴리오 웹사이트입니다.
 
