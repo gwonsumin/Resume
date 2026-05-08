@@ -1,6 +1,8 @@
 import { ROUTES } from '../config/routes'
 import type { ProjectPreview } from '../types/project'
 
+const PDF_BASE_PATH = `${import.meta.env.BASE_URL}assets/files`
+
 export const selectedProjects: readonly ProjectPreview[] = [
   {
     id: 'goreon',
@@ -19,8 +21,9 @@ export const selectedProjects: readonly ProjectPreview[] = [
       variant: 'coral',
     },
     to: ROUTES.caseStudyGoreon,
-    githubUrl: 'https://github.com/muteLJS/GOREON.git',
-    deployUrl: 'https://goreon-0x90.onrender.com/',
+    githubUrl: 'https://github.com/gwonsumin/GOREON',
+    deployUrl: 'https://goreon.vercel.app/',
+    proposalUrl: `${PDF_BASE_PATH}/GOREON-Proposal.pdf`,
   },
   {
     id: 'tone',
@@ -39,10 +42,9 @@ export const selectedProjects: readonly ProjectPreview[] = [
     to: ROUTES.caseStudyTone,
     prototypeUrl:
       'https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1',
-    planningUrl:
-      'https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1',
-    githubUrl: 'https://github.com/urusekai/TONE.git',
-    deployUrl: 'https://toneapp.dothome.co.kr',
+    proposalUrl: `${PDF_BASE_PATH}/TONE-Proposal.pdf`,
+    githubUrl: 'https://github.com/gwonsumin/TONE',
+    deployUrl: 'https://tone.dothome.co.kr/splash',
   },
   {
     id: 'sangsangmadang',
@@ -61,7 +63,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       variant: 'ink',
     },
     to: ROUTES.caseStudySangsangmadang,
-    githubUrl: 'https://github.com/gwonsumin/sangsangmadang-rebranding.git',
+    githubUrl: 'https://github.com/gwonsumin/sangsangmadang-rebranding',
     deployUrl: 'http://gsumin8327.dothome.co.kr/',
   },
 ]

@@ -14,6 +14,10 @@ type CaseStudyPrototype = {
   /** Defaults to a standard description when omitted. */
   description?: string
   buttonLabel?: string
+  extraLinks?: readonly {
+    href: string
+    buttonLabel: string
+  }[]
 }
 
 type CaseStudyRoleItem = {

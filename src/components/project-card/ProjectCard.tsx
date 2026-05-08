@@ -16,8 +16,7 @@ export function ProjectCard({
   visual,
   to,
   githubUrl,
-  prototypeUrl,
-  planningUrl,
+  proposalUrl,
   deployUrl,
   onOpenCaseStudy,
   linkLabel = 'Open case study',
@@ -31,10 +30,9 @@ export function ProjectCard({
         .slice(0, 4)
     : []
   const quickLinks = [
-    { label: '프로토타입', href: prototypeUrl },
     { label: '배포', href: deployUrl },
     { label: 'GitHub', href: githubUrl },
-    { label: '기획서', href: planningUrl },
+    { label: '제안서', href: proposalUrl },
   ].filter((link): link is { label: string; href: string } => Boolean(link.href))
 
   const cardInner = (
