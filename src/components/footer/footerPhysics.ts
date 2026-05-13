@@ -6,13 +6,23 @@ export type FooterPhysicsSpec =
   | { kind: 'circle'; element: HTMLElement; radius: number }
   | { kind: 'box'; element: HTMLElement; width: number; height: number }
 
-export function mountFooterPhysics(container: HTMLElement, specs: FooterPhysicsSpec[]): () => void {
-  const w = Math.max(1, container.clientWidth)
-  const h = Math.max(1, container.clientHeight)
+export function mountFooterPhysics(
+  container: HTMLElement,
+  specs: FooterPhysicsSpec[],
+): () => void {
+  /* Matter 좌표계는 반드시 마우스가 붙은 container와 동일한 w/h (getBoundingClientRect 권장) */
+  const cr = container.getBoundingClientRect()
+  const w = Math.max(1, Math.round(cr.width))
+  const h = Math.max(1, Math.round(cr.height))
 
   const engine = Matter.Engine.create({ enableSleeping: true })
+  engine.world.gravity.y = 0.78
 
-  const floor = Matter.Bodies.rectangle(w / 2, h - WALL / 2, w + WALL * 4, WALL, {
+  /* 마스크·뷰포트 하단에서 잘리지 않도록 바닥을 충분히 올림 */
+  const bottomSafe = Math.min(140, Math.max(88, h * 0.11))
+  const floorY = h - bottomSafe - WALL / 2
+
+  const floor = Matter.Bodies.rectangle(w / 2, floorY, w + WALL * 4, WALL, {
     isStatic: true,
     friction: 0.78,
     frictionStatic: 0.95,
@@ -25,15 +35,21 @@ export function mountFooterPhysics(container: HTMLElement, specs: FooterPhysicsS
   const dynamics: Matter.Body[] = []
   const pairs: { body: Matter.Body; el: HTMLElement }[] = []
 
-  const floorTopY = h - WALL
+  const floorTopY = floorY - WALL / 2
+  /* 초기 스폰: 중·하단 빈 영역, 바닥(클립)에서 띄움 */
+  const bandTop = h * 0.36
+  const bandBottom = floorTopY - Math.max(64, h * 0.08)
+  const liftFromFloor = Math.min(240, Math.max(168, h * 0.23))
+  const rowGap = Math.min(48, Math.max(28, h * 0.042))
   const spreadX = (i: number, n: number) => {
-    const pad = w * 0.12
+    const pad = w * 0.1
     const t = (i + 1) / (n + 1)
     return pad + (w - pad * 2) * t + Math.sin(i * 2.4 + 1) * (w * 0.035)
   }
 
   specs.forEach((spec, i) => {
-    const spawnY = floorTopY - 140 - i * 36
+    const rawY = floorTopY - liftFromFloor - i * rowGap
+    const spawnY = Math.min(bandBottom - 20, Math.max(bandTop + 52, rawY))
     const spawnX = spreadX(i, specs.length)
 
     if (spec.kind === 'circle') {
