@@ -1,0 +1,447 @@
+/* Splash intro — z-layering: bg 0, liquid 1, content 2 */
+:root {
+  --splash-coral: #ff785d;
+  --splash-canvas: #f7f7f5;
+  /* Figma: liquid pill / shell stroke */
+  --splash-toggle-liquid: #e15b47;
+  --splash-toggle-well: #ededed;
+  --splash-shell-stroke: #e15b47;
+  /* Keep in sync with TRANSITION_MS in SplashIntro.tsx */
+  --splash-fill-duration: 2.6s;
+  --splash-fill-ease: cubic-bezier(0.45, 0, 0.18, 1);
+  /* Must match EXIT_REVEAL_MS / EXIT_REVEAL_MS_REDUCED in SplashIntro.tsx */
+  --splash-exit-duration: 1s;
+  --splash-exit-duration-reduced: 0.38s;
+  --splash-exit-ease: cubic-bezier(0.38, 0.01, 0.16, 1);
+}
+
+body.splash-intro-active {
+  overflow: hidden;
+}
+
+.splash-intro {
+  --splash-shell-color: var(--splash-shell-stroke);
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: var(--space-24);
+  pointer-events: auto;
+  transform-origin: 50% 42%;
+}
+
+.splash-intro--exiting {
+  pointer-events: none;
+  animation: splash-intro-reveal-out var(--splash-exit-duration) var(--splash-exit-ease) forwards;
+}
+
+.splash-intro--reduced.splash-intro--exiting {
+  animation: splash-intro-reveal-out-fade var(--splash-exit-duration-reduced) ease-out forwards;
+}
+
+@keyframes splash-intro-reveal-out {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1) saturate(1);
+  }
+
+  35% {
+    opacity: 1;
+    transform: scale(1.02);
+    filter: brightness(1.03) saturate(1.02);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.18);
+    filter: brightness(1.06) saturate(1.04);
+  }
+}
+
+@keyframes splash-intro-reveal-out-fade {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.splash-intro__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--splash-canvas);
+  pointer-events: none;
+  transition: background-color 0.85s var(--splash-fill-ease);
+}
+
+.splash-intro--exiting .splash-intro__bg {
+  background-color: var(--splash-coral);
+}
+
+/* Full-viewport liquid rise */
+.splash-intro__liquid-fill.splash-liquid-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  background-color: var(--splash-coral);
+  pointer-events: none;
+  transition: height var(--splash-fill-duration) var(--splash-fill-ease);
+}
+
+.splash-intro--filling .splash-intro__liquid-fill,
+.splash-intro--exiting .splash-intro__liquid-fill {
+  height: 100vh;
+}
+
+.splash-liquid-fill__wave {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 140%;
+  min-width: 64rem;
+  height: 1.75rem;
+  transform: translate(-50%, -65%);
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+.splash-liquid-fill__wave-path {
+  animation: splash-wave-drift 3.2s ease-in-out 2;
+}
+
+@keyframes splash-wave-drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-1.25%);
+  }
+}
+
+.splash-intro__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(var(--space-32), 5vw, var(--space-48));
+  max-width: 28rem;
+  width: 100%;
+  pointer-events: none;
+}
+
+.splash-intro__content .splash-toggle,
+.splash-intro__content .splash-intro__copy {
+  pointer-events: auto;
+}
+
+.splash-intro__copy {
+  text-align: center;
+  color: var(--color-text);
+  transition:
+    color 0.55s ease-in-out,
+    background-color 0.45s ease,
+    box-shadow 0.45s ease;
+}
+
+.splash-intro--filling .splash-intro__copy {
+  padding: var(--space-16) var(--space-24);
+  border-radius: var(--radius-md);
+  background: rgb(247 247 245 / 0.94);
+  box-shadow: 0 8px 28px rgb(59 47 47 / 0.05);
+}
+
+.splash-intro--exiting .splash-intro__copy {
+  opacity: 0;
+  transition:
+    opacity 0.35s ease-out,
+    transform 0.55s var(--splash-exit-ease);
+}
+
+.splash-intro__title {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.375rem, 3.8vw, 1.875rem);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: inherit;
+}
+
+.splash-intro__hint {
+  margin: var(--space-16) 0 0;
+  color: var(--color-text-muted);
+  transition: color 0.55s ease-in-out;
+}
+
+.splash-intro__status {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: clamp(1.125rem, 2.8vw, 1.375rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: inherit;
+}
+
+/* --- Toggle --- */
+.splash-toggle {
+  --splash-shell-color: var(--splash-shell-stroke);
+}
+
+.splash-toggle__control {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 999px;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.splash-toggle__control:focus {
+  outline: none;
+}
+
+.splash-toggle__control:focus-visible {
+  outline: 2px solid var(--splash-coral);
+  outline-offset: 6px;
+}
+
+.splash-toggle__control:disabled {
+  cursor: default;
+}
+
+.splash-toggle__glow {
+  position: absolute;
+  inset: -18%;
+  z-index: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse 55% 45% at 50% 52%,
+    rgb(255 120 93 / 0.12) 0%,
+    transparent 72%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.splash-toggle--filling .splash-toggle__glow {
+  opacity: 1;
+}
+
+.splash-toggle--exiting .splash-toggle__glow {
+  opacity: 0.45;
+  background: radial-gradient(
+    ellipse 50% 42% at 50% 48%,
+    rgb(255 255 255 / 0.14) 0%,
+    transparent 70%
+  );
+}
+
+.splash-toggle__pill {
+  position: relative;
+  display: block;
+  width: clamp(4.5rem, 18vw, 11.0625rem);
+  max-width: 177px;
+  aspect-ratio: 177 / 376;
+  z-index: 1;
+  isolation: isolate;
+}
+
+.splash-toggle__clip {
+  position: absolute;
+  top: calc(100% * 15 / 376 - 0.5px);
+  right: calc(100% * 15 / 177 - 0.5px);
+  bottom: calc(100% * 15 / 376 - 0.5px);
+  left: calc(100% * 15 / 177 - 0.5px);
+  border-radius: 999px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.splash-toggle__well {
+  position: absolute;
+  inset: 0;
+  background: var(--splash-toggle-well);
+  z-index: 0;
+  transition: background-color var(--splash-fill-duration) var(--splash-fill-ease);
+}
+
+.splash-toggle--exiting .splash-toggle__well {
+  background: var(--splash-toggle-liquid);
+}
+
+.splash-toggle__liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.splash-toggle__liquid-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 23%;
+  overflow: hidden;
+  transform-origin: bottom center;
+  /* Rounded top reads as a dome / meniscus while filling (Figma) */
+  border-radius: 999px;
+  transition:
+    height var(--splash-fill-duration) var(--splash-fill-ease),
+    border-radius var(--splash-fill-duration) var(--splash-fill-ease);
+  z-index: 1;
+}
+
+.splash-toggle--filling .splash-toggle__liquid-body,
+.splash-toggle--exiting .splash-toggle__liquid-body {
+  height: 100%;
+}
+
+.splash-toggle__liquid-fill-img {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* Taller than the window so the visible slice cuts through the pill cap (curved top) */
+  height: 435%;
+  object-fit: cover;
+  object-position: bottom center;
+  transition: height var(--splash-fill-duration) var(--splash-fill-ease);
+}
+
+.splash-toggle--filling .splash-toggle__liquid-fill-img,
+.splash-toggle--exiting .splash-toggle__liquid-fill-img {
+  height: 100%;
+}
+
+.splash-toggle__liquid-wave {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  width: 115%;
+  height: 0.875rem;
+  transform: translate(-50%, -55%);
+  min-width: 5rem;
+  pointer-events: none;
+}
+
+.splash-toggle__liquid-wave-path {
+  animation: splash-toggle-wave 3s ease-in-out 2;
+}
+
+@keyframes splash-toggle-wave {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-2%);
+  }
+}
+
+.splash-toggle__stem {
+  position: absolute;
+  left: 50%;
+  z-index: 4;
+  /* Positions in % of shell (177×376): same math as when stem lived inside 147×346 clip */
+  top: calc(100% * 15 / 376 + (100% * 346 / 376) * 0.885);
+  transform: translate(-50%, -50%);
+  width: calc(100% * 85 / 177);
+  max-width: 85px;
+  pointer-events: none;
+  transition:
+    top var(--splash-fill-duration) var(--splash-fill-ease),
+    transform var(--splash-fill-duration) var(--splash-fill-ease);
+}
+
+.splash-toggle--filling .splash-toggle__stem,
+.splash-toggle--exiting .splash-toggle__stem {
+  top: calc(100% * 15 / 376 + (100% * 346 / 376) * 0.115);
+  transform: translate(-50%, -50%);
+}
+
+.splash-toggle__stem-img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.splash-toggle__shell.splash-toggle-shell {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  color: var(--splash-shell-color);
+  shape-rendering: geometricPrecision;
+  transition:
+    color var(--splash-fill-duration) var(--splash-fill-ease),
+    filter var(--splash-fill-duration) var(--splash-fill-ease),
+    opacity var(--splash-fill-duration) var(--splash-fill-ease);
+}
+
+/* OFF / filling: Figma stroke #E15B47, 15px inside */
+.splash-toggle--off .splash-toggle__shell,
+.splash-toggle--filling .splash-toggle__shell {
+  --splash-shell-color: var(--splash-shell-stroke);
+  filter: none;
+  opacity: 1;
+}
+
+/* ON / exit: 흰색 테두리 + 얇은 라이트 글로우 (시안) */
+.splash-toggle--exiting .splash-toggle__shell {
+  --splash-shell-color: #ffffff;
+  filter:
+    drop-shadow(0 0 1px rgb(247 247 245 / 0.65))
+    drop-shadow(0 0 14px rgb(255 255 255 / 0.22));
+  opacity: 1;
+}
+
+/* Reduced motion */
+.splash-intro--reduced .splash-intro__liquid-fill,
+.splash-intro--reduced .splash-toggle__liquid-body,
+.splash-intro--reduced .splash-toggle__liquid-fill-img,
+.splash-intro--reduced .splash-toggle__stem {
+  transition: none;
+}
+
+.splash-intro--reduced .splash-liquid-fill__wave-path,
+.splash-intro--reduced .splash-toggle__liquid-wave-path {
+  animation: none;
+}
+
+.splash-intro--reduced .splash-toggle--filling .splash-toggle__liquid-body,
+.splash-intro--reduced .splash-toggle--exiting .splash-toggle__liquid-body {
+  height: 100%;
+}
+
+.splash-intro--reduced .splash-toggle--filling .splash-toggle__liquid-fill-img,
+.splash-intro--reduced .splash-toggle--exiting .splash-toggle__liquid-fill-img {
+  height: 100%;
+}

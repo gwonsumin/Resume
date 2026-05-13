@@ -11,23 +11,38 @@ type SectionProps = {
   headerAction?: ReactNode;
   children: ReactNode;
   className?: string;
+  revealHeader?: boolean;
 };
 
-export function Section({ id, title, label, meta, subtitle, headerAction, children, className }: SectionProps) {
+export function Section({
+  id,
+  title,
+  label,
+  meta,
+  subtitle,
+  headerAction,
+  children,
+  className,
+  revealHeader = false,
+}: SectionProps) {
   const sectionClass = ["content-section", className].filter(Boolean).join(" ");
   const headingId = `${id}-heading`;
+  const fullHeader = label && title ? (
+    <SectionHeader
+      id={headingId}
+      label={label}
+      title={title}
+      meta={meta}
+      subtitle={subtitle}
+      action={headerAction}
+      enableReveal={revealHeader}
+    />
+  ) : null;
 
   return (
     <section id={id} className={sectionClass} aria-labelledby={headingId}>
-      {label && title ? (
-        <SectionHeader
-          id={headingId}
-          label={label}
-          title={title}
-          meta={meta}
-          subtitle={subtitle}
-          action={headerAction}
-        />
+      {fullHeader ? (
+        fullHeader
       ) : title ? (
         <h2 className="section-title" id={headingId}>
           {title}
