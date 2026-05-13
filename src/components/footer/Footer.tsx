@@ -4,6 +4,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
@@ -62,7 +63,25 @@ function DottedRow({ label, children }: { label: string; children: ReactNode }) 
   )
 }
 
+/** 탭으로 카드 뒤집기: 좁은 뷰 또는 터치/비호버 포인터 환경에서만 (Hero 모바일과 유사) */
+const FOOTER_PASS_TOUCH_FLIP_QUERIES = ['(max-width: 39.9375rem)', '(hover: none)', '(pointer: coarse)'] as const
+
+function subscribeFooterPassTouchFlip(cb: () => void) {
+  const mqs = FOOTER_PASS_TOUCH_FLIP_QUERIES.map((q) => window.matchMedia(q))
+  mqs.forEach((mq) => mq.addEventListener('change', cb))
+  return () => mqs.forEach((mq) => mq.removeEventListener('change', cb))
+}
+
+function getFooterPassTouchFlipSnapshot() {
+  return FOOTER_PASS_TOUCH_FLIP_QUERIES.some((q) => window.matchMedia(q).matches)
+}
+
 function FooterNamePass() {
+  const passTouchFlipMode = useSyncExternalStore(
+    subscribeFooterPassTouchFlip,
+    getFooterPassTouchFlipSnapshot,
+    () => false,
+  )
   const [touchFlipped, setTouchFlipped] = useState(false)
   const [emailCopied, setEmailCopied] = useState(false)
   const copyEmailResetRef = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -86,7 +105,7 @@ function FooterNamePass() {
 
   const handlePassSceneClick = (e: MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('a, button')) return
-    if (!window.matchMedia('(hover: none)').matches) return
+    if (!passTouchFlipMode) return
     setTouchFlipped((v) => !v)
   }
 
@@ -102,6 +121,13 @@ function FooterNamePass() {
       <div
         className={`site-footer__pass-scene${touchFlipped ? ' site-footer__pass-scene--touch-flip' : ''}`}
         tabIndex={0}
+        aria-label={
+          passTouchFlipMode
+            ? touchFlipped
+              ? 'SUMIN PASS 뒷면. 탭하면 앞면으로 돌아옵니다'
+              : 'SUMIN PASS 앞면. 카드나 빈 곳을 탭하면 뒷면이 보입니다'
+            : 'SUMIN PASS 연락처 카드'
+        }
         onClick={handlePassSceneClick}
         onKeyDown={handlePassSceneKeyDown}
       >

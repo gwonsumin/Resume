@@ -22,7 +22,7 @@ function buildPreviewImages(item: ArchiveItem): string[] {
 
 export function ArchiveModal({ item, onClose }: ArchiveModalProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
-  const previewImages = useMemo(() => buildPreviewImages(item), [item.mainImage, item.detailImages]);
+  const previewImages = useMemo(() => buildPreviewImages(item), [item]);
   const [selectedSrc, setSelectedSrc] = useState(item.mainImage);
 
   useEffect(() => {
@@ -37,10 +37,6 @@ export function ArchiveModal({ item, onClose }: ArchiveModalProps) {
   useEffect(() => {
     closeRef.current?.focus();
   }, [item.id]);
-
-  useEffect(() => {
-    setSelectedSrc(item.mainImage);
-  }, [item.id, item.mainImage]);
 
   const heroAlt =
     selectedSrc === item.mainImage ? item.imageAlt : `${item.title} 기록 이미지`;

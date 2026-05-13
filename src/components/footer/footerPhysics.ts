@@ -7,8 +7,8 @@ export type FooterPhysicsSpec =
   | { kind: 'box'; element: HTMLElement; width: number; height: number }
 
 export function mountFooterPhysics(container: HTMLElement, specs: FooterPhysicsSpec[]): () => void {
-  let w = Math.max(1, container.clientWidth)
-  let h = Math.max(1, container.clientHeight)
+  const w = Math.max(1, container.clientWidth)
+  const h = Math.max(1, container.clientHeight)
 
   const engine = Matter.Engine.create({ enableSleeping: true })
 
