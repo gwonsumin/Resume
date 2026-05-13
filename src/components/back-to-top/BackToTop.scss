@@ -1,0 +1,87 @@
+/* 원형 FAB — 스크롤 후 표시, 카드클립 아이콘은 소형으로만 사용 */
+.back-to-top {
+  pointer-events: none;
+  position: fixed;
+  right: clamp(0.75rem, 3vw, 1.15rem);
+  bottom: clamp(0.75rem, 3vw, 1.25rem);
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-text, #3b2f2f);
+  background: var(--color-background, #fff4eb);
+  border: 1px solid var(--color-border, rgb(59 47 47 / 0.14));
+  border-radius: 50%;
+  box-shadow: var(--shadow-button, 0 1px 4px rgb(59 47 47 / 0.06));
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    visibility 0.2s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.back-to-top--visible {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .back-to-top--visible:hover,
+  .back-to-top--visible:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgb(10 165 165 / 0.28);
+    box-shadow: 0 2px 10px rgb(59 47 47 / 0.1);
+    background: var(--color-surface-soft, #fff8f2);
+  }
+}
+
+.back-to-top:focus-visible {
+  outline: 2px solid #0aa5a5;
+  outline-offset: 3px;
+}
+
+.back-to-top__clip {
+  display: block;
+  width: auto;
+  height: 24px;
+  max-width: 11px;
+  object-fit: contain;
+}
+
+@media (min-width: 48rem) {
+  .back-to-top {
+    width: 52px;
+    height: 52px;
+  }
+
+  .back-to-top__clip {
+    height: 30px;
+    max-width: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition:
+      opacity 0.15s ease,
+      visibility 0.15s ease;
+  }
+
+  .back-to-top--visible:hover,
+  .back-to-top--visible:focus-visible {
+    transform: translateY(0);
+  }
+}

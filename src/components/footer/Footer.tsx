@@ -1,4 +1,13 @@
-import { useLayoutEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react'
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+} from 'react'
 import './Footer.scss'
 import footerLogo from '../../assets/footer/footer-logo.svg'
 import tomato0 from '../../assets/footer/footer-tamatoicon00.svg'
@@ -13,9 +22,35 @@ type FooterProps = {
 const RESUME_HREF = `${import.meta.env.BASE_URL}assets/files/KwonSumin-Resume.pdf`
 
 const EMAIL = 'gsum212@gmail.com'
+/** 카드·링크용 표기 */
+const PHONE_DISPLAY = '82+ 10-8327-8238'
+const PHONE_TEL = '+821083278238'
 const GITHUB_HREF = 'https://github.com/gwonsumin'
 const INSTAGRAM_GSUM = 'https://www.instagram.com/gsum_00/'
 const INSTAGRAM_GCAT = 'https://www.instagram.com/gcat_oo/'
+
+async function copyTextToClipboard(text: string): Promise<boolean> {
+  try {
+    await navigator.clipboard.writeText(text)
+    return true
+  } catch {
+    try {
+      const ta = document.createElement('textarea')
+      ta.value = text
+      ta.setAttribute('readonly', '')
+      ta.style.position = 'fixed'
+      ta.style.left = '-9999px'
+      ta.style.top = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      const ok = document.execCommand('copy')
+      document.body.removeChild(ta)
+      return ok
+    } catch {
+      return false
+    }
+  }
+}
 
 function DottedRow({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -29,6 +64,25 @@ function DottedRow({ label, children }: { label: string; children: ReactNode }) 
 
 function FooterNamePass() {
   const [touchFlipped, setTouchFlipped] = useState(false)
+  const [emailCopied, setEmailCopied] = useState(false)
+  const copyEmailResetRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (copyEmailResetRef.current) clearTimeout(copyEmailResetRef.current)
+    }
+  }, [])
+
+  const handleCopyEmail = useCallback(async () => {
+    const ok = await copyTextToClipboard(EMAIL)
+    if (!ok) return
+    setEmailCopied(true)
+    if (copyEmailResetRef.current) clearTimeout(copyEmailResetRef.current)
+    copyEmailResetRef.current = setTimeout(() => {
+      setEmailCopied(false)
+      copyEmailResetRef.current = null
+    }, 2200)
+  }, [])
 
   const handlePassSceneClick = (e: MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('a, button')) return
@@ -91,6 +145,12 @@ function FooterNamePass() {
                         <span className="site-footer__pass-contact-val">{EMAIL}</span>
                       </a>
                     </li>
+                    <li>
+                      <a href={`tel:${PHONE_TEL}`}>
+                        <span className="site-footer__pass-contact-key">phone</span>
+                        <span className="site-footer__pass-contact-val">{PHONE_DISPLAY}</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
 
@@ -131,6 +191,20 @@ function FooterNamePass() {
       </div>
 
       <nav className="site-footer__pass-actions" aria-label="주요 연락처 바로가기">
+        <button
+          type="button"
+          className={`site-footer__pass-action site-footer__pass-action--copy${emailCopied ? ' site-footer__pass-action--copied' : ''}`}
+          onClick={handleCopyEmail}
+          aria-label={emailCopied ? `Email copied: ${EMAIL}` : `Copy email to clipboard: ${EMAIL}`}
+        >
+          {emailCopied ? (
+            'Copied'
+          ) : (
+            <>
+              Email <span className="site-footer__pass-action-meta">copy</span>
+            </>
+          )}
+        </button>
         <a
           className="site-footer__pass-action"
           href={GITHUB_HREF}
