@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import heroChr from "../../assets/images/heroChr.png";
 import backIcon from "../../assets/icons/icon-back.svg";
 import saveIcon from "../../assets/icons/icon-save.svg";
@@ -21,11 +21,32 @@ const wait = (duration: number) =>
     window.setTimeout(resolve, duration);
   });
 
+/** Hero.scss 모바일 구간과 동일 (터치 활성 패턴 전용) */
+const HERO_MOBILE_MQ = "(max-width: 39.9375rem)";
+
+function subscribeHeroMobileLayout(onStoreChange: () => void) {
+  const mq = window.matchMedia(HERO_MOBILE_MQ);
+  mq.addEventListener("change", onStoreChange);
+  return () => mq.removeEventListener("change", onStoreChange);
+}
+
+function getHeroMobileLayoutSnapshot() {
+  return window.matchMedia(HERO_MOBILE_MQ).matches;
+}
+
 export function Hero() {
+  const isHeroMobileLayout = useSyncExternalStore(
+    subscribeHeroMobileLayout,
+    getHeroMobileLayoutSnapshot,
+    () => false,
+  );
   const [typedLines, setTypedLines] = useState<string[]>(["", "", ""]);
   const [isNameVisible, setIsNameVisible] = useState(false);
   const [typedSuffix, setTypedSuffix] = useState("");
   const [isTypingDone, setIsTypingDone] = useState(false);
+  const [resumeUnlockedByTouch, setResumeUnlockedByTouch] = useState(false);
+
+  const showResumeDownload = isTypingDone || (isHeroMobileLayout && resumeUnlockedByTouch);
 
   useEffect(() => {
     let isCancelled = false;
@@ -97,7 +118,7 @@ export function Hero() {
               <img src={backIcon} alt="" aria-hidden="true" />
               <p>State Notes</p>
             </div>
-            {isTypingDone ? (
+            {showResumeDownload ? (
               <a
                 className="hero-card__header-right hero-card__header-right--active"
                 href={RESUME_DOWNLOAD_PATH}
@@ -106,6 +127,16 @@ export function Hero() {
                 <img src={saveIcon} alt="" aria-hidden="true" />
                 <p>Resume Save</p>
               </a>
+            ) : isHeroMobileLayout ? (
+              <button
+                type="button"
+                className="hero-card__header-right hero-card__header-right--touch-latch"
+                aria-label="이력서 받기 활성화"
+                onClick={() => setResumeUnlockedByTouch(true)}
+              >
+                <img src={saveIcon} alt="" aria-hidden="true" />
+                <p>Resume Save</p>
+              </button>
             ) : (
               <div className="hero-card__header-right">
                 <img src={saveIcon} alt="" aria-hidden="true" />

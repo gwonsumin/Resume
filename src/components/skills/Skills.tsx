@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties } from "react";
-import { useRef } from "react";
 import { skills, type Skill } from "./skillsData";
 import "./Skills.scss";
 

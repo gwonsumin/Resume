@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import defaultCursor from "../../assets/cursor/Default-cousor.svg";
 import hoverCursor from "../../assets/cursor/Hover-cousor.svg";
 import "./CustomCursor.scss";
@@ -33,8 +33,20 @@ function canUseCustomCursor() {
   return finePointer && !prefersReducedMotion;
 }
 
+function subscribeCustomCursorEligible(onStoreChange: () => void) {
+  const mqFine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const mqReduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const onChange = () => onStoreChange();
+  mqFine.addEventListener("change", onChange);
+  mqReduced.addEventListener("change", onChange);
+  return () => {
+    mqFine.removeEventListener("change", onChange);
+    mqReduced.removeEventListener("change", onChange);
+  };
+}
+
 export function CustomCursor() {
-  const [enabled, setEnabled] = useState(false);
+  const enabled = useSyncExternalStore(subscribeCustomCursorEligible, canUseCustomCursor, () => false);
   const [visible, setVisible] = useState(false);
   const [isInteractive, setIsInteractive] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
@@ -42,16 +54,6 @@ export function CustomCursor() {
   const [point, setPoint] = useState({ x: 0, y: 0 });
   const cursorRef = useRef<HTMLSpanElement | null>(null);
   const prevPointRef = useRef({ x: 0, y: 0 });
-
-  useEffect(() => {
-    setEnabled(canUseCustomCursor());
-
-    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const onChange = () => setEnabled(canUseCustomCursor());
-    media.addEventListener("change", onChange);
-
-    return () => media.removeEventListener("change", onChange);
-  }, []);
 
   useEffect(() => {
     if (!enabled) return;

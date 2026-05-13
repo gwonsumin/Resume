@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import type { CSSProperties } from "react";
 import { archiveColumns } from "../../data/archiveData";
 import type { ArchiveColumnData, ArchiveRecordCard } from "../../data/archiveData";
@@ -9,18 +9,18 @@ const STACK_MS = 550;
 const STACK_EASE = "cubic-bezier(0.42, 0, 0.2, 1)";
 const AUTO_ADVANCE_MS = 6200;
 
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+  media.addEventListener("change", onStoreChange);
+  return () => media.removeEventListener("change", onStoreChange);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
 function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(media.matches);
-    const onChange = () => setReduced(media.matches);
-    media.addEventListener("change", onChange);
-    return () => media.removeEventListener("change", onChange);
-  }, []);
-
-  return reduced;
+  return useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, () => false);
 }
 
 type Phase = "idle" | "next" | "prev";
@@ -71,27 +71,35 @@ function ArchiveColumnStack({ column, reducedMotion, autoPaused, onOpenCard }: A
     [n],
   );
 
-  const pumpQueue = useCallback(() => {
-    if (busyRef.current) return;
-    const nextDir = queueRef.current.shift();
-    if (!nextDir) return;
+  const pumpImplRef = useRef<() => void>(() => {});
 
-    if (reducedMotion) {
-      finishStep(nextDir);
-      queueRef.current = [];
-      return;
-    }
+  useLayoutEffect(() => {
+    pumpImplRef.current = () => {
+      if (busyRef.current) return;
+      const nextDir = queueRef.current.shift();
+      if (!nextDir) return;
 
-    busyRef.current = true;
-    setPhase(nextDir === "next" ? "next" : "prev");
+      if (reducedMotion) {
+        finishStep(nextDir);
+        queueRef.current = [];
+        return;
+      }
 
-    clearTimer();
-    timeoutRef.current = window.setTimeout(() => {
-      timeoutRef.current = null;
-      finishStep(nextDir);
-      pumpQueue();
-    }, STACK_MS);
+      busyRef.current = true;
+      setPhase(nextDir === "next" ? "next" : "prev");
+
+      clearTimer();
+      timeoutRef.current = window.setTimeout(() => {
+        timeoutRef.current = null;
+        finishStep(nextDir);
+        pumpImplRef.current();
+      }, STACK_MS);
+    };
   }, [clearTimer, finishStep, reducedMotion]);
+
+  const pumpQueue = useCallback(() => {
+    pumpImplRef.current();
+  }, []);
 
   const requestStep = useCallback(
     (direction: "next" | "prev") => {
@@ -115,7 +123,10 @@ function ArchiveColumnStack({ column, reducedMotion, autoPaused, onOpenCard }: A
   }, [clearTimer]);
 
   const requestStepRef = useRef(requestStep);
-  requestStepRef.current = requestStep;
+
+  useLayoutEffect(() => {
+    requestStepRef.current = requestStep;
+  });
 
   useEffect(() => {
     if (n <= 1 || reducedMotion || autoPaused) return;
@@ -279,7 +290,9 @@ export function ArchiveBoard() {
         ))}
       </div>
 
-      {modalCard ? <ArchiveModal item={modalCard} onClose={() => setModalCard(null)} /> : null}
+      {modalCard ? (
+        <ArchiveModal key={modalCard.id} item={modalCard} onClose={() => setModalCard(null)} />
+      ) : null}
     </div>
   );
 }
