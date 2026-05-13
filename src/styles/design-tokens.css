@@ -59,6 +59,22 @@
   --page-padding-x: clamp(var(--space-16), 2.5vw + 0.5rem, var(--space-32));
   --section-gap: clamp(var(--space-48), 6vw, var(--space-80));
   --header-padding-y: clamp(var(--space-24), 3vw, var(--space-32));
+
+  /* 드래그 선택 하이라이트 — 코랄 + 살짝 틸 */
+  --color-selection-bg: color-mix(in srgb, var(--color-primary) 82%, var(--color-secondary) 18%);
+  --color-selection-fg: #fff9f0;
+}
+
+::selection {
+  background-color: var(--color-selection-bg);
+  color: var(--color-selection-fg);
+  text-shadow: none;
+}
+
+::-moz-selection {
+  background-color: var(--color-selection-bg);
+  color: var(--color-selection-fg);
+  text-shadow: none;
 }
 
 @font-face {

@@ -155,7 +155,7 @@ export function Header({ siteTitle }: HeaderProps) {
           <Link to={ROUTES.home} className="site-header__title-link" onClick={onLogoClick}>
             <img
               src={logoDefault}
-              alt={`${siteTitle || "SUMIN"} home`}
+              alt={`${siteTitle || "State Notes"} home`}
               className="site-header__logo"
             />
           </Link>

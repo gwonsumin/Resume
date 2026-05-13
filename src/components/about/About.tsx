@@ -26,7 +26,8 @@ const FOUNDATION_GROUPS = [
     bullets: [
       {
         task: "2019.03 ~ 2021.02 | 백석예술대학(영상미디어과)",
-        insight: "시각 언어와 콘텐츠 구성의 기본기를 학습하며 사용자 전달 관점을 확장",
+        insight:
+          "시각 언어와 콘텐츠 구성의 기본기를 학습하며 사용자 전달 관점을 확장",
       },
     ],
   },
@@ -37,7 +38,8 @@ const FOUNDATION_GROUPS = [
     bullets: [
       {
         task: "2022 | GTQ 1급",
-        insight: "디자인 툴 숙련도를 기반으로 시각 결과물의 정확도와 완성도를 강화",
+        insight:
+          "디자인 툴 숙련도를 기반으로 시각 결과물의 정확도와 완성도를 강화",
       },
       {
         task: "2022 | 컴퓨터 그래픽기능사",
@@ -59,7 +61,7 @@ const FOUNDATION_GROUPS = [
     summary: "UX/UI와 프론트엔드 구현을 연결한 실전형 학습",
     bullets: [
       {
-        task: "2025.11 ~ 2026.06 | 생성형AI 활용 UX UI 디자인 & 프론트엔드 개발 과정 (ChatGPT, 일러 포토, 피그마, 자바스크립트, 리액트)-3차",
+        task: "2025.11 ~ 2026.06 | 생성형AI 활용 UX UI 디자인 & 프론트엔드 개발 과정 (ChatGPT, 일러 포토, 피그마, 자바스크립트, 리액트)-3차 수료",
         insight:
           "디자인 의도를 코드로 연결하는 과정에서, 팀 프로젝트를 통해 기획–디자인–개발 간 커뮤니케이션 구조와 역할 흐름에 대한 이해를 확장",
       },
@@ -101,11 +103,13 @@ const EXPERIENCE_SECTIONS = [
 const CAREER_CARDS = [
   {
     title: "FOUNDATION",
-    description: "UX/UI 설계를 위한 학습 기반과 디자인 툴 활용 역량을 정리했습니다.",
+    description:
+      "UX/UI 설계를 위한 학습 기반과 디자인 툴 활용 역량을 정리했습니다.",
   },
   {
     title: "EXPERIENCE",
-    description: "실무와 서비스 환경에서\n사용자의 행동과 흐름을 이해하는 경험을 쌓았습니다.",
+    description:
+      "실무와 서비스 환경에서\n사용자의 행동과 흐름을 이해하는 경험을 쌓았습니다.",
   },
 ] as const;
 
@@ -127,12 +131,7 @@ function KeywordIcon({ type }: { type: KeywordIconType }) {
           rx="12"
           className="keyword-icon__toggle-track"
         />
-        <circle
-          cx="16"
-          cy="24"
-          r="9"
-          className="keyword-icon__toggle-knob"
-        />
+        <circle cx="16" cy="24" r="9" className="keyword-icon__toggle-knob" />
       </svg>
     );
   }
@@ -212,8 +211,12 @@ function FoundationCard() {
             <ul className="about-foundation-group__bullet-list" role="list">
               {group.bullets.map((bullet) => (
                 <li key={bullet.task}>
-                  <span className="about-foundation-group__task">{bullet.task}</span>
-                  <span className="about-foundation-group__insight">→ {bullet.insight}</span>
+                  <span className="about-foundation-group__task">
+                    {bullet.task}
+                  </span>
+                  <span className="about-foundation-group__insight">
+                    → {bullet.insight}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -230,14 +233,23 @@ function ExperienceCard() {
       <CareerCardHeader {...CAREER_CARDS[1]} />
       <div className="about-experience-sections">
         {EXPERIENCE_SECTIONS.map((section) => (
-          <section key={section.periodCompany} className="about-experience-section">
+          <section
+            key={section.periodCompany}
+            className="about-experience-section"
+          >
             <p className="about-career-card__meta">{section.periodCompany}</p>
-            <h4 className="about-experience-section__summary">{section.summary}</h4>
+            <h4 className="about-experience-section__summary">
+              {section.summary}
+            </h4>
             <ul className="about-experience-section__bullet-list" role="list">
               {section.bullets.map((bullet) => (
                 <li key={bullet.task}>
-                  <span className="about-experience-section__task">{bullet.task}</span>
-                  <span className="about-experience-section__insight">→ {bullet.insight}</span>
+                  <span className="about-experience-section__task">
+                    {bullet.task}
+                  </span>
+                  <span className="about-experience-section__insight">
+                    → {bullet.insight}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -276,7 +288,12 @@ export function About() {
         </article>
 
         <figure className="about-photo">
-          <img src={tomatoSticker} alt="" aria-hidden="true" className="about-photo__sticker" />
+          <img
+            src={tomatoSticker}
+            alt=""
+            aria-hidden="true"
+            className="about-photo__sticker"
+          />
           <div className="about-photo__frame">
             <img src={profilePhoto} alt="권수민 프로필 사진" />
           </div>
@@ -289,8 +306,16 @@ export function About() {
           <ExperienceCard />
           <div className="about-career__decor" aria-hidden="true">
             <div className="about-career__tomatoes">
-              <img className="about-career__tomato about-career__tomato--large" src={tomatoIcon01} alt="" />
-              <img className="about-career__tomato about-career__tomato--small" src={tomatoIcon02} alt="" />
+              <img
+                className="about-career__tomato about-career__tomato--large"
+                src={tomatoIcon01}
+                alt=""
+              />
+              <img
+                className="about-career__tomato about-career__tomato--small"
+                src={tomatoIcon02}
+                alt=""
+              />
             </div>
             <img className="about-career__can" src={tomatoCan} alt="" />
           </div>

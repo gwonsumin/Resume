@@ -4,7 +4,7 @@ import { CaseStudyPage } from './pages/case-study/CaseStudyPage'
 import { HomePage } from './pages/home/HomePage'
 
 const site = {
-  title: 'SUMIN',
+  title: 'State Notes',
 } as const
 
 export default function App() {

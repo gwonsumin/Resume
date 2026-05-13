@@ -1,8 +1,15 @@
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 30;
-  width: 100%;
+  /* 아카이브 덱 등 본문 z-index보다 위 — 모달(60)보다는 낮게 */
+  z-index: 50;
+  isolation: isolate;
+  box-sizing: border-box;
+  /* .page max-width 밖으로 빼서 뷰포트 가로 전체 */
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   height: 72px;
   color: var(--color-text);
   background: transparent;
