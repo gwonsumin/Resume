@@ -166,6 +166,21 @@
     background-color 0.18s ease;
 }
 
+button.site-footer__pass-action {
+  margin: 0;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+}
+
+.site-footer__pass-action--copied,
+.site-footer__pass-action--copied:hover,
+.site-footer__pass-action--copied:focus-visible {
+  color: #fff4eb;
+  border-color: rgb(10 165 165 / 0.55);
+  background: rgb(10 165 165 / 0.22);
+}
+
 .site-footer__pass-action:hover,
 .site-footer__pass-action:focus-visible {
   color: #0aa5a5;
