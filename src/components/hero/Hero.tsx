@@ -6,6 +6,8 @@ import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import heroRoofShape from "../../assets/shapes/hero-roof-shape.svg";
 import "./Hero.scss";
 
+const RESUME_DOWNLOAD_PATH = `${import.meta.env.BASE_URL}assets/files/KwonSumin-Resume.pdf`;
+
 const DESIGNER_NAME = "권수민";
 const HERO_TYPING_LINES = [
   "사용자의 상태를 이해하고",
@@ -95,16 +97,21 @@ export function Hero() {
               <img src={backIcon} alt="" aria-hidden="true" />
               <p>State Notes</p>
             </div>
-            <div
-              className={
-                isTypingDone
-                  ? "hero-card__header-right hero-card__header-right--active"
-                  : "hero-card__header-right"
-              }
-            >
-              <img src={saveIcon} alt="" aria-hidden="true" />
-              <p>Save</p>
-            </div>
+            {isTypingDone ? (
+              <a
+                className="hero-card__header-right hero-card__header-right--active"
+                href={RESUME_DOWNLOAD_PATH}
+                download="KwonSumin-Resume.pdf"
+              >
+                <img src={saveIcon} alt="" aria-hidden="true" />
+                <p>Resume Save</p>
+              </a>
+            ) : (
+              <div className="hero-card__header-right">
+                <img src={saveIcon} alt="" aria-hidden="true" />
+                <p>Resume Save</p>
+              </div>
+            )}
           </header>
 
           <h1 className="hero-card__title" id="hero-title">

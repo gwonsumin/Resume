@@ -20,7 +20,6 @@ const INTERACTIVE_SELECTOR = [
   ".archive-modal__close",
   ".archive-record__more",
   ".case-study-page__next-card",
-  ".resume-download-button",
   ".project-filters__pill",
   "[data-interactive='true']",
 ].join(", ");

@@ -1,22 +1,701 @@
+/* 뷰포트 전체 너비(부모 .page max-width 밖으로 맞춤) */
 .site-footer {
-  width: 100%;
-  min-width: 0;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 100vw;
+  max-width: none;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
   margin-top: auto;
-  padding-top: var(--section-gap);
-  padding-bottom: clamp(1.25rem, 1rem + 1vw, 1.75rem);
-  border-top: 1px solid var(--border);
-  text-align: center;
+  padding: clamp(3rem, 7.5vw, 5.25rem) 0 clamp(1.5rem, 4vw, 2.5rem);
+  color: #fff4eb;
+  background: #3b2f2f;
 }
 
-@media (min-width: 40rem) {
-  .site-footer {
-    text-align: start;
+.site-footer__mega {
+  pointer-events: none;
+  position: absolute;
+  top: clamp(0.5rem, 2vw, 1.5rem);
+  right: clamp(var(--page-padding-x, 1rem), 3vw, 2.5rem);
+  z-index: 0;
+}
+
+.site-footer__mega-text {
+  display: block;
+  font-size: clamp(2.75rem, 14vw, 7rem);
+  font-weight: 750;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: rgb(255 244 235 / 7%);
+}
+
+.site-footer__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: clamp(1.1rem, 2.4vw, 1.65rem);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: var(--page-padding-x, 1rem);
+  padding-bottom: clamp(0.85rem, 2.2vw, 1.35rem);
+}
+
+.site-footer__label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  color: #ff785d;
+}
+
+.site-footer__contact {
+  display: grid;
+  gap: clamp(1.4rem, 4vw, 2.75rem);
+  align-items: start;
+}
+
+.site-footer__contact-body {
+  display: grid;
+  gap: clamp(1.1rem, 2.4vw, 1.65rem);
+}
+
+/* SUMIN PASS — 브랜드 출입증 (앞·뒤 플립, 카드형 비율) */
+.site-footer__pass-stack {
+  display: grid;
+  gap: clamp(0.65rem, 2vw, 0.9rem);
+  box-sizing: border-box;
+  width: min(100%, 36rem);
+}
+
+.site-footer__pass-scene {
+  box-sizing: border-box;
+  width: 100%;
+  outline: none;
+  perspective: 1100px;
+  transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-footer__pass-scene:focus-visible {
+  border-radius: 16px;
+  outline: 2px solid #0aa5a5;
+  outline-offset: 4px;
+}
+
+.site-footer__pass-card {
+  width: 100%;
+}
+
+/* ISO ID 85.6×54mm ≈ 1.586 : 1 (가로:세로) */
+.site-footer__pass-flip {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 85.6 / 54;
+  transform-style: preserve-3d;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-footer__pass-face {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: clamp(0.5rem, 1.8vw, 0.75rem) clamp(0.55rem, 2vw, 0.85rem);
+  color: #3b2f2f;
+  border: 2px solid #3b2f2f;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 1px 2px rgb(59 47 47 / 0.06);
+  background-color: #fff4eb;
+  background-image:
+    radial-gradient(ellipse 120% 80% at 10% 0%, rgb(255 255 255 / 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse 90% 60% at 100% 100%, rgb(255 120 93 / 0.05) 0%, transparent 55%),
+    repeating-linear-gradient(
+      -18deg,
+      rgb(255 244 235) 0,
+      rgb(255 244 235) 1px,
+      rgb(59 47 47 / 0.018) 1px,
+      rgb(59 47 47 / 0.018) 2px
+    );
+}
+
+.site-footer__pass-face--front {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.35rem;
+}
+
+.site-footer__pass-face--back {
+  transform: rotateY(180deg);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.45rem;
+  align-content: start;
+}
+
+.site-footer__pass-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.4rem;
+  align-items: center;
+}
+
+.site-footer__pass-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-height: 38px;
+  padding: 0.42rem 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+  color: #fff4eb;
+  text-decoration: none;
+  background: rgb(255 244 235 / 6%);
+  border: 1px solid rgb(255 244 235 / 0.28);
+  border-radius: 8px;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease,
+    background-color 0.18s ease;
+}
+
+.site-footer__pass-action:hover,
+.site-footer__pass-action:focus-visible {
+  color: #0aa5a5;
+  border-color: rgb(10 165 165 / 0.55);
+  background: rgb(10 165 165 / 0.12);
+}
+
+.site-footer__pass-action:focus-visible {
+  outline: 2px solid #0aa5a5;
+  outline-offset: 2px;
+}
+
+.site-footer__pass-action--secondary {
+  border-style: dashed;
+  border-color: rgb(255 244 235 / 0.22);
+  background: transparent;
+}
+
+.site-footer__pass-action-meta {
+  font-size: 0.65rem;
+  font-weight: 500;
+  opacity: 0.82;
+}
+
+.site-footer__pass-corner {
+  pointer-events: none;
+  position: absolute;
+  top: 0.65rem;
+  left: 0.65rem;
+  z-index: 1;
+  opacity: 0.92;
+}
+
+.site-footer__pass-corner img {
+  display: block;
+  width: 22px;
+  height: auto;
+}
+
+.site-footer__pass-header {
+  padding-left: 1.75rem;
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid rgb(59 47 47 / 0.12);
+}
+
+.site-footer__pass-series {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(59 47 47 / 0.52);
+}
+
+.site-footer__pass-series-label {
+  color: #ff785d;
+}
+
+.site-footer__pass-title {
+  margin: 0.28rem 0 0;
+  font-size: clamp(0.92rem, 2.4vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.12em;
+  color: #3b2f2f;
+}
+
+.site-footer__pass-body {
+  display: grid;
+  gap: 0.45rem;
+  min-height: 0;
+}
+
+@media (min-width: 22rem) {
+  .site-footer__pass-body {
+    grid-template-columns: minmax(4.5rem, 38%) minmax(0, 1fr);
+    align-items: start;
   }
+}
+
+.site-footer__pass-photo {
+  display: grid;
+  gap: 0.2rem;
+  align-self: start;
+  max-height: 100%;
+}
+
+.site-footer__pass-photo-placeholder {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  max-height: min(9rem, 36vh);
+  border: 1px dashed rgb(59 47 47 / 0.28);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.38);
+}
+
+.site-footer__pass-photo-caption {
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(59 47 47 / 0.42);
+}
+
+.site-footer__pass-fields {
+  display: grid;
+  gap: 0.28rem;
+  min-height: 0;
+}
+
+.site-footer__pass-row {
+  display: grid;
+  grid-template-columns: auto minmax(2rem, 1fr) 1fr;
+  gap: 0 0.35rem;
+  align-items: end;
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+.site-footer__pass-row-label {
+  flex-shrink: 0;
+  padding-bottom: 0.1rem;
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(59 47 47 / 0.5);
+}
+
+.site-footer__pass-row-line {
+  height: 0;
+  margin-bottom: 0.2rem;
+  border-bottom: 1px dotted rgb(59 47 47 / 0.35);
+}
+
+.site-footer__pass-row-value {
+  padding-bottom: 0.1rem;
+  font-weight: 500;
+  text-align: right;
+  color: #3b2f2f;
+  word-break: break-all;
+}
+
+.site-footer__pass-em {
+  font-weight: 700;
+}
+
+.site-footer__pass-contact-block {
+  display: grid;
+  gap: 0.35rem;
+  padding-top: 0.35rem;
+  margin-top: 0.15rem;
+  border-top: 1px solid rgb(59 47 47 / 0.1);
+}
+
+.site-footer__pass-contact-heading {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.12em;
+  color: #ff785d;
+  text-transform: uppercase;
+}
+
+.site-footer__pass-contact-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__pass-contact-list li {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px dotted rgb(59 47 47 / 0.2);
+}
+
+.site-footer__pass-contact-list li:last-child {
+  border-bottom: none;
+}
+
+.site-footer__pass-contact-list a {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.6rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 0.38rem 0;
+  color: #3b2f2f;
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.site-footer__pass-contact-list a:hover,
+.site-footer__pass-contact-list a:focus-visible {
+  color: #0aa5a5;
+}
+
+.site-footer__pass-contact-list a:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid #0aa5a5;
+  outline-offset: 2px;
+}
+
+.site-footer__pass-contact-key {
+  flex-shrink: 0;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: rgb(59 47 47 / 0.48);
+}
+
+.site-footer__pass-contact-val {
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-align: right;
+  word-break: break-all;
+}
+
+.site-footer__pass-optional {
+  padding-top: 0.35rem;
+  margin-top: 0.15rem;
+  border-top: 1px dotted rgb(59 47 47 / 0.16);
+}
+
+.site-footer__pass-optional-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  justify-content: space-between;
+  margin: 0;
+  font-size: 0.68rem;
+  line-height: 1.4;
+  color: rgb(59 47 47 / 0.72);
+}
+
+.site-footer__pass-optional-k {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #3b2f2f;
+}
+
+.site-footer__pass-optional-v {
+  font-weight: 500;
+}
+
+.site-footer__pass-hint {
+  margin: 0;
+  font-size: 0.58rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-align: right;
+  color: rgb(59 47 47 / 0.38);
+}
+
+.site-footer__pass-back-label {
+  margin: 0;
+  padding-bottom: 0.35rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgb(59 47 47 / 0.48);
+}
+
+.site-footer__pass-back-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__pass-back-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.site-footer__pass-back-slot-title {
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff785d;
+}
+
+.site-footer__pass-back-slot-area {
+  flex: 1;
+  min-height: 2rem;
+  border: 1px dashed rgb(59 47 47 / 0.22);
+  border-radius: 6px;
+  background: rgb(255 255 255 / 0.42);
+}
+
+.site-footer__pass-back-note {
+  margin: 0;
+  font-size: 0.62rem;
+  line-height: 1.45;
+  color: rgb(59 47 47 / 0.5);
+  word-break: keep-all;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .site-footer__pass-scene:hover {
+    transform: rotateZ(1.2deg);
+  }
+
+  .site-footer__pass-scene:hover .site-footer__pass-flip {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (hover: none) and (prefers-reduced-motion: no-preference) {
+  .site-footer__pass-scene--touch-flip {
+    transform: rotateZ(1.2deg);
+  }
+
+  .site-footer__pass-scene--touch-flip .site-footer__pass-flip {
+    transform: rotateY(180deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__pass-scene,
+  .site-footer__pass-flip {
+    transition: none;
+  }
+
+  .site-footer__pass-scene:hover,
+  .site-footer__pass-scene:focus-within {
+    transform: none;
+  }
+
+  .site-footer__pass-flip {
+    position: relative;
+    display: grid;
+    gap: 0.75rem;
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: auto;
+    transform: none !important;
+  }
+
+  .site-footer__pass-face {
+    position: relative;
+    inset: auto;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transform: none !important;
+  }
+
+  .site-footer__pass-face--back {
+    margin-top: 0.25rem;
+  }
+
+  .site-footer__pass-hint {
+    display: none;
+  }
+}
+
+.site-footer__intro {
+  max-width: min(44rem, 100%);
+}
+
+.site-footer__lead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12em;
+  margin: 0;
+  padding: clamp(0.15rem, 0.8vw, 0.35rem) 0 0.15rem clamp(1rem, 2.4vw, 1.35rem);
+  border-left: 2px solid rgb(10 165 165 / 0.42);
+  font-size: clamp(1.5rem, 4vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.14;
+  letter-spacing: -0.032em;
+  color: #fff4eb;
+  word-break: keep-all;
+}
+
+.site-footer__lead-line {
+  display: block;
+}
+
+.site-footer__lead-line--soft {
+  margin-bottom: 0.06em;
+  font-size: 0.52em;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: rgb(255 244 235 / 0.76);
+}
+
+.site-footer__lead-accent {
+  margin-top: 0.14em;
+  font-size: 1.02em;
+  font-weight: 700;
+  letter-spacing: -0.036em;
+  color: rgb(255 244 235 / 98%);
+}
+
+.site-footer__note-block {
+  display: grid;
+  gap: 0.45rem;
 }
 
 .site-footer__note {
   margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.4;
-  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: rgb(255 244 235 / 52%);
+}
+
+.site-footer__note--disclaimer {
+  max-width: 38rem;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: rgb(255 244 235 / 42%);
+}
+
+/* 하단 물리 플레이: 중력·충돌·드래그 (DOM 동기화) */
+.site-footer__physics {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  min-height: clamp(300px, 28vh, 390px);
+  margin-top: clamp(0.35rem, 1.5vw, 0.85rem);
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.site-footer__physics-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.site-footer__physics-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.site-footer__physics-item--logo {
+  width: clamp(120px, 22vw, 220px);
+}
+
+.site-footer__physics-item--tomato {
+  width: clamp(88px, 15vw, 168px);
+}
+
+@media (max-width: 47.99rem) {
+  .site-footer__physics-item--logo,
+  .site-footer__physics-item--tomato-narrow {
+    display: none;
+  }
+
+  .site-footer__physics-item--tomato {
+    width: clamp(80px, 22vw, 132px);
+  }
+
+  .site-footer__physics {
+    min-height: clamp(180px, 26vh, 280px);
+  }
+
+  .site-footer__mega-text {
+    font-size: clamp(2.25rem, 18vw, 3.5rem);
+  }
+
+  .site-footer {
+    padding-top: clamp(2.75rem, 11vw, 4.5rem);
+  }
+}
+
+@media (min-width: 48rem) {
+  .site-footer__contact {
+    grid-template-columns: minmax(20rem, 36rem) minmax(0, 1fr);
+  }
+
+  .site-footer__contact-body {
+    align-content: end;
+    min-height: 100%;
+    padding-top: clamp(1.25rem, 3vw, 2rem);
+  }
+}
+
+/* 감소 모션: 물리 비활성 시 바닥에 나란히 정적 배치 */
+@media (prefers-reduced-motion: reduce) {
+  .site-footer__physics {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(12px, 3vw, 24px);
+    min-height: auto;
+    padding: clamp(1rem, 4vw, 2rem) var(--page-padding-x, 1rem);
+    user-select: auto;
+    cursor: default;
+    touch-action: auto;
+  }
+
+  .site-footer__physics-item {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none !important;
+  }
+
+  .site-footer__physics-item--logo,
+  .site-footer__physics-item--tomato-narrow {
+    display: block;
+  }
 }
