@@ -2,6 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, use
 import type { CSSProperties } from "react";
 import { archiveColumns } from "../../data/archiveData";
 import type { ArchiveColumnData, ArchiveRecordCard } from "../../data/archiveData";
+import { Reveal } from "../reveal/Reveal";
 import { ArchiveModal } from "./ArchiveModal";
 import "./ArchiveBoard.scss";
 
@@ -279,14 +280,21 @@ export function ArchiveBoard() {
   return (
     <div className="archive-record">
       <div className="archive-columns">
-        {archiveColumns.map((column) => (
-          <ArchiveColumnStack
+        {archiveColumns.map((column, columnIndex) => (
+          <Reveal
             key={column.id}
-            column={column}
-            reducedMotion={reducedMotion}
-            autoPaused={Boolean(modalCard)}
-            onOpenCard={setModalCard}
-          />
+            delay={40}
+            staggerIndex={columnIndex}
+            staggerMs={115}
+            durationMs={770}
+          >
+            <ArchiveColumnStack
+              column={column}
+              reducedMotion={reducedMotion}
+              autoPaused={Boolean(modalCard)}
+              onOpenCard={setModalCard}
+            />
+          </Reveal>
         ))}
       </div>
 

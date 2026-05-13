@@ -14,6 +14,7 @@ import footerLogo from '../../assets/footer/footer-logo.svg'
 import tomato0 from '../../assets/footer/footer-tamatoicon00.svg'
 import tomato1 from '../../assets/footer/footer-tamatoicon01.svg'
 import tomato2 from '../../assets/footer/footer-tamatoicon02.svg'
+import { Reveal } from '../reveal/Reveal'
 import { mountFooterPhysics, type FooterPhysicsSpec } from './footerPhysics'
 
 type FooterProps = {
@@ -328,30 +329,38 @@ export function Footer({ siteTitle }: FooterProps) {
       </div>
 
       <div className="site-footer__inner">
-        <p className="site-footer__label" id="contact-footer-heading">
-          CONTACT
-        </p>
+        <Reveal delay={0} staggerMs={92} durationMs={700}>
+          <p className="site-footer__label" id="contact-footer-heading">
+            CONTACT
+          </p>
+        </Reveal>
 
         <div className="site-footer__contact">
-          <FooterNamePass />
+          <Reveal delay={120} staggerMs={92} durationMs={760}>
+            <FooterNamePass />
+          </Reveal>
 
           <div className="site-footer__contact-body">
-            <div className="site-footer__intro">
-              <p className="site-footer__lead">
-                <span className="site-footer__lead-line site-footer__lead-line--soft">
-                  따뜻하고, 또렷하고,
-                </span>
-                <span className="site-footer__lead-line">쓸모 있는 무언가를</span>
-                <span className="site-footer__lead-line site-footer__lead-accent">함께 만들어가요.</span>
-              </p>
-            </div>
+            <Reveal delay={0} staggerMs={92} durationMs={760}>
+              <div className="site-footer__intro">
+                <p className="site-footer__lead">
+                  <span className="site-footer__lead-line site-footer__lead-line--soft">
+                    따뜻하고, 또렷하고,
+                  </span>
+                  <span className="site-footer__lead-line">쓸모 있는 무언가를</span>
+                  <span className="site-footer__lead-line site-footer__lead-accent">함께 만들어가요.</span>
+                </p>
+              </div>
+            </Reveal>
 
-            <div className="site-footer__note-block">
-              <p className="site-footer__note">© {year} {siteTitle}</p>
-              <p className="site-footer__note site-footer__note--disclaimer">
-                본 프로젝트는 포트폴리오용으로 제작된 사이트입니다.
-              </p>
-            </div>
+            <Reveal delay={220} staggerMs={92} durationMs={720}>
+              <div className="site-footer__note-block">
+                <p className="site-footer__note">© {year} {siteTitle}</p>
+                <p className="site-footer__note site-footer__note--disclaimer">
+                  본 프로젝트는 포트폴리오용으로 제작된 사이트입니다.
+                </p>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { About } from "../../components/about/About";
 import { ArchiveBoard } from "../../components/archive/ArchiveBoard";
 import { Hero } from "../../components/hero/Hero";
 import { ProjectCard } from "../../components/project-card/ProjectCard";
+import { Reveal } from "../../components/reveal/Reveal";
 import { Section } from "../../components/section/Section";
 import { Skills } from "../../components/skills/Skills";
 import { home } from "../../data/home";
@@ -137,6 +138,7 @@ export function HomePage() {
           </>
         }
         subtitle="사용자의 상태를 설계하는 디자이너"
+        revealHeader
       >
         <About />
       </Section>
@@ -147,6 +149,7 @@ export function HomePage() {
         title="디자인과 구현을 연결하는 도구들"
         meta="Figma · Illustrator · Photoshop · React · Vue · JavaScript · HTML/CSS · PHP"
         subtitle="기획부터 디자인, 구현까지 흐름을 이어가기 위해 사용하는 툴과 기술입니다."
+        revealHeader
       >
         <Skills />
       </Section>
@@ -156,25 +159,36 @@ export function HomePage() {
         label="CASE STUDY"
         title="선택 가능한 경험으로 구조화한 프로젝트"
         subtitle="문제를 정의하고, 사용자의 흐름을 설계하며, 실제 인터페이스로 연결한 작업들입니다."
+        revealHeader
       >
-        <div className="project-filters" aria-label="Project categories">
-          {PROJECT_FILTERS.map((filter) => {
-            const isActive = activeFilter === filter;
-            return (
-              <button
-                key={filter}
-                type="button"
-                className={`project-filters__pill${isActive ? " project-filters__pill--active" : ""}`}
-                onClick={() => setActiveFilter(filter)}
-              >
-                {filter}
-              </button>
-            );
-          })}
-        </div>
+        <Reveal delay={110} staggerIndex={0} staggerMs={100} durationMs={760}>
+          <div className="project-filters" aria-label="Project categories">
+            {PROJECT_FILTERS.map((filter) => {
+              const isActive = activeFilter === filter;
+              return (
+                <button
+                  key={filter}
+                  type="button"
+                  className={`project-filters__pill${isActive ? " project-filters__pill--active" : ""}`}
+                  onClick={() => setActiveFilter(filter)}
+                >
+                  {filter}
+                </button>
+              );
+            })}
+          </div>
+        </Reveal>
         <ul className="project-grid" role="list">
-          {projectGridItems.map((item) => (
-            <li key={item.id} className="project-grid__item">
+          {projectGridItems.map((item, index) => (
+            <Reveal
+              key={item.id}
+              as="li"
+              className="project-grid__item"
+              delay={150}
+              staggerIndex={index}
+              staggerMs={105}
+              durationMs={780}
+            >
               {item.type === "project" ? (
                 <ProjectCard
                   {...item.project}
@@ -187,7 +201,7 @@ export function HomePage() {
                   <p className="project-grid__coming-description">{item.description}</p>
                 </article>
               )}
-            </li>
+            </Reveal>
           ))}
         </ul>
       </Section>
@@ -197,8 +211,11 @@ export function HomePage() {
         label="ARCHIVE"
         title="ARCHIVE"
         subtitle="작은 관찰과 기록이 쌓여 경험 설계로 이어집니다."
+        revealHeader
       >
-        <p className="section-lede">{home.archive}</p>
+        <Reveal delay={80} staggerIndex={0} staggerMs={100} durationMs={740}>
+          <p className="section-lede">{home.archive}</p>
+        </Reveal>
         <ArchiveBoard />
       </Section>
     </div>

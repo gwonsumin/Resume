@@ -60,3 +60,32 @@ body {
     filter: blur(0);
   }
 }
+
+/* 홈만: 세로 스크롤을 섹션 근처에서 부드럽게 정렬 (mandatory보다 부드러움) */
+html.scroll-snap-home {
+  scroll-snap-type: y proximity;
+  /* sticky header 높이와 맞춤 */
+  scroll-padding-top: 72px;
+}
+
+html.scroll-snap-home .home > .content-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+html.scroll-snap-home .site-footer {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.scroll-snap-home {
+    scroll-snap-type: none;
+  }
+
+  html.scroll-snap-home .home > .content-section,
+  html.scroll-snap-home .site-footer {
+    scroll-snap-align: unset;
+    scroll-snap-stop: normal;
+  }
+}

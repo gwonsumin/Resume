@@ -4,6 +4,7 @@ import tomatoCan from "../../assets/images/tomatoCan.svg";
 import tomatoIcon01 from "../../assets/icons/tamatoicon01.svg";
 import tomatoIcon02 from "../../assets/icons/tamatoicon02.svg";
 import aboutTitleIcon from "../../assets/about/about-title.svg";
+import { Reveal } from "../reveal/Reveal";
 import "./About.scss";
 
 const ABOUT_KEYWORDS = [
@@ -264,62 +265,70 @@ export function About() {
   return (
     <div className="about-layout">
       <div className="about-layout__top">
-        <article className="about-summary">
-          <p className="about-summary__intro">
-            사용자의 맥락을 이해하고 자연스럽게 선택할 수 있는 경험 흐름을
-            설계합니다.
-          </p>
-          <ul className="about-summary__keywords" role="list">
-            {ABOUT_KEYWORDS.map((keyword) => (
-              <li key={keyword.label}>
-                <KeywordIcon type={keyword.type} />
-                <span>{keyword.label}</span>
-              </li>
-            ))}
-          </ul>
-          <ul className="about-quick-info" role="list" aria-label="기본 정보">
-            {QUICK_INFO.map((item) => (
-              <li key={item.label}>
-                <span className="about-quick-info__label">{item.label}</span>
-                <span className="about-quick-info__value">{item.value}</span>
-              </li>
-            ))}
-          </ul>
-        </article>
+        <Reveal staggerIndex={0} staggerMs={108} durationMs={760}>
+          <article className="about-summary">
+            <p className="about-summary__intro">
+              사용자의 맥락을 이해하고 자연스럽게 선택할 수 있는 경험 흐름을
+              설계합니다.
+            </p>
+            <ul className="about-summary__keywords" role="list">
+              {ABOUT_KEYWORDS.map((keyword) => (
+                <li key={keyword.label}>
+                  <KeywordIcon type={keyword.type} />
+                  <span>{keyword.label}</span>
+                </li>
+              ))}
+            </ul>
+            <ul className="about-quick-info" role="list" aria-label="기본 정보">
+              {QUICK_INFO.map((item) => (
+                <li key={item.label}>
+                  <span className="about-quick-info__label">{item.label}</span>
+                  <span className="about-quick-info__value">{item.value}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        </Reveal>
 
-        <figure className="about-photo">
-          <img
-            src={tomatoSticker}
-            alt=""
-            aria-hidden="true"
-            className="about-photo__sticker"
-          />
-          <div className="about-photo__frame">
-            <img src={profilePhoto} alt="권수민 프로필 사진" />
-          </div>
-        </figure>
+        <Reveal staggerIndex={1} staggerMs={108} durationMs={760}>
+          <figure className="about-photo">
+            <img
+              src={tomatoSticker}
+              alt=""
+              aria-hidden="true"
+              className="about-photo__sticker"
+            />
+            <div className="about-photo__frame">
+              <img src={profilePhoto} alt="권수민 프로필 사진" />
+            </div>
+          </figure>
+        </Reveal>
       </div>
 
       <section className="about-career" aria-label="기반과 경험">
-        <FoundationCard />
-        <div className="about-experience-wrap">
-          <ExperienceCard />
-          <div className="about-career__decor" aria-hidden="true">
-            <div className="about-career__tomatoes">
-              <img
-                className="about-career__tomato about-career__tomato--large"
-                src={tomatoIcon01}
-                alt=""
-              />
-              <img
-                className="about-career__tomato about-career__tomato--small"
-                src={tomatoIcon02}
-                alt=""
-              />
+        <Reveal staggerIndex={0} staggerMs={112} durationMs={780}>
+          <FoundationCard />
+        </Reveal>
+        <Reveal staggerIndex={1} staggerMs={112} durationMs={780}>
+          <div className="about-experience-wrap">
+            <ExperienceCard />
+            <div className="about-career__decor" aria-hidden="true">
+              <div className="about-career__tomatoes">
+                <img
+                  className="about-career__tomato about-career__tomato--large"
+                  src={tomatoIcon01}
+                  alt=""
+                />
+                <img
+                  className="about-career__tomato about-career__tomato--small"
+                  src={tomatoIcon02}
+                  alt=""
+                />
+              </div>
+              <img className="about-career__can" src={tomatoCan} alt="" />
             </div>
-            <img className="about-career__can" src={tomatoCan} alt="" />
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );
