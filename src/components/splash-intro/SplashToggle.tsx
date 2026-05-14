@@ -11,7 +11,7 @@ type SplashToggleProps = {
   toggleRef?: RefObject<HTMLButtonElement | null>;
 };
 
-const SHELL_LABEL = "포트폴리오 입장하기";
+const SHELL_LABEL = "상태를 활성화하고 이 공간으로 들어가기";
 
 function ToggleShellFrame({ className }: { className?: string }) {
   return (
@@ -77,7 +77,7 @@ export function SplashToggle({ phase, reducedMotion, onActivate, toggleRef }: Sp
                     <path
                       className="splash-toggle__liquid-wave-path"
                       fill="var(--splash-toggle-liquid, #e15b47)"
-                      d="M0 12c27-5 53 5 80 0s53-5 80 0 53 5 80 0 53-5 80 0 53 5 80 0v14H0z"
+                      d="M0 12c27-3 53 3 80 0s53-3 80 0 53 3 80 0 53-3 80 0 53 3 80 0v14H0z"
                     />
                   </svg>
                 ) : null}

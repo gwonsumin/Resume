@@ -3,10 +3,12 @@ import { SplashToggle, type SplashTogglePhase } from "./SplashToggle";
 import "./SplashIntro.scss";
 
 /** Must match --splash-fill-duration in SplashIntro.scss */
-const TRANSITION_MS = 2600;
-/** Must match --splash-exit-duration (or --splash-exit-duration-reduced) */
-const EXIT_REVEAL_MS = 1000;
+const TRANSITION_MS = 3000;
+/** Must match --splash-exit-duration (or --splash-exit-duration-reduced); 700–1000ms */
+const EXIT_REVEAL_MS = 880;
 const EXIT_REVEAL_MS_REDUCED = 380;
+
+const AMBIENT_LINES = ["상태를 정리하는 중", "선명한 흐름으로 연결 중"] as const;
 
 export type SplashIntroProps = {
   onComplete: () => void;
@@ -17,17 +19,35 @@ function prefersReducedMotion(): boolean {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+function WaveSvg({ className, fill, d }: { className: string; fill: string; d: string }) {
+  return (
+    <svg className={className} viewBox="0 0 1200 96" preserveAspectRatio="none" aria-hidden>
+      <path className="splash-liquid-fill__wave-path" fill={fill} d={d} />
+    </svg>
+  );
+}
+
+/** 프로그래매틱 포커스만 옮기고, :focus-visible 링은 띄우지 않음(최초 진입 시 외곽선 방지). */
+function focusWithoutRing(el: HTMLElement | null | undefined) {
+  if (!el) return;
+  type FocusWithVisibility = (options?: FocusOptions & { focusVisible?: boolean }) => void;
+  (el.focus as FocusWithVisibility).call(el, { preventScroll: true, focusVisible: false });
+}
+
 export function SplashIntro({ onComplete }: SplashIntroProps) {
   const copyId = useId();
   const [reducedMotion] = useState(prefersReducedMotion);
   const [phase, setPhase] = useState<SplashTogglePhase>("off");
+  const [ambientPhrase, setAmbientPhrase] = useState<string | null>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const timersRef = useRef<{ fill?: number; exit?: number }>({});
 
   const finish = useCallback(() => {
     onComplete();
     requestAnimationFrame(() => {
-      document.getElementById("main-content")?.focus();
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      const main = document.getElementById("main-content");
+      if (main instanceof HTMLElement) focusWithoutRing(main);
     });
   }, [onComplete]);
 
@@ -44,7 +64,7 @@ export function SplashIntro({ onComplete }: SplashIntroProps) {
 
   useEffect(() => {
     if (phase !== "off" || reducedMotion) return;
-    toggleRef.current?.focus();
+    focusWithoutRing(toggleRef.current ?? undefined);
   }, [phase, reducedMotion]);
 
   useEffect(() => {
@@ -54,6 +74,14 @@ export function SplashIntro({ onComplete }: SplashIntroProps) {
       clearTimers();
     };
   }, [clearTimers]);
+
+  useEffect(() => {
+    if (phase !== "filling" || reducedMotion) {
+      setAmbientPhrase(null);
+      return;
+    }
+    setAmbientPhrase(AMBIENT_LINES[Math.floor(Math.random() * AMBIENT_LINES.length)]);
+  }, [phase, reducedMotion]);
 
   useEffect(() => {
     if (phase !== "exiting") return;
@@ -78,6 +106,8 @@ export function SplashIntro({ onComplete }: SplashIntroProps) {
     }, TRANSITION_MS);
   };
 
+  const showLiquidWave = !reducedMotion && (phase === "filling" || phase === "exiting");
+
   return (
     <div
       className={`splash-intro splash-intro--${phase}${reducedMotion ? " splash-intro--reduced" : ""}`}
@@ -88,22 +118,29 @@ export function SplashIntro({ onComplete }: SplashIntroProps) {
     >
       <div className="splash-intro__bg" aria-hidden />
       <div className="splash-intro__liquid-fill splash-liquid-fill" aria-hidden>
-        {!reducedMotion && phase === "filling" ? (
-          <svg
-            className="splash-liquid-fill__wave"
-            viewBox="0 0 1200 32"
-            preserveAspectRatio="none"
-          >
-            <path
-              className="splash-liquid-fill__wave-path"
-              fill="var(--splash-coral, #ff785d)"
-              d="M0 14c75-6 150 6 225 0s150-6 225 0 150 6 225 0 150-6 225 0 150 6 225 0v20H0z"
+        {showLiquidWave ? (
+          <div className="splash-liquid-fill__waves">
+            <WaveSvg
+              className="splash-liquid-fill__wave splash-liquid-fill__wave--back"
+              fill="#e15b47"
+              d="M0 58 C180 36 360 78 540 52 S900 34 1200 56 L1200 160 L0 160 Z"
             />
-          </svg>
+            <WaveSvg
+              className="splash-liquid-fill__wave splash-liquid-fill__wave--front"
+              fill="#ff785d"
+              d="M0 50 C200 72 400 30 600 52 S960 70 1200 44 L1200 160 L0 160 Z"
+            />
+          </div>
         ) : null}
       </div>
 
       <div className="splash-intro__content">
+        {phase === "filling" && !reducedMotion && ambientPhrase ? (
+          <p className="splash-intro__ambient" aria-live="polite">
+            {ambientPhrase}
+          </p>
+        ) : null}
+
         <SplashToggle
           phase={phase}
           reducedMotion={reducedMotion}
@@ -112,22 +149,14 @@ export function SplashIntro({ onComplete }: SplashIntroProps) {
         />
 
         <div id={copyId} className="splash-intro__copy">
-          {phase === "off" ? (
+          {phase === "off" || phase === "filling" ? (
             <>
               <h1 className="splash-intro__title">
-                지금,
-                <br />
-                당신의 상태는
-                <br />
-                얼마나 선명한가요?
+                오늘은 어떤 상태로
+                <br />이 공간을 탐색하고 싶나요?
               </h1>
-              <p className="splash-intro__hint type-caption">토글을 켜고 상태를 확인해보세요.</p>
+              <p className="splash-intro__hint type-caption">토마토를 채워 상태를 활성화합니다.</p>
             </>
-          ) : null}
-          {phase === "filling" ? (
-            <p className="splash-intro__status splash-intro__status--filling" aria-live="polite">
-              흐름이 선명해지는 중
-            </p>
           ) : null}
         </div>
       </div>
