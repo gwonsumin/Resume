@@ -1,6 +1,43 @@
 /** Block of body copy: one string (split on blank lines) or explicit paragraphs. */
 export type CaseStudyBody = string | readonly string[]
 
+/** Section keys aligned with `CaseStudyTemplate` body blocks. */
+export type CaseStudySectionKey =
+  | 'intro'
+  | 'problem'
+  | 'insight'
+  | 'iaUserFlow'
+  | 'solution'
+  | 'uiDesign'
+  | 'result'
+  | 'learnings'
+
+export type CaseStudySectionFigure = {
+  src: string
+  alt?: string
+}
+
+/** Optional real screenshots for case study blocks. */
+export type CaseStudyMedia = {
+  hero?: {
+    desktopSrc?: string
+    mobileSrc?: string
+    desktopAlt?: string
+    mobileAlt?: string
+  }
+  prototype?: {
+    desktopSrc?: string
+    mobileSrc?: string
+    desktopAlt?: string
+    mobileAlt?: string
+  }
+  livePreview?: {
+    src: string
+    alt?: string
+  }
+  sectionFigures?: Partial<Record<CaseStudySectionKey, CaseStudySectionFigure>>
+}
+
 /** Optional block linking to a deployed build (shown when set). */
 type CaseStudyLivePreview = {
   href: string
@@ -49,4 +86,5 @@ export type CaseStudyContent = {
   learnings: CaseStudyBody
   livePreview?: CaseStudyLivePreview
   prototype?: CaseStudyPrototype
+  media?: CaseStudyMedia
 }

@@ -25,6 +25,7 @@ export function ProjectCard({
   deployWindow,
   demoTestId,
   demoTestPassword,
+  thumbnailSrc,
   onOpenCaseStudy,
   linkLabel = 'Open case study',
 }: ProjectCardProps) {
@@ -79,15 +80,18 @@ export function ProjectCard({
         className="project-card__clip"
         aria-hidden="true"
       />
+      {thumbnailSrc ? (
+        <div className="project-card__visual" aria-hidden="true">
+          <img
+            src={thumbnailSrc}
+            alt=""
+            className="project-card__visual-img"
+          />
+        </div>
+      ) : null}
       <div className="project-card__header">
         <span className="project-card__label">{visual.label}</span>
         <span className="project-card__status">{visual.meta}</span>
-      </div>
-      <div className="project-card__thumb" aria-label="썸네일 이미지 삽입 예정 구역">
-        <div className="project-card__thumb-grid" aria-hidden="true">
-          <span className="project-card__thumb-slot">DESKTOP SHOT</span>
-          <span className="project-card__thumb-slot">MOBILE SHOT</span>
-        </div>
       </div>
       <div className="project-card__content">
         <h3 className="project-card__title">{title}</h3>

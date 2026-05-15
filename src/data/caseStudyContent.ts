@@ -1,5 +1,8 @@
 import type { CaseStudyContent } from "../types/caseStudy";
 
+const goreonPublic = (file: string) =>
+  `${import.meta.env.BASE_URL}projects/goreon/${file}`;
+
 function p(...lines: string[]): readonly string[] {
   return lines;
 }
@@ -121,16 +124,38 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       buttonLabel: "라이브 사이트 열기",
     },
     prototype: {
-      href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=430-5154&t=3c6ZDjaV8B54Ibax-0&scaling=min-zoom&content-scaling=fixed&page-id=172%3A1911&starting-point-node-id=430%3A5154&desktop-link-click-timestamp=1778262100308&desktop-ul-exp-bucket=po",
+      href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=430-5154&t=3c6ZDjaV8B54Ibax-0&scaling=min-zoom&content-scaling=fixed&page-id=172%3A1911&starting-point-node-id=430%3A5154",
       description:
         "PC/모바일 두 가지 버전의 Figma 프로토타입을 통해 핵심 사용자 흐름과 인터랙션 구성을 확인할 수 있습니다.",
       buttonLabel: "PC 프로토타입 보기",
       extraLinks: [
         {
-          href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=1085-7486&t=3c6ZDjaV8B54Ibax-0&scaling=scale-down&content-scaling=fixed&page-id=1085%3A6750&starting-point-node-id=1085%3A7486&desktop-link-click-timestamp=1778262097242&desktop-ul-exp-bucket=po",
+          href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=1085-7486&t=3c6ZDjaV8B54Ibax-0&scaling=scale-down&content-scaling=fixed&page-id=1085%3A6750&starting-point-node-id=1085%3A7486",
           buttonLabel: "모바일 프로토타입 보기",
         },
       ],
+    },
+    media: {
+      hero: {
+        desktopSrc: goreonPublic("goreon-detail-thumbnail.png"),
+        desktopAlt: "GOREON 케이스 스터디 대표 비주얼",
+      },
+      prototype: {
+        desktopSrc: goreonPublic("goreon-prototype-desktop.png"),
+        mobileSrc: goreonPublic("goreon-prototype-mobile.png"),
+        desktopAlt: "GOREON PC 프로토타입 화면",
+        mobileAlt: "GOREON 모바일 프로토타입 화면",
+      },
+      sectionFigures: {
+        solution: {
+          src: goreonPublic("goreon-ai-chat.png"),
+          alt: "GOREON AI 추천 대화·채팅형 선택 입력",
+        },
+        result: {
+          src: goreonPublic("goreon-review.png"),
+          alt: "GOREON 구매 후기·리뷰 화면",
+        },
+      },
     },
   }),
   tone: makeCaseStudy("TONE", {
