@@ -1,7 +1,11 @@
 import type { ProjectCardData } from '../../types/project'
 import { Link } from 'react-router-dom'
+import type { MouseEvent } from 'react'
+import { useCallback } from 'react'
 import projectCardClip from '../../assets/project/project-cardClip.svg'
 import './ProjectCard.scss'
+
+const DEPLOY_TOGGLE_MAX_WIDTH_PX = 767
 
 type ProjectCardProps = ProjectCardData & {
   onOpenCaseStudy?: () => void
@@ -18,6 +22,7 @@ export function ProjectCard({
   githubUrl,
   proposalUrl,
   deployUrl,
+  deployWindow,
   demoTestId,
   demoTestPassword,
   onOpenCaseStudy,
@@ -31,11 +36,40 @@ export function ProjectCard({
         .filter(Boolean)
         .slice(0, 4)
     : []
-  const quickLinks = [
-    { label: '배포', href: deployUrl },
+
+  const handleDeployClick = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!deployUrl || !deployWindow) {
+        return
+      }
+      const prefersDefaultTab =
+        typeof window !== 'undefined' &&
+        window.matchMedia(`(max-width: ${DEPLOY_TOGGLE_MAX_WIDTH_PX}px)`).matches
+      if (prefersDefaultTab) {
+        return
+      }
+      event.preventDefault()
+      const featureStr = [
+        `width=${deployWindow.width}`,
+        `height=${deployWindow.height}`,
+        'resizable=yes',
+        'scrollbars=yes',
+        'noreferrer=yes',
+      ].join(',')
+      const opened = window.open(deployUrl, deployWindow.name, featureStr)
+      if (!opened) {
+        window.open(deployUrl, '_blank', 'noopener,noreferrer')
+      }
+    },
+    [deployUrl, deployWindow],
+  )
+
+  const otherQuickLinks = [
     { label: 'GitHub', href: githubUrl },
     { label: '제안서', href: proposalUrl },
   ].filter((link): link is { label: string; href: string } => Boolean(link.href))
+
+  const hasQuickLinks = Boolean(deployUrl) || otherQuickLinks.length > 0
 
   const cardInner = (
     <>
@@ -121,9 +155,21 @@ export function ProjectCard({
           {cardInner}
         </Link>
       )}
-      {quickLinks.length > 0 ? (
+      {hasQuickLinks ? (
         <div className="project-card__actions" aria-label={`${title} 빠른 링크`}>
-          {quickLinks.map((link) => (
+          {deployUrl ? (
+            <a
+              className="project-card__action-button"
+              href={deployUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              {...(deployWindow ? { onClick: handleDeployClick } : {})}
+              aria-label={`${title} 배포 열기`}
+            >
+              배포
+            </a>
+          ) : null}
+          {otherQuickLinks.map((link) => (
             <a
               key={link.label}
               className="project-card__action-button"

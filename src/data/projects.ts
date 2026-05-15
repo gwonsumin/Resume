@@ -24,6 +24,8 @@ export const selectedProjects: readonly ProjectPreview[] = [
     githubUrl: 'https://github.com/gwonsumin/GOREON',
     deployUrl: 'https://goreon.vercel.app/',
     proposalUrl: `${PDF_BASE_PATH}/GOREON-Proposal.pdf`,
+    demoTestId: 'test@test.com',
+    demoTestPassword: '123123123',
   },
   {
     id: 'tone',
@@ -45,6 +47,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     proposalUrl: `${PDF_BASE_PATH}/TONE-Proposal.pdf`,
     githubUrl: 'https://github.com/gwonsumin/TONE',
     deployUrl: 'https://tone.dothome.co.kr/splash',
+    deployWindow: { width: 430, height: 850, name: 'TONEPreview' },
   },
   {
     id: 'sangsangmadang',

@@ -28,6 +28,15 @@ export type ProjectPreview = {
   proposalUrl?: string
   /** Optional deployed site link. */
   deployUrl?: string
+  /**
+   * When set with `deployUrl`, wide viewports open the deploy link in this sized browser window instead of default new tab.
+   * Narrow viewports use normal `target="_blank"` behaviour.
+   */
+  deployWindow?: {
+    width: number
+    height: number
+    name: string
+  }
   /** Demo / preview login ID shown on the project card (optional). */
   demoTestId?: string
   /** Demo / preview password shown on the project card (optional). */
