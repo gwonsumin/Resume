@@ -26,6 +26,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     proposalUrl: `${PDF_BASE_PATH}/GOREON-Proposal.pdf`,
     demoTestId: 'test@test.com',
     demoTestPassword: '123123123',
+    thumbnailSrc: `${import.meta.env.BASE_URL}projects/goreon/goreon-thumbnail.png`,
   },
   {
     id: 'tone',

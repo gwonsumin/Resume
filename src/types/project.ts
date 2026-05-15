@@ -43,6 +43,8 @@ export type ProjectPreview = {
   demoTestPassword?: string
   /** Label for the card CTA (default in `ProjectCard`). */
   linkLabel?: string
+  /** Optional card thumbnail (`public/` path including `import.meta.env.BASE_URL` prefix when needed). */
+  thumbnailSrc?: string
 }
 
 export type ProjectCardData = Omit<ProjectPreview, 'id'>
