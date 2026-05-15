@@ -38,6 +38,10 @@ const FOUNDATION_GROUPS = [
     summary: "실무 툴 활용과 제작 역량 검증",
     bullets: [
       {
+        task: "2026 | 웹디자인기능사(필기)",
+        insight: "웹 서비스 구조와 UI 제작 원리에 대한 이해를 확장",
+      },
+      {
         task: "2022 | GTQ 1급",
         insight:
           "디자인 툴 숙련도를 기반으로 시각 결과물의 정확도와 완성도를 강화",
@@ -49,10 +53,6 @@ const FOUNDATION_GROUPS = [
       {
         task: "2022 | 운전면허 2종 보통",
         insight: "현장 기반 업무 대응력과 실무 이동 유연성 확보",
-      },
-      {
-        task: "2026 | 웹디자인기능사(필기)",
-        insight: "웹 서비스 구조와 UI 제작 원리에 대한 이해를 확장",
       },
     ],
   },
@@ -72,20 +72,6 @@ const FOUNDATION_GROUPS = [
 
 const EXPERIENCE_SECTIONS = [
   {
-    periodCompany: "2022.01 ~ 2023.05 | P&L KOREA (그래픽 디자이너)",
-    summary: "그래픽 디자인 실무 경험",
-    bullets: [
-      {
-        task: "상품 패키지 및 쇼핑몰 이미지 제작",
-        insight: "사용자 시선과 정보 전달 구조를 고려한 디자인",
-      },
-      {
-        task: "다양한 매체 디자인 작업",
-        insight: "서비스 맥락에 맞는 시각 요소 설계 경험",
-      },
-    ],
-  },
-  {
     periodCompany: "2023.06 ~ 2025.07 | 캐나다 워킹홀리데이",
     summary: "서비스 환경 기반 사용자 경험 이해",
     bullets: [
@@ -96,6 +82,20 @@ const EXPERIENCE_SECTIONS = [
       {
         task: "현지 서비스 환경 경험 (약 20개월)",
         insight: "사용자 행동과 서비스 흐름에 대한 이해 확장",
+      },
+    ],
+  },
+  {
+    periodCompany: "2022.01 ~ 2023.05 | P&L KOREA (그래픽 디자이너)",
+    summary: "그래픽 디자인 실무 경험",
+    bullets: [
+      {
+        task: "상품 패키지 및 쇼핑몰 이미지 제작",
+        insight: "사용자 시선과 정보 전달 구조를 고려한 디자인",
+      },
+      {
+        task: "다양한 매체 디자인 작업",
+        insight: "서비스 맥락에 맞는 시각 요소 설계 경험",
       },
     ],
   },
