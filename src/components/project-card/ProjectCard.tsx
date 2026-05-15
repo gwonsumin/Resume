@@ -18,6 +18,8 @@ export function ProjectCard({
   githubUrl,
   proposalUrl,
   deployUrl,
+  demoTestId,
+  demoTestPassword,
   onOpenCaseStudy,
   linkLabel = 'Open case study',
 }: ProjectCardProps) {
@@ -66,6 +68,32 @@ export function ProjectCard({
             ))}
           </ul>
         ) : null}
+        <div className="project-card__demo-creds" aria-label="데모 접속 정보">
+          <div className="project-card__demo-row">
+            <span className="project-card__demo-label">테스트 ID</span>
+            <span
+              className={
+                demoTestId
+                  ? 'project-card__demo-value'
+                  : 'project-card__demo-value project-card__demo-value--placeholder'
+              }
+            >
+              {demoTestId ?? '—'}
+            </span>
+          </div>
+          <div className="project-card__demo-row">
+            <span className="project-card__demo-label">비밀번호</span>
+            <span
+              className={
+                demoTestPassword
+                  ? 'project-card__demo-value'
+                  : 'project-card__demo-value project-card__demo-value--placeholder'
+              }
+            >
+              {demoTestPassword ?? '—'}
+            </span>
+          </div>
+        </div>
       </div>
       <span className="project-card__reveal" aria-hidden="true">
         View case study

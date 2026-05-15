@@ -122,7 +122,7 @@
 .project-card__content {
   display: grid;
   gap: 8px;
-  padding-bottom: 32px;
+  padding-bottom: clamp(36px, 4.5vw, 44px);
 }
 
 .project-card__title {
@@ -178,6 +178,53 @@
   border: 0;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+}
+
+.project-card__demo-creds {
+  display: grid;
+  gap: 6px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed rgb(59 47 47 / 0.22);
+}
+
+.project-card__demo-row {
+  display: grid;
+  grid-template-columns: minmax(5.5rem, 32%) 1fr;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 0;
+}
+
+.project-card__demo-label {
+  margin: 0;
+  color: rgb(59 47 47 / 0.55);
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.project-card__demo-value {
+  margin: 0;
+  padding: 5px 8px;
+  color: rgb(59 47 47 / 0.88);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  word-break: break-all;
+  background: rgb(255 244 235 / 0.55);
+  border: 1px solid rgb(59 47 47 / 0.18);
+  border-radius: 8px;
+}
+
+.project-card__demo-value--placeholder {
+  color: rgb(59 47 47 / 0.38);
+  font-weight: 500;
 }
 
 .project-card__reveal {

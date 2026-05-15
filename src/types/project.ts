@@ -28,6 +28,10 @@ export type ProjectPreview = {
   proposalUrl?: string
   /** Optional deployed site link. */
   deployUrl?: string
+  /** Demo / preview login ID shown on the project card (optional). */
+  demoTestId?: string
+  /** Demo / preview password shown on the project card (optional). */
+  demoTestPassword?: string
   /** Label for the card CTA (default in `ProjectCard`). */
   linkLabel?: string
 }
