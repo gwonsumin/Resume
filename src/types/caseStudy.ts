@@ -38,6 +38,22 @@ export type CaseStudyMedia = {
   sectionFigures?: Partial<Record<CaseStudySectionKey, CaseStudySectionFigure>>
 }
 
+export type CaseStudyServiceLink = {
+  label: string
+  href: string
+  featured: boolean
+  description: string
+}
+
+export type CaseStudyServiceExperience = {
+  title: string
+  description: string
+  serviceLinks: readonly CaseStudyServiceLink[]
+  verificationPoints: readonly string[]
+  /** Shown above demo credentials (e.g. login flow hint). */
+  testAccountLead: string
+}
+
 /** Optional block linking to a deployed build (shown when set). */
 type CaseStudyLivePreview = {
   href: string
@@ -85,6 +101,8 @@ export type CaseStudyContent = {
   result: CaseStudyBody
   learnings: CaseStudyBody
   livePreview?: CaseStudyLivePreview
+  /** Deployed app: grouped deep links, verification notes, optional test account (from project). */
+  serviceExperience?: CaseStudyServiceExperience
   prototype?: CaseStudyPrototype
   media?: CaseStudyMedia
 }
