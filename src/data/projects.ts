@@ -50,7 +50,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       'https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1',
     proposalUrl: `${PDF_BASE_PATH}/TONE-Proposal.pdf`,
     githubUrl: 'https://github.com/gwonsumin/TONE',
-    deployUrl: 'https://tone.dothome.co.kr/splash',
+    deployUrl: 'https://toneapp.dothome.co.kr',
     deployWindow: { width: 430, height: 850, name: 'TONEPreview' },
   },
   {
