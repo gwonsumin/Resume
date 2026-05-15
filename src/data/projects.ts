@@ -3,6 +3,9 @@ import type { ProjectPreview } from '../types/project'
 
 const PDF_BASE_PATH = `${import.meta.env.BASE_URL}assets/files`
 
+/** GOREON production origin (no trailing slash) — shared with case study deep links. */
+export const GOREON_DEPLOY_ORIGIN = 'https://goreon.vercel.app' as const
+
 export const selectedProjects: readonly ProjectPreview[] = [
   {
     id: 'goreon',
@@ -22,7 +25,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     },
     to: ROUTES.caseStudyGoreon,
     githubUrl: 'https://github.com/gwonsumin/GOREON',
-    deployUrl: 'https://goreon.vercel.app/',
+    deployUrl: `${GOREON_DEPLOY_ORIGIN}/`,
     proposalUrl: `${PDF_BASE_PATH}/GOREON-Proposal.pdf`,
     demoTestId: 'test@test.com',
     demoTestPassword: '123123123',

@@ -1,4 +1,8 @@
-import type { CaseStudyContent } from "../types/caseStudy";
+import type {
+  CaseStudyContent,
+  CaseStudyServiceLink,
+} from "../types/caseStudy";
+import { GOREON_DEPLOY_ORIGIN } from "./projects";
 
 const goreonPublic = (file: string) =>
   `${import.meta.env.BASE_URL}projects/goreon/${file}`;
@@ -6,6 +10,58 @@ const goreonPublic = (file: string) =>
 function p(...lines: string[]): readonly string[] {
   return lines;
 }
+
+const GOREON_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
+  {
+    label: "메인",
+    href: `${GOREON_DEPLOY_ORIGIN}/`,
+    featured: false,
+    description: "홈 화면과 주요 진입 동선을 확인할 수 있습니다.",
+  },
+  {
+    label: "AI 추천",
+    href: `${GOREON_DEPLOY_ORIGIN}/#ai_chat`,
+    featured: true,
+    description:
+      "메인의 AI 대화 영역으로 스크롤해 맞춤 추천 흐름을 확인할 수 있습니다.",
+  },
+  {
+    label: "상품 탐색",
+    href: `${GOREON_DEPLOY_ORIGIN}/list`,
+    featured: true,
+    description: "목록에서 카테고리·검색 기반 상품 탐색을 확인할 수 있습니다.",
+  },
+  {
+    label: "상품 상세",
+    href: `${GOREON_DEPLOY_ORIGIN}/product/1`,
+    featured: false,
+    description: "샘플 상품 상세·옵션·리뷰 구조를 확인할 수 있습니다.",
+  },
+  {
+    label: "찜",
+    href: `${GOREON_DEPLOY_ORIGIN}/wishlist`,
+    featured: false,
+    description: "로그인 후 저장한 상품 목록 흐름을 확인할 수 있습니다.",
+  },
+  {
+    label: "장바구니",
+    href: `${GOREON_DEPLOY_ORIGIN}/cart`,
+    featured: false,
+    description: "담기·수량·이동 등 장바구니 단계를 확인할 수 있습니다.",
+  },
+  {
+    label: "로그인",
+    href: `${GOREON_DEPLOY_ORIGIN}/login`,
+    featured: false,
+    description: "테스트 계정으로 로그인해 찜·장바구니를 검증할 수 있습니다.",
+  },
+];
+
+const GOREON_VERIFICATION_POINTS: readonly string[] = [
+  "핵심 커머스 플로우 확인 가능",
+  "AI 추천 기능 실제 동작 확인 가능",
+  "로그인 기반 찜/장바구니 흐름 확인 가능",
+];
 
 const placeholderIntro = (name: string) =>
   p(
@@ -117,11 +173,14 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "AI 기능은 독립된 기술 요소가 아니라 사용자의 의사결정 흐름 안에서 설계될 때 더 명확한 UX 가치가 생긴다는 점을 배웠습니다.",
       "커머스 UX에서는 많은 기능을 보여주는 것보다 탐색, 비교, 저장, 구매의 흐름을 끊기지 않게 연결하는 구조가 중요하다는 것을 확인했습니다.",
     ),
-    livePreview: {
-      href: "https://goreon.vercel.app/",
+    serviceExperience: {
+      title: "실제 서비스 체험",
       description:
-        "배포된 GOREON 서비스입니다. AI 추천, 상품 탐색, 상세 확인, 찜/장바구니 흐름을 실제 화면에서 확인할 수 있습니다.",
-      buttonLabel: "라이브 사이트 열기",
+        "AI 추천부터 상품 탐색, 찜, 장바구니까지 실제 배포 환경에서 검증할 수 있습니다.",
+      serviceLinks: GOREON_SERVICE_LINKS,
+      verificationPoints: GOREON_VERIFICATION_POINTS,
+      testAccountLead:
+        "로그인 후 찜과 장바구니 흐름을 확인할 수 있습니다.",
     },
     prototype: {
       href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=430-5154&t=3c6ZDjaV8B54Ibax-0&scaling=min-zoom&content-scaling=fixed&page-id=172%3A1911&starting-point-node-id=430%3A5154",

@@ -449,6 +449,175 @@
   background: var(--color-primary);
 }
 
+.case-study__service-experience-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2.4vw, 22px);
+  margin-top: clamp(14px, 2.2vw, 20px);
+  width: 100%;
+  max-width: 100%;
+}
+
+.case-study__service-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-study__service-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 44px;
+  padding: 14px 16px;
+  color: rgb(59 47 47 / 0.88);
+  font-weight: 600;
+  text-decoration: none;
+  background: rgb(255 253 248 / 0.92);
+  border: 1.5px solid rgb(59 47 47 / 0.28);
+  border-radius: 18px;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.case-study__service-link--featured {
+  background: rgb(255 120 93 / 0.07);
+  border-color: rgb(255 120 93 / 0.45);
+}
+
+.case-study__service-link-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.case-study__service-link-label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.case-study__service-link-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: rgb(59 47 47 / 0.48);
+  transition: color 0.2s ease;
+}
+
+.case-study__service-link-desc {
+  color: rgb(59 47 47 / 0.66);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.case-study__service-link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .case-study__service-link:hover {
+    border-color: rgb(59 47 47 / 0.44);
+    background: rgb(255 255 255 / 0.96);
+  }
+
+  .case-study__service-link--featured:hover {
+    border-color: rgb(255 120 93 / 0.72);
+    background: rgb(255 120 93 / 0.1);
+  }
+
+  .case-study__service-link:hover .case-study__service-link-icon {
+    color: rgb(59 47 47 / 0.62);
+  }
+}
+
+.case-study__test-account {
+  padding: 16px;
+  background: rgb(255 253 248 / 0.65);
+  border: 1.5px solid rgb(59 47 47 / 0.22);
+  border-radius: 16px;
+}
+
+.case-study__test-account-title {
+  margin: 0 0 8px;
+  color: var(--color-line);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.case-study__test-account-lead {
+  margin: 0 0 12px;
+  color: rgb(59 47 47 / 0.72);
+  font-size: 0.84rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.case-study__test-account-rows {
+  display: grid;
+  gap: 10px;
+}
+
+.case-study__test-account-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 12px;
+}
+
+.case-study__test-account-label {
+  min-width: 4.5rem;
+  color: rgb(59 47 47 / 0.55);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.case-study__test-account-value {
+  color: rgb(59 47 47 / 0.92);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.35;
+  word-break: break-all;
+}
+
+.case-study__verification-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-study__verification-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  color: rgb(59 47 47 / 0.82);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  background: rgb(255 253 248 / 0.9);
+  border: 1.5px solid rgb(59 47 47 / 0.24);
+  border-radius: 999px;
+}
+
 .case-study__live-action {
   margin: 4px 0 0;
 }
@@ -520,6 +689,10 @@
     grid-column: 1 / -1;
   }
 
+  .case-study__service-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .case-study__title {
     font-size: clamp(2rem, 10.2vw, 3.1rem);
     line-height: 1;
@@ -559,10 +732,19 @@
     margin-top: -36px;
     filter: drop-shadow(0 10px 24px rgb(59 47 47 / 0.12));
   }
+
+  .case-study__service-links {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .case-study__button {
+    transition: none;
+  }
+
+  .case-study__service-link,
+  .case-study__service-link-icon {
     transition: none;
   }
 
