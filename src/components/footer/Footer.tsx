@@ -7,13 +7,18 @@ import {
   useSyncExternalStore,
   type KeyboardEvent,
   type MouseEvent,
-  type ReactNode,
 } from "react";
 import "./Footer.scss";
 import footerLogo from "../../assets/footer/footer-logo.svg";
 import tomato0 from "../../assets/footer/footer-tamatoicon00.svg";
 import tomato1 from "../../assets/footer/footer-tamatoicon01.svg";
 import tomato2 from "../../assets/footer/footer-tamatoicon02.svg";
+import passBarcode from "../../assets/contact/pass/barcode.svg";
+import passHoverIcon from "../../assets/contact/pass/hoverIcon.svg";
+import passPortfolioQr from "../../assets/contact/pass/portfolio-qr.png";
+import passProfileCharacter from "../../assets/contact/pass/profile-character.svg";
+import passTomatoSymbol from "../../assets/contact/pass/tomato-symbol.svg";
+import passValidatedStamp from "../../assets/contact/pass/validated-stamp.svg";
 import { mountFooterPhysics, type FooterPhysicsSpec } from "./footerPhysics";
 import { Reveal } from "../reveal/Reveal";
 
@@ -25,7 +30,7 @@ const RESUME_HREF = `${import.meta.env.BASE_URL}assets/files/KwonSumin-Resume.pd
 
 const EMAIL = "gsum212@gmail.com";
 /** 카드·링크용 표기 */
-const PHONE_DISPLAY = "82+ 10-8327-8238";
+const PHONE_DISPLAY = "82 + 10-8327-8238";
 const PHONE_TEL = "+821083278238";
 const GITHUB_HREF = "https://github.com/gwonsumin";
 const INSTAGRAM_GSUM = "https://www.instagram.com/gsum_00/";
@@ -52,22 +57,6 @@ async function copyTextToClipboard(text: string): Promise<boolean> {
       return false;
     }
   }
-}
-
-function DottedRow({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="site-footer__pass-row">
-      <span className="site-footer__pass-row-label">{label}</span>
-      <span className="site-footer__pass-row-line" aria-hidden />
-      <span className="site-footer__pass-row-value">{children}</span>
-    </div>
-  );
 }
 
 /** 탭으로 카드 뒤집기: 좁은 뷰 또는 터치/비호버 포인터 환경에서만 (Hero 모바일과 유사) */
@@ -150,84 +139,103 @@ function FooterNamePass() {
         >
           <div className="site-footer__pass-flip">
             <div className="site-footer__pass-face site-footer__pass-face--front">
-              <span className="site-footer__pass-corner" aria-hidden>
-                <img
-                  src={tomato0}
-                  alt=""
-                  width={22}
-                  height={20}
-                  draggable={false}
-                />
+              <span
+                className="site-footer__pass-edge-hint"
+                aria-hidden="true"
+              >
+                <img src={passHoverIcon} alt="" width={12} height={16} draggable={false} />
               </span>
-              <header className="site-footer__pass-header">
-                <p className="site-footer__pass-series">
-                  <span className="site-footer__pass-series-label">
-                    STATE / FLOW / ARCHIVE
+              <header className="site-footer__pass-top">
+                <div className="site-footer__pass-kicker-row">
+                  <span className="site-footer__pass-kicker-strong">
+                    STATE RECORD
                   </span>
-                  <span className="site-footer__pass-series-no">
-                    No. 2026-UX
-                  </span>
-                </p>
-                <h2 className="site-footer__pass-title">SUMIN PASS</h2>
-              </header>
-
-              <div className="site-footer__pass-body">
-                <div
-                  className="site-footer__pass-photo"
-                  aria-label="프로필 이미지 영역 (준비 중)"
-                >
-                  <span className="site-footer__pass-photo-placeholder" />
-                  <span className="site-footer__pass-photo-caption">
-                    Photograph
+                  <span className="site-footer__pass-kicker-no">
+                    NO . 2026-UX
                   </span>
                 </div>
+                <div className="site-footer__pass-title-row">
+                  <img
+                    className="site-footer__pass-title-tomato"
+                    src={passTomatoSymbol}
+                    alt=""
+                    width={37}
+                    height={32}
+                    draggable={false}
+                  />
+                  <h2 className="site-footer__pass-title-main">SUMIN PASS</h2>
+                </div>
+                <div
+                  className="site-footer__pass-dash site-footer__pass-dash--rule"
+                  aria-hidden="true"
+                />
+              </header>
 
-                <div className="site-footer__pass-fields">
-                  <DottedRow label="NAME">
-                    <span className="site-footer__pass-em">권수민</span>
-                  </DottedRow>
-                  <DottedRow label="ROLE">
-                    <span>UX/UI Designer · Frontend</span>
-                  </DottedRow>
-                  <DottedRow label="STATUS">
-                    <span>Available for new projects</span>
-                  </DottedRow>
-
-                  <div className="site-footer__pass-contact-block">
-                    <p className="site-footer__pass-contact-heading">CONTACT</p>
-                    <ul className="site-footer__pass-contact-list">
-                      <li>
-                        <a href={`mailto:${EMAIL}`}>
-                          <span className="site-footer__pass-contact-key">
-                            email
-                          </span>
-                          <span className="site-footer__pass-contact-val">
-                            {EMAIL}
-                          </span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href={`tel:${PHONE_TEL}`}>
-                          <span className="site-footer__pass-contact-key">
-                            phone
-                          </span>
-                          <span className="site-footer__pass-contact-val">
-                            {PHONE_DISPLAY}
-                          </span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="site-footer__pass-optional">
-                    <p className="site-footer__pass-optional-line">
-                      <span className="site-footer__pass-optional-k">
-                        Current State
-                      </span>
-                      <span className="site-footer__pass-optional-v">
-                        Exploring Better Flows
-                      </span>
+              <div className="site-footer__pass-front-main">
+                <div className="site-footer__pass-info-col">
+                  <section className="site-footer__pass-block">
+                    <h3 className="site-footer__pass-label">NAME</h3>
+                    <p className="site-footer__pass-value site-footer__pass-value--lead">
+                      권수민
                     </p>
+                    <p className="site-footer__pass-value site-footer__pass-value--sub">
+                      Sumin Kweon
+                    </p>
+                  </section>
+                  <div
+                    className="site-footer__pass-dash site-footer__pass-dash--between"
+                    aria-hidden="true"
+                  />
+
+                  <section className="site-footer__pass-block">
+                    <h3 className="site-footer__pass-label">ROLE</h3>
+                    <p className="site-footer__pass-value site-footer__pass-value--lead">
+                      UX/UI 디자이너
+                    </p>
+                    <p className="site-footer__pass-value site-footer__pass-value--sub">
+                      프론트엔드 구현 가능
+                    </p>
+                  </section>
+                  <div
+                    className="site-footer__pass-dash site-footer__pass-dash--between"
+                    aria-hidden="true"
+                  />
+
+                  <section className="site-footer__pass-block">
+                    <h3 className="site-footer__pass-label">STATUS</h3>
+                    <p className="site-footer__pass-value site-footer__pass-value--lead site-footer__pass-value--balance">
+                      사용자의 상태를
+                    </p>
+                    <p className="site-footer__pass-value site-footer__pass-value--lead site-footer__pass-value--balance">
+                      기록하고 설계하는 중
+                    </p>
+                  </section>
+                  <div
+                    className="site-footer__pass-dash site-footer__pass-dash--between"
+                    aria-hidden="true"
+                  />
+
+                  <section className="site-footer__pass-block">
+                    <h3 className="site-footer__pass-label site-footer__pass-label--accent">
+                      CONTACT
+                    </h3>
+                    <p className="site-footer__pass-value site-footer__pass-value--lead site-footer__pass-value--tight">
+                      <a href={`mailto:${EMAIL}`}>{EMAIL}</a>
+                    </p>
+                    <p className="site-footer__pass-value site-footer__pass-value--lead site-footer__pass-value--tight">
+                      <a href={`tel:${PHONE_TEL}`}>{PHONE_DISPLAY}</a>
+                    </p>
+                  </section>
+                </div>
+
+                <div className="site-footer__pass-portrait-wrap">
+                  <div className="site-footer__pass-portrait">
+                    <img
+                      src={passProfileCharacter}
+                      alt=""
+                      className="site-footer__pass-portrait-img"
+                      draggable={false}
+                    />
                   </div>
                 </div>
               </div>
@@ -241,39 +249,122 @@ function FooterNamePass() {
               className="site-footer__pass-face site-footer__pass-face--back"
               aria-hidden
             >
-              <p className="site-footer__pass-back-label">Portfolio lens</p>
-              <ul className="site-footer__pass-back-grid">
-                <li className="site-footer__pass-back-slot">
-                  <span className="site-footer__pass-back-slot-title">
-                    State
+              <span
+                className="site-footer__pass-edge-hint"
+                aria-hidden="true"
+              >
+                <img src={passHoverIcon} alt="" width={12} height={16} draggable={false} />
+              </span>
+
+              <header className="site-footer__pass-top">
+                <div className="site-footer__pass-kicker-row">
+                  <span className="site-footer__pass-kicker-strong">
+                    STATE RECORD
                   </span>
-                  <span
-                    className="site-footer__pass-back-slot-area"
-                    aria-label="State 영역"
-                  />
-                </li>
-                <li className="site-footer__pass-back-slot">
-                  <span className="site-footer__pass-back-slot-title">
-                    Flow
+                  <span className="site-footer__pass-kicker-no">
+                    ARCHIVE NO. 2026-UX
                   </span>
-                  <span
-                    className="site-footer__pass-back-slot-area"
-                    aria-label="Flow 영역"
+                </div>
+                <div
+                  className="site-footer__pass-dash site-footer__pass-dash--rule"
+                  aria-hidden="true"
+                />
+              </header>
+
+              <div className="site-footer__pass-back-mid">
+                <div className="site-footer__pass-back-icon" aria-hidden="true">
+                  <img
+                    src={passValidatedStamp}
+                    alt=""
+                    width={85}
+                    height={86}
+                    draggable={false}
                   />
-                </li>
-                <li className="site-footer__pass-back-slot">
-                  <span className="site-footer__pass-back-slot-title">
-                    Archive
-                  </span>
-                  <span
-                    className="site-footer__pass-back-slot-area"
-                    aria-label="Archive 영역"
+                </div>
+                <div className="site-footer__pass-back-rows">
+                  <div className="site-footer__pass-back-row">
+                    <span className="site-footer__pass-back-key">STATUS</span>
+                    <span className="site-footer__pass-back-val">
+                      더 나은 흐름을 탐색하는 중
+                    </span>
+                  </div>
+                  <div
+                    className="site-footer__pass-dash site-footer__pass-dash--between"
+                    aria-hidden="true"
                   />
-                </li>
-              </ul>
-              <p className="site-footer__pass-back-note">
-                추후 비주얼·프로젝트 스탬프를 넣을 수 있는 영역입니다.
-              </p>
+                  <div className="site-footer__pass-back-row">
+                    <span className="site-footer__pass-back-key">
+                      CURRENT LOOP
+                    </span>
+                    <span className="site-footer__pass-back-val">
+                      UX / 인터랙션 / 아카이브
+                    </span>
+                  </div>
+                  <div
+                    className="site-footer__pass-dash site-footer__pass-dash--between"
+                    aria-hidden="true"
+                  />
+                  <div className="site-footer__pass-back-row">
+                    <span className="site-footer__pass-back-key">MOOD</span>
+                    <span className="site-footer__pass-back-val">
+                      따뜻하고 정돈된 흐름
+                    </span>
+                  </div>
+                  <div
+                    className="site-footer__pass-dash site-footer__pass-dash--between"
+                    aria-hidden="true"
+                  />
+                  <div className="site-footer__pass-back-row">
+                    <span className="site-footer__pass-back-key">DATE</span>
+                    <span className="site-footer__pass-back-val site-footer__pass-back-val--emph">
+                      2026 ARCHIVE
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="site-footer__pass-ticket">
+                <div className="site-footer__pass-ticket-shell">
+                  <div className="site-footer__pass-ticket-notch site-footer__pass-ticket-notch--left" aria-hidden="true" />
+                  <div className="site-footer__pass-ticket-notch site-footer__pass-ticket-notch--right" aria-hidden="true" />
+                  <div className="site-footer__pass-ticket-inner">
+                    <div className="site-footer__pass-ticket-id">
+                      <p className="site-footer__pass-passid-label">PASS ID</p>
+                      <p className="site-footer__pass-passid-code">
+                        2026-UX-0212
+                      </p>
+                      <img
+                        className="site-footer__pass-barcode"
+                        src={passBarcode}
+                        alt=""
+                        width={233}
+                        height={26}
+                        draggable={false}
+                      />
+                    </div>
+                    <div
+                      className="site-footer__pass-ticket-vdash"
+                      aria-hidden="true"
+                    />
+                    <div className="site-footer__pass-ticket-qr">
+                      <img
+                        className="site-footer__pass-qr-img"
+                        src={passPortfolioQr}
+                        alt="포트폴리오 QR 코드"
+                        width={72}
+                        height={72}
+                        draggable={false}
+                      />
+                      <div className="site-footer__pass-ticket-copy">
+                        <p className="site-footer__pass-ticket-quote">
+                          기록하고 관찰하며 더 나은 흐름을 설계합니다.
+                        </p>
+                        <p className="site-footer__pass-ticket-open">- OPEN RECORD</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </article>
