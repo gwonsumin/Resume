@@ -92,6 +92,11 @@
   border-color: #3b2f2f;
 }
 
+/* 포인터/스크립트 포커스 시 브라우저 기본(파란) 링만 제거 — 키보드 :focus-visible 는 유지 */
+.project-filters__pill:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .project-filters__pill:focus-visible {
   outline: 2px solid #3b2f2f;
   outline-offset: 2px;

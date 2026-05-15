@@ -456,17 +456,12 @@
 @media (min-width: 64rem) {
   .about-layout__top {
     grid-template-columns: minmax(0, 1fr) minmax(280px, 332px);
-    align-items: end;
+    align-items: start;
   }
 
   .about-summary {
     display: flex;
     flex-direction: column;
-    height: 100%;
-  }
-
-  .about-summary .about-quick-info {
-    margin-top: auto;
   }
 
   .about-quick-info {

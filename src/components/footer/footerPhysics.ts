@@ -36,11 +36,6 @@ export function mountFooterPhysics(
   const pairs: { body: Matter.Body; el: HTMLElement }[] = []
 
   const floorTopY = floorY - WALL / 2
-  /* 초기 스폰: 중·하단 빈 영역, 바닥(클립)에서 띄움 */
-  const bandTop = h * 0.36
-  const bandBottom = floorTopY - Math.max(64, h * 0.08)
-  const liftFromFloor = Math.min(240, Math.max(168, h * 0.23))
-  const rowGap = Math.min(48, Math.max(28, h * 0.042))
   const spreadX = (i: number, n: number) => {
     const pad = w * 0.1
     const t = (i + 1) / (n + 1)
@@ -48,9 +43,19 @@ export function mountFooterPhysics(
   }
 
   specs.forEach((spec, i) => {
-    const rawY = floorTopY - liftFromFloor - i * rowGap
-    const spawnY = Math.min(bandBottom - 20, Math.max(bandTop + 52, rawY))
     const spawnX = spreadX(i, specs.length)
+    const halfExtent =
+      spec.kind === "circle"
+        ? spec.radius
+        : Math.max(spec.width, spec.height) / 2
+    /* 푸터 진입 시 위에서 떨어지며 들어오는 연출 (천장 충돌 줄을 아래로 스폰) */
+    const clearCeiling = WALL + halfExtent + 16
+    const stagger = Math.min(38, Math.max(22, h * 0.034))
+    const j = Math.sin(i * 1.65 + 0.35) * 12
+    const spawnY = Math.min(
+      floorTopY - halfExtent - 32,
+      Math.max(clearCeiling + stagger * i + j, clearCeiling),
+    )
 
     if (spec.kind === 'circle') {
       const body = Matter.Bodies.circle(spawnX, spawnY, spec.radius, {
@@ -59,6 +64,11 @@ export function mountFooterPhysics(
         frictionAir: 0.015,
         density: 0.0024,
       })
+      Matter.Body.setVelocity(body, {
+        x: (Math.random() - 0.5) * 1.1,
+        y: 0.9 + Math.random() * 0.7,
+      })
+      Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.07)
       dynamics.push(body)
       pairs.push({ body, el: spec.element })
     } else {
@@ -70,6 +80,11 @@ export function mountFooterPhysics(
         frictionAir: 0.02,
         density: 0.002,
       })
+      Matter.Body.setVelocity(body, {
+        x: (Math.random() - 0.5) * 0.85,
+        y: 0.85 + Math.random() * 0.55,
+      })
+      Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.05)
       dynamics.push(body)
       pairs.push({ body, el: spec.element })
     }
