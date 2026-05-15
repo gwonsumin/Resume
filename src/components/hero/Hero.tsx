@@ -80,16 +80,16 @@ export function Hero() {
             nextLines[lineIndex] = currentLine.slice(0, charIndex);
             return nextLines;
           });
-          await wait(88);
+          await wait(62);
         }
 
         if (isCancelled) return;
-        await wait(lineIndex === 0 ? 340 : 240);
+        await wait(lineIndex === 0 ? 250 : 175);
       }
 
       if (isCancelled) return;
       setIsNameVisible(true);
-      await wait(220);
+      await wait(165);
 
       for (
         let charIndex = 1;
@@ -98,7 +98,7 @@ export function Hero() {
       ) {
         if (isCancelled) return;
         setTypedSuffix(HERO_SUFFIX_TEXT.slice(0, charIndex));
-        await wait(90);
+        await wait(65);
       }
 
       if (isCancelled) return;
