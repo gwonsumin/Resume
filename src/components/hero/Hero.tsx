@@ -1,4 +1,5 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
+import { useRevealReady } from "../reveal/RevealReadyContext";
 import heroChr from "../../assets/images/heroChr.png";
 import backIcon from "../../assets/icons/icon-back.svg";
 import saveIcon from "../../assets/icons/icon-save.svg";
@@ -35,6 +36,7 @@ function getHeroMobileLayoutSnapshot() {
 }
 
 export function Hero() {
+  const revealReady = useRevealReady();
   const isHeroMobileLayout = useSyncExternalStore(
     subscribeHeroMobileLayout,
     getHeroMobileLayoutSnapshot,
@@ -49,6 +51,14 @@ export function Hero() {
   const showResumeDownload = isTypingDone || (isHeroMobileLayout && resumeUnlockedByTouch);
 
   useEffect(() => {
+    if (!revealReady) return;
+
+    setTypedLines(["", "", ""]);
+    setIsNameVisible(false);
+    setTypedSuffix("");
+    setIsTypingDone(false);
+    setResumeUnlockedByTouch(false);
+
     let isCancelled = false;
 
     const runTyping = async () => {
@@ -100,7 +110,7 @@ export function Hero() {
     return () => {
       isCancelled = true;
     };
-  }, []);
+  }, [revealReady]);
 
   return (
     <div className="hero" aria-labelledby="hero-title">

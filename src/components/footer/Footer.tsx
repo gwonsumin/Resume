@@ -357,10 +357,47 @@ export function Footer({ siteTitle }: FooterProps) {
   const physicsTomato0Ref = useRef<HTMLDivElement>(null);
   const physicsTomato1Ref = useRef<HTMLDivElement>(null);
   const physicsTomato2Ref = useRef<HTMLDivElement>(null);
+  const footerPhysicsEnterRef = useRef<HTMLDivElement>(null);
+  const [footerPhysicsLive, setFooterPhysicsLive] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = requestAnimationFrame(() => {
+        setFooterPhysicsLive(true);
+      });
+      return () => cancelAnimationFrame(id);
+    }
+    const sentinel = footerPhysicsEnterRef.current;
+    if (!sentinel) return;
+    let done = false;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (done) return;
+        const hit = entries.some((e) => e.target === sentinel && e.isIntersecting);
+        if (hit) {
+          done = true;
+          setFooterPhysicsLive(true);
+          io.disconnect();
+        }
+      },
+      {
+        /* 푸터 패널 상단이 실제 뷰포트와 겹칠 때만 (페이지 로드 직후·확장 루트로 조기 실행 방지) */
+        threshold: 0,
+        rootMargin: "0px",
+      },
+    );
+    io.observe(sentinel);
+    return () => io.disconnect();
+  }, []);
 
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!footerPhysicsLive) return;
 
     let cleanup: (() => void) | undefined;
     let raf0 = 0;
@@ -429,7 +466,7 @@ export function Footer({ siteTitle }: FooterProps) {
       cancelAnimationFrame(raf1);
       cleanup?.();
     };
-  }, []);
+  }, [footerPhysicsLive]);
 
   return (
     <footer
@@ -438,6 +475,11 @@ export function Footer({ siteTitle }: FooterProps) {
       aria-labelledby="contact-footer-heading"
     >
       <div ref={footerPanelRef} className="footer-shape-panel">
+        <div
+          ref={footerPhysicsEnterRef}
+          className="footer-physics-enter-sentinel"
+          aria-hidden
+        />
         <div className="footer-content">
           <Reveal delay={0} staggerMs={92} durationMs={700}>
             <p className="site-footer__label" id="contact-footer-heading">
@@ -485,7 +527,7 @@ export function Footer({ siteTitle }: FooterProps) {
 
         <div
           ref={physicsContainerRef}
-          className="footer-tomato-layer site-footer__physics"
+          className={`footer-tomato-layer site-footer__physics${footerPhysicsLive ? " site-footer__physics--live" : ""}`}
           aria-hidden
           data-footer-playground
         >

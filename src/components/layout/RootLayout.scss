@@ -24,6 +24,11 @@
   padding-bottom: var(--section-gap);
 }
 
+/* 스플래시 종료 후 main 으로 보낸 프로그래매틱 포커스에 UA 기본 링이 붙는 경우 방지 */
+.site-main:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .skip-link {
   position: absolute;
   width: 1px;
