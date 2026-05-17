@@ -8,6 +8,9 @@ const tonePublicThumb = (file: string) => `${import.meta.env.BASE_URL}projects/t
 /** GOREON production origin (no trailing slash) — shared with case study deep links. */
 export const GOREON_DEPLOY_ORIGIN = 'https://goreon.vercel.app' as const
 
+/** TONE production origin (no trailing slash) — Vue app routes are under this host. */
+export const TONE_DEPLOY_ORIGIN = 'https://toneapp.dothome.co.kr' as const
+
 export const selectedProjects: readonly ProjectPreview[] = [
   {
     id: 'goreon',
@@ -52,7 +55,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       'https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1',
     proposalUrl: `${PDF_BASE_PATH}/TONE-Proposal.pdf`,
     githubUrl: 'https://github.com/gwonsumin/TONE',
-    deployUrl: 'https://toneapp.dothome.co.kr',
+    deployUrl: TONE_DEPLOY_ORIGIN,
     deployWindow: { width: 430, height: 850, name: 'TONEPreview' },
     thumbnailSrc: `${import.meta.env.BASE_URL}projects/tone/tone-thumbnail-02.png`,
     heroStaggeredScreens: {

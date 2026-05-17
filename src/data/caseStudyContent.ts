@@ -2,7 +2,7 @@ import type {
   CaseStudyContent,
   CaseStudyServiceLink,
 } from "../types/caseStudy";
-import { GOREON_DEPLOY_ORIGIN } from "./projects";
+import { GOREON_DEPLOY_ORIGIN, TONE_DEPLOY_ORIGIN } from "./projects";
 
 const goreonPublic = (file: string) =>
   `${import.meta.env.BASE_URL}projects/goreon/${file}`;
@@ -64,6 +64,66 @@ const GOREON_VERIFICATION_POINTS: readonly string[] = [
   "핵심 커머스 플로우 확인 가능",
   "AI 추천 기능 실제 동작 확인 가능",
   "로그인 기반 찜/장바구니 흐름 확인 가능",
+];
+
+/** Paths match `frontend/src/router/index.js` on gwonsumin/TONE (main). */
+const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
+  {
+    label: "For You",
+    title: "오늘의 톤 추천",
+    description:
+      "스플래시·로그인 후 메인 탭에서 Daily Tone·스펙트럼 기반 오늘의 컬러/음악 추천을 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/`,
+    featured: true,
+  },
+  {
+    label: "Color Charts",
+    title: "컬러 차트 탐색",
+    description:
+      "인기 컬러 플레이리스트와 좋아요·저장 흐름을 컬러 차트 탭에서 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/color-chart`,
+    featured: true,
+  },
+  {
+    label: "Player",
+    title: "메인 플레이어",
+    description:
+      "로그인 후 /main에서 음악·뮤비 전환, 재생, 셔플, 반복, 저장 UX를 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/main`,
+    featured: true,
+  },
+  {
+    label: "Playlist",
+    title: "컬러 플레이리스트",
+    description: "컬러별 음악 리스트와 재생 진입 흐름을 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/playlist`,
+  },
+  {
+    label: "Palette Log",
+    title: "저장한 플레이리스트",
+    description: "저장한 컬러 플레이리스트가 쌓이는 팔레트 로그 구조를 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/palette-log`,
+  },
+  {
+    label: "Calendar",
+    title: "감정 기록 캘린더",
+    description: "날짜별 컬러, 음악, 메모 기록 흐름을 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/calendar`,
+  },
+  {
+    label: "Search",
+    title: "AI 검색 추천",
+    description: "검색 화면에서 자연어 기반 컬러 플레이리스트 추천 흐름을 확인할 수 있습니다.",
+    href: `${TONE_DEPLOY_ORIGIN}/search`,
+  },
+];
+
+const TONE_VERIFICATION_POINTS: readonly string[] = [
+  "Daily Tone에서 오늘의 컬러와 추천 음악을 확인할 수 있습니다.",
+  "Color Charts와 Category를 통해 컬러 기반 음악 탐색 구조를 확인할 수 있습니다.",
+  "Playlist와 Player에서 재생, 뮤비 전환, 셔플, 반복, 저장 UX를 확인할 수 있습니다.",
+  "Palette Log와 Calendar에서 음악 감상이 감정 기록으로 이어지는 흐름을 확인할 수 있습니다.",
+  "Search에서 OpenAI 기반 자연어 추천 흐름을 확인할 수 있습니다.",
 ];
 
 const placeholderIntro = (name: string) =>
@@ -346,11 +406,18 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "또한 사용자가 자신의 상태를 표현할 수 있는 인터페이스가 제이처 기반 추천보다 먼저 설계되어야 한다는 점을 배웠다.",
       "특히 '기록'이라는 행동이 단순 기능이 아니라 사용자의 경험을 지속시키는 핵심 요소라는 것을 느꼈다.",
     ),
-    livePreview: {
-      href: "https://toneapp.dothome.co.kr",
-      description:
-        "실제 빌드에서 감정 기록부터 추천·아카이브 흐름까지 그대로 사용해 볼 수 있습니다.",
-      buttonLabel: "라이브 사이트 열기",
+    serviceExperience: {
+      title: "실제 서비스 체험",
+      description: p(
+        "TONE은 모바일 환경에 최적화된 감정 기반 음악 추천 서비스입니다.",
+        "오늘의 컬러 추천부터 플레이리스트 재생, 저장, 캘린더 기록까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
+      ),
+      mobileNotice:
+        "모바일 기준으로 설계된 서비스이므로 모바일 기기 또는 브라우저 모바일 뷰에서 확인하는 것을 권장합니다.",
+      serviceLinks: TONE_SERVICE_LINKS,
+      verificationPoints: TONE_VERIFICATION_POINTS,
+      testAccountLead:
+        "테스트 계정으로 로그인한 뒤 탭·플레이어·저장·캘린더 흐름을 확인할 수 있습니다.",
     },
   }),
   sangsangmadang: makeCaseStudy("Sangsangmadang", {

@@ -49,17 +49,22 @@ export type CaseStudyMedia = {
 export type CaseStudyServiceLink = {
   label: string
   href: string
-  featured: boolean
   description: string
+  /** When true, uses featured border/background treatment. */
+  featured?: boolean
+  /** Optional secondary line (e.g. Korean screen title). */
+  title?: string
 }
 
 export type CaseStudyServiceExperience = {
   title: string
-  description: string
+  description: CaseStudyBody
   serviceLinks: readonly CaseStudyServiceLink[]
   verificationPoints: readonly string[]
-  /** Shown above demo credentials (e.g. login flow hint). */
-  testAccountLead: string
+  /** Shown above demo credentials when credentials exist. */
+  testAccountLead?: string
+  /** Optional callout (e.g. mobile viewport recommendation). */
+  mobileNotice?: string
 }
 
 /** Optional block linking to a deployed build (shown when set). */
