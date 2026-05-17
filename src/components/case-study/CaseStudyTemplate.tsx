@@ -94,8 +94,7 @@ export function CaseStudyTemplate({
 }: CaseStudyTemplateProps) {
   const baseId = project.id
   const isToneCase = baseId === 'tone'
-  const normalizedTagSet = new Set(project.tags.map((tag) => tag.trim().toLowerCase()))
-  const toolTags = project.techStack.filter((tool) => !normalizedTagSet.has(tool.trim().toLowerCase()))
+  const projectTags = project.tags.slice(0, 4)
   const prototypeLinks = content.prototype
     ? [
         {
@@ -139,7 +138,6 @@ export function CaseStudyTemplate({
         prototypeMobileHref),
   )
   const livePreviewFigure = content.media?.livePreview?.src
-  const heroFlowLabels = content.heroNarrative?.flowLabels
   const uxFlowEditorial = content.uxFlowEditorial
   const prototypeAnchorKey: (typeof SECTIONS)[number]['key'] = isToneCase ? 'result' : 'iaUserFlow'
   const usedProgramsBlock = (
@@ -258,57 +256,22 @@ export function CaseStudyTemplate({
             </div>
           )
         ) : null}
-        {isToneCase && content.heroNarrative ? (
-          <div className="case-study__hero-story">
-            <h1 className="case-study__title case-study__title--tone" id={titleId}>
-              {content.heroNarrative.leadTitle ?? project.title}
-            </h1>
-            <div className="case-study__hero-message">
-              {renderCaseStudyBody(content.heroNarrative.coreMessage).map((line) => (
-                <p key={line} className="case-study__hero-message-line">
-                  {line}
-                </p>
-              ))}
-            </div>
-            {heroFlowLabels ? (
-              <ol className="case-study__hero-flow" aria-label="Color Tone에서 Archive까지의 흐름">
-                {heroFlowLabels.map((label, index) => (
-                  <li key={label} className="case-study__hero-flow-item">
-                    <span>{label}</span>
-                    {index < heroFlowLabels.length - 1 ? (
-                      <span className="case-study__hero-flow-arrow" aria-hidden="true">
-                        →
-                      </span>
-                    ) : null}
-                  </li>
-                ))}
-              </ol>
-            ) : null}
-            {usedProgramsBlock}
+        <>
+          <div className="case-study__meta-row">
+            <span>{project.visual.label}</span>
+            <span>{project.visual.meta}</span>
           </div>
-        ) : (
-          <>
-            <div className="case-study__meta-row">
-              <span>{project.visual.label}</span>
-              <span>{project.visual.meta}</span>
-            </div>
-            <h1 className="case-study__title" id={titleId}>
-              {project.title}
-            </h1>
-            <p className="case-study__summary">{project.description}</p>
-            <ul className="case-study__tags" role="list" aria-label="Project tags">
-              {project.tags.map((tag) => (
-                <li key={tag}>{tag}</li>
-              ))}
-              {toolTags.map((tool) => (
-                <li key={tool} className="case-study__tags-tool">
-                  {tool}
-                </li>
-              ))}
-            </ul>
-            {usedProgramsBlock}
-          </>
-        )}
+          <h1 className="case-study__title" id={titleId}>
+            {project.title}
+          </h1>
+          <p className="case-study__summary">{project.description}</p>
+          <ul className="case-study__tags" role="list" aria-label="Project tags">
+            {projectTags.map((tag) => (
+              <li key={tag}>{tag}</li>
+            ))}
+          </ul>
+          {usedProgramsBlock}
+        </>
       </header>
 
       <div className="case-study__body">
@@ -395,13 +358,13 @@ export function CaseStudyTemplate({
               </CaseStudyBlock>
               {key === 'iaUserFlow' && uxFlowEditorial ? (
                 <CaseStudyBlock id={`${baseId}-ux-flow-editorial`} title={uxFlowEditorial.title}>
-                  <ol className="case-study__ux-flow-editorial" role="list" aria-label="핵심 감정 경험 흐름">
+                  <ol className="case-study__ux-flow-editorial" role="list" aria-label="핵심 사용자 경험 흐름">
                     {uxFlowEditorial.steps.map((step, index) => (
                       <li key={step} className="case-study__ux-flow-step">
                         <span className="case-study__ux-flow-step-label">{step}</span>
                         {index < uxFlowEditorial.steps.length - 1 ? (
                           <span className="case-study__ux-flow-step-arrow" aria-hidden="true">
-                            ↓
+                            →
                           </span>
                         ) : null}
                       </li>
