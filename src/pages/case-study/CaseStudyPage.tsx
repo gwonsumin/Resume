@@ -34,11 +34,7 @@ export function CaseStudyPage() {
 
   const navigateBackToWorks = useCallback(() => {
     navigateWithPageTransition(() => {
-      if (window.history.length > 1) {
-        navigate(-1)
-        return
-      }
-      navigate(`${ROUTES.home}#case-study`, { replace: true })
+      navigate(`${ROUTES.home}#case-study`)
     })
   }, [navigate, navigateWithPageTransition])
 
@@ -128,6 +124,15 @@ export function CaseStudyPage() {
                         variant="next"
                         screens={item.heroStaggeredScreens}
                         loading="lazy"
+                      />
+                    ) : item.thumbnailSrc ? (
+                      <img
+                        src={item.thumbnailSrc}
+                        alt=""
+                        className="case-study-page__next-thumb-image"
+                        loading="lazy"
+                        decoding="async"
+                        aria-hidden="true"
                       />
                     ) : (
                       <span>{item.visual.label}</span>

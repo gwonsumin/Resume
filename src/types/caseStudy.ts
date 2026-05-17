@@ -104,13 +104,26 @@ type CaseStudyMyRole = {
   contributions: readonly CaseStudyContribution[]
 }
 
+type CaseStudyHeroNarrative = {
+  leadTitle?: string
+  coreMessage: CaseStudyBody
+  flowLabels?: readonly [string, string, string]
+}
+
+type CaseStudyUxFlowEditorial = {
+  title: string
+  steps: readonly string[]
+}
+
 /** Full case study narrative — one object per project slug. */
 export type CaseStudyContent = {
   intro: CaseStudyBody
   myRole?: CaseStudyMyRole
+  heroNarrative?: CaseStudyHeroNarrative
   problem: CaseStudyBody
   insight: CaseStudyBody
   iaUserFlow: CaseStudyBody
+  uxFlowEditorial?: CaseStudyUxFlowEditorial
   solution: CaseStudyBody
   uiDesign: CaseStudyBody
   result: CaseStudyBody

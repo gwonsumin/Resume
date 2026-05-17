@@ -66,6 +66,81 @@
   line-height: 1.58;
 }
 
+.case-study__hero-story {
+  display: grid;
+  gap: clamp(14px, 2.4vw, 24px);
+  max-width: 52rem;
+}
+
+.case-study__title--tone {
+  font-size: clamp(2.3rem, 6.4vw, 4.8rem);
+  line-height: 0.96;
+}
+
+.case-study__hero-message {
+  display: grid;
+  gap: 6px;
+  max-width: 40rem;
+}
+
+.case-study__hero-message-line {
+  margin: 0;
+  color: rgb(59 47 47 / 0.9);
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1.26;
+  letter-spacing: -0.01em;
+  word-break: keep-all;
+}
+
+.case-study__hero-flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-study__hero-flow-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 13px;
+  border: 1.5px solid rgb(59 47 47 / 0.24);
+  border-radius: 999px;
+  background: rgb(255 253 248 / 0.84);
+  color: rgb(59 47 47 / 0.84);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.case-study__hero-flow-arrow {
+  color: rgb(59 47 47 / 0.52);
+  font-weight: 600;
+}
+
+.case-study__programs {
+  display: grid;
+  gap: 10px;
+}
+
+.case-study__programs-label {
+  color: rgb(59 47 47 / 0.62);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-study__tags--programs {
+  gap: 8px;
+}
+
 .case-study__tags {
   display: flex;
   flex-wrap: wrap;
@@ -244,8 +319,50 @@
   max-width: min(74ch, 100%);
 }
 
-.case-study__split-body--proto.case-study__split-body--tone {
-  grid-template-columns: minmax(0, 1.12fr) minmax(min(300px, 38vw), min(460px, 46vw));
+.case-study__split-body--proto.case-study__split-body--tone:not(.case-study__split-body--proto-slot-only) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(16px, 2.8vw, 28px);
+}
+
+.case-study__split-body--proto.case-study__split-body--tone:not(.case-study__split-body--proto-slot-only)
+  .case-study__split-body-media {
+  justify-self: stretch;
+  align-items: stretch;
+}
+
+.case-study__split-body--proto.case-study__split-body--tone:not(.case-study__split-body--proto-slot-only)
+  .case-study__proto-entries {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+}
+
+.case-study__split-body--proto.case-study__split-body--tone:not(.case-study__split-body--proto-slot-only)
+  .case-study__figure--protoThumb {
+  min-height: clamp(170px, 22vw, 230px);
+}
+
+.case-study__split-body--proto.case-study__split-body--tone:not(.case-study__split-body--proto-slot-only)
+  .case-study__proto-entry:nth-child(2)
+  .case-study__figure--protoThumb
+  img {
+  width: auto;
+  max-width: 100%;
+  max-height: clamp(200px, 27vw, 292px);
+  margin-inline: auto;
+}
+
+.case-study__split-body--proto.case-study__split-body--tone.case-study__split-body--proto-slot-only {
+  grid-template-columns: minmax(18rem, 1fr) minmax(14.5rem, 0.86fr);
+  gap: clamp(18px, 3.2vw, 34px);
+}
+
+.case-study__split-body--proto .case-study__split-body-copy {
+  min-width: 0;
+}
+
+.case-study__split-body--proto .case-study__split-body-copy .case-study__paragraph {
+  font-size: clamp(1rem, 1.26vw, 1.1rem);
+  line-height: 1.72;
 }
 
 .case-study__split-body--proto.case-study__split-body--tone.case-study__split-body--proto-slot-only {
@@ -302,6 +419,7 @@
   display: grid;
   gap: 10px;
   min-width: 0;
+  align-content: end;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
@@ -328,8 +446,8 @@
   padding: 0;
   border-radius: 0;
   overflow: visible;
-  border: 1px solid rgb(59 47 47 / 0.09);
-  background: rgb(255 250 245 / 0.35);
+  border: 0;
+  background: transparent;
   min-height: clamp(140px, 22vw, 220px);
   display: flex;
   align-items: center;
@@ -467,6 +585,73 @@
   font-weight: 500;
   line-height: 1.66;
   word-break: keep-all;
+}
+
+.case-study__ux-flow-editorial {
+  display: grid;
+  gap: clamp(14px, 2.4vw, 20px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-study__ux-flow-step {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+}
+
+.case-study__ux-flow-step-label {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 18px;
+  background: rgb(255 253 248 / 0.94);
+  border: 1.5px solid rgb(59 47 47 / 0.24);
+  border-radius: 999px;
+  color: rgb(59 47 47 / 0.9);
+  font-size: clamp(1rem, 1.56vw, 1.16rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.case-study__ux-flow-step-arrow {
+  color: rgb(59 47 47 / 0.46);
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1;
+  transform: translateX(10px);
+}
+
+.case-study--tone .case-study__header {
+  gap: clamp(18px, 3vw, 28px);
+  margin-bottom: clamp(38px, 6.4vw, 78px);
+  padding-bottom: clamp(26px, 5vw, 52px);
+}
+
+.case-study--tone .case-study__body {
+  --case-block-gap: clamp(32px, 5vw, 62px);
+}
+
+.case-study--tone .case-study__block {
+  gap: clamp(24px, 4.6vw, 60px);
+  padding: clamp(24px, 4.2vw, 42px);
+}
+
+.case-study--tone .case-study__block-title {
+  font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.case-study--tone .case-study__paragraph {
+  color: rgb(59 47 47 / 0.72);
+  font-size: clamp(1rem, 1.38vw, 1.125rem);
+  line-height: 1.74;
+}
+
+.case-study--tone .case-study__split-body--tone {
+  gap: clamp(24px, 4.8vw, 52px);
 }
 
 .case-study__role-list {
@@ -854,9 +1039,33 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .case-study__hero-message-line {
+    font-size: clamp(1.4rem, 6.2vw, 1.85rem);
+  }
+
+  .case-study__hero-flow {
+    gap: 8px;
+  }
+
+  .case-study__hero-flow-item {
+    gap: 8px;
+    padding: 8px 11px;
+    font-size: 0.78rem;
+  }
+
   .case-study__title {
     font-size: clamp(2rem, 10.2vw, 3.1rem);
     line-height: 1;
+  }
+
+  .case-study--tone .case-study__block-title {
+    font-size: clamp(1.3rem, 5.2vw, 1.7rem);
+    line-height: 1.08;
+  }
+
+  .case-study--tone .case-study__paragraph {
+    font-size: clamp(0.98rem, 3.8vw, 1.04rem);
+    line-height: 1.68;
   }
 
   .case-study__proto-entries {
