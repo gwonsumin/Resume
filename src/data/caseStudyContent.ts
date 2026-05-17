@@ -282,13 +282,22 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
   }),
   tone: makeCaseStudy("TONE", {
     intro: p(
-      "오늘의 감정 상태를 색으로 남기고, 같은 분위기의 음악에 깊게 머무는 모바일 감정 아카이브.",
-      "플레이리스트 탐색이 아니라 기록과 분위기, 시간에 쌓이는 무드가 먼저 읽히도록 경험을 정렬했다.",
+      "TONE은 플레이리스트 탐색보다 먼저, 사용자가 오늘의 상태를 고르고 감정에 머무르는 시간을 설계한 감정 기록 인터페이스다.",
+      "기능 목록을 보여주기보다 Problem → Insight → Solution → Experience 흐름이 자연스럽게 읽히도록 내러티브를 재구성했다.",
     ),
+    heroNarrative: {
+      leadTitle: "TONE",
+      coreMessage: p(
+        "오늘의 감정을",
+        "색과 음악으로 기록하는",
+        "모바일 감정 아카이브",
+      ),
+      flowLabels: ["Color Tone", "Sound Tone", "Emotion Archive"],
+    },
     sectionTitles: {
-      solution: "팔레트 경험",
-      uiDesign: "플레이어 경험",
-      result: "캘린더 아카이브",
+      solution: "오늘의 상태를 고르는 첫 진입점",
+      uiDesign: "Color Tone이 Sound Tone으로 이어지는 순간",
+      result: "하루의 감정이 기록으로 남는 구조",
     },
     myRole: {
       summary: p(
@@ -337,17 +346,19 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "→ 음악은 감정을 기록하는 매개가 될 수 있다.",
     ),
     iaUserFlow: p(
-      "사용자는 감정을 선택하고, 해당 감정을 컬러 톤으로 기록한다.",
-
-      "→ 기록된 감정은 음악 추천으로 연결되며, 캘린더에 누적되어 개인 감정 아카이브를 형성한다.",
-
-      "핵심 흐름은 감정 선택 → 톤 기록 → 음악 추천 → 캘린더 저장 → 히스토리 확인으로 이어진다.",
+      "사용자는 먼저 오늘의 상태를 Color Tone으로 고르고, 그 톤과 연결된 Sound Tone 안에서 음악을 감상한다.",
+      "이 경험은 재생으로 끝나지 않고 캘린더에 하루의 감정 레이어로 누적되며 개인 아카이브를 만든다.",
+      "핵심 여정은 상태 선택 → 감정 몰입 → 기록 축적의 3단계로 정리된다.",
     ),
+    uxFlowEditorial: {
+      title: "감정 경험의 흐름",
+      steps: ["상태를 고른다", "음악에 머문다", "감정이 기록으로 남는다"],
+    },
     prototype: {
       href: "https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1",
       prototypeMobileThumbSlot: true,
       description:
-        "모바일 스케일에서 감정 선택 → 톤 기록 → 추천으로 이어지는 흐름을 그대로 검증했습니다. 모바일 프로토타입 카드를 누르면 Figma가 새 탭에서 열립니다.",
+        "초반에는 대표 화면만 보여주고, 상세/긴 모바일 흐름은 이 프로토타입 섹션으로 모아 스크롤 피로를 줄였습니다. 모바일 카드를 누르면 Figma에서 상태 선택 → 몰입 → 기록 축적 흐름을 연속으로 확인할 수 있습니다.",
       buttonLabel: "모바일 프로토타입 보기",
     },
     media: {
@@ -374,32 +385,27 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       sectionFigures: {
         solution: {
           src: tonePublic("tone-palette.png"),
-          alt: "팔레트 단계에서 감정별 팬톤 컬러를 탐색하는 화면",
+          alt: "오늘의 상태를 고르기 위한 감정 컬러 선택 화면",
           presentation: "palette",
         },
         uiDesign: {
           src: tonePublic("tone-player.png"),
-          alt: "감정 톤과 연결된 컬러 플레이어와 뮤직비디오 재생 화면 구성",
+          alt: "Color Tone이 Sound Tone으로 전환되는 플레이어 몰입 화면",
           presentation: "player",
-        },
-        result: {
-          src: tonePublic("tone-calendar.png"),
-          alt: "캘린더에 쌓인 하루하루의 감정 기록과 상세 화면",
-          presentation: "calendar",
         },
       },
     },
     solution: p(
-      "기능 나열보다 무드 탐색이 먼저 읽히도록, 팔레트를 감정의 입구처럼 열어두었다.",
-      "팬톤 컬러가 단순한 선택지가 아니라 그날의 분위기로 느껴지게, 여유 있는 호흡으로 톤을 넘길 수 있게 구성했다.",
+      "Palette는 컬러를 고르는 기능 화면이 아니라, 사용자가 오늘의 상태를 먼저 자각하게 만드는 첫 진입점으로 설계했다.",
+      "선택지는 많은 옵션 대신 감정 단위로 압축해 결정 피로를 줄였고, 한 번의 선택이 다음 경험으로 이어질 수 있도록 진입 리듬을 단순화했다.",
     ),
     uiDesign: p(
-      "감정에서 음악으로 넘어갈 때 시선이 갑자게 끊기지 않게, 같은 색의 레이어 위에 플레이어와 MV를 포개었다.",
-      "컬러 UI와 영상 플레이어가 한 덩어리로 읽히면서 몰입이 이어진다고 느낄 때 흐름이 완성된다고 생각했다.",
+      "Player는 재생 컨트롤을 나열하는 구간이 아니라, Color Tone이 Sound Tone으로 자연스럽게 이어지는 전환의 순간에 집중했다.",
+      "같은 톤의 레이어 안에서 컬러와 사운드가 함께 반응하도록 구성해 사용자가 기능을 조작하기보다 감정에 머무는 경험을 우선하도록 만들었다.",
     ),
     result: p(
-      "캘린더 줄은 새 기능이 아니라, 지나온 하루의 감정이 겹겹이 포개인 아카이브처럼 읽히게 두었다.",
-      "날짜를 따라가며 열어보는 카드 하나하나가 오늘의 상태를 저장한 기록처럼 남도록 배치했다.",
+      "Calendar는 데이터를 모아두는 저장소가 아니라, 하루의 상태가 시간축 위에 남는 감정 아카이브로 읽히도록 설계했다.",
+      "사용자는 날짜를 다시 열어보며 그날의 색과 음악을 함께 회상할 수 있고, 기록 행위 자체가 서비스 재방문 동기가 되도록 경험을 구성했다.",
     ),
     learnings: p(
       "감정을 기반으로 한 UX 설계에서 '기록 경험'이 사용자 몰입을 높인다는 것을 이해했다.",

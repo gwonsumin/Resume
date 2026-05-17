@@ -93,6 +93,7 @@ export function CaseStudyTemplate({
   titleId,
 }: CaseStudyTemplateProps) {
   const baseId = project.id
+  const isToneCase = baseId === 'tone'
   const normalizedTagSet = new Set(project.tags.map((tag) => tag.trim().toLowerCase()))
   const toolTags = project.techStack.filter((tool) => !normalizedTagSet.has(tool.trim().toLowerCase()))
   const prototypeLinks = content.prototype
@@ -138,9 +139,77 @@ export function CaseStudyTemplate({
         prototypeMobileHref),
   )
   const livePreviewFigure = content.media?.livePreview?.src
+  const heroFlowLabels = content.heroNarrative?.flowLabels
+  const uxFlowEditorial = content.uxFlowEditorial
+  const prototypeAnchorKey: (typeof SECTIONS)[number]['key'] = isToneCase ? 'result' : 'iaUserFlow'
+  const usedProgramsBlock = (
+    <div className="case-study__programs" aria-label="프로젝트 사용 프로그램">
+      <span className="case-study__programs-label">Used Programs</span>
+      <ul className="case-study__tags case-study__tags--programs" role="list">
+        {project.techStack.map((tool) => (
+          <li key={tool} className="case-study__tags-tool">
+            {tool}
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+  const serviceExperienceBlock = (
+    <CaseStudyBlock
+      id={
+        content.serviceExperience
+          ? `${baseId}-service-experience`
+          : `${baseId}-live-preview`
+      }
+      title={
+        content.serviceExperience?.title ??
+        '실서비스 검증'
+      }
+    >
+      {content.serviceExperience ? (
+        <ServiceExperienceSection
+          description={content.serviceExperience.description}
+          mobileNotice={content.serviceExperience.mobileNotice}
+          serviceLinks={content.serviceExperience.serviceLinks}
+          verificationPoints={content.serviceExperience.verificationPoints}
+          testAccountLead={content.serviceExperience.testAccountLead}
+          demoTestId={project.demoTestId}
+          demoTestPassword={project.demoTestPassword}
+        />
+      ) : (
+        <>
+          <CaseStudyProse
+            body={
+              content.livePreview?.description ??
+              'Open the current build or project note when a public preview is available.'
+            }
+          />
+          {livePreviewFigure ? (
+            <CaseStudyFigure
+              src={livePreviewFigure}
+              alt={content.media?.livePreview?.alt ?? ''}
+              variant="section"
+            />
+          ) : null}
+          {content.livePreview ? (
+            <p className="case-study__live-action">
+              <a
+                className="case-study__button"
+                href={content.livePreview.href}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                {content.livePreview.buttonLabel ?? '실서비스 보기'}
+              </a>
+            </p>
+          ) : null}
+        </>
+      )}
+    </CaseStudyBlock>
+  )
 
   return (
-    <article className="case-study" lang="en">
+    <article className={`case-study${isToneCase ? ' case-study--tone' : ''}`} lang="en">
       <header className="case-study__header">
         {hasStaggeredHero && staggeredScreens ? (
           <HeroEmotionFlow variant="header" screens={staggeredScreens} loading="eager" />
@@ -189,24 +258,57 @@ export function CaseStudyTemplate({
             </div>
           )
         ) : null}
-        <div className="case-study__meta-row">
-          <span>{project.visual.label}</span>
-          <span>{project.visual.meta}</span>
-        </div>
-        <h1 className="case-study__title" id={titleId}>
-          {project.title}
-        </h1>
-        <p className="case-study__summary">{project.description}</p>
-        <ul className="case-study__tags" role="list" aria-label="Project tags">
-          {project.tags.map((tag) => (
-            <li key={tag}>{tag}</li>
-          ))}
-          {toolTags.map((tool) => (
-            <li key={tool} className="case-study__tags-tool">
-              {tool}
-            </li>
-          ))}
-        </ul>
+        {isToneCase && content.heroNarrative ? (
+          <div className="case-study__hero-story">
+            <h1 className="case-study__title case-study__title--tone" id={titleId}>
+              {content.heroNarrative.leadTitle ?? project.title}
+            </h1>
+            <div className="case-study__hero-message">
+              {renderCaseStudyBody(content.heroNarrative.coreMessage).map((line) => (
+                <p key={line} className="case-study__hero-message-line">
+                  {line}
+                </p>
+              ))}
+            </div>
+            {heroFlowLabels ? (
+              <ol className="case-study__hero-flow" aria-label="Color Tone에서 Archive까지의 흐름">
+                {heroFlowLabels.map((label, index) => (
+                  <li key={label} className="case-study__hero-flow-item">
+                    <span>{label}</span>
+                    {index < heroFlowLabels.length - 1 ? (
+                      <span className="case-study__hero-flow-arrow" aria-hidden="true">
+                        →
+                      </span>
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
+            ) : null}
+            {usedProgramsBlock}
+          </div>
+        ) : (
+          <>
+            <div className="case-study__meta-row">
+              <span>{project.visual.label}</span>
+              <span>{project.visual.meta}</span>
+            </div>
+            <h1 className="case-study__title" id={titleId}>
+              {project.title}
+            </h1>
+            <p className="case-study__summary">{project.description}</p>
+            <ul className="case-study__tags" role="list" aria-label="Project tags">
+              {project.tags.map((tag) => (
+                <li key={tag}>{tag}</li>
+              ))}
+              {toolTags.map((tool) => (
+                <li key={tool} className="case-study__tags-tool">
+                  {tool}
+                </li>
+              ))}
+            </ul>
+            {usedProgramsBlock}
+          </>
+        )}
       </header>
 
       <div className="case-study__body">
@@ -249,58 +351,7 @@ export function CaseStudyTemplate({
             </div>
           </CaseStudyBlock>
         ) : null}
-
-        <CaseStudyBlock
-          id={
-            content.serviceExperience
-              ? `${baseId}-service-experience`
-              : `${baseId}-live-preview`
-          }
-          title={
-            content.serviceExperience?.title ??
-            '실서비스 검증'
-          }
-        >
-          {content.serviceExperience ? (
-            <ServiceExperienceSection
-              description={content.serviceExperience.description}
-              mobileNotice={content.serviceExperience.mobileNotice}
-              serviceLinks={content.serviceExperience.serviceLinks}
-              verificationPoints={content.serviceExperience.verificationPoints}
-              testAccountLead={content.serviceExperience.testAccountLead}
-              demoTestId={project.demoTestId}
-              demoTestPassword={project.demoTestPassword}
-            />
-          ) : (
-            <>
-              <CaseStudyProse
-                body={
-                  content.livePreview?.description ??
-                  'Open the current build or project note when a public preview is available.'
-                }
-              />
-              {livePreviewFigure ? (
-                <CaseStudyFigure
-                  src={livePreviewFigure}
-                  alt={content.media?.livePreview?.alt ?? ''}
-                  variant="section"
-                />
-              ) : null}
-              {content.livePreview ? (
-                <p className="case-study__live-action">
-                  <a
-                    className="case-study__button"
-                    href={content.livePreview.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                  >
-                    {content.livePreview.buttonLabel ?? '실서비스 보기'}
-                  </a>
-                </p>
-              ) : null}
-            </>
-          )}
-        </CaseStudyBlock>
+        {!isToneCase ? serviceExperienceBlock : null}
 
         {SECTIONS.map(({ key, domId, title }) => {
           const sectionFigure = content.media?.sectionFigures?.[key]
@@ -342,7 +393,23 @@ export function CaseStudyTemplate({
                   </>
                 )}
               </CaseStudyBlock>
-              {key === 'iaUserFlow' && content.prototype ? (
+              {key === 'iaUserFlow' && uxFlowEditorial ? (
+                <CaseStudyBlock id={`${baseId}-ux-flow-editorial`} title={uxFlowEditorial.title}>
+                  <ol className="case-study__ux-flow-editorial" role="list" aria-label="핵심 감정 경험 흐름">
+                    {uxFlowEditorial.steps.map((step, index) => (
+                      <li key={step} className="case-study__ux-flow-step">
+                        <span className="case-study__ux-flow-step-label">{step}</span>
+                        {index < uxFlowEditorial.steps.length - 1 ? (
+                          <span className="case-study__ux-flow-step-arrow" aria-hidden="true">
+                            ↓
+                          </span>
+                        ) : null}
+                      </li>
+                    ))}
+                  </ol>
+                </CaseStudyBlock>
+              ) : null}
+              {key === prototypeAnchorKey && content.prototype ? (
                 <CaseStudyBlock id={`${baseId}-prototype`} title="프로토타입 검증">
                   {prototypeHasVisualSplit ? (
                     <div
@@ -487,6 +554,7 @@ export function CaseStudyTemplate({
             </div>
           )
         })}
+        {isToneCase ? serviceExperienceBlock : null}
       </div>
     </article>
   )
