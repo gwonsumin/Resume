@@ -16,54 +16,60 @@ function p(...lines: string[]): readonly string[] {
 
 const GOREON_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   {
-    label: "메인",
+    label: "질문으로 시작",
     href: `${GOREON_DEPLOY_ORIGIN}/`,
     featured: false,
-    description: "홈 화면과 주요 진입 동선을 확인할 수 있습니다.",
+    description:
+      "사용자 조건을 단계적으로 정리하는 첫 진입 흐름을 확인하실 수 있습니다.",
   },
   {
-    label: "AI 추천",
+    label: "후보 압축",
     href: `${GOREON_DEPLOY_ORIGIN}/#ai_chat`,
     featured: true,
     description:
-      "메인의 AI 대화 영역으로 스크롤해 맞춤 추천 흐름을 확인할 수 있습니다.",
+      "대화 입력을 통해 조건이 결정 가능한 후보로 좁혀지는 흐름을 확인하실 수 있습니다.",
   },
   {
-    label: "상품 탐색",
+    label: "후보 탐색",
     href: `${GOREON_DEPLOY_ORIGIN}/list`,
     featured: true,
-    description: "목록에서 카테고리·검색 기반 상품 탐색을 확인할 수 있습니다.",
+    description:
+      "비교 대상 후보를 탐색하고 선택 기준을 마련하는 화면을 확인하실 수 있습니다.",
   },
   {
-    label: "상품 상세",
+    label: "판단 근거",
     href: `${GOREON_DEPLOY_ORIGIN}/product/1`,
     featured: false,
-    description: "샘플 상품 상세·옵션·리뷰 구조를 확인할 수 있습니다.",
+    description:
+      "상세 정보에서 선택 판단에 필요한 근거가 어떻게 정리되는지 확인하실 수 있습니다.",
   },
   {
-    label: "찜",
+    label: "저장",
     href: `${GOREON_DEPLOY_ORIGIN}/wishlist`,
     featured: false,
-    description: "로그인 후 저장한 상품 목록 흐름을 확인할 수 있습니다.",
+    description:
+      "즉시 구매하지 않아도 후보를 저장하고 다시 비교할 수 있는 흐름을 확인하실 수 있습니다.",
   },
   {
-    label: "장바구니",
+    label: "구매 전환",
     href: `${GOREON_DEPLOY_ORIGIN}/cart`,
     featured: false,
-    description: "담기·수량·이동 등 장바구니 단계를 확인할 수 있습니다.",
+    description:
+      "저장한 후보를 최종 선택으로 정리해 구매로 이어가는 단계를 확인하실 수 있습니다.",
   },
   {
-    label: "로그인",
+    label: "연속 경험",
     href: `${GOREON_DEPLOY_ORIGIN}/login`,
     featured: false,
-    description: "테스트 계정으로 로그인해 찜·장바구니를 검증할 수 있습니다.",
+    description:
+      "로그인 후 저장과 구매 흐름이 끊기지 않고 이어지는 경험을 검증하실 수 있습니다.",
   },
 ];
 
 const GOREON_VERIFICATION_POINTS: readonly string[] = [
-  "핵심 커머스 플로우 확인 가능",
-  "AI 추천 기능 실제 동작 확인 가능",
-  "로그인 기반 찜/장바구니 흐름 확인 가능",
+  "질문에서 후보 압축으로 이어지는 판단 시작 흐름을 확인하실 수 있습니다.",
+  "비교-저장-재진입으로 이어지는 선택 유지 구조를 확인하실 수 있습니다.",
+  "로그인 후 저장과 구매 전환이 연속적으로 이어지는 흐름을 확인하실 수 있습니다.",
 ];
 
 /** Paths match `frontend/src/router/index.js` on gwonsumin/TONE (main). */
@@ -101,7 +107,8 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   {
     label: "Palette Log",
     title: "저장한 플레이리스트",
-    description: "저장한 컬러 플레이리스트가 쌓이는 팔레트 로그 구조를 확인할 수 있습니다.",
+    description:
+      "저장한 컬러 플레이리스트가 쌓이는 팔레트 로그 구조를 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/palette-log`,
   },
   {
@@ -113,7 +120,8 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   {
     label: "Search",
     title: "AI 검색 추천",
-    description: "검색 화면에서 자연어 기반 컬러 플레이리스트 추천 흐름을 확인할 수 있습니다.",
+    description:
+      "검색 화면에서 자연어 기반 컬러 플레이리스트 추천 흐름을 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/search`,
   },
 ];
@@ -156,44 +164,52 @@ function makeCaseStudy(
 const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
   goreon: makeCaseStudy("GOREON", {
     intro: p(
-      "전자기기 선택의 복잡함을 AI 추천 흐름으로 줄인 쇼핑몰 UX.",
-      "GOREON은 사용자의 선택 정보를 바탕으로 맞춤형 전자기기를 추천하고, 탐색부터 비교, 저장, 구매까지 이어지는 쇼핑 경험을 설계한 AI 기반 커머스 프로젝트입니다.",
+      "GOREON은 전자기기 선택 과정에서 발생하는 판단 피로를 줄이기 위해 설계한 UX 프로젝트입니다.",
+      "사용자가 자신의 조건을 단계적으로 정리하고, 결정 가능한 후보로 좁혀가며, 비교와 저장을 거쳐 구매까지 이어지도록 경험을 구성했습니다.",
     ),
+    sectionTitles: {
+      problem: "Problem",
+      insight: "Insight",
+      solution: "Solution",
+      iaUserFlow: "UX Flow",
+      result: "Key Experience",
+      learnings: "Learnings",
+    },
     myRole: {
       summary: p(
-        "권수민은 4주 전 구간을 디자인팀 팀장으로 리드하며, 기획-디자인-구현을 하나의 UX 의사결정 체계로 연결했습니다.",
-        "AI 인터랙션과 구매 전환 흐름을 단일 여정으로 설계해 탐색 중심 쇼핑을 선택 중심 경험으로 전환했습니다.",
+        "권수민은 4주 동안 프로젝트 전 구간을 리드하며 문제 정의부터 화면 구현까지 하나의 UX 의사결정 체계로 연결했습니다.",
+        "기능 나열이 아니라 선택 흐름 설계를 기준으로 화면 우선순위를 정리해, 사용자의 결정 부담을 줄이는 방향으로 프로젝트를 완성했습니다.",
       ),
       roles: [
         {
           title: "UX Flow Design",
           detail:
-            "1-2주차에 탐색 → AI 추천 → 비교 → 저장 → 구매를 핵심 여정으로 정의하고, 화면 우선순위를 이 흐름에 고정했습니다.",
+            "1-2주차에 묻기 → 좁히기 → 비교하기 → 저장하기 → 구매하기 여정을 핵심 흐름으로 정의하고, 화면 우선순위를 이 순서에 맞췄습니다.",
         },
         {
           title: "AI Chat Interaction Design",
           detail:
-            "AI 입력, 추천 결과, 추천 기록 재진입 구조를 설계해 재입력 없이 선택을 이어가는 대화형 추천 경험을 만들었습니다.",
+            "질문과 응답이 반복될수록 후보가 압축되는 대화 구조를 설계해, 재입력 없이도 판단을 이어갈 수 있도록 만들었습니다.",
         },
         {
           title: "Core Screen UI Design",
           detail:
-            "2-3주차에 메인, 검색, 리스트, 상세의 정보 계층과 CTA 리듬을 통일해 비교 판단 정보가 빠르게 읽히는 UI를 구축했습니다.",
+            "2-3주차에 메인, 후보 목록, 상세 화면의 정보 계층과 액션 리듬을 통일해 비교 판단 정보가 빠르게 읽히도록 구성했습니다.",
         },
         {
           title: "Purchase Flow UX Design",
           detail:
-            "장바구니-결제-리뷰를 단절 없이 연결하고, 단계별 상태 피드백을 명확히 설계해 이탈 요인을 줄였습니다.",
+            "저장한 후보가 구매 단계로 자연스럽게 이어지도록 전환 흐름을 정리하고, 단계별 상태 피드백을 명확히 설계했습니다.",
         },
         {
           title: "Design System Direction",
           detail:
-            "컴포넌트, 폼, 상태 표현 규칙을 문서화해 화면 일관성을 확보하고 구현 해석 오차를 줄였습니다.",
+            "컴포넌트와 상태 표현 규칙을 문서화해 화면 간 해석 오차를 줄이고 선택 흐름의 일관성을 확보했습니다.",
         },
         {
           title: "React Frontend Collaboration",
           detail:
-            "3-4주차에 React 화면 일부를 직접 구현하고 UX 의도를 상태/컴포넌트 단위로 정렬해 디자인-개발 간극을 줄였습니다.",
+            "3-4주차에 React 화면 일부를 직접 구현하며 UX 의도를 상태/컴포넌트 단위로 정렬해 디자인-개발 간 간극을 줄였습니다.",
         },
       ],
       contributions: [
@@ -201,54 +217,57 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
         { label: "디자인팀 리딩", percentage: 100 },
         { label: "UX Flow / IA 설계", percentage: 90 },
         { label: "핵심 UI 설계", percentage: 90 },
-        { label: "프론트 구현", percentage: 60 },
+        { label: "프론트 구현", percentage: 40 },
       ],
     },
     problem: p(
-      "전자기기 쇼핑은 제품 종류, 스펙, 가격, 리뷰 등 비교해야 할 정보가 많아 사용자가 빠르게 결정을 내리기 어렵습니다.",
-      "특히 자신에게 맞는 상품을 찾기 전까지 검색과 카테고리 탐색을 반복해야 하는 부담이 있습니다.",
+      "전자기기 쇼핑에서는 비교해야 할 정보가 많아 사용자가 무엇부터 판단해야 하는지부터 막히는 경우가 많습니다.",
+      "특히 자신에게 맞는 후보를 찾기 전까지 탐색을 반복해야 하므로, 결정 이전 단계에서 피로가 빠르게 누적되는 문제가 있었습니다.",
     ),
     insight: p(
-      "문제의 핵심은 상품 정보가 부족한 것이 아니라, 사용자가 자신의 조건에 맞는 제품 후보를 좁히기 어렵다는 점이었습니다.",
-      "따라서 쇼핑 경험의 중심을 단순 탐색에서 사용자 선택 기반 추천 흐름으로 전환해야 한다고 판단했습니다.",
-    ),
-    iaUserFlow: p(
-      "사용자는 검색 또는 카테고리로 상품을 탐색하고, AI 추천을 통해 자신에게 맞는 제품 후보를 확인합니다.",
-      "추천 결과는 다시 확인할 수 있는 기록으로 남기고, 상품 상세, 찜, 장바구니, 주문 흐름으로 연결했습니다.",
-      "전체 여정은 탐색 → AI 추천 → 비교 → 저장 → 구매 순서로 설계했습니다.",
+      "문제의 핵심은 정보의 양이 아니라, 사용자가 자신의 조건을 결정 가능한 후보로 압축하기 어려운 구조에 있었습니다.",
+      "그래서 탐색 중심 화면을 확장하기보다, 질문을 통해 조건을 정리하고 비교 결정을 돕는 흐름 중심 UX로 전환해야 한다고 판단했습니다.",
     ),
     solution: p(
-      "GOREON은 사용자의 선택 정보를 바탕으로 AI 추천 흐름을 제공해 상품 탐색의 진입 장벽을 낮췄습니다.",
-      "추천 결과를 기록으로 다시 확인하고, 찜/장바구니/상세 페이지로 연결해 탐색이 실제 구매 행동으로 이어지도록 설계했습니다.",
-      "핵심 기능은 AI 기반 상품 추천, 카테고리 탐색, 추천 기록, 찜/장바구니 기반 구매 연결로 구성했습니다.",
+      "GOREON은 사용자의 조건을 단계적으로 묻고, 그 결과를 후보 압축으로 연결해 선택 시작점을 빠르게 만들도록 설계했습니다.",
+      "압축된 후보는 비교 근거가 읽히는 형태로 정리하고 저장/재진입 흐름과 연결해, 최종적으로 구매까지 자연스럽게 이어지도록 구성했습니다.",
     ),
+    iaUserFlow: p(
+      "사용자는 질문에 답하며 조건을 정리하고, 시스템은 조건에 맞는 후보를 압축해 제안합니다.",
+      "이후 사용자는 후보를 비교해 판단 근거를 확인하고, 바로 결정하지 못한 경우 저장한 뒤 다시 돌아와 선택을 이어갑니다.",
+      "최종적으로 선택된 후보는 구매 단계로 연결되어 탐색이 아닌 결정 중심 여정으로 마무리됩니다.",
+    ),
+    uxFlowEditorial: {
+      title: "선택 흐름 에디토리얼",
+      steps: ["묻습니다", "좁힙니다", "비교합니다", "저장합니다", "구매합니다"],
+    },
     uiDesign: p(
-      "카드에는 프로젝트의 핵심만 보이도록 AI 추천, 커머스, UX 흐름을 중심으로 정보를 압축했습니다.",
-      "상세 화면에서는 문제 정의, 사용자 흐름, 추천 기능의 역할, 구매 전환 구조를 순서대로 풀어 UX case study로 읽히도록 구성했습니다.",
-      "기술 스택은 카드에서 React, Redux Toolkit, Node.js, MongoDB만 노출하고, 상세에서는 Frontend, Backend, Database, UX/UI, Deploy 기준으로 분리했습니다.",
+      "각 화면은 기능 카드처럼 분절되지 않도록 하나의 결정 흐름 안에서 읽히는 타이포 계층과 정보 리듬으로 정리했습니다.",
+      "문장 → UX 의도 → 화면 순서를 유지해 사용자가 화면을 보기 전에 먼저 '왜 이 장면이 필요한지'를 이해할 수 있도록 구성했습니다.",
     ),
     result: p(
-      "상품 탐색 → AI 추천 → 비교 → 저장 → 구매로 이어지는 전자기기 쇼핑 UX 흐름을 구축했습니다.",
-      "정보가 많은 전자기기 구매 과정에서 사용자가 제품 후보를 빠르게 좁히고 다시 확인할 수 있는 구조를 만들었습니다.",
-      "기능 중심 프로젝트 설명을 UX 문제 해결 중심의 포트폴리오 콘텐츠로 재구성했습니다.",
+      "이 프로젝트를 통해 선택 시작 단계의 부담을 줄이고, 사용자가 후보를 더 빠르게 좁혀 비교할 수 있는 경험을 만들었습니다.",
+      "또한 저장 후 재진입 흐름을 명확히 설계해 즉시 결정을 강요하지 않으면서도 구매 전환으로 이어지는 구조를 완성했습니다.",
+      "결과적으로 GOREON은 기능 소개형 쇼핑몰이 아니라, 선택 흐름을 설계한 UX 사례로 읽히도록 정리되었습니다.",
     ),
     learnings: p(
-      "AI 기능은 독립된 기술 요소가 아니라 사용자의 의사결정 흐름 안에서 설계될 때 더 명확한 UX 가치가 생긴다는 점을 배웠습니다.",
-      "커머스 UX에서는 많은 기능을 보여주는 것보다 탐색, 비교, 저장, 구매의 흐름을 끊기지 않게 연결하는 구조가 중요하다는 것을 확인했습니다.",
+      "대화형 인터랙션은 기술 요소 자체보다 사용자 판단 흐름 안에 배치될 때 더 분명한 UX 가치를 만든다는 점을 배웠습니다.",
+      "또한 커머스 UX에서는 기능 수를 늘리는 것보다 질문-압축-비교-저장-구매 흐름을 끊기지 않게 연결하는 구조가 핵심임을 확인했습니다.",
+      "이전에 TONE 프로젝트와 다른 색감을 사용하면서 목적에 따라 더 효과적인 디자인을 완성시킬 수 있다는 것을 배웠습니다.",
     ),
     serviceExperience: {
       title: "실제 서비스 체험",
       description:
-        "AI 추천부터 상품 탐색, 찜, 장바구니까지 실제 배포 환경에서 검증할 수 있습니다.",
+        "질문으로 조건을 정리하고 후보를 좁힌 뒤 비교, 저장, 구매로 이어지는 흐름을 실제 서비스에서 확인하실 수 있습니다.",
       serviceLinks: GOREON_SERVICE_LINKS,
       verificationPoints: GOREON_VERIFICATION_POINTS,
       testAccountLead:
-        "로그인 후 찜과 장바구니 흐름을 확인할 수 있습니다.",
+        "로그인 후 저장부터 구매 전환까지 연속 흐름을 검증하실 수 있습니다.",
     },
     prototype: {
       href: "https://www.figma.com/proto/zvSNQN4Jn8jAxxiT2zo7uc/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=430-5154&t=3c6ZDjaV8B54Ibax-0&scaling=min-zoom&content-scaling=fixed&page-id=172%3A1911&starting-point-node-id=430%3A5154",
       description:
-        "PC/모바일 두 가지 버전의 Figma 프로토타입을 통해 핵심 사용자 흐름과 인터랙션 구성을 확인할 수 있습니다.",
+        "PC/모바일 프로토타입에서 묻기-압축-비교-저장-구매 흐름이 실제 인터랙션으로 어떻게 이어지는지 확인하실 수 있습니다.",
       buttonLabel: "PC 프로토타입 보기",
       extraLinks: [
         {
@@ -267,16 +286,6 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
         mobileSrc: goreonPublic("goreon-prototype-mobile.png"),
         desktopAlt: "GOREON PC 프로토타입 화면",
         mobileAlt: "GOREON 모바일 프로토타입 화면",
-      },
-      sectionFigures: {
-        solution: {
-          src: goreonPublic("goreon-ai-chat.png"),
-          alt: "GOREON AI 추천 대화·채팅형 선택 입력",
-        },
-        result: {
-          src: goreonPublic("goreon-review.png"),
-          alt: "GOREON 구매 후기·리뷰 화면",
-        },
       },
     },
   }),

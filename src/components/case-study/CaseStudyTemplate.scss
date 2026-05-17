@@ -588,39 +588,51 @@
 }
 
 .case-study__ux-flow-editorial {
-  display: grid;
-  gap: clamp(14px, 2.4vw, 20px);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.case-study__ux-flow-editorial::-webkit-scrollbar {
+  display: none;
 }
 
 .case-study__ux-flow-step {
-  display: grid;
-  justify-items: start;
-  gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
 }
 
 .case-study__ux-flow-step-label {
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  padding: 0 18px;
+  min-height: 40px;
+  padding: 0 14px;
   background: rgb(255 253 248 / 0.94);
   border: 1.5px solid rgb(59 47 47 / 0.24);
   border-radius: 999px;
   color: rgb(59 47 47 / 0.9);
-  font-size: clamp(1rem, 1.56vw, 1.16rem);
+  font-size: clamp(0.88rem, 1.2vw, 1rem);
   font-weight: 700;
   line-height: 1.2;
 }
 
 .case-study__ux-flow-step-arrow {
   color: rgb(59 47 47 / 0.46);
-  font-size: 1.3rem;
+  font-size: 1.08rem;
   font-weight: 600;
   line-height: 1;
-  transform: translateX(10px);
+  transform: none;
 }
 
 .case-study--tone .case-study__header {

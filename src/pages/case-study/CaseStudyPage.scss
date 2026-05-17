@@ -21,6 +21,14 @@
   border-top: 1px solid rgb(59 47 47 / 0.28);
 }
 
+.case-study-page__bottom-back {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: clamp(20px, 3.2vh, 30px);
+  padding-top: clamp(14px, 2.4vh, 22px);
+  border-top: 1px solid rgb(59 47 47 / 0.2);
+}
+
 .case-study-page__next-head {
   display: grid;
   gap: 10px;
@@ -248,6 +256,10 @@
 
   .case-study-page__next-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .case-study-page__bottom-back {
+    justify-content: flex-start;
   }
 }
 

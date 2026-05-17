@@ -19,7 +19,15 @@ export const selectedProjects: readonly ProjectPreview[] = [
       'AI 기반 전자기기 쇼핑에서 사용자의 상황을 이해하고 더 쉬운 선택을 돕는 추천 경험',
     subDescription:
       '복잡한 스펙과 비교 과정에서 발생하는 사용자의 선택 부담을 줄이기 위해, AI 대화 기반 추천과 비교 구조를 결합한 쇼핑 서비스',
-    techStack: ['React', 'Redux Toolkit', 'Node.js', 'MongoDB'],
+    techStack: [
+      'React',
+      'Redux Toolkit',
+      'Node.js',
+      'MongoDB',
+      'OpenAI API',
+      'Cloudflare R2',
+      'Figma',
+    ],
     tags: ['UX/UI Design', 'AI Recommendation', 'E-commerce', 'Frontend'],
     period: '2026.03 - 2026.04 (약 4주)',
     role: 'UX Flow Design · UI Design · Prototype · Frontend Collaboration',
@@ -41,7 +49,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     title: 'TONE',
     description:
       'TONE은 팬톤 컬러 기반의 데일리 톤과 플레이리스트를 제공하고, 사용자가 하루의 감정을 색과 음악으로 기록할 수 있도록 설계한 모바일 뮤직 플랫폼입니다.',
-    techStack: ['Vue', 'PHP', 'MySQL', 'Pinia', 'Figma'],
+    techStack: ['Vue', 'Pinia', 'PHP', 'MySQL', 'OpenAI API', 'Cloudflare R2'],
     tags: ['UX/UI', 'Vue', 'PHP', 'Emotion Record', 'Music Platform'],
     period: '2026.02 - 2026.03 (약 7주)',
     role: 'UX Flow Design · UI Design System · Prototype · Vue Frontend Collaboration',

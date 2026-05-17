@@ -149,6 +149,15 @@ export function CaseStudyPage() {
             ))}
           </ul>
         </section>
+        <div className="case-study-page__bottom-back">
+          <button
+            className="case-study-page__back"
+            type="button"
+            onClick={navigateBackToWorks}
+          >
+            Back to Works
+          </button>
+        </div>
       </div>
     </section>
   )
