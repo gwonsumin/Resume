@@ -43,6 +43,35 @@ export function ProjectCard({
       if (!deployUrl || !deployWindow) {
         return
       }
+
+      const openDeployInNewTab = () => {
+        window.open(deployUrl, '_blank', 'noopener,noreferrer')
+      }
+
+      const isTonePreview = deployWindow.name === 'TONEPreview'
+
+      if (isTonePreview) {
+        if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+          return
+        }
+        event.preventDefault()
+        const popup = window.open(
+          deployUrl,
+          deployWindow.name,
+          [
+            `width=${deployWindow.width}`,
+            `height=${deployWindow.height}`,
+            'scrollbars=yes',
+            'resizable=no',
+            'toolbar=no',
+          ].join(','),
+        )
+        if (!popup) {
+          openDeployInNewTab()
+        }
+        return
+      }
+
       const prefersDefaultTab =
         typeof window !== 'undefined' &&
         window.matchMedia(`(max-width: ${DEPLOY_TOGGLE_MAX_WIDTH_PX}px)`).matches
@@ -55,11 +84,10 @@ export function ProjectCard({
         `height=${deployWindow.height}`,
         'resizable=yes',
         'scrollbars=yes',
-        'noreferrer=yes',
       ].join(',')
       const opened = window.open(deployUrl, deployWindow.name, featureStr)
       if (!opened) {
-        window.open(deployUrl, '_blank', 'noopener,noreferrer')
+        openDeployInNewTab()
       }
     },
     [deployUrl, deployWindow],
