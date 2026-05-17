@@ -113,6 +113,18 @@
   text-transform: uppercase;
 }
 
+.case-study-page__next-thumb--stagger {
+  min-height: 0;
+  padding: 8px 6px 10px;
+  border-style: solid;
+  border-color: rgb(59 47 47 / 0.12);
+  background: rgb(255 247 238 / 0.55);
+}
+
+.case-study-page__next-thumb--stagger .case-study__hero-emotion-flow {
+  margin-inline: auto;
+}
+
 .case-study-page__next-meta {
   margin: 0;
   display: flex;

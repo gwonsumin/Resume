@@ -2,6 +2,7 @@ import type { ProjectCardData } from '../../types/project'
 import { Link } from 'react-router-dom'
 import type { MouseEvent } from 'react'
 import { useCallback } from 'react'
+import { HeroEmotionFlow } from '../case-study/HeroEmotionFlow'
 import projectCardClip from '../../assets/project/project-cardClip.svg'
 import './ProjectCard.scss'
 
@@ -26,6 +27,7 @@ export function ProjectCard({
   demoTestId,
   demoTestPassword,
   thumbnailSrc,
+  heroStaggeredScreens,
   onOpenCaseStudy,
   linkLabel = 'Open case study',
 }: ProjectCardProps) {
@@ -108,15 +110,25 @@ export function ProjectCard({
         className="project-card__clip"
         aria-hidden="true"
       />
-      {thumbnailSrc ? (
-        <div className="project-card__visual" aria-hidden="true">
+      {heroStaggeredScreens ? (
+        <div className="project-card__visual project-card__visual--emotion-flow">
+          <HeroEmotionFlow variant="project-card" screens={heroStaggeredScreens} loading="lazy" />
+        </div>
+      ) : thumbnailSrc ? (
+        <div className="project-card__visual project-card__visual--thumb">
           <img
             src={thumbnailSrc}
             alt=""
             className="project-card__visual-img"
+            aria-hidden="true"
           />
         </div>
-      ) : null}
+      ) : (
+        <div
+          className="project-card__visual project-card__visual--empty"
+          aria-hidden="true"
+        />
+      )}
       <div className="project-card__header">
         <span className="project-card__label">{visual.label}</span>
         <span className="project-card__status">{visual.meta}</span>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import { CaseStudyTemplate } from '../../components/case-study/CaseStudyTemplate'
+import { HeroEmotionFlow } from '../../components/case-study/HeroEmotionFlow'
 import { ROUTES } from '../../config/routes'
 import { getCaseStudyContent } from '../../data/caseStudyContent'
 import { getSelectedProjectBySlug, selectedProjects } from '../../data/projects'
@@ -111,10 +112,26 @@ export function CaseStudyPage() {
                   aria-label={`${item.title} 케이스 스터디 열기`}
                 >
                   <div
-                    className="case-study-page__next-thumb"
-                    aria-label={`${item.title} 프로젝트 분류`}
+                    className={
+                      item.heroStaggeredScreens
+                        ? 'case-study-page__next-thumb case-study-page__next-thumb--stagger'
+                        : 'case-study-page__next-thumb'
+                    }
+                    aria-label={
+                      item.heroStaggeredScreens
+                        ? `${item.title} 대표 화면 흐름`
+                        : `${item.title} 프로젝트 분류`
+                    }
                   >
-                    <span>{item.visual.label}</span>
+                    {item.heroStaggeredScreens ? (
+                      <HeroEmotionFlow
+                        variant="next"
+                        screens={item.heroStaggeredScreens}
+                        loading="lazy"
+                      />
+                    ) : (
+                      <span>{item.visual.label}</span>
+                    )}
                   </div>
                   <p className="case-study-page__next-meta">
                     <span>{item.visual.label}</span>

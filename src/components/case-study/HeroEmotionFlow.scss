@@ -1,0 +1,118 @@
+.case-study__hero-emotion-flow {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.28fr) minmax(0, 0.92fr);
+  align-items: flex-end;
+  justify-items: center;
+  gap: clamp(10px, 2.4vw, 24px);
+  justify-self: center;
+  margin-inline: auto;
+  width: min(100%, 620px);
+  padding:
+    clamp(6px, 2vw, 14px)
+    clamp(4px, 2vw, 12px)
+    clamp(14px, 2.8vw, 26px);
+  filter: drop-shadow(0 20px 28px rgb(59 47 47 / 0.05));
+}
+
+.case-study__hero-emotion-screen {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.case-study__hero-emotion-screen img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.case-study__hero-emotion-screen--center {
+  align-self: flex-start;
+  width: clamp(126px, 33vw, 236px);
+  z-index: 2;
+}
+
+.case-study__hero-emotion-screen--center img {
+  max-height: min(62vh, 560px);
+}
+
+.case-study__hero-emotion-screen--side {
+  width: clamp(104px, 26vw, 184px);
+  margin-top: clamp(18px, 4.2vw, 44px);
+  z-index: 1;
+}
+
+.case-study__hero-emotion-screen--side img {
+  max-height: min(46vh, 372px);
+}
+
+.case-study__hero-emotion-flow--compact {
+  gap: clamp(4px, 1.8vw, 10px);
+  padding: 4px 2px 8px;
+  filter: drop-shadow(0 8px 14px rgb(59 47 47 / 0.055));
+}
+
+.case-study__hero-emotion-flow--compact-project {
+  --emotion-flow-cap: 236px;
+
+  width: min(100%, var(--emotion-flow-cap));
+}
+
+.case-study__hero-emotion-flow--compact-next {
+  --emotion-flow-cap: 304px;
+
+  width: min(100%, var(--emotion-flow-cap));
+}
+
+.case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--center {
+  width: clamp(58px, 36%, 88px);
+  align-self: flex-start;
+}
+
+.case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--side {
+  width: clamp(48px, 30%, 74px);
+  margin-top: 6px;
+}
+
+.case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--center img {
+  max-height: 104px;
+}
+
+.case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--side img {
+  max-height: 76px;
+}
+
+@media (max-width: 47.99rem) {
+  .case-study__hero-emotion-flow:not(.case-study__hero-emotion-flow--compact) {
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.2fr) minmax(0, 0.94fr);
+    gap: clamp(8px, 2.2vw, 16px);
+    width: min(100%, 580px);
+  }
+}
+
+@media (max-width: 26rem) {
+  .case-study__hero-emotion-flow:not(.case-study__hero-emotion-flow--compact) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    gap: clamp(8px, 3vw, 14px);
+  }
+
+  .case-study__hero-emotion-flow:not(.case-study__hero-emotion-flow--compact)
+    .case-study__hero-emotion-screen--center {
+    order: -1;
+    flex: 0 0 min(228px, 82%);
+    margin-bottom: clamp(4px, 1.8vw, 10px);
+  }
+
+  .case-study__hero-emotion-flow:not(.case-study__hero-emotion-flow--compact)
+    .case-study__hero-emotion-screen--side {
+    flex: 0 1 clamp(96px, 36vw, 142px);
+    margin-top: 0;
+  }
+}

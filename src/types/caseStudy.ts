@@ -15,6 +15,8 @@ export type CaseStudySectionKey =
 export type CaseStudySectionFigure = {
   src: string
   alt?: string
+  /** Image block treatment inside case study body (tone palette / player / archive). */
+  presentation?: 'default' | 'palette' | 'player' | 'calendar'
 }
 
 /** Optional real screenshots for case study blocks. */
@@ -24,6 +26,12 @@ export type CaseStudyMedia = {
     mobileSrc?: string
     desktopAlt?: string
     mobileAlt?: string
+    /** Three mobile screenshots in a staggered “emotion sequence” row (center dominant). */
+    staggeredScreens?: {
+      left: CaseStudySectionFigure
+      center: CaseStudySectionFigure
+      right: CaseStudySectionFigure
+    }
   }
   prototype?: {
     desktopSrc?: string
@@ -67,6 +75,8 @@ type CaseStudyPrototype = {
   /** Defaults to a standard description when omitted. */
   description?: string
   buttonLabel?: string
+  /** Single mobile thumbnail in the same `proto-entry`/`protoThumb` layout as GOREON (right column). */
+  prototypeMobileThumbSlot?: boolean
   extraLinks?: readonly {
     href: string
     buttonLabel: string
@@ -105,4 +115,6 @@ export type CaseStudyContent = {
   serviceExperience?: CaseStudyServiceExperience
   prototype?: CaseStudyPrototype
   media?: CaseStudyMedia
+  /** Optional per-section headings (defaults to CaseStudyTemplate copy). */
+  sectionTitles?: Partial<Record<CaseStudySectionKey, string>>
 }

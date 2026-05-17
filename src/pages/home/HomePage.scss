@@ -108,10 +108,32 @@
   padding: 0;
   display: grid;
   gap: clamp(22px, 4vw, 36px);
-  align-items: start;
+  align-items: stretch;
+}
+
+#case-study .project-grid__item {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#case-study .project-grid__item > .project-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#case-study .project-grid__item > .project-grid__coming {
+  flex: 1;
+  min-height: 0;
 }
 
 @media (min-width: 48rem) {
+  #case-study .project-grid__item .project-card__link {
+    min-height: 608px;
+  }
+
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: clamp(20px, 2.8vw, 32px);

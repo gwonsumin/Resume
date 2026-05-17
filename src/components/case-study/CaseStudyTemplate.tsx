@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import type { ProjectPreview } from '../../types/project'
-import type { CaseStudyBody, CaseStudyContent } from '../../types/caseStudy'
+import type { CaseStudyBody, CaseStudyContent, CaseStudySectionFigure } from '../../types/caseStudy'
+import { HeroEmotionFlow } from './HeroEmotionFlow'
 import './CaseStudyTemplate.scss'
 
 const SECTIONS: ReadonlyArray<{
@@ -39,14 +40,23 @@ function CaseStudyFigure({
   alt,
   variant = 'section',
   loading = 'lazy',
+  tonePresentation,
 }: {
   src: string
   alt: string
   variant?: 'hero' | 'heroCompact' | 'section' | 'heroPosterMain' | 'heroPosterInset' | 'protoThumb' | 'heroLead'
   loading?: 'lazy' | 'eager'
+  tonePresentation?: CaseStudySectionFigure['presentation']
 }) {
+  const toneClass =
+    variant === 'section' &&
+    tonePresentation &&
+    tonePresentation !== 'default'
+      ? ` case-study__figure--tone-${tonePresentation}`
+      : ''
+
   return (
-    <figure className={`case-study__figure case-study__figure--${variant}`}>
+    <figure className={`case-study__figure case-study__figure--${variant}${toneClass}`}>
       <img src={src} alt={alt} loading={loading} decoding="async" />
     </figure>
   )
@@ -132,18 +142,41 @@ export function CaseStudyTemplate({
 
   const heroDesktop = content.media?.hero?.desktopSrc
   const heroMobile = content.media?.hero?.mobileSrc
+  const staggeredScreens = content.media?.hero?.staggeredScreens
+  const hasStaggeredHero = Boolean(
+    staggeredScreens?.left?.src &&
+      staggeredScreens?.center?.src &&
+      staggeredScreens?.right?.src,
+  )
   const hasHero = Boolean(heroDesktop || heroMobile)
   const heroSingleColumn = Boolean(heroDesktop && !heroMobile) || Boolean(!heroDesktop && heroMobile)
 
   const prototypeDesktop = content.media?.prototype?.desktopSrc
   const prototypeMobile = content.media?.prototype?.mobileSrc
   const hasPrototypeMedia = Boolean(prototypeDesktop && prototypeMobile)
+  const prototypeMobileThumbSlot = Boolean(
+    content.prototype?.prototypeMobileThumbSlot &&
+      content.prototype.href &&
+      content.media?.prototype?.mobileSrc,
+  )
+  const prototypeHasVisualSplit = Boolean(
+    (prototypeMobileThumbSlot &&
+      content.prototype?.href &&
+      content.media?.prototype?.mobileSrc) ||
+      (hasPrototypeMedia &&
+        prototypeDesktop &&
+        prototypeMobile &&
+        prototypeDesktopHref &&
+        prototypeMobileHref),
+  )
   const livePreviewFigure = content.media?.livePreview?.src
 
   return (
     <article className="case-study" lang="en">
       <header className="case-study__header">
-        {hasHero ? (
+        {hasStaggeredHero && staggeredScreens ? (
+          <HeroEmotionFlow variant="header" screens={staggeredScreens} loading="eager" />
+        ) : hasHero ? (
           heroDesktop && heroMobile ? (
             <div className="case-study__hero-poster" aria-label="대표 화면">
               <div className="case-study__hero-poster-canvas">
@@ -373,95 +406,184 @@ export function CaseStudyTemplate({
 
         {SECTIONS.map(({ key, domId, title }) => {
           const sectionFigure = content.media?.sectionFigures?.[key]
+          const sectionTitle = content.sectionTitles?.[key] ?? title
+          const toneFigurePresentation =
+            sectionFigure?.presentation === 'palette' ||
+            sectionFigure?.presentation === 'player' ||
+            sectionFigure?.presentation === 'calendar'
+          const toneFigureSplit = Boolean(sectionFigure && toneFigurePresentation)
 
           return (
             <div key={key} className="case-study__section-stack">
-              <CaseStudyBlock id={`${baseId}-${domId}`} title={title}>
-                <Prose body={content[key]} />
-                {sectionFigure ? (
-                  <CaseStudyFigure
-                    src={sectionFigure.src}
-                    alt={sectionFigure.alt ?? ''}
-                    variant="section"
-                  />
-                ) : null}
+              <CaseStudyBlock id={`${baseId}-${domId}`} title={sectionTitle}>
+                {toneFigureSplit && sectionFigure ? (
+                  <div className="case-study__split-body case-study__split-body--tone">
+                    <div className="case-study__split-body-copy">
+                      <Prose body={content[key]} />
+                    </div>
+                    <div className="case-study__split-body-media">
+                      <CaseStudyFigure
+                        src={sectionFigure.src}
+                        alt={sectionFigure.alt ?? ''}
+                        variant="section"
+                        tonePresentation={sectionFigure.presentation}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <Prose body={content[key]} />
+                    {sectionFigure ? (
+                      <CaseStudyFigure
+                        src={sectionFigure.src}
+                        alt={sectionFigure.alt ?? ''}
+                        variant="section"
+                        tonePresentation={sectionFigure.presentation}
+                      />
+                    ) : null}
+                  </>
+                )}
               </CaseStudyBlock>
               {key === 'iaUserFlow' && content.prototype ? (
                 <CaseStudyBlock id={`${baseId}-prototype`} title="프로토타입 검증">
-                  <Prose
-                    body={
-                      content.prototype.description ??
-                      'Prototype links and interaction notes are collected here.'
-                    }
-                  />
-                  {hasPrototypeMedia &&
-                  prototypeDesktop &&
-                  prototypeMobile &&
-                  prototypeDesktopHref &&
-                  prototypeMobileHref ? (
-                    <div className="case-study__proto-entries">
-                      <a
-                        className="case-study__proto-entry"
-                        href={prototypeDesktopHref}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        <figure className="case-study__figure case-study__figure--protoThumb">
-                          <img
-                            src={prototypeDesktop}
-                            alt={content.media?.prototype?.desktopAlt ?? ''}
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        </figure>
-                        <span className="case-study__proto-entry-title">Desktop prototype</span>
-                        <span className="case-study__proto-entry-note">Figma · 주요 데스크톱 흐름</span>
-                      </a>
-                      <a
-                        className="case-study__proto-entry"
-                        href={prototypeMobileHref}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        <figure className="case-study__figure case-study__figure--protoThumb">
-                          <img
-                            src={prototypeMobile}
-                            alt={content.media?.prototype?.mobileAlt ?? ''}
-                            loading="lazy"
-                            decoding="async"
-                          />
-                        </figure>
-                        <span className="case-study__proto-entry-title">Mobile prototype</span>
-                        <span className="case-study__proto-entry-note">Figma · 모바일 스케일 흐름</span>
-                      </a>
+                  {prototypeHasVisualSplit ? (
+                    <div
+                      className={
+                        prototypeMobileThumbSlot
+                          ? 'case-study__split-body case-study__split-body--tone case-study__split-body--proto case-study__split-body--proto-slot-only'
+                          : 'case-study__split-body case-study__split-body--tone case-study__split-body--proto'
+                      }
+                    >
+                      <div className="case-study__split-body-copy">
+                        <Prose
+                          body={
+                            content.prototype.description ??
+                            'Prototype links and interaction notes are collected here.'
+                          }
+                        />
+                      </div>
+                      <div className="case-study__split-body-media">
+                        {prototypeMobileThumbSlot &&
+                        content.prototype.href &&
+                        content.media?.prototype?.mobileSrc ? (
+                          <div className="case-study__proto-entries case-study__proto-entries--mobile-slot">
+                            <a
+                              className="case-study__proto-entry"
+                              href={content.prototype.href}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              <figure className="case-study__figure case-study__figure--protoThumb">
+                                <img
+                                  src={content.media.prototype.mobileSrc}
+                                  alt={
+                                    content.media.prototype.mobileAlt ?? '모바일 프로토타입 미리보기'
+                                  }
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              </figure>
+                              <span className="case-study__proto-entry-title">
+                                Mobile prototype
+                              </span>
+                              <span className="case-study__proto-entry-note">
+                                Figma · 모바일 스케일 흐름
+                              </span>
+                            </a>
+                          </div>
+                        ) : null}
+                        {hasPrototypeMedia &&
+                        prototypeDesktop &&
+                        prototypeMobile &&
+                        prototypeDesktopHref &&
+                        prototypeMobileHref ? (
+                          <div className="case-study__proto-entries">
+                            <a
+                              className="case-study__proto-entry"
+                              href={prototypeDesktopHref}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              <figure className="case-study__figure case-study__figure--protoThumb">
+                                <img
+                                  src={prototypeDesktop}
+                                  alt={content.media?.prototype?.desktopAlt ?? ''}
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              </figure>
+                              <span className="case-study__proto-entry-title">
+                                Desktop prototype
+                              </span>
+                              <span className="case-study__proto-entry-note">
+                                Figma · 주요 데스크톱 흐름
+                              </span>
+                            </a>
+                            <a
+                              className="case-study__proto-entry"
+                              href={prototypeMobileHref}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              <figure className="case-study__figure case-study__figure--protoThumb">
+                                <img
+                                  src={prototypeMobile}
+                                  alt={content.media?.prototype?.mobileAlt ?? ''}
+                                  loading="lazy"
+                                  decoding="async"
+                                />
+                              </figure>
+                              <span className="case-study__proto-entry-title">
+                                Mobile prototype
+                              </span>
+                              <span className="case-study__proto-entry-note">
+                                Figma · 모바일 스케일 흐름
+                              </span>
+                            </a>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
-                  ) : null}
-                  {prototypeLinks.length > 0 &&
-                  !(
-                    hasPrototypeMedia &&
-                    prototypeDesktop &&
-                    prototypeMobile &&
-                    prototypeDesktopHref &&
-                    prototypeMobileHref
-                  ) ? (
-                    <ul className="case-study__proto-text-links" role="list">
-                      {prototypeLinks.map((link) => (
-                        <li key={`${link.buttonLabel}-${link.href}`}>
-                          <a
-                            className="case-study__text-link"
-                            href={link.href}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                          >
-                            {link.buttonLabel}
-                            <span className="case-study__text-link-arrow" aria-hidden="true">
-                              →
-                            </span>
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
+                  ) : (
+                    <>
+                      <Prose
+                        body={
+                          content.prototype.description ??
+                          'Prototype links and interaction notes are collected here.'
+                        }
+                      />
+                      {prototypeLinks.length > 0 &&
+                      !(
+                        hasPrototypeMedia &&
+                        prototypeDesktop &&
+                        prototypeMobile &&
+                        prototypeDesktopHref &&
+                        prototypeMobileHref
+                      ) &&
+                      !prototypeMobileThumbSlot ? (
+                        <ul className="case-study__proto-text-links" role="list">
+                          {prototypeLinks.map((link) => (
+                            <li key={`${link.buttonLabel}-${link.href}`}>
+                              <a
+                                className="case-study__text-link"
+                                href={link.href}
+                                target="_blank"
+                                rel="noreferrer noopener"
+                              >
+                                {link.buttonLabel}
+                                <span
+                                  className="case-study__text-link-arrow"
+                                  aria-hidden="true"
+                                >
+                                  →
+                                </span>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </>
+                  )}
                 </CaseStudyBlock>
               ) : null}
             </div>

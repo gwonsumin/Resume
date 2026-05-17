@@ -7,6 +7,9 @@ import { GOREON_DEPLOY_ORIGIN } from "./projects";
 const goreonPublic = (file: string) =>
   `${import.meta.env.BASE_URL}projects/goreon/${file}`;
 
+const tonePublic = (file: string) =>
+  `${import.meta.env.BASE_URL}projects/tone/${file}`;
+
 function p(...lines: string[]): readonly string[] {
   return lines;
 }
@@ -219,10 +222,14 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
   }),
   tone: makeCaseStudy("TONE", {
     intro: p(
-      "감정을 기록하고 색으로 축적하며 음악으로 연결되는 아카이브형 음악 UX 서비스.",
-
-      "사용자는 매일의 감정을 컬러 톤(Color)으로 기록하고, 이를 캘린더에 쌓아 자신만의 감정 아카이브를 만든다.",
+      "오늘의 감정 상태를 색으로 남기고, 같은 분위기의 음악에 깊게 머무는 모바일 감정 아카이브.",
+      "플레이리스트 탐색이 아니라 기록과 분위기, 시간에 쌓이는 무드가 먼저 읽히도록 경험을 정렬했다.",
     ),
+    sectionTitles: {
+      solution: "팔레트 경험",
+      uiDesign: "플레이어 경험",
+      result: "캘린더 아카이브",
+    },
     myRole: {
       summary: p(
         "TONE 프로젝트에서는 기능 단위 작업 나열이 아니라, 사용자의 감정 기록 경험이 끊기지 않도록 핵심 경험 흐름을 설계하고 구현 연결까지 담당했다.",
@@ -278,31 +285,61 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     ),
     prototype: {
       href: "https://www.figma.com/proto/CPHFRbBDBqaBRVcCQzwULV/%EB%94%94%EC%9E%90%EC%9D%B8?node-id=290-6422&p=f&t=OGzQaCRN52M5DVZr-0&scaling=scale-down&content-scaling=fixed&page-id=290%3A6295&starting-point-node-id=290%3A6540&show-proto-sidebar=1",
+      prototypeMobileThumbSlot: true,
       description:
-        "모바일 기준으로 제작된 Figma 프로토타입입니다. 감정 기록부터 추천 흐름까지 핵심 여정을 검증했습니다.",
+        "모바일 스케일에서 감정 선택 → 톤 기록 → 추천으로 이어지는 흐름을 그대로 검증했습니다. 모바일 프로토타입 카드를 누르면 Figma가 새 탭에서 열립니다.",
       buttonLabel: "모바일 프로토타입 보기",
     },
+    media: {
+      hero: {
+        staggeredScreens: {
+          left: {
+            src: tonePublic("tone-thumbnail-01.png"),
+            alt: "감정 흐름 첫 단계 — 하루의 톤을 고르기 전 화면",
+          },
+          center: {
+            src: tonePublic("tone-thumbnail-02.png"),
+            alt: "중심 화면 — 선택한 감정 톤에서 음악으로 이어지는 플레이어",
+          },
+          right: {
+            src: tonePublic("tone-thumbnail-03.png"),
+            alt: "흐름의 연속 — 같은 날의 감정을 이어 받는 다음 장면",
+          },
+        },
+      },
+      prototype: {
+        mobileSrc: tonePublic("tone-prototype-mobile.png"),
+        mobileAlt: "TONE 모바일 Figma 프로토타입 목업",
+      },
+      sectionFigures: {
+        solution: {
+          src: tonePublic("tone-palette.png"),
+          alt: "팔레트 단계에서 감정별 팬톤 컬러를 탐색하는 화면",
+          presentation: "palette",
+        },
+        uiDesign: {
+          src: tonePublic("tone-player.png"),
+          alt: "감정 톤과 연결된 컬러 플레이어와 뮤직비디오 재생 화면 구성",
+          presentation: "player",
+        },
+        result: {
+          src: tonePublic("tone-calendar.png"),
+          alt: "캘린더에 쌓인 하루하루의 감정 기록과 상세 화면",
+          presentation: "calendar",
+        },
+      },
+    },
     solution: p(
-      "감정 기록을 중심으로 음악 경험을 재구성했다.",
-
-      "- 감정을 컬러 톤으로 기록",
-      "- 감정 기반 음악 추천 제공",
-      "- 캘린더를 통한 감정 아카이브 구축",
+      "기능 나열보다 무드 탐색이 먼저 읽히도록, 팔레트를 감정의 입구처럼 열어두었다.",
+      "팬톤 컬러가 단순한 선택지가 아니라 그날의 분위기로 느껴지게, 여유 있는 호흡으로 톤을 넘길 수 있게 구성했다.",
     ),
     uiDesign: p(
-      "감정과 색을 직관적으로 연결하기 위해 컬러 기반 인터페이스를 중심으로 설계했다.",
-
-      "- 하루의 감정을 하나의 톤(Color)으로 표현",
-      "- 컬러를 통해 감정을 직관적으로 인식",
-      "- 선택 → 기록 → 추천으로 이어지는 흐름 구성",
-
-      "사용자가 복잡한 입력 없이 자신의 상태를 빠르게 표현할 수 있도록 간결한 인터렉션을 설계했다.",
+      "감정에서 음악으로 넘어갈 때 시선이 갑자게 끊기지 않게, 같은 색의 레이어 위에 플레이어와 MV를 포개었다.",
+      "컬러 UI와 영상 플레이어가 한 덩어리로 읽히면서 몰입이 이어진다고 느낄 때 흐름이 완성된다고 생각했다.",
     ),
     result: p(
-      "- 감정 기록 → 추천 → 저장으로 이어지는 UX 흐름 구축",
-      "- 사용자가 자신의 감정을 빠르게 선택하고 표현할 수 있는 UX 흐름을 구축",
-      "- 음악 소비 중심 경험을 감정 기록 기반의 개인 아카이브 경험으로 전환",
-      "- 감정을 기록하는 행위 자체가 음악 경험의 시작이 되도록 UX를 전환",
+      "캘린더 줄은 새 기능이 아니라, 지나온 하루의 감정이 겹겹이 포개인 아카이브처럼 읽히게 두었다.",
+      "날짜를 따라가며 열어보는 카드 하나하나가 오늘의 상태를 저장한 기록처럼 남도록 배치했다.",
     ),
     learnings: p(
       "감정을 기반으로 한 UX 설계에서 '기록 경험'이 사용자 몰입을 높인다는 것을 이해했다.",
@@ -310,9 +347,9 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "특히 '기록'이라는 행동이 단순 기능이 아니라 사용자의 경험을 지속시키는 핵심 요소라는 것을 느꼈다.",
     ),
     livePreview: {
-      href: "https://tone.dothome.co.kr/splash",
+      href: "https://toneapp.dothome.co.kr",
       description:
-        "실제로 구현된 인터랙티브 빌드입니다. 배포된 사이트에서 감정 기록부터 추천 흐름까지 직접 사용해 볼 수 있습니다.",
+        "실제 빌드에서 감정 기록부터 추천·아카이브 흐름까지 그대로 사용해 볼 수 있습니다.",
       buttonLabel: "라이브 사이트 열기",
     },
   }),

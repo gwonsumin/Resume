@@ -45,6 +45,15 @@ export type ProjectPreview = {
   linkLabel?: string
   /** Optional card thumbnail (`public/` path including `import.meta.env.BASE_URL` prefix when needed). */
   thumbnailSrc?: string
+  /**
+   * Optional three-screen streak for cards / «Next» tiles (matches case study `hero-emotion-flow`).
+   * When set, takes precedence over a single `thumbnailSrc` when both exist.
+   */
+  heroStaggeredScreens?: {
+    left: { src: string; alt?: string }
+    center: { src: string; alt?: string }
+    right: { src: string; alt?: string }
+  }
 }
 
 export type ProjectCardData = Omit<ProjectPreview, 'id'>
