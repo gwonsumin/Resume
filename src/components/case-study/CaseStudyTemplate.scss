@@ -192,12 +192,110 @@
   overflow: visible;
 }
 
+/* Tone mockups: two-column `.case-study__split-body--tone` — sizes live under `.case-study__split-body-media` */
+.case-study__split-body--tone {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, min(28vw, 252px));
+  gap: clamp(20px, 4vw, 44px);
+  align-items: start;
+  width: 100%;
+}
+
+.case-study__split-body-copy {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.case-study__split-body-copy .case-study__prose {
+  max-width: clamp(38ch, 48ch, 52ch);
+}
+
+.case-study__split-body-copy .case-study__paragraph {
+  color: rgb(59 47 47 / 0.9);
+  line-height: 1.73;
+}
+
+.case-study__split-body-media {
+  min-width: 0;
+  justify-self: end;
+  align-self: start;
+  width: 100%;
+  max-width: 248px;
+}
+
+.case-study__split-body-media .case-study__figure--section {
+  margin-top: 0;
+  max-width: 100%;
+}
+
+.case-study__split-body-media .case-study__figure--section.case-study__figure--tone-palette img,
+.case-study__split-body-media .case-study__figure--section.case-study__figure--tone-player img,
+.case-study__split-body-media .case-study__figure--section.case-study__figure--tone-calendar img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  max-height: min(50vh, 300px);
+  object-fit: contain;
+}
+
+.case-study__split-body--proto .case-study__split-body-copy .case-study__prose {
+  max-width: min(74ch, 100%);
+}
+
+.case-study__split-body--proto.case-study__split-body--tone {
+  grid-template-columns: minmax(0, 1.12fr) minmax(min(300px, 38vw), min(460px, 46vw));
+}
+
+.case-study__split-body--proto.case-study__split-body--tone.case-study__split-body--proto-slot-only {
+  grid-template-columns: minmax(18rem, 1fr) minmax(236px, 274px);
+  gap: clamp(14px, 3vw, 28px);
+}
+
+.case-study__split-body--proto .case-study__split-body-media {
+  max-width: none;
+  width: 100%;
+  justify-self: end;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.case-study__split-body-media .case-study__proto-entries {
+  margin-top: 0;
+}
+
+/* Single-column mobile-slot inside proto split: card pinned to trailing edge */
+.case-study__split-body--proto .case-study__split-body-media .case-study__proto-entries--mobile-slot {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: end;
+  width: auto;
+  max-width: min(268px, 100%);
+}
+
+.case-study__split-body--proto .case-study__split-body-media .case-study__proto-entries:not(.case-study__proto-entries--mobile-slot) {
+  width: 100%;
+}
+
+.case-study__split-body-media .case-study__proto-entries--mobile-slot .case-study__proto-entry {
+  grid-column: auto;
+}
+
+.case-study__split-body--proto .case-study__split-body-media .case-study__proto-entries--mobile-slot .case-study__proto-entry {
+  justify-self: end;
+}
+
 .case-study__proto-entries {
   display: grid;
   grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
   gap: clamp(20px, 3.6vw, 36px);
   margin-top: 16px;
   align-items: start;
+}
+
+.case-study__proto-entries--mobile-slot .case-study__proto-entry {
+  grid-column: 2;
 }
 
 .case-study__proto-entry {
@@ -689,6 +787,39 @@
     grid-column: 1 / -1;
   }
 
+  .case-study__split-body--tone {
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(16px, 3.2vw, 26px);
+  }
+
+  .case-study__split-body-copy .case-study__prose {
+    max-width: 66ch;
+  }
+
+  .case-study__split-body--tone:not(.case-study__split-body--proto) .case-study__split-body-media {
+    justify-self: center;
+    max-width: min(232px, 78vw);
+  }
+
+  .case-study__split-body--proto .case-study__split-body-media {
+    max-width: min(100%, 420px);
+    width: 100%;
+    justify-self: center;
+    align-items: center;
+  }
+
+  .case-study__split-body--proto .case-study__split-body-media .case-study__proto-entries--mobile-slot {
+    justify-items: stretch;
+    width: min(292px, 100%);
+    max-width: 100%;
+  }
+
+  .case-study__split-body-media .case-study__figure--section.case-study__figure--tone-palette img,
+  .case-study__split-body-media .case-study__figure--section.case-study__figure--tone-player img,
+  .case-study__split-body-media .case-study__figure--section.case-study__figure--tone-calendar img {
+    max-height: min(44vh, 272px);
+  }
+
   .case-study__service-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -704,6 +835,12 @@
 
   .case-study__proto-entries {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .case-study__proto-entries--mobile-slot .case-study__proto-entry {
+    grid-column: 1 / -1;
+    max-width: min(280px, 100%);
+    margin-inline: auto;
   }
 
   .case-study__figure--protoThumb {

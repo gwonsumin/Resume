@@ -20,6 +20,8 @@
   position: relative;
   display: grid;
   gap: 16px;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-content: start;
   min-height: 100%;
   padding: clamp(16px, 2.5vw, 22px);
   color: inherit;
@@ -63,17 +65,64 @@
 .project-card__visual {
   width: 100%;
   min-width: 0;
+  /* GOREON 썸네일 기준 레퍼런스: 446×248 */
+  aspect-ratio: 446 / 248;
   line-height: 0;
+  overflow: hidden;
+}
+
+.project-card__visual--thumb {
+  display: grid;
+  place-items: center;
+}
+
+.project-card__visual--emotion-flow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 0;
+}
+
+.project-card__visual--emotion-flow .case-study__hero-emotion-flow.case-study__hero-emotion-flow--compact-project {
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.project-card__visual--emotion-flow .case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--center {
+  width: clamp(96px, 30%, 144px);
+}
+
+.project-card__visual--emotion-flow .case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--side {
+  width: clamp(78px, 24%, 118px);
+  margin-top: clamp(12px, 9%, 28px);
+}
+
+.project-card__visual--emotion-flow .case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--center img {
+  max-height: min(226px, 92%);
+}
+
+.project-card__visual--emotion-flow .case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--side img {
+  max-height: min(164px, 72%);
+}
+
+.project-card__visual--empty {
+  background:
+    repeating-linear-gradient(
+      -52deg,
+      rgb(255 244 235 / 0.35) 0 6px,
+      rgb(255 250 246 / 0.55) 6px 12px
+    );
+  border: 1px dashed rgb(59 47 47 / 0.16);
 }
 
 .project-card__visual-img {
   display: block;
   width: 100%;
-  height: auto;
-  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
   object-fit: contain;
 }
-
 .project-card__header {
   display: flex;
   align-items: center;
@@ -105,6 +154,7 @@
 .project-card__content {
   display: grid;
   gap: 8px;
+  min-height: 0;
   padding-bottom: clamp(36px, 4.5vw, 44px);
 }
 
