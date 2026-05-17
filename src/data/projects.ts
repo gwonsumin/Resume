@@ -52,6 +52,8 @@ export const selectedProjects: readonly ProjectPreview[] = [
     githubUrl: 'https://github.com/gwonsumin/TONE',
     deployUrl: 'https://toneapp.dothome.co.kr',
     deployWindow: { width: 430, height: 850, name: 'TONEPreview' },
+    demoTestId: 'testuser',
+    demoTestPassword: 'testuser',
   },
   {
     id: 'sangsangmadang',
