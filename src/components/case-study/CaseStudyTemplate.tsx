@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import type { ProjectPreview } from '../../types/project'
-import type { CaseStudyBody, CaseStudyContent, CaseStudySectionFigure } from '../../types/caseStudy'
+import type { CaseStudyContent, CaseStudySectionFigure } from '../../types/caseStudy'
+import { CaseStudyProse, renderCaseStudyBody } from './CaseStudyProse'
 import { HeroEmotionFlow } from './HeroEmotionFlow'
+import { ServiceExperienceSection } from './ServiceExperienceSection'
 import './CaseStudyTemplate.scss'
 
 const SECTIONS: ReadonlyArray<{
@@ -59,40 +61,6 @@ function CaseStudyFigure({
     <figure className={`case-study__figure case-study__figure--${variant}${toneClass}`}>
       <img src={src} alt={alt} loading={loading} decoding="async" />
     </figure>
-  )
-}
-
-function Prose({ body }: { body: CaseStudyBody }) {
-  return (
-    <div className="case-study__prose">
-      {renderBody(body).map((line) => (
-        <p key={line} className="case-study__paragraph">
-          {line}
-        </p>
-      ))}
-    </div>
-  )
-}
-
-function renderBody(body: CaseStudyBody): readonly string[] {
-  return typeof body === 'string' ? [body] : body
-}
-
-function ExternalLinkGlyph({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width={14}
-      height={14}
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        fill="currentColor"
-        d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-      />
-    </svg>
   )
 }
 
@@ -246,7 +214,7 @@ export function CaseStudyTemplate({
           <CaseStudyBlock id={`${baseId}-my-role`} title="내 역할">
             <div className="case-study__my-role">
               <div className="case-study__my-role-summary">
-                {renderBody(content.myRole.summary).map((line) => (
+                {renderCaseStudyBody(content.myRole.summary).map((line) => (
                   <p key={line} className="case-study__paragraph">
                     {line}
                   </p>
@@ -294,88 +262,18 @@ export function CaseStudyTemplate({
           }
         >
           {content.serviceExperience ? (
-            <>
-              <Prose body={content.serviceExperience.description} />
-              <div className="case-study__service-experience-stack">
-                <ul
-                  className="case-study__service-links"
-                  role="list"
-                  aria-label="배포 서비스 주요 화면"
-                >
-                  {content.serviceExperience.serviceLinks.map((link) => (
-                    <li key={link.href}>
-                      <a
-                        className={
-                          link.featured
-                            ? 'case-study__service-link case-study__service-link--featured'
-                            : 'case-study__service-link'
-                        }
-                        href={link.href}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        <span className="case-study__service-link-head">
-                          <span className="case-study__service-link-label">
-                            {link.label}
-                          </span>
-                          <ExternalLinkGlyph className="case-study__service-link-icon" />
-                        </span>
-                        <span className="case-study__service-link-desc">
-                          {link.description}
-                        </span>
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {project.demoTestId && project.demoTestPassword ? (
-                  <div
-                    className="case-study__test-account"
-                    aria-label="테스트 계정"
-                  >
-                    <h3 className="case-study__test-account-title">
-                      테스트 계정
-                    </h3>
-                    <p className="case-study__test-account-lead">
-                      {content.serviceExperience.testAccountLead}
-                    </p>
-                    <div className="case-study__test-account-rows">
-                      <div className="case-study__test-account-row">
-                        <span className="case-study__test-account-label">
-                          Email
-                        </span>
-                        <span className="case-study__test-account-value">
-                          {project.demoTestId}
-                        </span>
-                      </div>
-                      <div className="case-study__test-account-row">
-                        <span className="case-study__test-account-label">
-                          Password
-                        </span>
-                        <span className="case-study__test-account-value">
-                          {project.demoTestPassword}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ) : null}
-
-                <ul
-                  className="case-study__verification-pills"
-                  role="list"
-                  aria-label="검증 포인트"
-                >
-                  {content.serviceExperience.verificationPoints.map((point) => (
-                    <li key={point} className="case-study__verification-pill">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </>
+            <ServiceExperienceSection
+              description={content.serviceExperience.description}
+              mobileNotice={content.serviceExperience.mobileNotice}
+              serviceLinks={content.serviceExperience.serviceLinks}
+              verificationPoints={content.serviceExperience.verificationPoints}
+              testAccountLead={content.serviceExperience.testAccountLead}
+              demoTestId={project.demoTestId}
+              demoTestPassword={project.demoTestPassword}
+            />
           ) : (
             <>
-              <Prose
+              <CaseStudyProse
                 body={
                   content.livePreview?.description ??
                   'Open the current build or project note when a public preview is available.'
@@ -419,7 +317,7 @@ export function CaseStudyTemplate({
                 {toneFigureSplit && sectionFigure ? (
                   <div className="case-study__split-body case-study__split-body--tone">
                     <div className="case-study__split-body-copy">
-                      <Prose body={content[key]} />
+                      <CaseStudyProse body={content[key]} />
                     </div>
                     <div className="case-study__split-body-media">
                       <CaseStudyFigure
@@ -432,7 +330,7 @@ export function CaseStudyTemplate({
                   </div>
                 ) : (
                   <>
-                    <Prose body={content[key]} />
+                    <CaseStudyProse body={content[key]} />
                     {sectionFigure ? (
                       <CaseStudyFigure
                         src={sectionFigure.src}
@@ -455,7 +353,7 @@ export function CaseStudyTemplate({
                       }
                     >
                       <div className="case-study__split-body-copy">
-                        <Prose
+                        <CaseStudyProse
                           body={
                             content.prototype.description ??
                             'Prototype links and interaction notes are collected here.'
@@ -546,7 +444,7 @@ export function CaseStudyTemplate({
                     </div>
                   ) : (
                     <>
-                      <Prose
+                      <CaseStudyProse
                         body={
                           content.prototype.description ??
                           'Prototype links and interaction notes are collected here.'

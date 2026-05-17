@@ -556,6 +556,27 @@
   max-width: 100%;
 }
 
+.case-study__service-mobile-notice {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1.5px solid rgb(59 47 47 / 0.22);
+  background: rgb(255 253 248 / 0.72);
+}
+
+.case-study__service-mobile-notice--tone {
+  background: rgb(10 165 165 / 0.08);
+  border-color: rgb(10 165 165 / 0.32);
+}
+
+.case-study__service-mobile-notice-text {
+  margin: 0;
+  color: rgb(59 47 47 / 0.78);
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
 .case-study__service-links {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -569,9 +590,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  min-height: 44px;
-  padding: 14px 16px;
+  gap: 10px;
+  min-height: 48px;
+  padding: 16px 16px;
   color: rgb(59 47 47 / 0.88);
   font-weight: 600;
   text-decoration: none;
@@ -591,10 +612,17 @@
 
 .case-study__service-link-head {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
+}
+
+.case-study__service-link-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
 }
 
 .case-study__service-link-label {
@@ -604,9 +632,17 @@
   letter-spacing: -0.01em;
 }
 
+.case-study__service-link-kicker {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: rgb(59 47 47 / 0.72);
+}
+
 .case-study__service-link-icon {
   flex-shrink: 0;
-  margin-top: 1px;
+  margin-top: 2px;
   color: rgb(59 47 47 / 0.48);
   transition: color 0.2s ease;
 }
@@ -720,12 +756,6 @@
   margin: 4px 0 0;
 }
 
-.case-study__live-action--group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
 .case-study__button {
   display: inline-flex;
   align-items: center;
@@ -827,10 +857,6 @@
   .case-study__title {
     font-size: clamp(2rem, 10.2vw, 3.1rem);
     line-height: 1;
-  }
-
-  .case-study__live-action--group {
-    gap: 8px;
   }
 
   .case-study__proto-entries {
