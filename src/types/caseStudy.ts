@@ -50,6 +50,7 @@ export type CaseStudyServiceLink = {
   label: string
   href: string
   description: string
+  type?: 'external' | 'mobile-preview'
   /** When true, uses featured border/background treatment. */
   featured?: boolean
   /** Optional secondary line (e.g. Korean screen title). */
