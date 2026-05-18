@@ -1,6 +1,10 @@
 .content-section {
   margin: 0;
-  padding: 0;
+  box-sizing: border-box;
+  min-width: 0;
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+  padding-inline: 0;
   scroll-margin-top: calc(72px + var(--space-16));
 }
 
@@ -103,7 +107,7 @@
   color: var(--text);
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 47.99rem) {
   .section-header {
     margin-bottom: 28px;
   }

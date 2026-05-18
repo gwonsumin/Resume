@@ -28,6 +28,7 @@ export function ArchiveModal({ item, onClose }: ArchiveModalProps) {
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
+      event.preventDefault();
       onClose();
     };
     window.addEventListener("keydown", onKeyDown);

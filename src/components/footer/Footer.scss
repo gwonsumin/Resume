@@ -10,6 +10,11 @@
   background: #fff4eb;
 }
 
+/* 데스크톱: 모바일 전용 단순 푸터 숨김 (767px 이상 디자인 변화 없음) */
+.site-footer__mobile-panel {
+  display: none;
+}
+
 /* footer-shape.svg: 동일 path, fill 흰색 = mask/luminance 호환. 실제 톤은 아래 background */
 .footer-shape-panel {
   --footer-mask: url("../../assets/shapes/footer-shape.svg");
@@ -18,14 +23,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  width: calc(100% - 48px);
-  max-width: 1840px;
+  /* .page 가로 패딩 안에서 꽉 채움 — 좁은 화면에서 calc(-48px) 이중 축소 방지 */
+  width: 100%;
+  max-width: min(1840px, 100%);
   min-height: clamp(42.5rem, 72vh, 46.25rem);
   margin: 0 auto;
   padding: clamp(120px, 13vw, 168px) clamp(20px, 5vw, 96px)
     clamp(120px, 12vw, 164px);
   box-sizing: border-box;
   overflow: hidden;
+  overflow-x: clip;
   background: #3b2f2f;
   -webkit-mask-image: var(--footer-mask);
   mask-image: var(--footer-mask);
@@ -105,9 +112,14 @@
 
 @media (min-width: 69rem) {
   .footer-main-grid {
-    grid-template-columns: minmax(520px, 620px) minmax(420px, 520px);
-    column-gap: 120px;
+    /*
+      고정 최소폭 컬럼은 1024~1100 구간에서 가로 넘침 발생 → 유동 분할 유지,
+      카드 자체에 max-width로 폭 한도.
+    */
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    column-gap: clamp(48px, 7vw, 120px);
     row-gap: 0;
+    align-items: start;
   }
 }
 
@@ -354,7 +366,6 @@ button.site-footer__pass-action {
 }
 
 .site-footer__pass-action--copied,
-.site-footer__pass-action--copied:hover,
 .site-footer__pass-action--copied:focus-visible {
   color: #fff4eb;
   border-color: rgb(10 165 165 / 0.5);
@@ -363,18 +374,34 @@ button.site-footer__pass-action {
   transform: none;
 }
 
-.site-footer__pass-action:hover,
+@media (hover: hover) and (pointer: fine) {
+  .site-footer__pass-action--copied:hover {
+    color: #fff4eb;
+    border-color: rgb(10 165 165 / 0.5);
+    background: transparent;
+    text-decoration: none;
+    transform: none;
+  }
+}
+
 .site-footer__pass-action:focus-visible {
   color: #0aa5a5;
   border-color: rgb(10 165 165 / 0.45);
   background: transparent;
   text-decoration: none;
   transform: translateY(-1px);
-}
-
-.site-footer__pass-action:focus-visible {
   outline: 2px solid #0aa5a5;
   outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer__pass-action:hover {
+    color: #0aa5a5;
+    border-color: rgb(10 165 165 / 0.45);
+    background: transparent;
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
 }
 
 .site-footer__pass-action--secondary {
@@ -823,7 +850,21 @@ button.site-footer__pass-action {
   color: rgb(59 47 47 / 0.38);
 }
 
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+.site-footer__pass-hint--touch {
+  display: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .site-footer__pass-hint--pointer-fine {
+    display: none;
+  }
+
+  .site-footer__pass-hint--touch {
+    display: block;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .site-footer__pass-scene:hover {
     transform: rotateZ(1.2deg);
   }
@@ -971,7 +1012,61 @@ button.site-footer__pass-action {
   width: clamp(58px, 9.6vw, 112px);
 }
 
-@media (max-width: 47.99rem) {
+/* 좁은 뷰포트까지: 카드 패널·PASS 카드 레이아웃·패딩 통합 조정 (~1024px 미만과 동일) */
+@media (max-width: 63.9375rem) {
+  .site-footer {
+    padding: 0 0 clamp(1.35rem, 4.5vw, 2.35rem);
+  }
+
+  /* 모바일~태블릿: 패널 높이·패딩을 뷰포트에 맞게 완화 */
+  .footer-shape-panel {
+    min-height: clamp(30rem, 62dvh, 44rem);
+    padding: clamp(72px, 12vw, 112px) var(--section-padding-inline, clamp(16px, 5vw, 24px))
+      clamp(88px, 14vw, 132px);
+  }
+
+  /* 우측 인트로: 한 화면에 맞춰 타이포 축소 */
+  .footer-shape-panel .site-footer__lead {
+    font-size: clamp(1.6rem, 6.8vw, 2.35rem);
+    padding-left: clamp(0.5rem, 2.8vw, 0.9rem);
+  }
+
+  .footer-content .site-footer__label {
+    margin-bottom: clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .footer-content {
+    padding-top: clamp(20px, 3.5vw, 40px);
+    padding-bottom: clamp(132px, 28vw, 192px);
+  }
+
+  .footer-main-grid {
+    row-gap: clamp(1.35rem, 4vw, 2rem);
+  }
+
+  /* SUMIN 카드: 본문+초상화 1열(초상화 상단), 얇은 디바이스에서 가독성 */
+  .site-footer__pass-front-main {
+    grid-template-columns: 1fr;
+    gap: clamp(0.65rem, 3vw, 0.95rem);
+  }
+
+  .site-footer__pass-portrait-wrap {
+    order: -1;
+    height: auto;
+    max-width: min(220px, 72%);
+    margin-inline: auto;
+  }
+
+  .site-footer__pass-title-row {
+    flex-wrap: wrap;
+    column-gap: 0.42em;
+  }
+
+  .site-footer__pass-actions {
+    width: 100%;
+    gap: 0.5rem 0.5rem;
+  }
+
   .site-footer__physics-item--logo,
   .site-footer__physics-item--tomato-narrow {
     display: none;
@@ -981,8 +1076,28 @@ button.site-footer__pass-action {
     width: clamp(50px, 16vw, 87px);
   }
 
-  .footer-content {
-    padding-bottom: clamp(120px, 26vw, 176px);
+  .site-footer__pass-actions .site-footer__pass-action {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 14px;
+    box-sizing: border-box;
+  }
+
+  .site-footer__pass-value a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 4px 8px 0;
+    box-sizing: border-box;
+  }
+
+  /* 터치 환경에서 호버색만 노출되는 링크: 포커스·기본 명도 확보는 유지, 탭 타겟은 위에서 처리 */
+}
+
+/* 매우 좁은 폭(320 전후): 기존 22.5rem 규칙과 중복되는 부분만 보강 */
+@media (max-width: 22.5rem) {
+  .footer-shape-panel {
+    padding-inline: clamp(12px, 4vw, 18px);
   }
 }
 
@@ -1059,5 +1174,121 @@ button.site-footer__pass-action {
   .site-footer__physics-item--logo,
   .site-footer__physics-item--tomato-narrow {
     display: block;
+  }
+}
+
+/* —— 모바일(≤767px)만: 복합 푸터 대신 텍스트·링크 단순 패널 —— */
+@media (max-width: 767px) {
+  .site-footer {
+    padding: 0 0 clamp(1.25rem, 5vw, 2rem);
+    overflow-x: hidden;
+  }
+
+  .site-footer > .footer-shape-panel {
+    display: none !important;
+  }
+
+  .site-footer__mobile-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: clamp(1.125rem, 4.2vw, 1.6rem);
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: clamp(1.85rem, 7vw, 2.65rem)
+      clamp(18px, 5vw, 26px)
+      clamp(2rem, 7vw, 2.85rem);
+    background: #3b2f2f;
+    color: #fff4eb;
+    text-align: left;
+  }
+
+  .site-footer__mobile-kicker {
+    margin: 0;
+    padding: 0;
+    align-self: flex-start;
+    font-family: "Satoshi", var(--font-family-base);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: #ff785d;
+  }
+
+  .site-footer__mobile-lead {
+    margin: 0;
+    max-width: 36rem;
+    font-size: clamp(0.93rem, 3.9vw, 1.02rem);
+    font-weight: 500;
+    line-height: 1.65;
+    letter-spacing: -0.01em;
+    color: rgb(255 244 235 / 0.94);
+    word-break: keep-all;
+  }
+
+  .site-footer__mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 0.15rem;
+  }
+
+  .site-footer__mobile-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-sizing: border-box;
+    min-height: 44px;
+    padding: 10px 16px;
+    margin: 0;
+    width: fit-content;
+    max-width: 100%;
+    font-family: "Satoshi", var(--font-family-base);
+    font-size: 0.82rem;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+    color: #fff4eb;
+    text-decoration: none;
+    border: 2px solid rgb(255 244 235 / 0.45);
+    border-radius: 999px;
+    background: rgb(255 244 235 / 0.06);
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease,
+      color 0.15s ease;
+  }
+
+  .site-footer__mobile-link:active {
+    border-color: #0aa5a5;
+    background: rgb(10 165 165 / 0.12);
+  }
+
+  .site-footer__mobile-meta {
+    margin: clamp(0.35rem, 2vw, 0.65rem) 0 0;
+    font-family: "Satoshi", var(--font-family-base);
+    font-size: 0.76rem;
+    font-weight: 600;
+    line-height: 1.45;
+    letter-spacing: 0.03em;
+    color: rgb(255 244 235 / 0.62);
+    word-break: keep-all;
+  }
+
+  .site-footer__mobile-copy {
+    margin: 0;
+    font-family: "Satoshi", var(--font-family-base);
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.45;
+    color: rgb(255 244 235 / 0.48);
+    letter-spacing: 0.02em;
+  }
+
+  .site-footer__mobile-link:focus-visible {
+    outline: 2px solid #0aa5a5;
+    outline-offset: 3px;
   }
 }

@@ -22,8 +22,8 @@ const wait = (duration: number) =>
     window.setTimeout(resolve, duration);
   });
 
-/** Hero.scss 모바일 구간과 동일 (터치 활성 패턴 전용) */
-const HERO_MOBILE_MQ = "(max-width: 39.9375rem)";
+/** Hero.scss 좁은 뷰포트 구간과 동일 (≤767.98px, 터치 활성 패턴 전용) */
+const HERO_MOBILE_MQ = "(max-width: 47.99rem)";
 
 function subscribeHeroMobileLayout(onStoreChange: () => void) {
   const mq = window.matchMedia(HERO_MOBILE_MQ);

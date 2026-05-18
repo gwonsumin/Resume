@@ -5,6 +5,8 @@
   display: grid;
   place-items: center;
   padding: clamp(12px, 3vw, 28px);
+  box-sizing: border-box;
+  overscroll-behavior: contain;
 }
 
 .archive-modal__backdrop {
@@ -20,10 +22,11 @@
 .archive-modal__sheet {
   position: relative;
   width: min(100%, 960px);
-  max-height: 88vh;
+  max-height: min(100dvh - 24px, 92vh);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  min-height: 0;
   padding: clamp(14px, 2.4vw, 22px);
   background: #fffdf8;
   border: 2px solid #3b2f2f;
@@ -35,8 +38,11 @@
   display: grid;
   gap: clamp(14px, 2.2vw, 20px);
   align-items: stretch;
-  flex: 1;
+  flex: 1 1 auto;
   min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .archive-modal__hero {
@@ -175,13 +181,24 @@
   border: 1px solid rgb(59 47 47 / 0.25);
   border-radius: 10px;
   overflow: hidden;
+  box-sizing: border-box;
   background: rgb(255 253 248 / 0.95);
   opacity: 0.65;
+  flex: 0 0 auto;
   transition:
     border-color 160ms ease,
     opacity 160ms ease,
     transform 160ms ease,
     box-shadow 160ms ease;
+}
+
+/* 호버 불가 환경: tap으로 선택 · 프리뷰 썸네일 정보가 과도하게 가려지지 않도록 */
+@media (hover: none), (pointer: coarse) {
+  .archive-modal__thumb:not(.archive-modal__thumb--active) {
+    opacity: 0.92;
+    min-width: 44px;
+    min-height: 44px;
+  }
 }
 
 .archive-modal__thumb--active {
@@ -197,7 +214,7 @@
   pointer-events: none;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .archive-modal__thumb:hover:not(.archive-modal__thumb--active) {
     opacity: 1;
     transform: scale(1.03);
@@ -223,6 +240,12 @@
 .archive-modal__close {
   margin: 0;
   padding: 9px 16px;
+  min-height: 44px;
+  min-width: 44px;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  display: inline-flex;
   color: #3b2f2f;
   font-family: "Satoshi", var(--font-family-base);
   font-size: 0.68rem;
@@ -267,12 +290,44 @@
 
 @media (max-width: 51.99rem) {
   .archive-modal__memo {
-    -webkit-line-clamp: 4;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    display: block;
+    overflow: visible;
+  }
+
+  .archive-modal__aside {
+    max-height: min(38dvh, 320px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 2px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .archive-modal__thumb {
     width: 56px;
     height: 56px;
+  }
+}
+
+@media (max-width: 767px) {
+  .archive-modal__thumbs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    width: 100%;
+  }
+
+  .archive-modal__thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    min-height: 48px;
+  }
+
+  .archive-modal__close:active {
+    background: rgb(255 120 93 / 0.12);
+    border-color: #ff785d;
   }
 }
 
@@ -286,7 +341,9 @@
       border-color 160ms ease,
       opacity 160ms ease;
   }
+}
 
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
   .archive-modal__thumb:hover:not(.archive-modal__thumb--active) {
     transform: none;
   }

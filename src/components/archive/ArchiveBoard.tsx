@@ -230,7 +230,7 @@ function ArchiveColumnStack({ column, reducedMotion, autoPaused, onOpenCard }: A
                 <img
                   className="archive-deck__thumb archive-deck__thumb--base"
                   src={card.mainImage}
-                  alt=""
+                  alt={isTop ? `${card.title} 기록 썸네일` : ""}
                   loading="lazy"
                   decoding="async"
                 />
@@ -270,10 +270,16 @@ export function ArchiveBoard() {
 
   useEffect(() => {
     if (!modalCard) return;
-    const previousOverflow = document.body.style.overflow;
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousBodyTouch = document.body.style.touchAction;
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
     return () => {
-      document.body.style.overflow = previousOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousBodyOverflow;
+      document.body.style.touchAction = previousBodyTouch;
     };
   }, [modalCard]);
 
