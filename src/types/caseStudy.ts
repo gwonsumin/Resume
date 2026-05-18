@@ -55,6 +55,11 @@ export type CaseStudyServiceLink = {
   featured?: boolean
   /** Optional secondary line (e.g. Korean screen title). */
   title?: string
+  /**
+   * `primary`: default hero row (large treatment when a secondary row exists).
+   * `secondary`: smaller archive / supporting row (e.g. cultural platform SSM).
+   */
+  tier?: 'primary' | 'secondary'
 }
 
 export type CaseStudyServiceExperience = {
@@ -66,6 +71,8 @@ export type CaseStudyServiceExperience = {
   testAccountLead?: string
   /** Optional callout (e.g. mobile viewport recommendation). */
   mobileNotice?: string
+  /** Optional kicker above the secondary (`tier: 'secondary'`) link row. */
+  secondaryBandLabel?: string
 }
 
 /** Optional block linking to a deployed build (shown when set). */

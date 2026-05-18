@@ -11,6 +11,9 @@ export const GOREON_DEPLOY_ORIGIN = 'https://goreon.vercel.app' as const
 /** TONE production origin (no trailing slash) — Vue app routes are under this host. */
 export const TONE_DEPLOY_ORIGIN = 'https://toneapp.dothome.co.kr' as const
 
+/** Sangsangmadang PHP deploy origin (no trailing slash). */
+export const SANGSANGMADANG_DEPLOY_ORIGIN = 'https://gsumin8327.dothome.co.kr' as const
+
 export const selectedProjects: readonly ProjectPreview[] = [
   {
     id: 'goreon',
@@ -101,7 +104,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     },
     to: ROUTES.caseStudySangsangmadang,
     githubUrl: 'https://github.com/gwonsumin/sangsangmadang-rebranding',
-    deployUrl: 'http://gsumin8327.dothome.co.kr/',
+    deployUrl: `${SANGSANGMADANG_DEPLOY_ORIGIN}/`,
     thumbnailSrc: `${import.meta.env.BASE_URL}projects/sangsangmadang/sangsangmadang-thumbnail.png`,
     demoTestId: 'test',
     demoTestPassword: '1234',
