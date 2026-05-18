@@ -1,4 +1,24 @@
 :root {
+  /*
+    Responsive breakpoints (1rem = 16px — mobile-first)
+    mobile default → tablet ≥48rem (768px) → desktop ≥64rem (1024px) → wide ≥90rem (1440px)
+
+    참고: @media에서는 위 rem 값과 동일한 기준으로 맞춤 (예: 768px 미만은 max-width: 47.99rem).
+  */
+
+  --layout-max-width: 90rem; /* wide / 1440px */
+
+  /* Hero → About 전환에만 쓰는 큰 세로 여백 */
+  --section-padding-block-hero-about: clamp(72px, 10vw, 160px);
+  /* 나머지 섹션 공통 세로 패딩 (스크롤 리듬 부담 줄임) */
+  --section-padding-y: clamp(36px, 5vw, 80px);
+  --section-padding-inline: clamp(20px, 5vw, 80px);
+
+  /* 공통 카드 그리드 gap (모바일 1열: 클립 데코 돌출·액션 행 포함 여유) */
+  --grid-gap-editorial-mobile: clamp(52px, 9vw, 76px);
+  --grid-gap-editorial-tablet: clamp(20px, 2.8vw, 32px);
+  --grid-gap-editorial-desktop: clamp(22px, 2.5vw, 34px);
+
   /* Color */
   --color-primary: #ff785d;
   --color-secondary: #0aa5a5;
@@ -12,9 +32,16 @@
 
   /* Typography */
   --font-family-base: 'Inter', 'Pretendard', 'Segoe UI', sans-serif;
-  --font-size-h1: 4.5rem; /* 72px */
-  --font-size-h2: 2.25rem; /* 36px */
-  --font-size-body: 1.125rem; /* 18px */
+  /*
+    Hierarchy: heading > body 최소 1rem(16px) ≥ caption
+    --font-size-h1 / --font-size-h2: clamp 플루이드 상한은 기존 타이포 스케일과 동일
+  */
+  --font-size-h1: clamp(2.8125rem, 5vw + 1rem, 4.5rem); /* 최대 기존 72px */
+
+  --font-size-h2: clamp(1.9rem, 1.8vw + 1.05rem, 2.25rem); /* 최대 기존 36px */
+
+  /* 본문: 최소 16px, 상한 기존 18px 근처 */
+  --font-size-body: clamp(1rem, 0.390625vw + 0.90625rem, 1.125rem);
   --font-size-caption: 0.875rem; /* 14px */
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
@@ -56,8 +83,11 @@
   --border: var(--color-border);
   --font-sans: var(--font-family-base);
   --page-max-width: 72rem;
-  --page-padding-x: clamp(var(--space-16), 2.5vw + 0.5rem, var(--space-32));
-  --section-gap: clamp(var(--space-48), 6vw, var(--space-80));
+  /* 레이아웃 좌우: 섹션 인라인 토큰과 동일 (중복 패딩 방지 목적 단일 근거) */
+  --page-padding-x: var(--section-padding-inline);
+
+  /* 레거시: 섹션 간 여백 기대치 — 실제 본문 패딩과 맞춤 */
+  --section-gap: var(--section-padding-y);
   --header-padding-y: clamp(var(--space-24), 3vw, var(--space-32));
 
   /* 드래그 선택 하이라이트 — 코랄 + 살짝 틸 */
@@ -133,4 +163,12 @@ small,
   font-size: var(--font-size-caption);
   line-height: 1.5;
   color: var(--color-text-muted);
+}
+
+/* 테블릿 미만에서 본문·헤딩 줄간격 소폭 완화 (정보 밀도·가독성) */
+@media (max-width: 47.99rem) {
+  :root {
+    --line-height-body: 1.62;
+    --line-height-heading: 1.18;
+  }
 }

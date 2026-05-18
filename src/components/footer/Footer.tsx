@@ -61,7 +61,7 @@ async function copyTextToClipboard(text: string): Promise<boolean> {
 
 /** 탭으로 카드 뒤집기: 좁은 뷰 또는 터치/비호버 포인터 환경에서만 (Hero 모바일과 유사) */
 const FOOTER_PASS_TOUCH_FLIP_QUERIES = [
-  "(max-width: 39.9375rem)",
+  "(max-width: 63.9375rem)",
   "(hover: none)",
   "(pointer: coarse)",
 ] as const;
@@ -76,6 +76,19 @@ function getFooterPassTouchFlipSnapshot() {
   return FOOTER_PASS_TOUCH_FLIP_QUERIES.some(
     (q) => window.matchMedia(q).matches,
   );
+}
+
+/** 767px 미만: 단순 푸터만 표시 · 물리/패스 카드 DOM은 유지하되 패널은 CSS로 숨김 */
+function subscribeFooterNarrowViewport(cb: () => void) {
+  if (typeof window === "undefined") return () => {};
+  const mq = window.matchMedia("(max-width: 767px)");
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
+function getFooterNarrowViewportSnapshot() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(max-width: 767px)").matches;
 }
 
 function FooterNamePass() {
@@ -241,7 +254,12 @@ function FooterNamePass() {
               </div>
 
               <p className="site-footer__pass-hint" aria-hidden>
-                카드에 올리면 뒷면 · GitHub·이력서·IG는 하단 버튼
+                <span className="site-footer__pass-hint--pointer-fine">
+                  카드에 올리면 뒷면 · GitHub·이력서·IG는 하단 버튼
+                </span>
+                <span className="site-footer__pass-hint--touch">
+                  카드를 탭하면 뒷면 · GitHub·이력서·IG는 하단 버튼
+                </span>
               </p>
             </div>
 
@@ -442,6 +460,11 @@ function physicsElementVisible(el: HTMLElement) {
 
 export function Footer({ siteTitle }: FooterProps) {
   const year = new Date().getFullYear();
+  const isFooterNarrowViewport = useSyncExternalStore(
+    subscribeFooterNarrowViewport,
+    getFooterNarrowViewportSnapshot,
+    () => false,
+  );
   const footerPanelRef = useRef<HTMLDivElement>(null);
   const physicsContainerRef = useRef<HTMLDivElement>(null);
   const physicsLogoRef = useRef<HTMLDivElement>(null);
@@ -456,6 +479,7 @@ export function Footer({ siteTitle }: FooterProps) {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
+    if (isFooterNarrowViewport) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const id = requestAnimationFrame(() => {
         setFooterPhysicsLive(true);
@@ -483,10 +507,11 @@ export function Footer({ siteTitle }: FooterProps) {
     );
     io.observe(sentinel);
     return () => io.disconnect();
-  }, []);
+  }, [isFooterNarrowViewport]);
 
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
+    if (isFooterNarrowViewport) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (!footerPhysicsLive) return;
 
@@ -557,14 +582,47 @@ export function Footer({ siteTitle }: FooterProps) {
       cancelAnimationFrame(raf1);
       cleanup?.();
     };
-  }, [footerPhysicsLive]);
+  }, [footerPhysicsLive, isFooterNarrowViewport]);
 
   return (
-    <footer
-      id="contact"
-      className="site-footer"
-      aria-labelledby="contact-footer-heading"
-    >
+    <footer id="contact" className="site-footer" aria-label="연락처">
+      <div className="site-footer__mobile-panel">
+        <p className="site-footer__mobile-kicker">CONTACT</p>
+        <p className="site-footer__mobile-lead">
+          함께 이야기하고 싶은 프로젝트가 있다면 편하게 연락해주세요.
+        </p>
+        <nav className="site-footer__mobile-nav" aria-label="연락 링크">
+          <a
+            className="site-footer__mobile-link"
+            href={`mailto:${EMAIL}`}
+          >
+            Email
+          </a>
+          <a
+            className="site-footer__mobile-link"
+            href={GITHUB_HREF}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            GitHub
+          </a>
+          <a
+            className="site-footer__mobile-link"
+            href={RESUME_HREF}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Resume Download
+          </a>
+        </nav>
+        <p className="site-footer__mobile-meta">
+          UX/UI Designer · Frontend Developer
+        </p>
+        <p className="site-footer__mobile-copy">
+          © {year} {siteTitle}
+        </p>
+      </div>
+
       <div ref={footerPanelRef} className="footer-shape-panel">
         <div
           ref={footerPhysicsEnterRef}
@@ -573,9 +631,7 @@ export function Footer({ siteTitle }: FooterProps) {
         />
         <div className="footer-content">
           <Reveal delay={0} staggerMs={92} durationMs={700}>
-            <p className="site-footer__label" id="contact-footer-heading">
-              CONTACT
-            </p>
+            <p className="site-footer__label">CONTACT</p>
           </Reveal>
 
           <div className="footer-main-grid">

@@ -453,6 +453,53 @@
 
 }
 
+@media (max-width: 63.9375rem) {
+  .about-layout__top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-summary__intro {
+    max-width: none;
+    line-height: 1.68;
+  }
+
+  /* 키워드 리스트 모바일·태블릿 1열 */
+  .about-summary__keywords {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .about-summary__keywords li {
+    width: 100%;
+    justify-content: flex-start;
+    box-sizing: border-box;
+  }
+
+  .about-photo {
+    margin-inline: auto;
+  }
+
+  /* 경험 카드 장식 과밀 완화 (본문 카드 레이아웃은 동일·세로 나열 유지) */
+  .about-career__decor {
+    transform: translateY(-4px);
+    padding-top: 6px;
+  }
+
+  .about-career__can {
+    opacity: 0.68;
+    width: clamp(80px, 22vw, 96px);
+  }
+
+  .about-career__tomato {
+    width: clamp(17px, 4.5vw, 22px);
+  }
+
+  .about-career__tomato--small {
+    width: clamp(14px, 3.8vw, 18px);
+  }
+}
+
 @media (min-width: 64rem) {
   .about-layout__top {
     grid-template-columns: minmax(0, 1fr) minmax(280px, 332px);
@@ -492,62 +539,55 @@
   }
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 47.99rem) {
   .about-layout {
-    gap: 32px;
+    gap: 28px;
   }
 
   .about-layout__top {
-    gap: 22px;
+    gap: 20px;
   }
 
   .about-summary__intro {
     font-size: 16px;
-    line-height: 1.72;
+    line-height: 1.7;
+    max-width: min(100%, 48ch);
   }
 
   .about-summary__keywords {
-    gap: 10px;
+    gap: 8px;
+    margin-top: 18px;
   }
 
   .about-summary__keywords li {
-    padding: 8px 12px;
+    padding: 10px 14px;
   }
 
   .about-quick-info {
-    gap: 14px;
-    padding: 20px;
+    gap: 12px;
+    padding: 18px;
   }
 
   .about-career {
-    gap: 14px;
+    gap: 12px;
   }
 
   .about-career-card {
-    gap: 18px;
-    padding: 18px;
+    gap: 16px;
+    padding: 16px;
   }
 
   .about-foundation-groups,
   .about-experience-sections {
-    gap: 22px;
+    gap: 18px;
   }
 
   .about-experience-wrap {
     gap: 10px;
   }
 
-  .about-career__can {
-    width: 84px;
-    opacity: 0.72;
-  }
-
-  .about-career__tomato {
-    width: 20px;
-  }
-
-  .about-career__tomato--small {
-    width: 17px;
+  .about-experience-section + .about-experience-section {
+    padding-top: 22px;
   }
 }
 

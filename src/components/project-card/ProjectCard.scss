@@ -20,9 +20,20 @@
   position: relative;
   display: grid;
   gap: 16px;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
+  /*
+    모바일: 비주얼 → 타이틀 → 메타(라벨/상태) → 본문
+    태블릿+: 기존 데스크톱 순서 = 비주얼 → 메타 → 타이틀 → 본문
+  */
+  grid-template-areas:
+    "visual"
+    "title"
+    "meta"
+    "body";
+  grid-template-rows: auto auto auto minmax(0, 1fr);
   align-content: start;
   min-height: 100%;
+  min-width: 0;
   padding: clamp(16px, 2.5vw, 22px);
   color: inherit;
   text-decoration: none;
@@ -34,6 +45,16 @@
     border-color 200ms ease,
     box-shadow 220ms ease,
     transform 220ms ease;
+}
+
+@media (min-width: 48rem) {
+  .project-card__link {
+    grid-template-areas:
+      "visual"
+      "meta"
+      "title"
+      "body";
+  }
 }
 
 .project-card__link--button {
@@ -63,6 +84,7 @@
 }
 
 .project-card__visual {
+  grid-area: visual;
   width: 100%;
   min-width: 0;
   /* GOREON 썸네일 기준 레퍼런스: 446×248 */
@@ -124,6 +146,7 @@
   object-fit: contain;
 }
 .project-card__header {
+  grid-area: meta;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -152,13 +175,16 @@
 }
 
 .project-card__content {
+  grid-area: body;
   display: grid;
   gap: 8px;
   min-height: 0;
+  min-width: 0;
   padding-bottom: clamp(36px, 4.5vw, 44px);
 }
 
 .project-card__title {
+  grid-area: title;
   margin: 0;
   color: var(--color-line);
   font-size: clamp(1.45rem, 3.3vw, 1.92rem);
@@ -278,6 +304,7 @@
   border: 0;
   letter-spacing: 0.08em;
   transition: color 0.25s ease-in-out;
+  pointer-events: none;
 }
 
 .project-card__reveal::after {
@@ -291,7 +318,7 @@
   outline-offset: 4px;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .project-card__link:hover {
     border-color: var(--project-accent);
     box-shadow: 0 4px 10px rgb(59 47 47 / 0.08);
@@ -343,6 +370,18 @@
     background-color 200ms ease;
 }
 
+.project-card__deploy-label {
+  pointer-events: none;
+}
+
+.project-card__deploy-label--narrow {
+  display: none;
+}
+
+.project-card__deploy-label--wide {
+  display: inline;
+}
+
 .project-card__action-button:focus-visible {
   outline: 2px solid var(--color-line);
   outline-offset: 2px;
@@ -354,7 +393,105 @@
   }
 }
 
-@media (hover: hover) {
+@media (max-width: 767px) {
+  .project-card {
+    gap: clamp(18px, 5vw, 26px);
+  }
+
+  .project-card__link {
+    grid-template-areas:
+      "visual"
+      "title"
+      "meta"
+      "body"
+      "cta";
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  }
+
+  .project-card__content {
+    padding-bottom: clamp(10px, 2.5vw, 16px);
+  }
+
+  .project-card__header {
+    flex-wrap: wrap;
+    padding-top: 0;
+  }
+
+  .project-card__label,
+  .project-card__status {
+    line-height: 1.25;
+  }
+
+  .project-card__title {
+    line-height: 1.12;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
+  .project-card__description {
+    display: block;
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    overflow: visible;
+    line-height: 1.55;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
+  .project-card__reveal {
+    grid-area: cta;
+    position: static;
+    justify-self: start;
+    margin-top: clamp(6px, 2vw, 12px);
+    padding: 4px 0 clamp(14px, 4vw, 20px);
+    color: var(--project-accent);
+    pointer-events: none;
+  }
+
+  .project-card__actions {
+    row-gap: 10px;
+    column-gap: 10px;
+  }
+
+  .project-card__action-button {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 10px 16px;
+    box-sizing: border-box;
+  }
+
+  .project-card__deploy-label--narrow {
+    display: inline;
+  }
+
+  .project-card__deploy-label--wide {
+    display: none;
+  }
+
+  /* 긴 카피: 모바일에서 대문자+자간으로 인한 과밀 완화 */
+  .project-card__action-button--deploy {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 0.74rem;
+  }
+
+  .project-card__link:active {
+    transform: none;
+    box-shadow: 0 2px 6px rgb(59 47 47 / 0.06);
+  }
+
+  .project-card__action-button:active {
+    border-color: var(--project-accent);
+    background: rgb(255 244 235 / 0.95);
+  }
+
+  /* 상단 종이 클립이 음수 top으로 카드 간 시각 간섭 줄이기 */
+  .project-card__clip {
+    top: -8px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
   .project-card__action-button:hover {
     color: var(--project-accent);
     background: rgb(255 244 235 / 0.98);

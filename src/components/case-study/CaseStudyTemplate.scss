@@ -488,7 +488,7 @@
   outline-offset: 3px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 47.99rem) {
   .case-study__section-image-list--row {
     flex-direction: column;
     gap: clamp(14px, 3vw, 20px);
@@ -836,6 +836,8 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  max-width: 100%;
+  min-width: 0;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -1049,7 +1051,7 @@
   text-transform: uppercase;
 }
 
-@media (min-width: 721px) {
+@media (min-width: 48rem) {
   .case-study__service-links--primary-tier {
     grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.14fr) minmax(0, 0.94fr);
   }

@@ -18,6 +18,15 @@
   align-items: start;
 }
 
+/* ~480px~데스크 첫 분기 전까지 2열 가능 (너무 좁으면 1열 유지) */
+@media (min-width: 30rem) and (max-width: 55.99rem) {
+  .archive-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: clamp(14px, 3vw, 22px);
+    row-gap: clamp(22px, 4vw, 32px);
+  }
+}
+
 .archive-column {
   display: flex;
   flex-direction: column;
@@ -258,12 +267,14 @@
   box-shadow: none;
 }
 
-.archive-deck__btn--prev:hover:not(:disabled),
-.archive-deck__btn--next:hover:not(:disabled) {
-  color: #fffdf8;
-  background: #ff785d;
-  transform: translateY(-2px);
-  box-shadow: 3px 5px 0 rgb(10 165 165 / 0.22);
+@media (hover: hover) and (pointer: fine) {
+  .archive-deck__btn--prev:hover:not(:disabled),
+  .archive-deck__btn--next:hover:not(:disabled) {
+    color: #fffdf8;
+    background: #ff785d;
+    transform: translateY(-2px);
+    box-shadow: 3px 5px 0 rgb(10 165 165 / 0.22);
+  }
 }
 
 .archive-deck__btn:focus-visible {
@@ -320,9 +331,63 @@
       background-color 180ms ease,
       color 180ms ease;
   }
+}
 
+@media (prefers-reduced-motion: reduce) and (hover: hover) and (pointer: fine) {
   .archive-deck__btn--prev:hover:not(:disabled),
   .archive-deck__btn--next:hover:not(:disabled) {
     transform: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .archive-record {
+    overflow-x: hidden;
+  }
+
+  /* 헤더 ↔ 덱 ↔ 캡션 ↔ 네비 리듬 (스택 카드가 아래로 번짐 보정) */
+  .archive-column {
+    gap: clamp(22px, 5vw, 34px);
+  }
+
+  .archive-column__title {
+    margin-bottom: 10px;
+  }
+
+  .archive-column__count {
+    display: block;
+    margin-top: 4px;
+  }
+
+  .archive-deck__stack {
+    margin-bottom: clamp(18px, 4vw, 28px);
+  }
+
+  .archive-column__caption {
+    padding-block: 6px 4px;
+    max-width: min(100%, 32ch);
+  }
+
+  .archive-column__nav {
+    margin-top: 4px;
+    gap: 12px;
+  }
+
+  .archive-column__btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+  }
+
+  .archive-deck__btn {
+    min-height: 44px;
+    min-width: 44px;
+    padding: 12px 22px;
+    box-sizing: border-box;
+  }
+
+  .archive-deck__card--top:active:not(:disabled) {
+    filter: brightness(0.96);
   }
 }

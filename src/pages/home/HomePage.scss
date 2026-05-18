@@ -6,14 +6,16 @@
   min-width: 0;
 }
 
-.home > .content-section:not(.home__hero-section) {
-  padding-top: var(--section-gap);
+.home > .home__hero-section.content-section {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .home > #about.content-section {
   position: relative;
   margin-top: calc(var(--space-16) * -1);
-  padding-top: calc(var(--section-gap) + var(--space-16));
+  /* 히어로 이후에만 큰 브레이크 — 다른 섹션은 Section 기본(--section-padding-y)만 사용 */
+  padding-top: calc(var(--section-padding-block-hero-about) + var(--space-16));
 }
 
 .home > #about.content-section::before {
@@ -107,7 +109,8 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: clamp(22px, 4vw, 36px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--grid-gap-editorial-mobile);
   align-items: stretch;
 }
 
@@ -136,16 +139,16 @@
 
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: clamp(20px, 2.8vw, 32px);
-    row-gap: clamp(20px, 2.8vw, 32px);
+    column-gap: var(--grid-gap-editorial-tablet);
+    row-gap: var(--grid-gap-editorial-tablet);
   }
 }
 
-@media (min-width: 72rem) {
+@media (min-width: 64rem) {
   .project-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: clamp(22px, 2.4vw, 34px);
-    row-gap: clamp(22px, 2.6vw, 34px);
+    column-gap: var(--grid-gap-editorial-desktop);
+    row-gap: var(--grid-gap-editorial-desktop);
   }
 }
 

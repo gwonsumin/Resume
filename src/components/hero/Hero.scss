@@ -356,6 +356,19 @@ a.hero-card__header-right--active {
     white-space: normal;
   }
 
+  .hero-card__title {
+    text-wrap: balance;
+  }
+
+  .hero-card__line {
+    overflow-wrap: break-word;
+  }
+
+  /* 스택 레이아웃에서 스티커가 본문과 겹칠 수 있음 — 데스크톱에서는 유지 */
+  .hero__tomato {
+    display: none;
+  }
+
   /* 캐릭터가 카드 우하단 위에 얹히므로 역할 문구는 왼쪽·하단 정렬로 겹침 완화 */
   .hero-card__role {
     position: static;
@@ -372,21 +385,9 @@ a.hero-card__header-right--active {
     bottom: clamp(-44px, -5vw, -28px);
     width: clamp(220px, 40vw, 340px);
   }
-
-  .hero__tomato--top {
-    right: clamp(118px, 16vw, 190px);
-    top: clamp(150px, 22vw, 210px);
-    width: clamp(66px, 11vw, 98px);
-  }
-
-  .hero__tomato--bottom {
-    left: clamp(26px, 7vw, 70px);
-    bottom: clamp(166px, 24vw, 220px);
-    width: clamp(72px, 12vw, 106px);
-  }
 }
 
-@media (max-width: 39.9375rem) {
+@media (max-width: 47.99rem) {
   .hero {
     margin-top: -4px;
     padding-bottom: 92px;
@@ -395,26 +396,33 @@ a.hero-card__header-right--active {
 
   .hero__stage {
     padding-inline: clamp(14px, 4.2vw, 18px);
-    padding-bottom: clamp(92px, 28vw, 132px);
+    padding-bottom: clamp(72px, 22vw, 112px);
   }
 
   /* 좁은 뷰포트에서 물결 실루엣 과도하게 늘어짐 완화 */
   .hero__roof {
     object-fit: cover;
     object-position: 50% 0;
+    opacity: 0.92;
   }
 
   .hero-card {
     margin-top: clamp(22px, 6vw, 28px);
     padding-block-start: clamp(20px, 5.2vw, 26px);
     padding-inline-start: clamp(18px, 5.2vw, 24px);
-    padding-inline-end: clamp(40px, 14vw, 52px);
-    padding-bottom: clamp(22px, 6.5vw, 30px);
+    padding-inline-end: clamp(24px, 10vw, 44px);
+    padding-bottom: clamp(40px, 14vw, 56px);
     border-radius: 22px;
   }
 
   .hero-card__header {
     gap: 12px 14px;
+  }
+
+  .hero-card__header-left {
+    min-height: 44px;
+    align-items: center;
+    box-sizing: border-box;
   }
 
   /* 호버 불가 디바이스: 탭 래치 상태에서 누르는 순간 피드백 */
@@ -469,19 +477,20 @@ a.hero-card__header-right--active {
   .hero-card__role {
     margin-top: clamp(13px, 3.9vw, 18px);
     max-width: 100%;
-    font-size: clamp(10px, 2.95vw, 11px);
+    font-size: clamp(11px, 3.1vw, 12px);
   }
 
   /* 본문·이름 안 남기고 카드 우하단은 캐릭터로 — 폭 과대 겹침 완화 */
   .hero__character {
-    right: clamp(-20px, -5vw, -10px);
-    bottom: clamp(-22px, -5vw, -14px);
-    width: clamp(152px, 42vw, 208px);
+    right: clamp(-16px, -4vw, -8px);
+    bottom: clamp(-18px, -5vw, -12px);
+    width: clamp(132px, 36vw, 196px);
   }
 
-  /* 좁은 뷰에서 스티커가 본문·이름과 겹침 → 숨김 */
-  .hero__tomato {
-    display: none;
+  .hero-card__header-right {
+    min-height: 44px;
+    padding: 8px 10px;
+    box-sizing: border-box;
   }
 }
 

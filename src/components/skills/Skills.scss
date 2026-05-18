@@ -126,21 +126,53 @@
   transition: opacity 220ms ease;
 }
 
-@media (hover: hover) {
-  .skill-pill:hover {
-    transform: translateY(0);
-  }
+.skill-pill__item {
+  list-style: none;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+}
 
-  .skill-pill:hover .skill-pill__fill {
+button.skill-pill {
+  width: auto;
+  font: inherit;
+  text-align: inherit;
+  cursor: inherit;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.skill-pill--active .skill-pill__fill {
+  transform: scaleX(1);
+}
+
+.skill-pill--active .skill-pill__name::after {
+  opacity: 0.92;
+  font-weight: 600;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .skill-pill:not(.skill-pill--active):hover .skill-pill__fill {
     transform: scaleX(1);
   }
 
-  .skill-pill:hover .skill-pill__name::after {
+  .skill-pill:not(.skill-pill--active):hover .skill-pill__name::after {
     opacity: 1;
   }
 }
 
-@media (max-width: 48rem) {
+@media (max-width: 767px), ((hover: none) and (pointer: coarse)) {
+  .skill-pill,
+  .skill-pill__fill {
+    transition: none;
+  }
+
+  button.skill-pill:active {
+    border-color: #0aa5a5;
+  }
+}
+
+@media (max-width: 47.99rem) {
   .skills-marquee {
     gap: 10px;
   }
@@ -166,5 +198,13 @@
   .skills-marquee__track,
   .skill-pill__fill {
     transition: none;
+  }
+
+  .skill-pill .skill-pill__fill {
+    transform: scaleX(1);
+  }
+
+  .skill-pill__name::after {
+    opacity: 0.92;
   }
 }

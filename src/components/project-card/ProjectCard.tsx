@@ -83,12 +83,12 @@ export function ProjectCard({
           aria-hidden="true"
         />
       )}
+      <h3 className="project-card__title">{title}</h3>
       <div className="project-card__header">
         <span className="project-card__label">{visual.label}</span>
         <span className="project-card__status">{visual.meta}</span>
       </div>
       <div className="project-card__content">
-        <h3 className="project-card__title">{title}</h3>
         <p className="project-card__description">{shortDescription}</p>
         {period ? <p className="project-card__period">작업 기간 {period}</p> : null}
         {roleTags.length > 0 ? (
@@ -157,14 +157,19 @@ export function ProjectCard({
         <div className="project-card__actions" aria-label={`${title} 빠른 링크`}>
           {deployUrl ? (
             <a
-              className="project-card__action-button"
+              className="project-card__action-button project-card__action-button--deploy"
               href={deployUrl}
               target="_blank"
               rel="noreferrer noopener"
               {...(deployWindow ? { onClick: handleDeployClick } : {})}
-              aria-label={`${title} 배포 열기`}
+              aria-label={`${title} 실제 서비스·배포 페이지 열기`}
             >
-              배포
+              <span className="project-card__deploy-label project-card__deploy-label--narrow" aria-hidden="true">
+                실제 서비스 체험
+              </span>
+              <span className="project-card__deploy-label project-card__deploy-label--wide" aria-hidden="true">
+                배포
+              </span>
             </a>
           ) : null}
           {otherQuickLinks.map((link) => (
