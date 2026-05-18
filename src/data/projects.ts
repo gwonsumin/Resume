@@ -102,6 +102,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     to: ROUTES.caseStudySangsangmadang,
     githubUrl: 'https://github.com/gwonsumin/sangsangmadang-rebranding',
     deployUrl: 'http://gsumin8327.dothome.co.kr/',
+    thumbnailSrc: `${import.meta.env.BASE_URL}projects/sangsangmadang/sangsangmadang-thumbnail.png`,
     demoTestId: 'test',
     demoTestPassword: '1234',
   },

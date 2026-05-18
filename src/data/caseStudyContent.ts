@@ -10,6 +10,9 @@ const goreonPublic = (file: string) =>
 const tonePublic = (file: string) =>
   `${import.meta.env.BASE_URL}projects/tone/${file}`;
 
+const ssmPublic = (file: string) =>
+  `${import.meta.env.BASE_URL}projects/sangsangmadang/${file}`;
+
 function p(...lines: string[]): readonly string[] {
   return lines;
 }
@@ -455,44 +458,60 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
   }),
   sangsangmadang: makeCaseStudy("Sangsangmadang", {
     intro: p(
-      "복합문화공간 상상마당의 콘텐츠 탐색 경험을 정보 구조 중심으로 재설계하고, 게시판 기능까지 직접 구현한 리브랜딩 웹사이트.",
-      "상상마당의 지점, 프로그램, 공간, 뉴스 정보를 사용자가 목적에 따라 빠르게 탐색할 수 있도록 화면 흐름을 재구성하고 PHP/MySQL 기반 운영 기능까지 연결했습니다.",
+      "상상마당은 복합문화공간의 브랜드, 공간, 문화 프로그램을 사용자 탐색 흐름 중심으로 재구조화한 foundation 프로젝트입니다.",
+      "시각적 리브랜딩이 아닌 정보 구조 설계부터 시작해, PHP/MySQL 기반 운영 기능 구현과 실서버 배포까지 하나의 완성된 문화 플랫폼으로 연결했습니다.",
     ),
+    media: {
+      hero: {
+        desktopSrc: ssmPublic("sangsangmadang-thumbnail.png"),
+        desktopAlt: "상상마당 케이스 스터디 대표 비주얼",
+      },
+    },
+    sectionTitles: {
+      intro: "Project Overview",
+      problem: "Program Structure",
+      insight: "Detail Page · Content Experience",
+      iaUserFlow: "IA / User Flow",
+      solution: "Platform as Archive",
+      uiDesign: "Website Surface",
+      result: "Operations",
+      learnings: "Reflection",
+    },
     myRole: {
       summary: p(
         "개인 프로젝트로 기획, UI 디자인, 퍼블리싱, PHP 개발, MySQL 연동, 서버 배포까지 전 과정을 담당했습니다.",
-        "팀 프로젝트처럼 역할을 기능 단위가 아닌 UX 의사결정 단위로 분리해, 정보 구조 설계부터 실제 운영형 게시판 구현까지 하나의 완성된 웹 경험으로 연결했습니다.",
+        "기능 구현 나열이 아닌 UX 의사결정 단위로 역할을 구분해, 정보 구조 설계부터 운영형 게시판까지 하나의 경험 흐름으로 완성했습니다.",
       ),
       roles: [
         {
           title: "UX Planning",
           detail:
-            "복합문화공간의 지점, 프로그램, 공간, 뉴스 정보를 사용자의 방문 목적에 맞게 다시 분류하고 핵심 탐색 흐름을 정의했습니다.",
+            "지점·프로그램·공간·뉴스 정보를 방문 목적 기준으로 재분류하고 핵심 탐색 흐름을 정의했습니다.",
         },
         {
           title: "Information Architecture",
           detail:
-            "메인에서 주요 콘텐츠를 먼저 확인하고, 프로그램과 공지 상세로 자연스럽게 이동할 수 있도록 메뉴 구조와 콘텐츠 우선순위를 정리했습니다.",
+            "메인에서 주요 콘텐츠를 먼저 확인하고, 프로그램·공지 상세로 자연스럽게 이동할 수 있도록 메뉴 구조와 콘텐츠 우선순위를 정리했습니다.",
         },
         {
           title: "UI Design",
           detail:
-            "문화 콘텐츠의 분위기를 유지하면서도 프로그램, 공간, 공지 정보가 명확하게 읽히도록 섹션 구성과 카드형 콘텐츠 표현을 설계했습니다.",
+            "문화 콘텐츠의 분위기를 유지하면서도 섹션 구성과 카드형 콘텐츠 표현이 명확하게 읽히도록 편집 리듬을 설계했습니다.",
         },
         {
           title: "Publishing",
           detail:
-            "HTML, CSS, JavaScript, jQuery를 활용해 메인 페이지와 서브 페이지를 구현하고 화면 전환과 콘텐츠 노출 흐름을 맞췄습니다.",
+            "HTML, CSS, JavaScript, jQuery를 활용해 메인·서브 페이지를 구현하고 화면 전환과 콘텐츠 노출 흐름을 맞췄습니다.",
         },
         {
           title: "PHP Development",
           detail:
-            "PHP와 MySQL을 사용해 공지사항 작성, 조회, 수정, 삭제가 가능한 CRUD 게시판과 이미지 업로드 기능을 직접 구현했습니다.",
+            "PHP와 MySQL로 공지사항 CRUD 게시판과 이미지 업로드 기능을 직접 구현했습니다.",
         },
         {
           title: "Deploy",
           detail:
-            "Dothome 서버와 FileZilla를 활용해 실제 접속 가능한 웹사이트로 배포하고 운영 환경에서 화면과 기능을 확인했습니다.",
+            "Dothome 서버와 FileZilla로 실제 접속 가능한 웹사이트를 배포하고 운영 환경에서 기능을 검증했습니다.",
         },
       ],
       contributions: [
@@ -505,42 +524,104 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       ],
     },
     problem: p(
-      "상상마당은 지점, 프로그램, 공간, 뉴스 등 정보 유형이 다양해 사용자가 원하는 콘텐츠를 빠르게 파악하기 어렵습니다.",
-      "문화공간의 성격은 명확하지만, 방문 목적에 따라 어떤 콘텐츠를 먼저 봐야 하는지 판단하기 쉬운 탐색 구조가 필요했습니다.",
+      "지점·프로그램·공간·뉴스가 한꺼번에 쌓이면 방문 목적별로 무엇을 먼저 봐야 할지 분기하기 어렵습니다.",
+      "프로그램 리스트와 상세로 이어지는 흐름을 정리해, 일정·장소·요약 정보가 한 화면에서 읽히도록 구조를 맞췄습니다.",
     ),
     insight: p(
-      "문제의 핵심은 콘텐츠 양이 아니라, 사용자가 방문 목적에 따라 정보를 탐색할 수 있는 구조의 부족이라고 판단했습니다.",
-      "따라서 브랜드 분위기를 바꾸는 시각적 리브랜딩보다, 문화 콘텐츠를 목적별로 읽고 이동할 수 있는 정보 구조 개선을 우선했습니다.",
+      "목적별 탐색이 가능해지려면 ‘탐색 질문이 끝나는 지점’에 상세 경험이 와야 합니다.",
+      "상세 화면에는 판단에 필요한 본문과 운영 정보를 모으고, 맥락 없는 장식보다 읽기 리듬을 우선했습니다.",
     ),
     iaUserFlow: p(
-      "사용자는 메인에서 상상마당의 핵심 공간과 운영 정보를 먼저 확인하고, 프로그램, 공간, 뉴스/공지로 이동해 필요한 상세 정보를 탐색합니다.",
-      "공지사항은 DB와 연동해 최신 게시글이 메인에 자동 출력되도록 구성해 정적인 소개 사이트가 아닌 운영형 웹사이트 흐름으로 확장했습니다.",
-      "주요 흐름은 메인 진입 → 지점/공간 확인 → 프로그램 탐색 → 뉴스/공지 확인 → 상세 정보 확인으로 구성했습니다.",
+      "사용자는 메인에서 상상마당의 핵심 공간과 운영 정보를 먼저 확인하고, 프로그램·공간·뉴스/공지로 이동해 필요한 상세 정보를 탐색합니다.",
+      "공지사항은 DB와 연동해 최신 게시글이 메인에 자동 노출되도록 구성했습니다.",
+      "핵심 흐름: 메인 진입 → 지점/공간 확인 → 프로그램 탐색 → 뉴스/공지 → 상세 정보.",
     ),
     solution: p(
-      "문화공간의 핵심 정보를 프로그램, 공간, 뉴스 흐름으로 재정리하고, 메인에서 주요 콘텐츠와 최신 공지를 바로 확인할 수 있도록 탐색 구조를 개선했습니다.",
-      "PHP와 MySQL 기반 게시판 CRUD를 직접 구현해 공지 작성, 목록 조회, 상세 조회, 수정, 삭제, 이미지 업로드까지 가능한 운영 기능을 추가했습니다.",
-      "핵심 기능은 지점/공간 정보 구조화, 프로그램 탐색, 공지사항 CRUD, 이미지 업로드, 메인 최신 공지 자동 노출로 구성했습니다.",
+      "문화공간의 핵심 정보를 프로그램·공간·뉴스 흐름으로 재정리하고, 메인에서 주요 콘텐츠와 최신 공지를 바로 확인할 수 있도록 탐색 구조를 개선했습니다.",
+      "PHP/MySQL 기반 게시판 CRUD를 직접 구현해 공지 작성, 조회, 수정, 삭제, 이미지 업로드가 가능한 운영형 플랫폼 구조를 완성했습니다.",
     ),
     uiDesign: p(
       "메인 화면은 문화공간의 분위기와 현재 진행 중인 콘텐츠를 빠르게 인지할 수 있도록 구성했습니다.",
-      "프로그램과 뉴스 콘텐츠는 카테고리, 제목, 장소, 일정 등 판단에 필요한 정보를 우선 노출해 사용자가 상세 페이지로 이동하기 전 핵심 내용을 파악할 수 있게 했습니다.",
-      "카드에서는 리브랜딩, 정보 구조, PHP CRUD, 실제 배포 경험만 간결하게 보여주고, 상세 페이지에서는 문제 정의부터 구현 결과까지 UX case study 흐름으로 확장했습니다.",
+      "프로그램·뉴스 콘텐츠는 카테고리·제목·장소·일정 등 판단에 필요한 정보를 먼저 노출해 상세 페이지로 이동 전에 핵심 내용을 파악할 수 있게 했습니다.",
     ),
     result: p(
-      "복합문화공간의 콘텐츠를 사용자가 목적에 따라 탐색할 수 있는 웹사이트 구조로 재구성했습니다.",
-      "정적인 리브랜딩 화면에 그치지 않고 PHP/MySQL 기반 게시판과 실제 서버 배포까지 연결해 완성형 웹 프로젝트로 구현했습니다.",
-      "개인 프로젝트지만 기획, 디자인, 프론트 구현, 백엔드 기능, 배포를 역할 단위로 분리해 팀 프로젝트와 같은 밀도의 포트폴리오 콘텐츠로 정리했습니다.",
+      "복합문화공간의 콘텐츠를 방문 목적에 따라 탐색할 수 있는 구조로 재편했습니다.",
+      "정적 리브랜딩에 그치지 않고 PHP/MySQL 게시판과 실서버 배포까지 연결해 운영 가능한 문화 플랫폼으로 완성했습니다.",
     ),
     learnings: p(
-      "리브랜딩 프로젝트에서도 시각적 변화보다 사용자가 정보를 찾는 방식과 운영자가 콘텐츠를 관리하는 흐름이 함께 설계되어야 한다는 점을 배웠습니다.",
-      "PHP와 MySQL로 CRUD 구조를 직접 구현하며 화면, 데이터, 서버 배포가 연결되는 웹 서비스의 기본 흐름을 경험했습니다.",
+      "GOREON이 AI 기반 UX를 탐구하고, TONE이 감정 인터랙션을 설계하기 이전에—상상마당은 브랜드와 공간을 UX 구조로 해석하는 foundation 작업이었습니다.",
+      "리브랜딩에서도 시각적 변화보다 사용자의 탐색 방식과 운영자의 관리 흐름이 함께 설계되어야 한다는 것, PHP/MySQL로 화면·데이터·배포가 연결되는 웹 서비스의 기본 구조를 몸소 경험했습니다.",
     ),
     livePreview: {
       href: "https://gsumin8327.dothome.co.kr/",
       description:
-        "배포된 상상마당 리브랜딩 웹사이트입니다. 메인 콘텐츠 구성, 프로그램/공간 탐색, 공지사항 흐름을 실제 화면에서 확인할 수 있습니다.",
+        "배포된 상상마당 리브랜딩 웹사이트입니다. 메인 구성, 프로그램/공간 탐색, 공지사항 흐름을 실제 화면에서 확인할 수 있습니다.",
       buttonLabel: "라이브 사이트 열기",
+    },
+    browserScrollPreviews: {
+      intro: [
+        {
+          title: "Main page · scroll preview",
+          pages: [
+            {
+              src: ssmPublic("sangsangmadang-main-full.png"),
+              alt: "상상마당 메인 페이지 전체",
+            },
+          ],
+        },
+      ],
+      problem: [
+        {
+          title: "Program structure · scroll preview",
+          pages: [
+            {
+              src: ssmPublic("sangsangmadang-program-full.png"),
+              alt: "상상마당 프로그램 페이지 전체",
+            },
+          ],
+        },
+      ],
+      insight: [
+        {
+          title: "Detail page · scroll preview",
+          pages: [
+            {
+              src: ssmPublic("sangsangmadang-detail-full.png"),
+              alt: "상상마당 상세 페이지 전체",
+            },
+          ],
+        },
+      ],
+    },
+    sectionImageLayout: {
+      solution: 'row',
+      result: 'row',
+    },
+    sectionImages: {
+      solution: [
+        {
+          src: ssmPublic('sangsangmadang-board.png'),
+          alt: '상상마당 게시판 화면',
+        },
+        {
+          src: ssmPublic('sangsangmadang-login.png'),
+          alt: '상상마당 로그인 화면',
+        },
+        {
+          src: ssmPublic('sangsangmadang-mypage.png'),
+          alt: '상상마당 마이페이지 화면',
+        },
+      ],
+      result: [
+        {
+          src: ssmPublic('sangsangmadang-admin1.png'),
+          alt: '상상마당 관리자 화면 1',
+        },
+        {
+          src: ssmPublic('sangsangmadang-admin2.png'),
+          alt: '상상마당 관리자 화면 2',
+        },
+      ],
     },
   }),
 };
