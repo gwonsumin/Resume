@@ -116,6 +116,16 @@ type CaseStudyUxFlowEditorial = {
   steps: readonly string[]
 }
 
+/** CSS browser frame + long scroll viewport (see BrowserScrollPreview). */
+export type CaseStudyBrowserScrollPreview = {
+  title?: string
+  /** Full-length screenshots stacked vertically; hover scrolls the column inside the frame. */
+  pages: readonly { src: string; alt?: string }[]
+}
+
+/** Layout for `sectionImages` in a case study block (default: vertical stack). */
+export type CaseStudySectionImageLayout = 'stack' | 'row'
+
 /** Full case study narrative — one object per project slug. */
 export type CaseStudyContent = {
   intro: CaseStudyBody
@@ -136,4 +146,12 @@ export type CaseStudyContent = {
   media?: CaseStudyMedia
   /** Optional per-section headings (defaults to CaseStudyTemplate copy). */
   sectionTitles?: Partial<Record<CaseStudySectionKey, string>>
+  /** @deprecated Prefer `browserScrollPreviews`. Kept for uiDesign fallback only. */
+  browserScrollPreview?: CaseStudyBrowserScrollPreview
+  /** Browser shell scroll previews rendered after selected section copy. */
+  browserScrollPreviews?: Partial<Record<CaseStudySectionKey, readonly CaseStudyBrowserScrollPreview[]>>
+  /** Static full-size screenshots rendered after selected section copy. */
+  sectionImages?: Partial<Record<CaseStudySectionKey, readonly CaseStudySectionFigure[]>>
+  /** How to lay out `sectionImages` per section (default `stack`). */
+  sectionImageLayout?: Partial<Record<CaseStudySectionKey, CaseStudySectionImageLayout>>
 }

@@ -267,6 +267,181 @@
   overflow: visible;
 }
 
+/* Browser scroll preview blocks (after section copy; titles optional) */
+.case-study__browser-preview-list {
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+  margin-top: clamp(20px, 3.5vw, 32px);
+}
+
+.case-study__browser-preview {
+  width: 100%;
+  max-width: 920px;
+}
+
+.case-study__browser-preview-title {
+  margin: 0 0 10px;
+  color: rgb(59 47 47 / 0.62);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.case-study__section-image-list {
+  display: grid;
+  gap: clamp(18px, 3vw, 28px);
+  margin-top: clamp(20px, 3.5vw, 32px);
+}
+
+.case-study__section-image-list .case-study__figure--section {
+  margin-top: 0;
+}
+
+/* Single-row strip — compact thumbnails; click opens lightbox (row layout only). */
+.case-study__section-image-list--row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: clamp(10px, 1.6vw, 16px);
+  margin-top: clamp(16px, 2.5vw, 24px);
+  align-items: flex-start;
+}
+
+.case-study__section-image-trigger {
+  display: block;
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: zoom-in;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+@media (hover: hover) {
+  .case-study__section-image-trigger:hover {
+    opacity: 0.9;
+  }
+}
+
+.case-study__section-image-trigger:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+.case-study__section-image-list--row .case-study__figure--section {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+}
+
+.case-study__section-image-list--row .case-study__figure--section img {
+  max-height: min(200px, 28vw);
+  width: 100%;
+  object-fit: contain;
+  object-position: center top;
+}
+
+/* Fullscreen lightbox for row thumbnails */
+.case-study__image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(48px, 8vw, 72px) clamp(12px, 3vw, 20px) clamp(16px, 3vw, 24px);
+}
+
+.case-study__image-lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: rgb(30 24 24 / 0.75);
+  cursor: pointer;
+}
+
+.case-study__image-lightbox__panel {
+  position: relative;
+  z-index: 1;
+  max-width: min(96vw, 1280px);
+  max-height: min(90vh, 1200px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.case-study__image-lightbox__img {
+  display: block;
+  max-width: 100%;
+  max-height: min(85vh, 1100px);
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 24px 64px rgb(0 0 0 / 0.35);
+}
+
+.case-study__image-lightbox__close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid rgb(255 250 245 / 0.55);
+  border-radius: 999px;
+  background: rgb(59 47 47 / 0.85);
+  color: #fffaf5;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.case-study__image-lightbox__close:hover {
+  background: rgb(59 47 47 / 0.95);
+}
+
+.case-study__image-lightbox__close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
+@media (max-width: 720px) {
+  .case-study__section-image-list--row {
+    flex-direction: column;
+    gap: clamp(14px, 3vw, 20px);
+  }
+
+  .case-study__section-image-list--row .case-study__section-image-trigger {
+    flex: none;
+    width: 100%;
+  }
+
+  .case-study__section-image-list--row .case-study__figure--section img {
+    max-height: min(280px, 48vh);
+  }
+
+  .case-study__image-lightbox__close {
+    top: -44px;
+  }
+}
+
 /* Tone mockups: two-column `.case-study__split-body--tone` — sizes live under `.case-study__split-body-media` */
 .case-study__split-body--tone {
   display: grid;

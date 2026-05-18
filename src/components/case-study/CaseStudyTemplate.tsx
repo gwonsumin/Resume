@@ -1,9 +1,14 @@
-import type { ReactNode } from 'react'
+import { Fragment, useEffect, useState, type ReactNode } from 'react'
 import type { ProjectPreview } from '../../types/project'
-import type { CaseStudyContent, CaseStudySectionFigure } from '../../types/caseStudy'
+import type {
+  CaseStudyBrowserScrollPreview,
+  CaseStudyContent,
+  CaseStudySectionFigure,
+} from '../../types/caseStudy'
 import { CaseStudyProse, renderCaseStudyBody } from './CaseStudyProse'
 import { HeroEmotionFlow } from './HeroEmotionFlow'
 import { ServiceExperienceSection } from './ServiceExperienceSection'
+import { BrowserScrollPreview } from './BrowserScrollPreview'
 import './CaseStudyTemplate.scss'
 
 const SECTIONS: ReadonlyArray<{
@@ -84,6 +89,120 @@ function CaseStudyBlock({
       </h2>
       <div className="case-study__block-main">{children}</div>
     </section>
+  )
+}
+
+function CaseStudyBrowserPreviewList({
+  previews,
+}: {
+  previews?: readonly CaseStudyBrowserScrollPreview[]
+}) {
+  if (!previews?.length) return null
+
+  return (
+    <div className="case-study__browser-preview-list">
+      {previews.map((preview, index) => (
+        <div
+          key={`${preview.title ?? 'browser-preview'}-${index}`}
+          className="case-study__browser-preview"
+        >
+          {preview.title ? (
+            <p className="case-study__browser-preview-title">{preview.title}</p>
+          ) : null}
+          <BrowserScrollPreview pages={preview.pages} />
+        </div>
+      ))}
+    </div>
+  )
+}
+
+function CaseStudySectionImageList({
+  images,
+  layout = 'stack',
+}: {
+  images?: readonly CaseStudySectionFigure[]
+  layout?: 'stack' | 'row'
+}) {
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null)
+
+  useEffect(() => {
+    if (!lightbox) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setLightbox(null)
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightbox])
+
+  if (!images?.length) return null
+
+  const listClass =
+    layout === 'row'
+      ? 'case-study__section-image-list case-study__section-image-list--row'
+      : 'case-study__section-image-list'
+
+  return (
+    <>
+      <div className={listClass}>
+        {images.map((image) => {
+          const figure = (
+            <CaseStudyFigure
+              src={image.src}
+              alt={image.alt ?? ''}
+              variant="section"
+              tonePresentation={image.presentation}
+            />
+          )
+          if (layout === 'row') {
+            return (
+              <button
+                key={image.src}
+                type="button"
+                className="case-study__section-image-trigger"
+                onClick={() => setLightbox({ src: image.src, alt: image.alt ?? '' })}
+                aria-label={
+                  image.alt ? `${image.alt} — 확대 보기` : '스크린샷 확대 보기'
+                }
+              >
+                {figure}
+              </button>
+            )
+          }
+          return <Fragment key={image.src}>{figure}</Fragment>
+        })}
+      </div>
+      {lightbox ? (
+        <div
+          className="case-study__image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="확대 이미지"
+        >
+          <button
+            type="button"
+            className="case-study__image-lightbox__backdrop"
+            aria-label="닫기"
+            onClick={() => setLightbox(null)}
+          />
+          <div className="case-study__image-lightbox__panel">
+            <button
+              type="button"
+              className="case-study__image-lightbox__close"
+              onClick={() => setLightbox(null)}
+              aria-label="닫기"
+            >
+              ×
+            </button>
+            <img
+              src={lightbox.src}
+              alt={lightbox.alt}
+              className="case-study__image-lightbox__img"
+              decoding="async"
+            />
+          </div>
+        </div>
+      ) : null}
+    </>
   )
 }
 
@@ -324,6 +443,13 @@ export function CaseStudyTemplate({
             sectionFigure?.presentation === 'player' ||
             sectionFigure?.presentation === 'calendar'
           const toneFigureSplit = Boolean(sectionFigure && toneFigurePresentation)
+          const browserPreviews =
+            content.browserScrollPreviews?.[key] ??
+            (key === 'uiDesign' && content.browserScrollPreview
+              ? [content.browserScrollPreview]
+              : undefined)
+          const sectionImages = content.sectionImages?.[key]
+          const sectionImageLayout = content.sectionImageLayout?.[key] ?? 'stack'
 
           return (
             <div key={key} className="case-study__section-stack">
@@ -355,6 +481,8 @@ export function CaseStudyTemplate({
                     ) : null}
                   </>
                 )}
+                <CaseStudyBrowserPreviewList previews={browserPreviews} />
+                <CaseStudySectionImageList images={sectionImages} layout={sectionImageLayout} />
               </CaseStudyBlock>
               {key === 'iaUserFlow' && uxFlowEditorial ? (
                 <CaseStudyBlock id={`${baseId}-ux-flow-editorial`} title={uxFlowEditorial.title}>
