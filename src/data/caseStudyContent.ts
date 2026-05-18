@@ -16,53 +16,60 @@ function p(...lines: string[]): readonly string[] {
 
 const GOREON_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   {
-    label: "질문으로 시작",
+    label: "Home",
+    title: "질문 시작 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/`,
     featured: false,
     description:
-      "사용자 조건을 단계적으로 정리하는 첫 진입 흐름을 확인하실 수 있습니다.",
+      "서비스 첫 진입 화면에서 조건 질문으로 추천 흐름이 시작되는 구조를 확인할 수 있습니다.",
   },
   {
-    label: "후보 압축",
+    label: "AI Chat",
+    title: "조건 정리 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/#ai_chat`,
     featured: true,
     description:
-      "대화 입력을 통해 조건이 결정 가능한 후보로 좁혀지는 흐름을 확인하실 수 있습니다.",
+      "대화 입력을 통해 예산, 사용 목적, 선호 조건이 정리되는 추천 진입 흐름을 확인할 수 있습니다.",
   },
   {
-    label: "후보 탐색",
+    label: "Product List",
+    title: "후보 추천 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/list`,
     featured: true,
     description:
-      "비교 대상 후보를 탐색하고 선택 기준을 마련하는 화면을 확인하실 수 있습니다.",
+      "정리된 조건을 바탕으로 추천 후보를 탐색하고 비교 대상을 고르는 화면을 확인할 수 있습니다.",
   },
   {
-    label: "판단 근거",
+    label: "Product Detail",
+    title: "상세 비교 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/product/1`,
     featured: false,
     description:
-      "상세 정보에서 선택 판단에 필요한 근거가 어떻게 정리되는지 확인하실 수 있습니다.",
+      "선택한 후보의 상세 정보와 판단 기준이 어떻게 정리되는지 확인할 수 있습니다.",
   },
   {
-    label: "저장",
+    label: "Wishlist",
+    title: "저장한 후보 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/wishlist`,
     featured: false,
     description:
-      "즉시 구매하지 않아도 후보를 저장하고 다시 비교할 수 있는 흐름을 확인하실 수 있습니다.",
+      "관심 후보를 저장한 뒤 다시 비교하거나 선택을 이어가는 화면을 확인할 수 있습니다.",
   },
   {
-    label: "구매 전환",
+    label: "Cart",
+    title: "구매 전환 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/cart`,
     featured: false,
     description:
-      "저장한 후보를 최종 선택으로 정리해 구매로 이어가는 단계를 확인하실 수 있습니다.",
+      "최종 후보를 장바구니에 담고 구매 단계로 이어지는 전환 화면을 확인할 수 있습니다.",
   },
   {
-    label: "연속 경험",
+    label: "Login",
+    title: "로그인 화면",
     href: `${GOREON_DEPLOY_ORIGIN}/login`,
     featured: false,
     description:
-      "로그인 후 저장과 구매 흐름이 끊기지 않고 이어지는 경험을 검증하실 수 있습니다.",
+      "로그인 후 저장한 후보와 구매 흐름이 이어지는 서비스 진입 화면을 확인할 수 있습니다.",
   },
 ];
 
@@ -264,8 +271,12 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     ),
     serviceExperience: {
       title: "실제 서비스 체험",
-      description:
-        "질문으로 조건을 정리하고 후보를 좁힌 뒤 비교, 저장, 구매로 이어지는 흐름을 실제 서비스에서 확인하실 수 있습니다.",
+      description: p(
+        "GOREON은 반응형 환경에 맞춰 설계한 전자기기 추천 및 비교 서비스입니다.",
+        "질문 시작 화면부터 조건 정리, 후보 추천, 상세 비교, 저장, 구매 전환까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
+      ),
+      mobileNotice:
+        "데스크톱과 모바일 화면에 모두 대응한 반응형 서비스이므로 원하는 기기 환경에서 확인할 수 있습니다.",
       serviceLinks: GOREON_SERVICE_LINKS,
       verificationPoints: GOREON_VERIFICATION_POINTS,
       testAccountLead:
