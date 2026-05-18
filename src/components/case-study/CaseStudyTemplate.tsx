@@ -1,10 +1,21 @@
-import { Fragment, useEffect, useState, type ReactNode } from 'react'
+import {
+  Fragment,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type MouseEvent,
+  type ReactNode,
+} from 'react'
+import { createPortal } from 'react-dom'
 import type { ProjectPreview } from '../../types/project'
 import type {
   CaseStudyBrowserScrollPreview,
   CaseStudyContent,
   CaseStudySectionFigure,
 } from '../../types/caseStudy'
+import { handleProjectDeployClick } from '../../utils/handleProjectDeployClick'
 import { CaseStudyProse, renderCaseStudyBody } from './CaseStudyProse'
 import { HeroEmotionFlow } from './HeroEmotionFlow'
 import { ServiceExperienceSection } from './ServiceExperienceSection'
@@ -116,6 +127,51 @@ function CaseStudyBrowserPreviewList({
   )
 }
 
+function clampCaseStudy(n: number, min: number, max: number) {
+  return Math.min(Math.max(n, min), max)
+}
+
+const LIGHTBOX_LIST_ANCHOR_MARGIN_PX = 56
+
+/** Viewport-clamped center of the thumbnail row for the image lightbox panel. */
+function lightboxAnchorForListEl(el: HTMLDivElement | null): { left: number; top: number } {
+  if (typeof window === 'undefined') {
+    return { left: 0, top: 0 }
+  }
+  const w = window.innerWidth
+  const h = window.innerHeight
+  const m = LIGHTBOX_LIST_ANCHOR_MARGIN_PX
+  const fallback = { left: w / 2, top: h / 2 }
+  if (!el) {
+    return fallback
+  }
+  const r = el.getBoundingClientRect()
+  const cx = r.left + r.width / 2
+  const cy = r.top + r.height / 2
+  return {
+    left: clampCaseStudy(cx, m, w - m),
+    top: clampCaseStudy(cy, m, h - m),
+  }
+}
+
+function CaseStudyHeroExternalGlyph({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width={12}
+      height={12}
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        fill="currentColor"
+        d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
+      />
+    </svg>
+  )
+}
+
 function CaseStudySectionImageList({
   images,
   layout = 'stack',
@@ -123,16 +179,38 @@ function CaseStudySectionImageList({
   images?: readonly CaseStudySectionFigure[]
   layout?: 'stack' | 'row'
 }) {
+  const listRef = useRef<HTMLDivElement>(null)
   const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null)
+  const [panelPos, setPanelPos] = useState<{ left: number; top: number } | null>(null)
+
+  const updatePanelAnchor = useCallback(() => {
+    setPanelPos(lightboxAnchorForListEl(listRef.current))
+  }, [])
+
+  const closeLightbox = useCallback(() => {
+    setLightbox(null)
+    setPanelPos(null)
+  }, [])
+
+  useLayoutEffect(() => {
+    if (!lightbox) return
+    updatePanelAnchor()
+    window.addEventListener('resize', updatePanelAnchor)
+    window.addEventListener('scroll', updatePanelAnchor, true)
+    return () => {
+      window.removeEventListener('resize', updatePanelAnchor)
+      window.removeEventListener('scroll', updatePanelAnchor, true)
+    }
+  }, [lightbox, updatePanelAnchor])
 
   useEffect(() => {
     if (!lightbox) return
     const onKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setLightbox(null)
+      if (event.key === 'Escape') closeLightbox()
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [lightbox])
+  }, [lightbox, closeLightbox])
 
   if (!images?.length) return null
 
@@ -141,9 +219,57 @@ function CaseStudySectionImageList({
       ? 'case-study__section-image-list case-study__section-image-list--row'
       : 'case-study__section-image-list'
 
+  const openLightbox = (src: string, alt: string) => {
+    setPanelPos(lightboxAnchorForListEl(listRef.current))
+    setLightbox({ src, alt })
+  }
+
+  const lightboxPortal =
+    lightbox && panelPos && typeof document !== 'undefined'
+      ? createPortal(
+          <div
+            className="case-study__image-lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="확대 이미지"
+          >
+            <button
+              type="button"
+              className="case-study__image-lightbox__backdrop"
+              aria-label="닫기"
+              onClick={closeLightbox}
+            />
+            <div
+              className="case-study__image-lightbox__panel"
+              style={{
+                left: panelPos.left,
+                top: panelPos.top,
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <button
+                type="button"
+                className="case-study__image-lightbox__close"
+                onClick={closeLightbox}
+                aria-label="닫기"
+              >
+                ×
+              </button>
+              <img
+                src={lightbox.src}
+                alt={lightbox.alt}
+                className="case-study__image-lightbox__img"
+                decoding="async"
+              />
+            </div>
+          </div>,
+          document.body,
+        )
+      : null
+
   return (
     <>
-      <div className={listClass}>
+      <div ref={listRef} className={listClass}>
         {images.map((image) => {
           const figure = (
             <CaseStudyFigure
@@ -159,7 +285,7 @@ function CaseStudySectionImageList({
                 key={image.src}
                 type="button"
                 className="case-study__section-image-trigger"
-                onClick={() => setLightbox({ src: image.src, alt: image.alt ?? '' })}
+                onClick={() => openLightbox(image.src, image.alt ?? '')}
                 aria-label={
                   image.alt ? `${image.alt} — 확대 보기` : '스크린샷 확대 보기'
                 }
@@ -171,37 +297,7 @@ function CaseStudySectionImageList({
           return <Fragment key={image.src}>{figure}</Fragment>
         })}
       </div>
-      {lightbox ? (
-        <div
-          className="case-study__image-lightbox"
-          role="dialog"
-          aria-modal="true"
-          aria-label="확대 이미지"
-        >
-          <button
-            type="button"
-            className="case-study__image-lightbox__backdrop"
-            aria-label="닫기"
-            onClick={() => setLightbox(null)}
-          />
-          <div className="case-study__image-lightbox__panel">
-            <button
-              type="button"
-              className="case-study__image-lightbox__close"
-              onClick={() => setLightbox(null)}
-              aria-label="닫기"
-            >
-              ×
-            </button>
-            <img
-              src={lightbox.src}
-              alt={lightbox.alt}
-              className="case-study__image-lightbox__img"
-              decoding="async"
-            />
-          </div>
-        </div>
-      ) : null}
+      {lightboxPortal}
     </>
   )
 }
@@ -287,6 +383,7 @@ export function CaseStudyTemplate({
         <ServiceExperienceSection
           description={content.serviceExperience.description}
           mobileNotice={content.serviceExperience.mobileNotice}
+          secondaryBandLabel={content.serviceExperience.secondaryBandLabel}
           serviceLinks={content.serviceExperience.serviceLinks}
           verificationPoints={content.serviceExperience.verificationPoints}
           testAccountLead={content.serviceExperience.testAccountLead}
@@ -325,54 +422,94 @@ export function CaseStudyTemplate({
     </CaseStudyBlock>
   )
 
+  const heroDeployUrl = project.deployUrl
+  const onHeroDeployClick = useCallback(
+    (event: MouseEvent<HTMLAnchorElement>) => {
+      if (!heroDeployUrl) return
+      handleProjectDeployClick(event, heroDeployUrl, project.deployWindow)
+    },
+    [heroDeployUrl, project.deployWindow],
+  )
+
+  const heroDeployControl =
+    heroDeployUrl ? (
+      <a
+        className="case-study__hero-deploy-link"
+        href={heroDeployUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        onClick={onHeroDeployClick}
+        aria-label={`${project.title} 배포 사이트 새 탭에서 열기`}
+      >
+        <span className="case-study__hero-deploy-link-text">Live site</span>
+        <CaseStudyHeroExternalGlyph className="case-study__hero-deploy-link-icon" />
+      </a>
+    ) : null
+
+  const wrapCaseStudyHero = (inner: ReactNode) =>
+    heroDeployControl ? (
+      <div className="case-study__hero-with-deploy">
+        {inner}
+        {heroDeployControl}
+      </div>
+    ) : (
+      inner
+    )
+
   return (
     <article className={`case-study${isToneCase ? ' case-study--tone' : ''}`} lang="en">
       <header className="case-study__header">
         {hasStaggeredHero && staggeredScreens ? (
-          <HeroEmotionFlow variant="header" screens={staggeredScreens} loading="eager" />
+          wrapCaseStudyHero(
+            <HeroEmotionFlow variant="header" screens={staggeredScreens} loading="eager" />,
+          )
         ) : hasHero ? (
           heroDesktop && heroMobile ? (
-            <div className="case-study__hero-poster" aria-label="대표 화면">
-              <div className="case-study__hero-poster-canvas">
-                <CaseStudyFigure
-                  src={heroDesktop}
-                  alt={content.media?.hero?.desktopAlt ?? ''}
-                  variant="heroPosterMain"
-                  loading="eager"
-                />
-                <CaseStudyFigure
-                  src={heroMobile}
-                  alt={content.media?.hero?.mobileAlt ?? ''}
-                  variant="heroPosterInset"
-                  loading="lazy"
-                />
-              </div>
-            </div>
+            wrapCaseStudyHero(
+              <div className="case-study__hero-poster" aria-label="대표 화면">
+                <div className="case-study__hero-poster-canvas">
+                  <CaseStudyFigure
+                    src={heroDesktop}
+                    alt={content.media?.hero?.desktopAlt ?? ''}
+                    variant="heroPosterMain"
+                    loading="eager"
+                  />
+                  <CaseStudyFigure
+                    src={heroMobile}
+                    alt={content.media?.hero?.mobileAlt ?? ''}
+                    variant="heroPosterInset"
+                    loading="lazy"
+                  />
+                </div>
+              </div>,
+            )
           ) : (
-            <div
-              className={
-                heroSingleColumn
-                  ? 'case-study__hero-visuals case-study__hero-visuals--single'
-                  : 'case-study__hero-visuals'
-              }
-            >
-              {heroDesktop ? (
-                <CaseStudyFigure
-                  src={heroDesktop}
-                  alt={content.media?.hero?.desktopAlt ?? ''}
-                  variant={heroMobile ? 'hero' : 'heroLead'}
-                  loading="eager"
-                />
-              ) : null}
-              {heroMobile ? (
-                <CaseStudyFigure
-                  src={heroMobile}
-                  alt={content.media?.hero?.mobileAlt ?? ''}
-                  variant="heroCompact"
-                  loading={heroDesktop ? 'lazy' : 'eager'}
-                />
-              ) : null}
-            </div>
+            wrapCaseStudyHero(
+              <div
+                className={
+                  heroSingleColumn
+                    ? 'case-study__hero-visuals case-study__hero-visuals--single'
+                    : 'case-study__hero-visuals'
+                }
+              >
+                {heroDesktop ? (
+                  <CaseStudyFigure
+                    src={heroDesktop}
+                    alt={content.media?.hero?.desktopAlt ?? ''}
+                    variant={heroMobile ? 'hero' : 'heroLead'}
+                    loading="eager"
+                  />
+                ) : null}
+                {heroMobile ? (
+                  <CaseStudyFigure
+                    src={heroMobile}
+                    alt={content.media?.hero?.mobileAlt ?? ''}
+                    variant="heroCompact"
+                    loading={heroDesktop ? 'lazy' : 'eager'}
+                  />
+                ) : null}
+              </div>,
+            )
           )
         ) : null}
         <>

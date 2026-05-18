@@ -11,6 +11,8 @@ export type ServiceExperienceSectionProps = {
   verificationPoints: readonly string[]
   /** Shown in a callout above link grid when set. */
   mobileNotice?: string
+  /** Kicker above the secondary tier row when `tier: 'secondary'` links exist. */
+  secondaryBandLabel?: string
   demoTestId?: string
   demoTestPassword?: string
   testAccountLead?: string
@@ -67,9 +69,76 @@ function openMobilePreview(href: string) {
   window.open(href, '_blank', 'noopener,noreferrer')
 }
 
+function ServiceExperienceLinkCard({
+  link,
+  tier,
+  onLinkClick,
+}: {
+  link: CaseStudyServiceLink
+  tier: 'primary' | 'secondary'
+  onLinkClick: (event: MouseEvent<HTMLAnchorElement>, link: CaseStudyServiceLink) => void
+}) {
+  const tierClass =
+    tier === 'secondary'
+      ? 'case-study__service-link case-study__service-link--tier-secondary'
+      : 'case-study__service-link case-study__service-link--tier-primary'
+
+  return (
+    <a
+      className={
+        link.featured ? `${tierClass} case-study__service-link--featured` : tierClass
+      }
+      href={link.href}
+      target="_blank"
+      rel="noreferrer noopener"
+      onClick={(event) => onLinkClick(event, link)}
+    >
+      <span className="case-study__service-link-head">
+        <span className="case-study__service-link-titles">
+          <span className="case-study__service-link-label">{link.label}</span>
+          {link.title ? (
+            <span className="case-study__service-link-kicker">{link.title}</span>
+          ) : null}
+        </span>
+        <ExternalLinkGlyph className="case-study__service-link-icon" />
+      </span>
+      <span className="case-study__service-link-desc">{link.description}</span>
+    </a>
+  )
+}
+
+function ServiceExperienceLinkList({
+  links,
+  tier,
+  className,
+  ariaLabel,
+  onLinkClick,
+}: {
+  links: readonly CaseStudyServiceLink[]
+  tier: 'primary' | 'secondary'
+  className: string
+  ariaLabel?: string
+  onLinkClick: (event: MouseEvent<HTMLAnchorElement>, link: CaseStudyServiceLink) => void
+}) {
+  return (
+    <ul
+      className={className}
+      role="list"
+      {...(ariaLabel ? { 'aria-label': ariaLabel } : {})}
+    >
+      {links.map((link) => (
+        <li key={`${link.href}-${link.label}`}>
+          <ServiceExperienceLinkCard link={link} tier={tier} onLinkClick={onLinkClick} />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 export function ServiceExperienceSection({
   description,
   mobileNotice,
+  secondaryBandLabel,
   serviceLinks,
   verificationPoints,
   testAccountLead,
@@ -89,6 +158,10 @@ export function ServiceExperienceSection({
     openMobilePreview(link.href)
   }
 
+  const primaryLinks = serviceLinks.filter((l) => l.tier !== 'secondary')
+  const secondaryLinks = serviceLinks.filter((l) => l.tier === 'secondary')
+  const hasTieredLayout = secondaryLinks.length > 0
+
   return (
     <>
       <CaseStudyProse body={description} />
@@ -102,34 +175,37 @@ export function ServiceExperienceSection({
           </div>
         ) : null}
 
-        <ul className="case-study__service-links" role="list" aria-label="배포 서비스 주요 화면">
-          {serviceLinks.map((link) => (
-            <li key={`${link.href}-${link.label}`}>
-              <a
-                className={
-                  link.featured
-                    ? 'case-study__service-link case-study__service-link--featured'
-                    : 'case-study__service-link'
-                }
-                href={link.href}
-                target="_blank"
-                rel="noreferrer noopener"
-                onClick={(event) => handleServiceLinkClick(event, link)}
-              >
-                <span className="case-study__service-link-head">
-                  <span className="case-study__service-link-titles">
-                    <span className="case-study__service-link-label">{link.label}</span>
-                    {link.title ? (
-                      <span className="case-study__service-link-kicker">{link.title}</span>
-                    ) : null}
-                  </span>
-                  <ExternalLinkGlyph className="case-study__service-link-icon" />
-                </span>
-                <span className="case-study__service-link-desc">{link.description}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        {hasTieredLayout ? (
+          <div
+            className="case-study__service-link-tiers"
+            aria-label="배포된 플랫폼 탐색 경로"
+          >
+            <ServiceExperienceLinkList
+              links={primaryLinks}
+              tier="primary"
+              className="case-study__service-links case-study__service-links--primary-tier"
+              onLinkClick={handleServiceLinkClick}
+            />
+            {secondaryBandLabel ? (
+              <p className="case-study__service-secondary-band-label">{secondaryBandLabel}</p>
+            ) : null}
+            <ServiceExperienceLinkList
+              links={secondaryLinks}
+              tier="secondary"
+              className="case-study__service-links case-study__service-links--secondary-tier"
+              ariaLabel="아카이브 및 운영 레이어"
+              onLinkClick={handleServiceLinkClick}
+            />
+          </div>
+        ) : (
+          <ServiceExperienceLinkList
+            links={serviceLinks}
+            tier="primary"
+            className="case-study__service-links"
+            ariaLabel="배포 서비스 주요 화면"
+            onLinkClick={handleServiceLinkClick}
+          />
+        )}
 
         {hasCreds ? (
           <div className="case-study__test-account" aria-label="테스트 계정">

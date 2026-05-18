@@ -2,7 +2,11 @@ import type {
   CaseStudyContent,
   CaseStudyServiceLink,
 } from "../types/caseStudy";
-import { GOREON_DEPLOY_ORIGIN, TONE_DEPLOY_ORIGIN } from "./projects";
+import {
+  GOREON_DEPLOY_ORIGIN,
+  SANGSANGMADANG_DEPLOY_ORIGIN,
+  TONE_DEPLOY_ORIGIN,
+} from "./projects";
 
 const goreonPublic = (file: string) =>
   `${import.meta.env.BASE_URL}projects/goreon/${file}`;
@@ -149,6 +153,71 @@ const TONE_VERIFICATION_POINTS: readonly string[] = [
   "Playlist와 Player에서 재생, 뮤비 전환, 셔플, 반복, 저장 UX를 확인할 수 있습니다.",
   "Palette Log와 Calendar에서 음악 감상이 감정 기록으로 이어지는 흐름을 확인할 수 있습니다.",
   "Search에서 OpenAI 기반 자연어 추천 흐름을 확인할 수 있습니다.",
+];
+
+const SSM = SANGSANGMADANG_DEPLOY_ORIGIN;
+
+const SANGSANGMADANG_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
+  {
+    tier: "primary",
+    label: "Main Website",
+    title: "메인 페이지",
+    href: `${SSM}/`,
+    type: "external",
+    description:
+      "메인에 머물며 브랜드의 리듬과 최신 운영 소식을 읽고, 프로그램·공간·기록으로 탐색을 분기하는 진입면입니다.",
+  },
+  {
+    tier: "primary",
+    label: "Program Archive",
+    title: "프로그램·공연 목록",
+    href: `${SSM}/sub_01.php`,
+    type: "external",
+    description:
+      "진행 중인 공연·프로그램을 아카이브처럼 넘겨 보며 일정과 장소 맥락을 비교하고, 상세 탐색으로 자연스럽게 이어지는 축입니다.",
+  },
+  {
+    tier: "primary",
+    label: "Performance Detail",
+    title: "프로그램 상세 페이지",
+    href: `${SSM}/sub_01_01.php`,
+    type: "external",
+    description:
+      "한 작품·프로그램에 대한 판단 정보와 본문이 한 화면에 모이는, 탐색 질문이 정리되는 깊은 레이어입니다.",
+  },
+  {
+    tier: "secondary",
+    label: "Community Archive",
+    title: "게시판 목록",
+    href: `${SSM}/board_list.php`,
+    type: "external",
+    description:
+      "공지와 커뮤니티 흔적이 리스트로 남는 층으로, 플랫폼이 ‘살아 있는 기록’을 어떻게 보여 주는지 확인할 수 있습니다.",
+  },
+  {
+    tier: "secondary",
+    label: "Member Experience",
+    title: "회원 정보 수정",
+    href: `${SSM}/member_modify_form.php`,
+    type: "external",
+    description:
+      "로그인 이후에도 탐색 맥락이 끊기지 않도록 회원 정보와 설정이 정리된, 사람 중심의 보조 표면입니다.",
+  },
+  {
+    tier: "secondary",
+    label: "Operation System",
+    title: "게시글 작성 폼",
+    href: `${SSM}/board_form.php`,
+    type: "external",
+    description:
+      "콘텐츠를 올리고 다듬는 운영자의 입구로, 사용자에게 보이는 탐색 구조 뒤쪽에서 플랫폼이 어떻게 돌아가는지 보여 줍니다.",
+  },
+];
+
+const SANGSANGMADANG_VERIFICATION_POINTS: readonly string[] = [
+  "메인 → 프로그램 → 상세로 이어지는 문화 콘텐츠 탐색 축을 실제 화면에서 따라가 볼 수 있습니다.",
+  "게시판·회원 맥락이 같은 도메인 안에서 어떻게 이어지는지, 아카이브 표면으로 확인할 수 있습니다.",
+  "운영 작성 화면까지 열람해 ‘보이는 탐색’과 ‘돌아가는 구조’를 함께 검증해 볼 수 있습니다.",
 ];
 
 const placeholderIntro = (name: string) =>
@@ -552,11 +621,17 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "GOREON이 AI 기반 UX를 탐구하고, TONE이 감정 인터랙션을 설계하기 이전에—상상마당은 브랜드와 공간을 UX 구조로 해석하는 foundation 작업이었습니다.",
       "리브랜딩에서도 시각적 변화보다 사용자의 탐색 방식과 운영자의 관리 흐름이 함께 설계되어야 한다는 것, PHP/MySQL로 화면·데이터·배포가 연결되는 웹 서비스의 기본 구조를 몸소 경험했습니다.",
     ),
-    livePreview: {
-      href: "https://gsumin8327.dothome.co.kr/",
-      description:
-        "배포된 상상마당 리브랜딩 웹사이트입니다. 메인 구성, 프로그램/공간 탐색, 공지사항 흐름을 실제 화면에서 확인할 수 있습니다.",
-      buttonLabel: "라이브 사이트 열기",
+    serviceExperience: {
+      title: "Platform Experience",
+      description: p(
+        "배포된 사이트는 기능 목록이 아니라, 문화 콘텐츠를 어떤 순서로 읽고 이동할지 보여 주는 탐색 표면의 묶음입니다.",
+        "아래 카드는 화면 이름이 아니라 ‘어떤 흐름을 열어볼 수 있는지’를 안내합니다. 상단은 방문자가 가장 먼저 마주하는 문화 플랫폼의 축이고, 하단은 그 뒤를 받치는 기록·회원·운영 레이어입니다.",
+      ),
+      secondaryBandLabel: "Archive · member · operations",
+      serviceLinks: SANGSANGMADANG_SERVICE_LINKS,
+      verificationPoints: SANGSANGMADANG_VERIFICATION_POINTS,
+      testAccountLead:
+        "테스트 계정으로 로그인한 뒤 회원 화면과 커뮤니티·운영 흐름을 이어 확인해 보실 수 있습니다.",
     },
     browserScrollPreviews: {
       intro: [

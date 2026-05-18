@@ -4,9 +4,8 @@ import type { MouseEvent } from 'react'
 import { useCallback } from 'react'
 import { HeroEmotionFlow } from '../case-study/HeroEmotionFlow'
 import projectCardClip from '../../assets/project/project-cardClip.svg'
+import { handleProjectDeployClick } from '../../utils/handleProjectDeployClick'
 import './ProjectCard.scss'
-
-const DEPLOY_TOGGLE_MAX_WIDTH_PX = 767
 
 type ProjectCardProps = ProjectCardData & {
   onOpenCaseStudy?: () => void
@@ -42,55 +41,10 @@ export function ProjectCard({
 
   const handleDeployClick = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
-      if (!deployUrl || !deployWindow) {
+      if (!deployUrl) {
         return
       }
-
-      const openDeployInNewTab = () => {
-        window.open(deployUrl, '_blank', 'noopener,noreferrer')
-      }
-
-      const isTonePreview = deployWindow.name === 'TONEPreview'
-
-      if (isTonePreview) {
-        if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-          return
-        }
-        event.preventDefault()
-        const popup = window.open(
-          deployUrl,
-          deployWindow.name,
-          [
-            `width=${deployWindow.width}`,
-            `height=${deployWindow.height}`,
-            'scrollbars=yes',
-            'resizable=no',
-            'toolbar=no',
-          ].join(','),
-        )
-        if (!popup) {
-          openDeployInNewTab()
-        }
-        return
-      }
-
-      const prefersDefaultTab =
-        typeof window !== 'undefined' &&
-        window.matchMedia(`(max-width: ${DEPLOY_TOGGLE_MAX_WIDTH_PX}px)`).matches
-      if (prefersDefaultTab) {
-        return
-      }
-      event.preventDefault()
-      const featureStr = [
-        `width=${deployWindow.width}`,
-        `height=${deployWindow.height}`,
-        'resizable=yes',
-        'scrollbars=yes',
-      ].join(',')
-      const opened = window.open(deployUrl, deployWindow.name, featureStr)
-      if (!opened) {
-        openDeployInNewTab()
-      }
+      handleProjectDeployClick(event, deployUrl, deployWindow)
     },
     [deployUrl, deployWindow],
   )
