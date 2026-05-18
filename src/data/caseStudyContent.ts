@@ -80,6 +80,7 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     description:
       "스플래시·로그인 후 메인 탭에서 Daily Tone·스펙트럼 기반 오늘의 컬러/음악 추천을 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/`,
+    type: "mobile-preview",
     featured: true,
   },
   {
@@ -88,6 +89,7 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     description:
       "인기 컬러 플레이리스트와 좋아요·저장 흐름을 컬러 차트 탭에서 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/color-chart`,
+    type: "mobile-preview",
     featured: true,
   },
   {
@@ -96,13 +98,15 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     description:
       "로그인 후 /main에서 음악·뮤비 전환, 재생, 셔플, 반복, 저장 UX를 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/main`,
+    type: "mobile-preview",
     featured: true,
   },
   {
-    label: "Playlist",
-    title: "컬러 플레이리스트",
+    label: "Category",
+    title: "무드 카테고리",
     description: "컬러별 음악 리스트와 재생 진입 흐름을 확인할 수 있습니다.",
-    href: `${TONE_DEPLOY_ORIGIN}/playlist`,
+    href: `${TONE_DEPLOY_ORIGIN}/category`,
+    type: "mobile-preview",
   },
   {
     label: "Palette Log",
@@ -110,12 +114,14 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     description:
       "저장한 컬러 플레이리스트가 쌓이는 팔레트 로그 구조를 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/palette-log`,
+    type: "mobile-preview",
   },
   {
     label: "Calendar",
     title: "감정 기록 캘린더",
     description: "날짜별 컬러, 음악, 메모 기록 흐름을 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/calendar`,
+    type: "mobile-preview",
   },
   {
     label: "Search",
@@ -123,6 +129,7 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     description:
       "검색 화면에서 자연어 기반 컬러 플레이리스트 추천 흐름을 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/search`,
+    type: "mobile-preview",
   },
 ];
 

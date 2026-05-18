@@ -1,5 +1,9 @@
+import type { MouseEvent } from 'react'
 import type { CaseStudyBody, CaseStudyServiceLink } from '../../types/caseStudy'
 import { CaseStudyProse } from './CaseStudyProse'
+
+const MOBILE_PREVIEW_WIDTH = 430
+const MOBILE_PREVIEW_HEIGHT = 850
 
 export type ServiceExperienceSectionProps = {
   description: CaseStudyBody
@@ -30,6 +34,39 @@ function ExternalLinkGlyph({ className }: { className?: string }) {
   )
 }
 
+function isMobileDevice() {
+  if (typeof window === 'undefined') {
+    return false
+  }
+
+  const hasMobileViewport = window.matchMedia('(max-width: 768px)').matches
+  const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches
+  const hasMobileUserAgent = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)
+
+  return hasMobileViewport || (hasCoarsePointer && hasMobileUserAgent)
+}
+
+function openMobilePreview(href: string) {
+  const popup = window.open(
+    href,
+    'TONEPreview',
+    [
+      `width=${MOBILE_PREVIEW_WIDTH}`,
+      `height=${MOBILE_PREVIEW_HEIGHT}`,
+      'scrollbars=yes',
+      'resizable=no',
+      'toolbar=no',
+    ].join(','),
+  )
+
+  if (popup) {
+    popup.opener = null
+    return
+  }
+
+  window.open(href, '_blank', 'noopener,noreferrer')
+}
+
 export function ServiceExperienceSection({
   description,
   mobileNotice,
@@ -40,6 +77,17 @@ export function ServiceExperienceSection({
   demoTestPassword,
 }: ServiceExperienceSectionProps) {
   const hasCreds = Boolean(demoTestId && demoTestPassword)
+  const handleServiceLinkClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    link: CaseStudyServiceLink,
+  ) => {
+    if (link.type !== 'mobile-preview' || isMobileDevice()) {
+      return
+    }
+
+    event.preventDefault()
+    openMobilePreview(link.href)
+  }
 
   return (
     <>
@@ -66,6 +114,7 @@ export function ServiceExperienceSection({
                 href={link.href}
                 target="_blank"
                 rel="noreferrer noopener"
+                onClick={(event) => handleServiceLinkClick(event, link)}
               >
                 <span className="case-study__service-link-head">
                   <span className="case-study__service-link-titles">
