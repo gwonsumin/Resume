@@ -19,10 +19,12 @@ import reactLogo from "../../assets/skills/react.svg";
 import scssLogo from "../../assets/skills/scss.svg";
 import vueLogo from "../../assets/skills/vue.svg";
 
+export type SkillFrequency = "매일" | "자주" | "가끔" | "익히는 중";
+
 export type Skill = {
   id: string;
   name: string;
-  percent: number;
+  frequency: SkillFrequency;
   icon?: string;
   category: "frontend" | "styling" | "design" | "tool";
 };
@@ -31,122 +33,140 @@ export const skills: Skill[] = [
   {
     id: "figma",
     name: "Figma",
-    percent: 95,
+    frequency: "매일",
     icon: figmaLogo,
     category: "design",
   },
   {
     id: "photoshop",
     name: "Photoshop",
-    percent: 90,
+    frequency: "매일",
     icon: photoshopLogo,
     category: "design",
   },
   {
     id: "illustrator",
     name: "Illustrator",
-    percent: 90,
+    frequency: "자주",
     icon: illustratorLogo,
     category: "design",
   },
   {
     id: "after-effects",
     name: "After Effects",
-    percent: 70,
+    frequency: "가끔",
     icon: afterEffectsLogo,
     category: "design",
   },
   {
     id: "procreate",
     name: "Procreate",
-    percent: 100,
+    frequency: "자주",
     icon: procreateLogo,
     category: "design",
   },
   {
     id: "react",
     name: "React",
-    percent: 79,
+    frequency: "매일",
     icon: reactLogo,
     category: "frontend",
   },
   {
     id: "javascript",
     name: "JavaScript",
-    percent: 78,
+    frequency: "매일",
     icon: javascriptLogo,
     category: "frontend",
   },
   {
     id: "jquery",
     name: "jQuery",
-    percent: 80,
+    frequency: "가끔",
     icon: jqueryLogo,
     category: "frontend",
   },
-  { id: "vue", name: "Vue", percent: 80, icon: vueLogo, category: "frontend" },
+  {
+    id: "vue",
+    name: "Vue",
+    frequency: "자주",
+    icon: vueLogo,
+    category: "frontend",
+  },
   {
     id: "nextjs",
     name: "Next.js",
-    percent: 67,
+    frequency: "익히는 중",
     icon: nextjsLogo,
     category: "frontend",
   },
   {
     id: "nodejs",
     name: "Node.js",
-    percent: 68,
+    frequency: "자주",
     icon: nodejsLogo,
     category: "frontend",
   },
-  { id: "php", name: "PHP", percent: 85, icon: phpLogo, category: "frontend" },
+  {
+    id: "php",
+    name: "PHP",
+    frequency: "가끔",
+    icon: phpLogo,
+    category: "frontend",
+  },
   {
     id: "mongodb",
     name: "MongoDB",
-    percent: 70,
+    frequency: "가끔",
     icon: mongoDbLogo,
     category: "frontend",
   },
   {
     id: "html-css",
     name: "HTML/CSS",
-    percent: 90,
+    frequency: "매일",
     icon: htmlLogo,
     category: "styling",
   },
   {
     id: "scss",
     name: "SCSS",
-    percent: 90,
+    frequency: "매일",
     icon: scssLogo,
     category: "styling",
   },
-  { id: "css", name: "CSS", percent: 93, icon: cssLogo, category: "styling" },
+  {
+    id: "css",
+    name: "CSS",
+    frequency: "매일",
+    icon: cssLogo,
+    category: "styling",
+  },
   {
     id: "github",
     name: "GitHub",
-    percent: 80,
+    frequency: "매일",
     icon: githubLogo,
     category: "tool",
   },
   {
     id: "notion",
     name: "Notion",
-    percent: 75,
+    frequency: "매일",
     icon: notionLogo,
     category: "tool",
   },
   {
     id: "chatgpt",
     name: "ChatGPT",
-    percent: 93,
+    frequency: "매일",
     icon: chatgptLogo,
     category: "tool",
   },
   {
     id: "cursor",
     name: "Cursor",
-    percent: 90,
+    frequency: "매일",
     icon: cursorLogo,
     category: "tool",
   },

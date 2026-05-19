@@ -1,0 +1,148 @@
+/* State Notes · Tomato Market Issue — shared editorial language */
+
+.content-section:not(.home__hero-section):not(#about) {
+  border-top: 1px dashed var(--editorial-stitch);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--editorial-cream) 88%, transparent) 0%,
+    transparent clamp(32px, 5vw, 56px)
+  );
+}
+
+#skills.content-section {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--editorial-cream) 72%, var(--color-background)) 0%,
+    var(--color-background) clamp(40px, 6vw, 72px)
+  );
+}
+
+/* —— Unified market card surface + hover —— */
+.about-career-card,
+.about-quick-info,
+.about-photo__frame,
+.project-card__link,
+.project-grid__coming,
+.archive-record,
+.toolkit-table {
+  position: relative;
+  background: var(--editorial-paper);
+  border: var(--border-editorial);
+  border-radius: var(--radius-editorial);
+  box-shadow: var(--shadow-editorial);
+  transition:
+    transform var(--card-duration) var(--card-ease),
+    background-color var(--card-duration) var(--card-ease),
+    border-color var(--card-duration) var(--card-ease);
+}
+
+.about-photo__frame,
+.archive-record,
+.toolkit-table {
+  border-radius: var(--radius-editorial-lg);
+}
+
+.about-career-card--foundation {
+  background: var(--color-background);
+}
+
+.about-career-card--experience {
+  background: var(--editorial-paper);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .about-career-card:hover,
+  .about-quick-info:hover,
+  .about-photo__frame:hover,
+  .project-card__link:hover,
+  .project-grid__coming:hover,
+  .archive-record:hover,
+  .toolkit-table:hover {
+    transform: translateY(var(--card-hover-lift));
+    border-color: var(--hover-border);
+    background: var(--hover-paper-tint);
+    box-shadow: var(--shadow-editorial);
+  }
+
+  .project-card__link:hover .project-card__label {
+    border-style: solid;
+    border-color: var(--project-accent, var(--color-primary));
+    color: var(--project-accent, var(--color-primary));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-career-card,
+  .about-quick-info,
+  .about-photo__frame,
+  .project-card__link,
+  .project-grid__coming,
+  .archive-record,
+  .toolkit-table {
+    transition: border-color var(--card-duration) ease,
+      background-color var(--card-duration) ease;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .about-career-card:hover,
+    .about-quick-info:hover,
+    .about-photo__frame:hover,
+    .project-card__link:hover,
+    .project-grid__coming:hover,
+    .archive-record:hover,
+    .toolkit-table:hover {
+      transform: none;
+    }
+  }
+}
+
+.section-header__issue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em 0.75em;
+  margin: 0 0 8px;
+}
+
+.section-header__vol {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-header__hand {
+  color: rgb(59 47 47 / 0.82);
+  font-family: var(--font-hand-ko);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.section-header__catalog {
+  margin: clamp(14px, 2vw, 18px) 0 0;
+  color: rgb(59 47 47 / 0.52);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.editorial-card {
+  background: var(--editorial-paper);
+  border: var(--border-editorial);
+  border-radius: var(--radius-editorial);
+  box-shadow: var(--shadow-editorial);
+}
+
+.editorial-stitch {
+  border: 0;
+  border-top: 1px dashed var(--editorial-stitch);
+  margin: 0;
+}

@@ -131,7 +131,9 @@ export function HomePage() {
 
       <Section
         id="about"
-        label="ABOUT"
+        label="ABOUT · PROFILE"
+        handNote="소개 기록"
+        meta="ISSUE 01 · SEOUL · STATE NOTES"
         title={
           <>
             권수민<span aria-hidden="true">/</span>Sumin Kweon
@@ -145,9 +147,10 @@ export function HomePage() {
 
       <Section
         id="skills"
-        label="SKILLS"
+        label="SKILLS · TOOL DRAWER"
+        handNote="도구 서랍"
         title="디자인과 구현을 연결하는 도구들"
-        meta="Figma · Illustrator · Photoshop · React · Vue · JavaScript · HTML/CSS · PHP"
+        meta="DESIGN · BUILD · WORKFLOW"
         subtitle="기획부터 디자인, 구현까지 흐름을 이어가기 위해 사용하는 툴과 기술입니다."
         revealHeader
       >
@@ -156,7 +159,9 @@ export function HomePage() {
 
       <Section
         id="case-study"
-        label="CASE STUDY"
+        label="CASE STUDY · CATALOG"
+        handNote="케이스 카탈로그"
+        meta="04 CASES · SELECTED WORK"
         title="선택 가능한 경험으로 구조화한 프로젝트"
         subtitle="문제를 정의하고, 사용자의 흐름을 설계하며, 실제 인터페이스로 연결한 작업들입니다."
         revealHeader
@@ -208,7 +213,9 @@ export function HomePage() {
 
       <Section
         id="archive"
-        label="ARCHIVE"
+        label="ARCHIVE · PIECES"
+        handNote="아카이브 조각"
+        meta="23 PIECES · OBSERVATION LOG"
         title="ARCHIVE"
         subtitle="작은 관찰과 기록이 쌓여 경험 설계로 이어집니다."
         revealHeader

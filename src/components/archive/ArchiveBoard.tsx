@@ -285,6 +285,7 @@ export function ArchiveBoard() {
 
   return (
     <div className="archive-record">
+      <span className="archive-record__tack" aria-hidden="true" />
       <div className="archive-columns">
         {archiveColumns.map((column, columnIndex) => (
           <Reveal

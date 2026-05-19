@@ -1,21 +1,28 @@
 .about-layout {
-  --about-text: #3b2f2f;
-  --about-line: rgba(59, 47, 47, 0.22);
+  --about-text: var(--editorial-ink);
+  --about-line: var(--editorial-stitch-strong);
   --about-keyword-bg: rgba(59, 47, 47, 0.06);
-  --about-surface: #fff;
-  --about-point: #ff785d;
+  --about-surface: var(--editorial-paper);
+  --about-point: var(--color-primary);
 
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
   display: grid;
-  gap: clamp(28px, 4.4vw, 46px);
+  gap: var(--vr-quiet);
   color: var(--about-text);
 }
 
 .about-layout__top {
   display: grid;
-  gap: clamp(24px, 3.4vw, 40px);
+  gap: clamp(20px, 3vw, 32px);
+}
+
+.about-layout__document {
+  display: grid;
+  gap: var(--vr-quiet);
+  padding-top: clamp(12px, 2vw, 20px);
+  border-top: 1px dashed var(--editorial-stitch);
 }
 
 .about-summary {
@@ -115,8 +122,6 @@
 .about-photo__frame {
   overflow: hidden;
   background: var(--about-surface);
-  border: 1px solid var(--about-line);
-  border-radius: 20px;
   aspect-ratio: 0.86;
 }
 
@@ -131,13 +136,24 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  margin-top: clamp(18px, 2.8vw, 28px);
-  padding: 26px;
-  border: 1px solid rgba(59, 47, 47, 0.18);
-  border-radius: 20px;
-  background: #fffdf8;
+  gap: 14px;
+  margin: 0;
+  padding: clamp(20px, 2.6vw, 24px);
   overflow: hidden;
+}
+
+.about-quick-info::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: clamp(14px, 2.5vw, 22px);
+  z-index: 0;
+  width: clamp(56px, 10vw, 84px);
+  height: 14px;
+  background: rgb(255 214 120 / 0.42);
+  border: 1px solid rgb(59 47 47 / 0.08);
+  transform: rotate(-6deg);
+  pointer-events: none;
 }
 
 .about-quick-info li {
@@ -172,50 +188,52 @@
   word-break: break-word;
 }
 
-.about-quick-info::after {
-  content: "";
+.about-career {
+  display: grid;
+  gap: clamp(14px, 2vw, 18px);
+  position: relative;
+  padding-bottom: 0;
+  margin: 0;
+}
+
+.about-career-card__clip {
   position: absolute;
-  right: 16px;
-  bottom: 12px;
-  width: clamp(20px, 2.2vw, 30px);
-  aspect-ratio: 1;
-  background: url("../../assets/icons/tamatoicon01.svg") center / contain no-repeat;
-  opacity: 0.36;
+  top: -8px;
+  right: clamp(16px, 3vw, 24px);
+  z-index: 2;
+  width: 13px;
+  height: 26px;
+  border: 2px solid rgb(59 47 47 / 0.32);
+  border-radius: 2px;
+  background: linear-gradient(180deg, #fff 0%, #e8e0d6 100%);
+  transform: rotate(10deg);
   pointer-events: none;
 }
 
-.about-career {
-  display: grid;
-  gap: 18px;
-  position: relative;
-  padding-bottom: 0;
-}
-
-.about-experience-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  min-height: 100%;
+.about-career-card__clip::after {
+  content: "";
+  position: absolute;
+  inset: 4px 3px auto;
+  height: 7px;
+  border-radius: 50%;
+  background: rgb(59 47 47 / 0.1);
 }
 
 .about-career-card {
-  position: relative;
   display: grid;
-  gap: 22px;
+  gap: clamp(16px, 2.2vw, 20px);
   min-width: 0;
-  padding: 20px;
+  padding: clamp(16px, 2.2vw, 20px);
   background: var(--about-surface);
-  border: 1px solid rgba(59, 47, 47, 0.18);
-  border-radius: 18px;
-  transition: all 0.25s ease-in-out;
 }
 
 .about-career-card--foundation {
-  background: #fff4eb;
+  position: relative;
+  background: var(--color-background);
 }
 
 .about-career-card--experience {
-  border-color: transparent;
+  background: var(--editorial-paper);
 }
 
 .about-career-card__header {
@@ -381,76 +399,11 @@
   color: rgba(59, 47, 47, 0.84);
 }
 
-.about-career__decor {
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: auto;
-  padding-top: 0;
-  transform: translateY(-10px);
-}
-
-.about-career__can {
-  width: clamp(96px, 10vw, 128px);
-  height: auto;
-  opacity: 0.82;
-  transform-origin: 50% 78%;
-  transition: all 0.25s ease-in-out;
-}
-
-.about-career__tomatoes {
-  display: flex;
-  align-items: flex-end;
-  gap: 6px;
-}
-
-.about-career__tomato {
-  width: clamp(24px, 2.6vw, 32px);
-  height: auto;
-  opacity: 0.4;
-  transform: translateY(4px);
-  transition: all 0.25s ease-in-out;
-}
-
-.about-career__tomato--small {
-  width: clamp(20px, 2.2vw, 26px);
-}
-
 @media (hover: hover) {
   .about-summary__keywords li:hover {
     background: rgba(59, 47, 47, 0.08);
     border-color: var(--about-line);
   }
-
-  .about-experience-wrap:hover .about-career-card--experience {
-    transform: translateY(-4px);
-    border-color: #ff785d;
-  }
-
-  .about-experience-wrap:hover .about-career-card__header,
-  .about-experience-wrap:hover .about-experience-sections {
-    transform: translateY(-2px);
-  }
-
-  .about-experience-wrap:hover .about-career__can {
-    opacity: 1;
-    transform: translateY(-8px) rotate(-3deg);
-  }
-
-  .about-experience-wrap:hover .about-career__tomato {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .about-experience-wrap:hover .about-experience-sections {
-    opacity: 1;
-  }
-
-  .about-experience-wrap:hover .about-experience-section + .about-experience-section {
-    border-top-color: rgba(59, 47, 47, 0.3);
-  }
-
 }
 
 @media (max-width: 63.9375rem) {
@@ -480,24 +433,6 @@
     margin-inline: auto;
   }
 
-  /* 경험 카드 장식 과밀 완화 (본문 카드 레이아웃은 동일·세로 나열 유지) */
-  .about-career__decor {
-    transform: translateY(-4px);
-    padding-top: 6px;
-  }
-
-  .about-career__can {
-    opacity: 0.68;
-    width: clamp(80px, 22vw, 96px);
-  }
-
-  .about-career__tomato {
-    width: clamp(17px, 4.5vw, 22px);
-  }
-
-  .about-career__tomato--small {
-    width: clamp(14px, 3.8vw, 18px);
-  }
 }
 
 @media (min-width: 64rem) {
@@ -528,10 +463,6 @@
     align-items: stretch;
     gap: 18px;
     padding-bottom: 0;
-  }
-
-  .about-experience-wrap {
-    align-self: stretch;
   }
 
   .about-career-card {
@@ -582,10 +513,6 @@
     gap: 18px;
   }
 
-  .about-experience-wrap {
-    gap: 10px;
-  }
-
   .about-experience-section + .about-experience-section {
     padding-top: 22px;
   }
@@ -593,10 +520,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .about-career-card,
-  .about-experience-sections,
-  .about-experience-section + .about-experience-section,
-  .about-career__can,
-  .about-career__tomato {
+  .about-career-card__header,
+  .about-experience-sections {
     transition: none;
   }
 }

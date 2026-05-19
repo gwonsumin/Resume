@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Gaegu:wght@700&family=Noto+Serif+KR:wght@500;600;700&display=swap");
+
 :root {
   /*
     Responsive breakpoints (1rem = 16px — mobile-first)
@@ -8,10 +10,15 @@
 
   --layout-max-width: 90rem; /* wide / 1440px */
 
+  /* Vertical rhythm — issue tempo */
+  --vr-grand: clamp(120px, 12vw, 160px);
+  --vr-section: clamp(72px, 6.8vw, 96px);
+  --vr-quiet: clamp(40px, 4vw, 56px);
+
   /* Hero → About 전환에만 쓰는 큰 세로 여백 */
-  --section-padding-block-hero-about: clamp(72px, 10vw, 160px);
-  /* 나머지 섹션 공통 세로 패딩 (스크롤 리듬 부담 줄임) */
-  --section-padding-y: clamp(36px, 5vw, 80px);
+  --section-padding-block-hero-about: var(--vr-grand);
+  /* 나머지 섹션 공통 세로 패딩 — issue 리듬 (airy, 균형) */
+  --section-padding-y: var(--vr-section);
   --section-padding-inline: clamp(20px, 5vw, 80px);
 
   /* 공통 카드 그리드 gap (모바일 1열: 클립 데코 돌출·액션 행 포함 여유) */
@@ -29,6 +36,27 @@
   --color-surface: #fffaf5;
   --color-surface-soft: #fff8f2;
   --color-border: rgb(59 47 47 / 0.16);
+
+  /* Editorial issue system */
+  --editorial-cream: #fff8ef;
+  --editorial-paper: #fffdf8;
+  --editorial-ink: var(--color-line);
+  --editorial-stitch: rgb(59 47 47 / 0.18);
+  --editorial-stitch-strong: rgb(59 47 47 / 0.28);
+  --border-editorial-width: 1.5px;
+  --border-editorial: var(--border-editorial-width) solid rgb(59 47 47 / 0.22);
+  --shadow-editorial: 0 2px 0 rgb(59 47 47 / 0.08);
+  --shadow-editorial-hover: var(--shadow-editorial);
+  --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --card-duration: 260ms;
+  --card-hover-lift: -1px;
+  --hover-paper-tint: color-mix(in srgb, var(--editorial-cream) 32%, var(--editorial-paper));
+  --hover-border: color-mix(in srgb, var(--color-primary) 36%, rgb(59 47 47 / 0.28));
+  --font-hand-ko: "Gaegu", "Apple SD Gothic Neo", cursive;
+  --font-hand-en: "Caveat", "Gaegu", cursive;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  --font-serif: "Noto Serif KR", "Apple SD Gothic Neo", "Batang", serif;
 
   /* Typography */
   --font-family-base: 'Inter', 'Pretendard', 'Segoe UI', sans-serif;
@@ -66,12 +94,14 @@
   --space-6: var(--space-48);
   --space-10: var(--space-80);
 
-  /* Radius + shadow */
-  --radius-card: 1rem; /* 16px */
+  /* Radius + shadow — unified card language */
+  --radius-editorial: 0.75rem; /* 12px */
+  --radius-editorial-lg: 1rem; /* 16px */
+  --radius-card: var(--radius-editorial-lg);
   --radius-sm: 0.5rem;
-  --radius-md: 1rem;
-  --radius-lg: var(--radius-card);
-  --shadow-card: 0 2px 8px rgb(59 47 47 / 0.04);
+  --radius-md: var(--radius-editorial);
+  --radius-lg: var(--radius-editorial-lg);
+  --shadow-card: var(--shadow-editorial);
   --shadow-button: 0 1px 4px rgb(59 47 47 / 0.05);
   --shadow-sm: none;
 

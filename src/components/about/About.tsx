@@ -1,8 +1,5 @@
 import profilePhoto from "../../assets/images/profile-photo.png";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
-import tomatoCan from "../../assets/images/tomatoCan.svg";
-import tomatoIcon01 from "../../assets/icons/tamatoicon01.svg";
-import tomatoIcon02 from "../../assets/icons/tamatoicon02.svg";
 import aboutTitleIcon from "../../assets/about/about-title.svg";
 import { Reveal } from "../reveal/Reveal";
 import "./About.scss";
@@ -203,6 +200,7 @@ function CareerCardHeader({
 function FoundationCard() {
   return (
     <article className="about-career-card about-career-card--foundation">
+      <span className="about-career-card__clip" aria-hidden="true" />
       <CareerCardHeader {...CAREER_CARDS[0]} />
       <div className="about-foundation-groups">
         {FOUNDATION_GROUPS.map((group) => (
@@ -279,14 +277,6 @@ export function About() {
                 </li>
               ))}
             </ul>
-            <ul className="about-quick-info" role="list" aria-label="기본 정보">
-              {QUICK_INFO.map((item) => (
-                <li key={item.label}>
-                  <span className="about-quick-info__label">{item.label}</span>
-                  <span className="about-quick-info__value">{item.value}</span>
-                </li>
-              ))}
-            </ul>
           </article>
         </Reveal>
 
@@ -305,31 +295,27 @@ export function About() {
         </Reveal>
       </div>
 
-      <section className="about-career" aria-label="기반과 경험">
-        <Reveal staggerIndex={0} staggerMs={112} durationMs={780}>
-          <FoundationCard />
+      <div className="about-layout__document">
+        <Reveal staggerIndex={0} staggerMs={108} durationMs={760}>
+          <ul className="about-quick-info" role="list" aria-label="기본 정보">
+            {QUICK_INFO.map((item) => (
+              <li key={item.label}>
+                <span className="about-quick-info__label">{item.label}</span>
+                <span className="about-quick-info__value">{item.value}</span>
+              </li>
+            ))}
+          </ul>
         </Reveal>
-        <Reveal staggerIndex={1} staggerMs={112} durationMs={780}>
-          <div className="about-experience-wrap">
+
+        <section className="about-career" aria-label="기반과 경험">
+          <Reveal staggerIndex={0} staggerMs={112} durationMs={780}>
+            <FoundationCard />
+          </Reveal>
+          <Reveal staggerIndex={1} staggerMs={112} durationMs={780}>
             <ExperienceCard />
-            <div className="about-career__decor" aria-hidden="true">
-              <div className="about-career__tomatoes">
-                <img
-                  className="about-career__tomato about-career__tomato--large"
-                  src={tomatoIcon01}
-                  alt=""
-                />
-                <img
-                  className="about-career__tomato about-career__tomato--small"
-                  src={tomatoIcon02}
-                  alt=""
-                />
-              </div>
-              <img className="about-career__can" src={tomatoCan} alt="" />
-            </div>
-          </div>
-        </Reveal>
-      </section>
+          </Reveal>
+        </section>
+      </div>
     </div>
   );
 }
