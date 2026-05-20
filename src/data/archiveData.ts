@@ -12,9 +12,13 @@ import sunnyHug from "../assets/archive/SunnyHug.png";
 import tomatoMirror from "../assets/archive/TomatoMirror.png";
 import winterMood from "../assets/archive/WinterMood.png";
 
-export type ArchiveAccentHex = "#FF785D" | "#0AA5A5";
+/** Accent hex — string으로 풀어 새 색을 자유롭게 추가할 수 있게. */
+export type ArchiveAccentHex = string;
 
-/** 단일 기록 카드 — 모달과 덱 슬롯에서 동일 타입 사용 */
+/** 카테고리당 부착물 종류 — Pinboard 시각언어의 핵심 */
+export type ArchiveFastener = "pin" | "tape" | "clip";
+
+/** 단일 기록 카드 */
 export type ArchiveRecordCard = {
   id: string;
   title: string;
@@ -31,21 +35,31 @@ export type ArchiveRecordCard = {
 export type ArchiveColumnData = {
   id: string;
   columnTitle: string;
+  /** 손글씨로 노출할 한글 라벨 */
+  columnKorean: string;
+  /** 핀 / 와시테이프 / 클립 */
+  fastener: ArchiveFastener;
   accentColor: ArchiveAccentHex;
+  /** 마지막 카드 옆에 "곧 추가될 예정" placeholder를 표시할지 */
+  showComingSoon?: boolean;
   cards: ArchiveRecordCard[];
 };
 
 /** 모달 등 기존 코드 호환 */
 export type ArchiveItem = ArchiveRecordCard;
 
-const coral: ArchiveAccentHex = "#FF785D";
-const mint: ArchiveAccentHex = "#0AA5A5";
+const coral = "#FF785D";
+const mint = "#0AA5A5";
+const ochre = "#C58A2A";
 
 export const archiveColumns: ArchiveColumnData[] = [
   {
     id: "things-i-liked",
     columnTitle: "Things I Liked",
+    columnKorean: "좋아했던 것",
+    fastener: "pin",
     accentColor: coral,
+    showComingSoon: true,
     cards: [
       {
         id: "til-coral",
@@ -96,7 +110,10 @@ export const archiveColumns: ArchiveColumnData[] = [
   {
     id: "seasonal-notes",
     columnTitle: "Seasonal Notes",
+    columnKorean: "계절의 기록",
+    fastener: "tape",
     accentColor: mint,
+    showComingSoon: true,
     cards: [
       {
         id: "season-nutcracker",
@@ -147,7 +164,10 @@ export const archiveColumns: ArchiveColumnData[] = [
   {
     id: "drawings",
     columnTitle: "Drawings",
-    accentColor: coral,
+    columnKorean: "그린 것들",
+    fastener: "clip",
+    accentColor: ochre,
+    showComingSoon: true,
     cards: [
       {
         id: "draw-garden",

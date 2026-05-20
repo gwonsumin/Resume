@@ -1,122 +1,171 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { ArchiveItem } from "../../data/archiveData";
+import { useEffect, type CSSProperties } from "react";
+import type { ArchiveColumnData, ArchiveRecordCard } from "../../data/archiveData";
 import "./ArchiveModal.scss";
 
 type ArchiveModalProps = {
-  item: ArchiveItem;
+  item: ArchiveRecordCard;
+  column: ArchiveColumnData;
+  position: number; // 1-indexed
+  total: number;
   onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
 };
 
-function buildPreviewImages(item: ArchiveItem): string[] {
-  const raw = [item.mainImage, ...(item.detailImages ?? [])];
-  const seen = new Set<string>();
-  const out: string[] = [];
-  for (const u of raw) {
-    if (!seen.has(u)) {
-      seen.add(u);
-      out.push(u);
-    }
-  }
-  return out;
-}
-
-export function ArchiveModal({ item, onClose }: ArchiveModalProps) {
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const previewImages = useMemo(() => buildPreviewImages(item), [item]);
-  const [selectedSrc, setSelectedSrc] = useState(item.mainImage);
-
+export function ArchiveModal({
+  item,
+  column,
+  position,
+  total,
+  onClose,
+  onPrev,
+  onNext,
+}: ArchiveModalProps) {
   useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== "Escape") return;
-      event.preventDefault();
-      onClose();
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowLeft") onPrev();
+      else if (e.key === "ArrowRight") onNext();
     };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [onClose]);
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose, onPrev, onNext]);
 
-  useEffect(() => {
-    closeRef.current?.focus();
-  }, [item.id]);
+  // year stamp text — try to derive "2024" / "SPR" tokens; falls back gracefully
+  const yearTokens = item.year.split(/\s+/).slice(0, 2);
 
-  const heroAlt =
-    selectedSrc === item.mainImage ? item.imageAlt : `${item.title} 기록 이미지`;
+  const details = item.detailImages?.length ? item.detailImages : [item.mainImage];
 
   return (
-    <div className="archive-modal" role="dialog" aria-modal="true" aria-labelledby={`archive-modal-title-${item.id}`}>
-      <button
-        type="button"
-        className="archive-modal__backdrop"
-        aria-label="아카이브 상세 닫기"
-        onClick={onClose}
-      />
-      <div className="archive-modal__sheet">
-        <div className="archive-modal__body">
-          <div className="archive-modal__hero">
-            <figure className="archive-modal__visual">
-              <img
-                className="archive-modal__image"
-                src={selectedSrc}
-                alt={heroAlt}
-                loading="eager"
-                decoding="async"
-              />
-            </figure>
-          </div>
+    <div
+      className="archive-modal__backdrop"
+      role="presentation"
+      onClick={onClose}
+    >
+      <div
+        className="archive-modal__spread"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`archive-modal-title-${item.id}`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Left page — hero */}
+        <section
+          className="archive-modal__page archive-modal__page--left"
+          aria-label="작품"
+        >
+          <p className="archive-modal__eyebrow" style={{ color: column.accentColor }}>
+            {column.columnTitle}
+          </p>
+          <h2
+            className="archive-modal__title"
+            id={`archive-modal-title-${item.id}`}
+          >
+            {item.title}
+          </h2>
+          <p className="archive-modal__meta">
+            {item.year} {item.tags.length > 0 && `· ${item.tags.join(" · ")}`}
+          </p>
 
-          <div className="archive-modal__aside">
-            <header className="archive-modal__intro">
-              <p className="archive-modal__label" style={{ color: item.accentColor }}>
-                {item.category}
-              </p>
-              <h2 className="archive-modal__title" id={`archive-modal-title-${item.id}`}>
-                {item.title}
-              </h2>
-              <p className="archive-modal__meta archive-modal__meta--year">{item.year}</p>
-            </header>
-
-            <p className="archive-modal__memo">{item.memo}</p>
-
-            <ul className="archive-modal__tags" aria-label="태그">
-              {item.tags.map((tag, i) => (
-                <li key={`${item.id}-tag-${i}`} className="archive-modal__tag">
-                  {tag}
-                </li>
+          <div className="archive-modal__hero-wrap">
+            <img
+              className="archive-modal__hero"
+              src={item.mainImage}
+              alt={item.imageAlt}
+            />
+            <div
+              className="archive-modal__stamp"
+              aria-hidden="true"
+              style={{ borderColor: column.accentColor, color: column.accentColor }}
+            >
+              <span>KEPT</span>
+              {yearTokens.map((t) => (
+                <span key={t}>{t}</span>
               ))}
-            </ul>
-
-            {previewImages.length > 0 ? (
-              <div className="archive-modal__thumbs" aria-label="미리보기 이미지 선택">
-                {previewImages.map((src, i) => {
-                  const isActive = src === selectedSrc;
-                  return (
-                    <button
-                      key={`${item.id}-preview-${i}`}
-                      type="button"
-                      className={[
-                        "archive-modal__thumb",
-                        isActive ? "archive-modal__thumb--active" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                      onClick={() => setSelectedSrc(src)}
-                      aria-label={i === 0 ? "대표 이미지 보기" : `기록 이미지 ${i} 선택`}
-                      aria-pressed={isActive}
-                    >
-                      <img src={src} alt="" loading={i === 0 ? "eager" : "lazy"} decoding="async" />
-                    </button>
-                  );
-                })}
-              </div>
-            ) : null}
+            </div>
           </div>
-        </div>
 
-        <div className="archive-modal__footer">
-          <button ref={closeRef} type="button" className="archive-modal__close" onClick={onClose}>
-            닫기 · Esc
-          </button>
-        </div>
+          <p className="archive-modal__hand">{item.memo}</p>
+        </section>
+
+        {/* Binding gutter */}
+        <div className="archive-modal__binding" aria-hidden="true" />
+
+        {/* Right page — notes */}
+        <section
+          className="archive-modal__page archive-modal__page--right"
+          aria-label="노트와 디테일"
+        >
+          <p className="archive-modal__section-label">NOTES &amp; DETAILS</p>
+
+          <p className="archive-modal__body">{item.memo}</p>
+
+          {details.length > 0 && (
+            <>
+              <p className="archive-modal__section-label">DETAILS · {details.length}</p>
+              <div
+                className="archive-modal__details"
+                style={
+                  {
+                    gridTemplateColumns: `repeat(${Math.min(details.length, 3)}, 1fr)`,
+                  } as CSSProperties
+                }
+              >
+                {details.map((src, i) => (
+                  <div className="archive-modal__detail" key={i}>
+                    <img src={src} alt={`${item.title} 디테일 ${i + 1}`} />
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {item.tags.length > 0 && (
+            <>
+              <p className="archive-modal__section-label">TAGS</p>
+              <ul className="archive-modal__tags">
+                {item.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          <nav className="archive-modal__nav" aria-label="작품 사이 이동">
+            <button
+              type="button"
+              className="archive-modal__nav-btn"
+              onClick={onPrev}
+            >
+              ← PREV
+            </button>
+            <p className="archive-modal__counter" aria-live="polite">
+              <span style={{ color: column.accentColor }}>
+                {String(position).padStart(2, "0")}
+              </span>
+              <span>/ {String(total).padStart(2, "0")}</span>
+            </p>
+            <button
+              type="button"
+              className="archive-modal__nav-btn archive-modal__nav-btn--filled"
+              onClick={onNext}
+            >
+              NEXT →
+            </button>
+          </nav>
+        </section>
+
+        <button
+          type="button"
+          className="archive-modal__close"
+          onClick={onClose}
+          aria-label="노트 닫기"
+        >
+          ×
+        </button>
+        <span className="archive-modal__close-hint" aria-hidden="true">
+          ESC · CLOSE
+        </span>
       </div>
     </div>
   );

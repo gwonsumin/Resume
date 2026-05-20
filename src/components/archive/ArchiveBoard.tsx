@@ -1,314 +1,416 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import type { CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
 import { archiveColumns } from "../../data/archiveData";
-import type { ArchiveColumnData, ArchiveRecordCard } from "../../data/archiveData";
-import { Reveal } from "../reveal/Reveal";
+import type {
+  ArchiveColumnData,
+  ArchiveFastener,
+  ArchiveRecordCard,
+} from "../../data/archiveData";
 import { ArchiveModal } from "./ArchiveModal";
 import "./ArchiveBoard.scss";
 
-const STACK_MS = 550;
-const STACK_EASE = "cubic-bezier(0.42, 0, 0.2, 1)";
-const AUTO_ADVANCE_MS = 6200;
+/* -------------------------------------------------------------------------- */
+/* Layout constants                                                           */
+/* -------------------------------------------------------------------------- */
 
-function subscribeReducedMotion(onStoreChange: () => void) {
-  const media = window.matchMedia("(prefers-reduced-motion: reduce)");
-  media.addEventListener("change", onStoreChange);
-  return () => media.removeEventListener("change", onStoreChange);
+const CARD_W = 225;
+const CARD_H = 300;
+const CARD_GAP = 27; // between cards
+const SHELF_PAD_X = 30;
+
+/** i번째 카드의 셸프 내부 절대 위치 */
+function slotFor(i: number) {
+  return {
+    x: SHELF_PAD_X + i * (CARD_W + CARD_GAP),
+    y: [30, 50, 35, 55][i % 4],
+    rot: [-3, 2, -2, 3][i % 4],
+  };
 }
 
-function getReducedMotionSnapshot() {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function usePrefersReducedMotion() {
-  return useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, () => false);
-}
-
-type Phase = "idle" | "next" | "prev";
-
-type ArchiveColumnStackProps = {
-  column: ArchiveColumnData;
-  reducedMotion: boolean;
-  autoPaused: boolean;
-  onOpenCard: (card: ArchiveRecordCard) => void;
+const FASTENER_LABEL: Record<ArchiveFastener, string> = {
+  pin: "핀으로 고정 · pinned",
+  tape: "와시테이프로 붙임 · taped",
+  clip: "클립으로 끼움 · clipped",
 };
 
-function ArchiveColumnStack({ column, reducedMotion, autoPaused, onOpenCard }: ArchiveColumnStackProps) {
-  const cards = column.cards;
-  const n = cards.length;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [phase, setPhase] = useState<Phase>("idle");
+/* -------------------------------------------------------------------------- */
+/* Fastener — pin / washi tape / paper clip                                   */
+/* -------------------------------------------------------------------------- */
 
-  const busyRef = useRef(false);
-  const queueRef = useRef<("next" | "prev")[]>([]);
-  const timeoutRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
-
-  const { incomingIndex, slots, hideSlot2 } = useMemo(() => {
-    const s0 = activeIndex;
-    const s1 = (activeIndex + 1) % n;
-    const s2 = (activeIndex + 2) % n;
-    const incoming = phase === "prev" ? (activeIndex - 1 + n) % n : null;
-    const hide = incoming !== null && incoming === s2;
-    return { incomingIndex: incoming, slots: [s0, s1, s2] as const, hideSlot2: hide };
-  }, [activeIndex, n, phase]);
-
-  const clearTimer = useCallback(() => {
-    if (timeoutRef.current !== null) {
-      window.clearTimeout(timeoutRef.current);
-      timeoutRef.current = null;
-    }
-  }, []);
-
-  const finishStep = useCallback(
-    (direction: "next" | "prev") => {
-      if (direction === "next") {
-        setActiveIndex((i) => (i + 1) % n);
-      } else {
-        setActiveIndex((i) => (i - 1 + n) % n);
-      }
-      setPhase("idle");
-      busyRef.current = false;
-    },
-    [n],
-  );
-
-  const pumpImplRef = useRef<() => void>(() => {});
-
-  useLayoutEffect(() => {
-    pumpImplRef.current = () => {
-      if (busyRef.current) return;
-      const nextDir = queueRef.current.shift();
-      if (!nextDir) return;
-
-      if (reducedMotion) {
-        finishStep(nextDir);
-        queueRef.current = [];
-        return;
-      }
-
-      busyRef.current = true;
-      setPhase(nextDir === "next" ? "next" : "prev");
-
-      clearTimer();
-      timeoutRef.current = window.setTimeout(() => {
-        timeoutRef.current = null;
-        finishStep(nextDir);
-        pumpImplRef.current();
-      }, STACK_MS);
-    };
-  }, [clearTimer, finishStep, reducedMotion]);
-
-  const pumpQueue = useCallback(() => {
-    pumpImplRef.current();
-  }, []);
-
-  const requestStep = useCallback(
-    (direction: "next" | "prev") => {
-      if (n <= 1) return;
-      if (reducedMotion) {
-        finishStep(direction);
-        return;
-      }
-      queueRef.current.push(direction);
-      pumpQueue();
-    },
-    [finishStep, n, pumpQueue, reducedMotion],
-  );
-
-  useEffect(() => {
-    return () => {
-      clearTimer();
-      queueRef.current = [];
-      busyRef.current = false;
-    };
-  }, [clearTimer]);
-
-  const requestStepRef = useRef(requestStep);
-
-  useLayoutEffect(() => {
-    requestStepRef.current = requestStep;
-  });
-
-  useEffect(() => {
-    if (n <= 1 || reducedMotion || autoPaused) return;
-    const id = window.setInterval(() => {
-      requestStepRef.current("next");
-    }, AUTO_ADVANCE_MS);
-    return () => window.clearInterval(id);
-  }, [n, reducedMotion, autoPaused, column.id]);
-
-  const interactionLocked = phase !== "idle" && !reducedMotion;
-  const headingId = `archive-col-${column.id}`;
-
-  const stackClassName = [
-    "archive-deck__stack",
-    "archive-column__stack",
-    phase === "next" ? "archive-deck__stack--anim-next" : "",
-    phase === "prev" ? "archive-deck__stack--anim-prev" : "",
-    hideSlot2 && phase === "prev" ? "archive-deck__stack--three-prev" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  const stackStyle = {
-    "--archive-deck-duration": `${STACK_MS}ms`,
-    "--archive-deck-ease": STACK_EASE,
-  } as CSSProperties;
-
-  const currentCard = cards[activeIndex]!;
-
+function Fastener({ kind, color, ghost = false }: { kind: ArchiveFastener; color: string; ghost?: boolean }) {
+  if (kind === "pin") {
+    return (
+      <span
+        className={`archive-pin__fastener archive-pin__fastener--pin${ghost ? " is-ghost" : ""}`}
+        style={ghost ? undefined : ({ "--pin-color": color } as CSSProperties)}
+        aria-hidden="true"
+      />
+    );
+  }
+  if (kind === "tape") {
+    return (
+      <span
+        className={`archive-pin__fastener archive-pin__fastener--tape${ghost ? " is-ghost" : ""}`}
+        style={ghost ? undefined : ({ "--tape-color": `${color}55` } as CSSProperties)}
+        aria-hidden="true"
+      />
+    );
+  }
   return (
-    <section className="archive-column" aria-labelledby={headingId}>
-      <div className="archive-column__header">
-        <h3 className="archive-column__title" id={headingId} style={{ color: column.accentColor }}>
-          {column.columnTitle}
-        </h3>
-        <p className="archive-column__count" aria-live="polite">
-          <span className="archive-deck__visually-hidden">{column.columnTitle} 기록 </span>
-          {String(activeIndex + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
-        </p>
-      </div>
-
-      <div
-        className={stackClassName}
-        style={stackStyle}
-        role="region"
-        aria-roledescription="기록 카드 더미"
-        aria-labelledby={headingId}
-      >
-        {phase === "prev" && incomingIndex !== null ? (
-          <div
-            className="archive-deck__card archive-deck__card--incoming archive-column__card"
-            style={
-              {
-                "--deck-accent": cards[incomingIndex]!.accentColor,
-                "--deck-accent-soft": `${cards[incomingIndex]!.accentColor}33`,
-              } as CSSProperties
-            }
-          >
-            <span className="archive-deck__pin" aria-hidden="true" />
-            <span className="archive-deck__card-surface" aria-hidden="true" />
-            <span className="archive-deck__thumb-wrap archive-deck__thumb-wrap--solo">
-              <img
-                className="archive-deck__thumb archive-deck__thumb--base"
-                src={cards[incomingIndex]!.mainImage}
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-            </span>
-          </div>
-        ) : null}
-
-        {slots.map((cardIdx, slot) => {
-          if (phase === "prev" && hideSlot2 && slot === 2) return null;
-          const card = cards[cardIdx]!;
-          const isTop = slot === 0;
-          return (
-            <button
-              key={card.id}
-              type="button"
-              className={[
-                "archive-deck__card",
-                "archive-column__card",
-                `archive-deck__card--slot-${slot}`,
-                isTop ? "archive-deck__card--top" : "",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-              style={
-                {
-                  "--deck-accent": card.accentColor,
-                  "--deck-accent-soft": `${card.accentColor}33`,
-                } as CSSProperties
-              }
-              onClick={() => onOpenCard(card)}
-              disabled={!isTop || interactionLocked}
-              aria-label={`${card.title} 기록 크게 보기`}
-            >
-              <span className="archive-deck__pin" aria-hidden="true" />
-              <span className="archive-deck__card-surface" aria-hidden="true" />
-              <span className="archive-deck__thumb-wrap archive-deck__thumb-wrap--solo">
-                <img
-                  className="archive-deck__thumb archive-deck__thumb--base"
-                  src={card.mainImage}
-                  alt={isTop ? `${card.title} 기록 썸네일` : ""}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </span>
-            </button>
-          );
-        })}
-      </div>
-
-      <p className="archive-column__caption">{currentCard.memo}</p>
-
-      <nav className="archive-column__nav" aria-label={`${column.columnTitle} 기록 넘기기`}>
-        <button
-          type="button"
-          className="archive-deck__btn archive-deck__btn--prev archive-column__btn"
-          onClick={() => requestStep("prev")}
-          disabled={n <= 1 || interactionLocked}
-        >
-          이전
-        </button>
-        <button
-          type="button"
-          className="archive-deck__btn archive-deck__btn--next archive-column__btn"
-          onClick={() => requestStep("next")}
-          disabled={n <= 1 || interactionLocked}
-        >
-          다음
-        </button>
-      </nav>
-    </section>
+    <svg
+      className={`archive-pin__fastener archive-pin__fastener--clip${ghost ? " is-ghost" : ""}`}
+      width="28"
+      height="40"
+      viewBox="0 0 28 40"
+      aria-hidden="true"
+    >
+      <path
+        d="M8 4 C 4 4, 4 14, 8 14 L 20 14 C 24 14, 24 24, 20 24 L 10 24 C 6 24, 6 32, 10 32 L 18 32"
+        stroke="currentColor"
+        strokeWidth={ghost ? 2 : 2.2}
+        strokeDasharray={ghost ? "3 3" : undefined}
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
 
-export function ArchiveBoard() {
-  const reducedMotion = usePrefersReducedMotion();
-  const [modalCard, setModalCard] = useState<ArchiveRecordCard | null>(null);
+/* -------------------------------------------------------------------------- */
+/* Single pinned card                                                         */
+/* -------------------------------------------------------------------------- */
 
-  useEffect(() => {
-    if (!modalCard) return;
-    const previousBodyOverflow = document.body.style.overflow;
-    const previousHtmlOverflow = document.documentElement.style.overflow;
-    const previousBodyTouch = document.body.style.touchAction;
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
-    return () => {
-      document.documentElement.style.overflow = previousHtmlOverflow;
-      document.body.style.overflow = previousBodyOverflow;
-      document.body.style.touchAction = previousBodyTouch;
-    };
-  }, [modalCard]);
+type PinnedCardProps = {
+  card: ArchiveRecordCard;
+  slotIndex: number;
+  fastener: ArchiveFastener;
+  accentColor: string;
+  isHovered: boolean;
+  onHover: () => void;
+  onLeave: () => void;
+  onOpen: () => void;
+};
+
+function PinnedCard({
+  card,
+  slotIndex,
+  fastener,
+  accentColor,
+  isHovered,
+  onHover,
+  onLeave,
+  onOpen,
+}: PinnedCardProps) {
+  const slot = slotFor(slotIndex);
+  const style: CSSProperties = {
+    left: slot.x,
+    top: slot.y,
+    width: CARD_W,
+    height: CARD_H,
+    transform: `rotate(${slot.rot}deg)${isHovered ? " translateY(-6px) scale(1.03)" : ""}`,
+    zIndex: isHovered ? 10 : 1,
+  };
 
   return (
-    <div className="archive-record">
-      <div className="archive-columns">
-        {archiveColumns.map((column, columnIndex) => (
-          <Reveal
-            key={column.id}
-            delay={40}
-            staggerIndex={columnIndex}
-            staggerMs={115}
-            durationMs={770}
-          >
-            <ArchiveColumnStack
-              column={column}
-              reducedMotion={reducedMotion}
-              autoPaused={Boolean(modalCard)}
-              onOpenCard={setModalCard}
-            />
-          </Reveal>
+    <button
+      type="button"
+      className={`archive-pin${isHovered ? " is-hovered" : ""}`}
+      style={style}
+      onPointerEnter={onHover}
+      onPointerLeave={onLeave}
+      onFocus={onHover}
+      onBlur={onLeave}
+      onClick={onOpen}
+      aria-label={`${card.title} — 노트 펼쳐 보기`}
+    >
+      <Fastener kind={fastener} color={accentColor} />
+
+      <span className="archive-pin__matte">
+        <img
+          className="archive-pin__image"
+          src={card.mainImage}
+          alt={card.imageAlt}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+        />
+        <span className="archive-pin__caption">
+          <span className="archive-pin__caption-title">{card.title}</span>
+          <span className="archive-pin__caption-meta">{card.year}</span>
+        </span>
+      </span>
+
+      <span className="archive-pin__note" aria-hidden="true">
+        {card.memo}
+        <span className="archive-pin__note-meta">{card.category}</span>
+      </span>
+    </button>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* "Coming soon" placeholder                                                  */
+/* -------------------------------------------------------------------------- */
+
+function ComingSoonSlot({ slotIndex, fastener }: { slotIndex: number; fastener: ArchiveFastener }) {
+  const slot = slotFor(slotIndex);
+  const style: CSSProperties = {
+    left: slot.x,
+    top: slot.y,
+    width: CARD_W,
+    height: CARD_H,
+    transform: `rotate(${slot.rot}deg)`,
+  };
+  return (
+    <div className="archive-pin archive-pin--coming-soon" style={style} aria-label="곧 추가될 예정">
+      <Fastener kind={fastener} color="" ghost />
+      <div className="archive-pin__ghost-paper">
+        <div className="archive-pin__dots" aria-hidden="true">
+          <span /> <span /> <span />
+        </div>
+        <p className="archive-pin__ghost-hand">
+          곧 추가될
+          <br />
+          예정이에요
+        </p>
+        <p className="archive-pin__ghost-meta">COMING SOON</p>
+      </div>
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Category tab                                                               */
+/* -------------------------------------------------------------------------- */
+
+type TabProps = {
+  column: ArchiveColumnData;
+  active: boolean;
+  onClick: () => void;
+};
+
+function CategoryTab({ column, active, onClick }: TabProps) {
+  const style: CSSProperties = { "--tab-color": column.accentColor } as CSSProperties;
+  return (
+    <button
+      type="button"
+      className={`archive-tab${active ? " is-active" : ""}`}
+      style={style}
+      onClick={onClick}
+      role="tab"
+      aria-selected={active}
+      aria-controls={`archive-shelf-${column.id}`}
+      id={`archive-tab-${column.id}`}
+    >
+      <span className="archive-tab__label">{column.columnTitle}</span>
+      <span className="archive-tab__korean">{column.columnKorean}</span>
+    </button>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Main board                                                                 */
+/* -------------------------------------------------------------------------- */
+
+export function ArchiveBoard() {
+  const [activeId, setActiveId] = useState<string>(archiveColumns[0]!.id);
+  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  const activeColumn = useMemo(
+    () => archiveColumns.find((c) => c.id === activeId) ?? archiveColumns[0]!,
+    [activeId],
+  );
+
+  /* ---------- drag-to-scroll ---------- */
+  const shelfRef = useRef<HTMLDivElement | null>(null);
+  const [shelfW, setShelfW] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const didDragRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, startDragX: 0 });
+
+  useEffect(() => {
+    if (!shelfRef.current) return;
+    const ro = new ResizeObserver(() => setShelfW(shelfRef.current?.clientWidth ?? 0));
+    ro.observe(shelfRef.current);
+    setShelfW(shelfRef.current.clientWidth);
+    return () => ro.disconnect();
+  }, []);
+
+  // reset scroll when category changes
+  useEffect(() => {
+    setDragX(0);
+  }, [activeId]);
+
+  const totalSlots = activeColumn.cards.length + (activeColumn.showComingSoon ? 1 : 0);
+  const innerWidth = SHELF_PAD_X + (totalSlots - 1) * (CARD_W + CARD_GAP) + CARD_W + SHELF_PAD_X;
+  const overflows = shelfW > 0 && innerWidth > shelfW;
+  const maxScroll = overflows ? shelfW - innerWidth : 0;
+  const clamp = useCallback(
+    (v: number) => Math.max(maxScroll, Math.min(0, v)),
+    [maxScroll],
+  );
+
+  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!overflows) return;
+    if (e.button !== 0) return;
+    setDragging(true);
+    didDragRef.current = false;
+    dragStartRef.current = { x: e.clientX, startDragX: dragX };
+    // NOTE: setPointerCapture is intentionally NOT called here.
+    // Calling it during pointerdown suppresses all compatibility mouse events
+    // (mouseup, click), which prevents button onClick handlers from firing.
+    // Capture is set lazily in onPointerMove once the drag threshold is crossed.
+  };
+  const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragging) return;
+    const dx = e.clientX - dragStartRef.current.x;
+    if (Math.abs(dx) > 4) {
+      if (!didDragRef.current) {
+        // Capture only on the first frame past threshold so drag stays smooth
+        // even when pointer leaves the shelf.
+        try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* noop */ }
+      }
+      didDragRef.current = true;
+    }
+    setDragX(clamp(dragStartRef.current.startDragX + dx));
+  };
+  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
+    if (!dragging) return;
+    setDragging(false);
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {
+      /* noop */
+    }
+    // clear didDrag on the next tick so the same gesture's click is suppressed
+    window.setTimeout(() => {
+      didDragRef.current = false;
+    }, 0);
+  };
+
+  /* ---------- modal nav ---------- */
+  const openCard = (i: number) => {
+    if (didDragRef.current) return;
+    setOpenIdx(i);
+  };
+  const closeModal = () => setOpenIdx(null);
+  const navigateRel = (delta: number) =>
+    setOpenIdx((curr) => {
+      if (curr === null) return curr;
+      const n = activeColumn.cards.length;
+      return (curr + delta + n) % n;
+    });
+
+  /* ---------- lock body scroll while modal open ---------- */
+  useEffect(() => {
+    if (openIdx === null) return;
+    const prevBody = document.body.style.overflow;
+    const prevHtml = document.documentElement.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevBody;
+      document.documentElement.style.overflow = prevHtml;
+    };
+  }, [openIdx]);
+
+  return (
+    <div className="archive-board">
+      {/* Tabs */}
+      <div className="archive-board__tabs" role="tablist" aria-label="아카이브 카테고리">
+        {archiveColumns.map((col) => (
+          <CategoryTab
+            key={col.id}
+            column={col}
+            active={col.id === activeId}
+            onClick={() => setActiveId(col.id)}
+          />
         ))}
+        <p className="archive-board__fastener-hint">{FASTENER_LABEL[activeColumn.fastener]}</p>
       </div>
 
-      {modalCard ? (
-        <ArchiveModal key={modalCard.id} item={modalCard} onClose={() => setModalCard(null)} />
-      ) : null}
+      {/* Shelf */}
+      <div
+        ref={shelfRef}
+        className={`archive-board__shelf${overflows ? " is-scrollable" : ""}${dragging ? " is-dragging" : ""}`}
+        id={`archive-shelf-${activeColumn.id}`}
+        role="tabpanel"
+        aria-labelledby={`archive-tab-${activeColumn.id}`}
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
+      >
+        <div
+          key={activeColumn.id}
+          className="archive-board__track"
+          style={
+            {
+              width: innerWidth,
+              transform: `translateX(${dragX}px)`,
+              transition: dragging ? "none" : undefined,
+            } as CSSProperties
+          }
+        >
+          {activeColumn.cards.map((card, i) => (
+            <PinnedCard
+              key={card.id}
+              card={card}
+              slotIndex={i}
+              fastener={activeColumn.fastener}
+              accentColor={activeColumn.accentColor}
+              isHovered={hoverIdx === i && !dragging}
+              onHover={() => setHoverIdx(i)}
+              onLeave={() =>
+                setHoverIdx((h) => (h === i ? null : h))
+              }
+              onOpen={() => openCard(i)}
+            />
+          ))}
+          {activeColumn.showComingSoon && (
+            <ComingSoonSlot
+              slotIndex={activeColumn.cards.length}
+              fastener={activeColumn.fastener}
+            />
+          )}
+        </div>
+
+        {/* fade edges */}
+        {overflows && dragX > maxScroll + 4 && (
+          <div className="archive-board__fade archive-board__fade--right" aria-hidden="true" />
+        )}
+        {overflows && dragX < -4 && (
+          <div className="archive-board__fade archive-board__fade--left" aria-hidden="true" />
+        )}
+
+        {/* drag hint */}
+        {overflows && dragX > maxScroll + 4 && (
+          <div className="archive-board__drag-hint" aria-hidden="true">
+            ← DRAG
+          </div>
+        )}
+      </div>
+
+      {/* Foot row */}
+      <div className="archive-board__foot">
+        <span>HOVER · NOTE</span>
+        <span>CLICK · OPEN {overflows ? "· DRAG · SCROLL" : ""}</span>
+        <span>← → · NAVIGATE &nbsp;·&nbsp; ESC · CLOSE</span>
+      </div>
+
+      {openIdx !== null && (
+        <ArchiveModal
+          item={activeColumn.cards[openIdx]!}
+          column={activeColumn}
+          position={openIdx + 1}
+          total={activeColumn.cards.length}
+          onClose={closeModal}
+          onPrev={() => navigateRel(-1)}
+          onNext={() => navigateRel(1)}
+        />
+      )}
     </div>
   );
 }
