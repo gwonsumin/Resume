@@ -73,12 +73,16 @@ export type CaseStudyServiceDemoVideos =
       layout: 'side-by-side'
       src: string
     }
+  | {
+      /** Thumbnail row; click opens modal player. */
+      layout: 'split'
+      videos: readonly { src: string; label?: string; ariaLabel: string }[]
+    }
 
 export type CaseStudyServiceExperience = {
   title: string
   description: CaseStudyBody
   serviceLinks: readonly CaseStudyServiceLink[]
-  verificationPoints: readonly string[]
   /** Autoplay demo clips — video only, no mockup frame. */
   demoVideos?: CaseStudyServiceDemoVideos
   /** Shown above demo credentials when credentials exist. */

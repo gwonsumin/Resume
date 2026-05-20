@@ -14,7 +14,6 @@ export type ServiceExperienceSectionProps = {
   description: CaseStudyBody
   demoVideos?: CaseStudyServiceDemoVideos
   serviceLinks: readonly CaseStudyServiceLink[]
-  verificationPoints: readonly string[]
   /** Shown in a callout above link grid when set. */
   mobileNotice?: string
   /** Kicker above the secondary tier row when `tier: 'secondary'` links exist. */
@@ -147,7 +146,6 @@ export function ServiceExperienceSection({
   mobileNotice,
   secondaryBandLabel,
   serviceLinks,
-  verificationPoints,
   testAccountLead,
   demoTestId,
   demoTestPassword,
@@ -181,8 +179,8 @@ export function ServiceExperienceSection({
         </div>
       ) : (
         <>
-          <CaseStudyProse body={description} />
           {demoVideos ? <ServiceExperienceDemoVideos demoVideos={demoVideos} /> : null}
+          <CaseStudyProse body={description} />
         </>
       )}
       <div className="case-study__service-experience-stack">
@@ -246,13 +244,6 @@ export function ServiceExperienceSection({
           </div>
         ) : null}
 
-        <ul className="case-study__verification-pills" role="list" aria-label="검증 포인트">
-          {verificationPoints.map((point) => (
-            <li key={point} className="case-study__verification-pill">
-              {point}
-            </li>
-          ))}
-        </ul>
       </div>
     </>
   )

@@ -80,12 +80,6 @@ const GOREON_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   },
 ];
 
-const GOREON_VERIFICATION_POINTS: readonly string[] = [
-  "질문에서 후보 압축으로 이어지는 판단 시작 흐름을 확인하실 수 있습니다.",
-  "비교-저장-재진입으로 이어지는 선택 유지 구조를 확인하실 수 있습니다.",
-  "로그인 후 저장과 구매 전환이 연속적으로 이어지는 흐름을 확인하실 수 있습니다.",
-];
-
 /** Paths match `frontend/src/router/index.js` on gwonsumin/TONE (main). */
 const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   {
@@ -147,14 +141,6 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
   },
 ];
 
-const TONE_VERIFICATION_POINTS: readonly string[] = [
-  "Daily Tone에서 오늘의 컬러와 추천 음악을 확인할 수 있습니다.",
-  "Color Charts와 Category를 통해 컬러 기반 음악 탐색 구조를 확인할 수 있습니다.",
-  "Playlist와 Player에서 재생, 뮤비 전환, 셔플, 반복, 저장 UX를 확인할 수 있습니다.",
-  "Palette Log와 Calendar에서 음악 감상이 감정 기록으로 이어지는 흐름을 확인할 수 있습니다.",
-  "Search에서 OpenAI 기반 자연어 추천 흐름을 확인할 수 있습니다.",
-];
-
 const SSM = SANGSANGMADANG_DEPLOY_ORIGIN;
 
 const SANGSANGMADANG_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
@@ -212,12 +198,6 @@ const SANGSANGMADANG_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     description:
       "콘텐츠를 올리고 다듬는 운영자의 입구로, 사용자에게 보이는 탐색 구조 뒤쪽에서 플랫폼이 어떻게 돌아가는지 보여 줍니다.",
   },
-];
-
-const SANGSANGMADANG_VERIFICATION_POINTS: readonly string[] = [
-  "메인 → 프로그램 → 상세로 이어지는 문화 콘텐츠 탐색 축을 실제 화면에서 따라가 볼 수 있습니다.",
-  "게시판·회원 맥락이 같은 도메인 안에서 어떻게 이어지는지, 아카이브 표면으로 확인할 수 있습니다.",
-  "운영 작성 화면까지 열람해 ‘보이는 탐색’과 ‘돌아가는 구조’를 함께 검증해 볼 수 있습니다.",
 ];
 
 const placeholderIntro = (name: string) =>
@@ -353,14 +333,15 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
         "질문 시작 화면부터 조건 정리, 후보 추천, 상세 비교, 저장, 구매 전환까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
       ),
       demoVideos: {
-        layout: "dual",
-        desktop: { src: goreonPublic("GOREON-demo-pc.mp4"), label: "DESKTOP" },
-        mobile: { src: goreonPublic("GOREON-demo-mobile.mp4"), label: "MOBILE" },
+        layout: "split",
+        videos: [
+          { src: goreonPublic("GOREON-demo-pc.mp4"), label: "DESKTOP", ariaLabel: "데스크톱 서비스 데모 영상" },
+          { src: goreonPublic("GOREON-demo-mobile.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
+        ],
       },
       mobileNotice:
         "데스크톱과 모바일 화면에 모두 대응한 반응형 서비스이므로 원하는 기기 환경에서 확인할 수 있습니다.",
       serviceLinks: GOREON_SERVICE_LINKS,
-      verificationPoints: GOREON_VERIFICATION_POINTS,
       testAccountLead:
         "로그인 후 저장부터 구매 전환까지 연속 흐름을 검증하실 수 있습니다.",
     },
@@ -533,13 +514,14 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
         "오늘의 컬러 추천부터 플레이리스트 재생, 저장, 캘린더 기록까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
       ),
       demoVideos: {
-        layout: "side-by-side",
-        src: tonePublic("TONE-demo.mp4"),
+        layout: "split",
+        videos: [
+          { src: tonePublic("TONE-demo.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
+        ],
       },
       mobileNotice:
         "모바일 기준으로 설계된 서비스이므로 모바일 기기 또는 브라우저 모바일 뷰에서 확인하는 것을 권장합니다.",
       serviceLinks: TONE_SERVICE_LINKS,
-      verificationPoints: TONE_VERIFICATION_POINTS,
       testAccountLead:
         "테스트 계정으로 로그인한 뒤 탭·플레이어·저장·캘린더 흐름을 확인할 수 있습니다.",
     },
@@ -653,7 +635,6 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       ),
       secondaryBandLabel: "Archive · member · operations",
       serviceLinks: SANGSANGMADANG_SERVICE_LINKS,
-      verificationPoints: SANGSANGMADANG_VERIFICATION_POINTS,
       testAccountLead:
         "테스트 계정으로 로그인한 뒤 회원 화면과 커뮤니티·운영 흐름을 이어 확인해 보실 수 있습니다.",
     },
