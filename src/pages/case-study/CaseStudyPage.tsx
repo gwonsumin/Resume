@@ -91,7 +91,7 @@ export function CaseStudyPage() {
           content={content}
           titleId="case-study-page-title"
         />
-        <section className="case-study-page__next" aria-labelledby="case-study-next-title">
+        <section className="case-study-page__next next-projects" aria-labelledby="case-study-next-title">
           <div className="case-study-page__next-head">
             <p className="case-study-page__next-eyebrow">Continue reading</p>
             <h2 className="case-study-page__next-title" id="case-study-next-title">
@@ -103,7 +103,7 @@ export function CaseStudyPage() {
               <li key={item.id}>
                 <button
                   type="button"
-                  className={`case-study-page__next-card case-study-page__next-card--${item.visual.variant}`}
+                  className={`case-study-page__next-card next-projects__card case-study-page__next-card--${item.visual.variant}`}
                   onClick={() => navigateToProject(item.to)}
                   aria-label={`${item.title} 케이스 스터디 열기`}
                 >

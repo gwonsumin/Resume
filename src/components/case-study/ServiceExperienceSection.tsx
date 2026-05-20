@@ -1,12 +1,18 @@
 import type { MouseEvent } from 'react'
-import type { CaseStudyBody, CaseStudyServiceLink } from '../../types/caseStudy'
+import type {
+  CaseStudyBody,
+  CaseStudyServiceDemoVideos,
+  CaseStudyServiceLink,
+} from '../../types/caseStudy'
 import { CaseStudyProse } from './CaseStudyProse'
+import { ServiceExperienceDemoVideos } from './ServiceExperienceDemoVideos'
 
 const MOBILE_PREVIEW_WIDTH = 430
 const MOBILE_PREVIEW_HEIGHT = 850
 
 export type ServiceExperienceSectionProps = {
   description: CaseStudyBody
+  demoVideos?: CaseStudyServiceDemoVideos
   serviceLinks: readonly CaseStudyServiceLink[]
   verificationPoints: readonly string[]
   /** Shown in a callout above link grid when set. */
@@ -137,6 +143,7 @@ function ServiceExperienceLinkList({
 
 export function ServiceExperienceSection({
   description,
+  demoVideos,
   mobileNotice,
   secondaryBandLabel,
   serviceLinks,
@@ -161,10 +168,23 @@ export function ServiceExperienceSection({
   const primaryLinks = serviceLinks.filter((l) => l.tier !== 'secondary')
   const secondaryLinks = serviceLinks.filter((l) => l.tier === 'secondary')
   const hasTieredLayout = secondaryLinks.length > 0
+  const isSideBySideDemo = demoVideos?.layout === 'side-by-side'
 
   return (
     <>
-      <CaseStudyProse body={description} />
+      {isSideBySideDemo && demoVideos ? (
+        <div className="tone-demo-wrap">
+          <div className="tone-demo-text">
+            <CaseStudyProse body={description} />
+          </div>
+          <ServiceExperienceDemoVideos demoVideos={demoVideos} />
+        </div>
+      ) : (
+        <>
+          <CaseStudyProse body={description} />
+          {demoVideos ? <ServiceExperienceDemoVideos demoVideos={demoVideos} /> : null}
+        </>
+      )}
       <div className="case-study__service-experience-stack">
         {mobileNotice ? (
           <div

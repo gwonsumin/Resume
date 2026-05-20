@@ -150,6 +150,66 @@
   list-style: none;
 }
 
+.team-info-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px dashed #d4c9b8;
+  margin-top: 14px;
+}
+
+.team-info-item {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 0;
+}
+
+.team-info-item--role {
+  align-items: center;
+  gap: 4px;
+}
+
+.team-info-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9b7b5c;
+  margin-right: 4px;
+}
+
+.team-info-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.team-info-solo-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b86a4e;
+  border: 1px dashed #b86a4e;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
+.my-role-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #b86a4e;
+  border: 1px dashed #b86a4e;
+  border-radius: 3px;
+  padding: 2px 7px;
+}
+
 .case-study__hero-visuals {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.9fr);
@@ -161,69 +221,43 @@
   grid-template-columns: minmax(0, 1fr);
 }
 
-.case-study__hero-with-deploy {
-  position: relative;
+.case-study__hero-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
   width: 100%;
 }
 
-.case-study__hero-deploy-link {
-  position: absolute;
-  z-index: 4;
-  right: clamp(8px, 1.4vw, 14px);
-  bottom: clamp(8px, 1.4vw, 14px);
+.live-site-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 13px;
-  font-size: 0.76rem;
-  font-weight: 700;
+  padding: 5px 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
-  color: rgb(59 47 47 / 0.92);
-  background: rgb(255 253 248 / 0.94);
-  border: 1.5px solid rgb(59 47 47 / 0.28);
-  border-radius: 999px;
-  box-shadow: 0 6px 18px rgb(59 47 47 / 0.1);
+  color: #b86a4e;
+  background: transparent;
+  border: 1px dashed #b86a4e;
+  border-radius: 4px;
   transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease;
-}
-
-.case-study__hero-deploy-link-text {
-  position: relative;
-  top: 0.5px;
-}
-
-.case-study__hero-deploy-link-icon {
-  flex-shrink: 0;
-  color: rgb(59 47 47 / 0.45);
-  transition: color 0.2s ease;
-}
-
-.case-study--tone .case-study__hero-deploy-link {
-  border-color: rgb(10 165 165 / 0.35);
-  box-shadow: 0 6px 18px rgb(10 165 165 / 0.08);
+    border-style 0.15s ease,
+    background 0.15s ease;
 }
 
 @media (hover: hover) {
-  .case-study__hero-deploy-link:hover {
-    border-color: rgb(59 47 47 / 0.42);
-    background: rgb(255 255 255 / 0.98);
-  }
-
-  .case-study__hero-deploy-link:hover .case-study__hero-deploy-link-icon {
-    color: rgb(59 47 47 / 0.62);
-  }
-
-  .case-study--tone .case-study__hero-deploy-link:hover {
-    border-color: rgb(10 165 165 / 0.5);
+  .live-site-btn:hover {
+    border-style: solid;
+    background: rgb(184 106 78 / 0.06);
   }
 }
 
-.case-study__hero-deploy-link:focus-visible {
+.live-site-btn:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 3px;
 }
@@ -763,30 +797,61 @@
   }
 }
 
-.case-study__body {
-  --case-block-gap: clamp(24px, 4vw, 42px);
+/* Unified card chrome — section / role blocks */
+.section-card,
+.case-study__block {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: none;
+}
 
+.role-card,
+.case-study__role-item {
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: none;
+}
+
+/* —— Vertical rhythm (GOREON · TONE · Sangsangmadang 공통) —— */
+.case-study__body {
   display: grid;
-  gap: var(--case-block-gap);
+  gap: 0;
 }
 
 .case-study__section-stack {
   display: grid;
-  gap: var(--case-block-gap);
+  gap: 0;
 }
 
-.case-study__block {
+/* 섹션 카드 간 간격 통일 */
+.section-card + .section-card,
+.case-study__section-stack + .case-study__section-stack,
+.case-study__body > .section-card + .case-study__section-stack,
+.case-study__body > .case-study__section-stack + .section-card {
+  margin-top: var(--vr-section);
+}
+
+.case-study__block,
+.section-card {
   display: grid;
   grid-template-columns: minmax(0, 0.38fr) minmax(0, 0.62fr);
-  gap: clamp(18px, 4vw, 52px);
+  column-gap: var(--vr-quiet);
+  row-gap: 0;
   margin: 0;
   padding: clamp(20px, 3.4vw, 36px);
-  background:
-    linear-gradient(rgb(10 165 165 / 0.1) 1px, transparent 1px),
-    #fffaf5;
-  background-size: 100% 30px;
-  border: 2px solid rgb(59 47 47 / 0.22);
-  border-radius: 20px;
+}
+
+/* 섹션 내부 — 제목과 본문 사이 */
+.section-card .case-study__block-title,
+.section-card .section-title {
+  margin-bottom: 0;
+}
+
+.case-study__block-heading {
+  min-width: 0;
+  align-self: start;
 }
 
 .case-study__block-title {
@@ -804,14 +869,19 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 0;
+  gap: var(--vr-quiet);
 }
 
 .case-study__prose,
-.case-study__my-role,
 .case-study__my-role-summary {
   display: grid;
   gap: 12px;
+  min-width: 0;
+}
+
+.case-study__my-role {
+  display: grid;
+  gap: var(--vr-quiet);
   min-width: 0;
 }
 
@@ -884,12 +954,9 @@
   padding-bottom: clamp(26px, 5vw, 52px);
 }
 
-.case-study--tone .case-study__body {
-  --case-block-gap: clamp(32px, 5vw, 62px);
-}
 
 .case-study--tone .case-study__block {
-  gap: clamp(24px, 4.6vw, 60px);
+  column-gap: var(--vr-quiet);
   padding: clamp(24px, 4.2vw, 42px);
 }
 
@@ -911,17 +978,21 @@
 
 .case-study__role-list {
   display: grid;
-  gap: 10px;
+  gap: 0;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.case-study__role-item {
+/* 역할 카드 간 간격 — 조밀하게 */
+.role-card + .role-card,
+.case-study__role-item + .case-study__role-item {
+  margin-top: 16px;
+}
+
+.case-study__role-item,
+.role-card {
   padding: 14px;
-  background: rgb(255 244 235 / 0.58);
-  border: 1.5px solid rgb(59 47 47 / 0.2);
-  border-radius: 14px;
 }
 
 .case-study__role-title {
@@ -996,6 +1067,73 @@
   }
 }
 
+.demo-video-wrap {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 16px;
+  align-items: center;
+  margin: var(--vr-quiet) 0;
+  width: 100%;
+}
+
+.demo-video-item {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-video-item video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: contain;
+  border-radius: 12px;
+  border: 1px solid #d4c9b8;
+  background: #1a1a1a;
+}
+
+.demo-label {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9b7b5c;
+}
+
+.tone-demo-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  margin: var(--vr-quiet) 0;
+  width: 100%;
+}
+
+.tone-demo-text {
+  min-width: 0;
+}
+
+.tone-demo-text .case-study__prose {
+  max-width: none;
+}
+
+.tone-demo-video {
+  max-width: 280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tone-demo-video video {
+  display: block;
+  width: 100%;
+  border-radius: 32px;
+  border: 1px solid #d4c9b8;
+  background: #1a1a1a;
+  object-fit: contain;
+}
+
 .case-study__service-experience-stack {
   display: flex;
   flex-direction: column;
@@ -1003,6 +1141,21 @@
   margin-top: clamp(14px, 2.2vw, 20px);
   width: 100%;
   max-width: 100%;
+}
+
+@media (max-width: 47.99rem) {
+  .demo-video-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tone-demo-wrap {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .tone-demo-video {
+    max-width: min(100%, 280px);
+  }
 }
 
 .case-study__service-mobile-notice {
@@ -1198,9 +1351,10 @@
 
 .case-study__test-account {
   padding: 16px;
-  background: rgb(255 253 248 / 0.65);
-  border: 1.5px solid rgb(59 47 47 / 0.22);
-  border-radius: 16px;
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: none;
 }
 
 .case-study__test-account-title {
@@ -1234,18 +1388,20 @@
 
 .case-study__test-account-label {
   min-width: 4.5rem;
-  color: rgb(59 47 47 / 0.55);
-  font-size: 0.72rem;
-  font-weight: 700;
+  color: #9b7b5c;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .case-study__test-account-value {
-  color: rgb(59 47 47 / 0.92);
-  font-size: 0.88rem;
-  font-weight: 600;
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
   line-height: 1.35;
   word-break: break-all;
 }
@@ -1330,8 +1486,10 @@
     right: 6px;
   }
 
-  .case-study__block {
+  .case-study__block,
+  .section-card {
     grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--vr-quiet);
   }
 
   .case-study__block-main {
