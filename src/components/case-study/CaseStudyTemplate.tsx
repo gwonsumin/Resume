@@ -484,7 +484,6 @@ export function CaseStudyTemplate({
           mobileNotice={content.serviceExperience.mobileNotice}
           secondaryBandLabel={content.serviceExperience.secondaryBandLabel}
           serviceLinks={content.serviceExperience.serviceLinks}
-          verificationPoints={content.serviceExperience.verificationPoints}
           testAccountLead={content.serviceExperience.testAccountLead}
           demoTestId={project.demoTestId}
           demoTestPassword={project.demoTestPassword}
