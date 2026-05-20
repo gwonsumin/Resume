@@ -41,13 +41,6 @@ export function Hero() {
       className={isVisible ? "hero hero--visible" : "hero"}
       aria-labelledby="hero-title"
     >
-      <div className="hero__awning" aria-hidden="true">
-        <div className="hero__awning-band">
-          <span className="hero__awning-stitch" />
-        </div>
-        <div className="hero__awning-scallops" />
-      </div>
-
       <div className="hero__stage">
         <img
           src={tomatoSticker}
@@ -75,17 +68,27 @@ export function Hero() {
           <div className="hero__main">
             <div className="hero__copy">
               <h1 className="hero__title" id="hero-title">
-                <span className="hero__title-line">
-                  사용자의{" "}
-                  <span className="hero__marker">상태</span>
-                  를
+                <span className="hero__title-set hero__title-set--desktop">
+                  <span className="hero__title-line">
+                    사용자의{" "}
+                    <span className="hero__marker">상태</span>
+                    를 이해하고,
+                  </span>
+                  <span className="hero__title-line">흐름으로 설계합니다.</span>
                 </span>
-                <span className="hero__title-line">이해하고,</span>
-                <span className="hero__title-line hero__title-line--split">
-                  <span className="hero__title-word">흐름</span>
-                  <span className="hero__title-word">으로</span>
+                <span className="hero__title-set hero__title-set--mobile">
+                  <span className="hero__title-line">
+                    사용자의{" "}
+                    <span className="hero__marker">상태</span>
+                    를
+                  </span>
+                  <span className="hero__title-line">이해하고,</span>
+                  <span className="hero__title-line hero__title-line--split">
+                    <span className="hero__title-word">흐름</span>
+                    <span className="hero__title-word">으로</span>
+                  </span>
+                  <span className="hero__title-line">설계합니다.</span>
                 </span>
-                <span className="hero__title-line">설계합니다.</span>
               </h1>
 
               <div className="hero__byline">
