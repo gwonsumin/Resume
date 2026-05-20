@@ -44,15 +44,20 @@ function subscribeCustomCursorEligible(onStoreChange: () => void) {
   };
 }
 
+function applyCursorTransform(node: HTMLSpanElement, x: number, y: number, rotation: number) {
+  node.style.setProperty("--cursor-x", `${x}px`);
+  node.style.setProperty("--cursor-y", `${y}px`);
+  node.style.setProperty("--cursor-rotation", `${rotation}deg`);
+}
+
 export function CustomCursor() {
   const enabled = useSyncExternalStore(subscribeCustomCursorEligible, canUseCustomCursor, () => false);
   const [visible, setVisible] = useState(false);
   const [isInteractive, setIsInteractive] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const [rotation, setRotation] = useState(-14);
-  const [point, setPoint] = useState({ x: 0, y: 0 });
   const cursorRef = useRef<HTMLSpanElement | null>(null);
   const prevPointRef = useRef({ x: 0, y: 0 });
+  const isInteractiveRef = useRef(false);
 
   useEffect(() => {
     if (!enabled) return;
@@ -64,15 +69,22 @@ export function CustomCursor() {
       const y = event.clientY;
 
       const dx = x - prevPointRef.current.x;
-      const dynamicTilt = Math.max(-8, Math.min(8, dx * 0.35));
-      setRotation(-14 + dynamicTilt);
-
+      const rotation = -14 + Math.max(-8, Math.min(8, dx * 0.35));
       prevPointRef.current = { x, y };
-      setPoint({ x, y });
+
+      const node = cursorRef.current;
+      if (node) {
+        applyCursorTransform(node, x, y, rotation);
+      }
+
       setVisible(true);
 
       const target = event.target as Element | null;
-      setIsInteractive(Boolean(target?.closest(INTERACTIVE_SELECTOR)));
+      const nextInteractive = Boolean(target?.closest(INTERACTIVE_SELECTOR));
+      if (nextInteractive !== isInteractiveRef.current) {
+        isInteractiveRef.current = nextInteractive;
+        setIsInteractive(nextInteractive);
+      }
     };
 
     const onMouseDown = (event: MouseEvent) => {
@@ -83,9 +95,11 @@ export function CustomCursor() {
     const onMouseLeave = () => {
       setVisible(false);
       setIsPressed(false);
+      isInteractiveRef.current = false;
+      setIsInteractive(false);
     };
 
-    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mouseup", onMouseUp);
     window.addEventListener("mouseleave", onMouseLeave);
@@ -98,13 +112,6 @@ export function CustomCursor() {
       window.removeEventListener("mouseleave", onMouseLeave);
     };
   }, [enabled]);
-
-  useEffect(() => {
-    if (!cursorRef.current) return;
-    cursorRef.current.style.setProperty("--cursor-x", `${point.x}px`);
-    cursorRef.current.style.setProperty("--cursor-y", `${point.y}px`);
-    cursorRef.current.style.setProperty("--cursor-rotation", `${rotation}deg`);
-  }, [point, rotation]);
 
   const cursorClassName = useMemo(() => {
     if (!visible) return "custom-cursor";

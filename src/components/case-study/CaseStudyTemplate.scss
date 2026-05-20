@@ -925,11 +925,45 @@
 }
 
 .case-study__role-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 8px;
   margin: 0 0 6px;
   color: var(--color-line);
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.25;
+}
+
+.role-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 3px;
+  margin-left: 8px;
+  vertical-align: middle;
+  border: 1px solid transparent;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.role-tag--lead {
+  border-color: #b86a4e;
+  color: #b86a4e;
+}
+
+.role-tag--collab {
+  border-color: #9b7b5c;
+  color: #9b7b5c;
+}
+
+.role-tag--support {
+  border-color: #c4b09a;
+  color: #c4b09a;
 }
 
 .case-study__role-detail {
@@ -940,51 +974,26 @@
   line-height: 1.58;
 }
 
-.case-study__contribution {
-  display: grid;
-  gap: 10px;
-  padding: 14px;
-  background: rgb(255 244 235 / 0.58);
-  border: 1.5px solid rgb(59 47 47 / 0.24);
-  border-radius: 14px;
-}
-
-.case-study__contribution-item {
-  display: grid;
-  gap: 6px;
-}
-
-.case-study__contribution-label-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  color: rgb(59 47 47 / 0.88);
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.case-study__contribution-track {
-  width: 100%;
-  height: 8px;
+.role-contribution-bar {
+  height: 3px;
+  background: #e8ddd0;
+  border-radius: 2px;
+  margin-top: 12px;
   overflow: hidden;
-  appearance: none;
-  background: rgb(255 253 248 / 0.9);
-  border: 1.5px solid rgb(59 47 47 / 0.34);
-  border-radius: 999px;
 }
 
-.case-study__contribution-track::-webkit-progress-bar {
-  background: rgb(255 253 248 / 0.9);
+.role-contribution-bar__fill {
+  height: 100%;
+  background: #e8614a;
+  border-radius: 2px;
+  width: 0;
+  transition: width 0.6s cubic-bezier(0.25, 0, 0.1, 1);
 }
 
-.case-study__contribution-track::-webkit-progress-value {
-  background: var(--color-primary);
-}
-
-.case-study__contribution-track::-moz-progress-bar {
-  background: var(--color-primary);
+@media (prefers-reduced-motion: reduce) {
+  .role-contribution-bar__fill {
+    transition: none;
+  }
 }
 
 .case-study__service-experience-stack {

@@ -10,16 +10,18 @@ import {
 } from 'react'
 import { createPortal } from 'react-dom'
 import type { ProjectPreview } from '../../types/project'
-import type {
-  CaseStudyBrowserScrollPreview,
-  CaseStudyContent,
-  CaseStudySectionFigure,
+import {
+  CASE_STUDY_ROLE_TAG_LABELS,
+  type CaseStudyBrowserScrollPreview,
+  type CaseStudyContent,
+  type CaseStudySectionFigure,
 } from '../../types/caseStudy'
 import { handleProjectDeployClick } from '../../utils/handleProjectDeployClick'
 import { CaseStudyProse, renderCaseStudyBody } from './CaseStudyProse'
 import { HeroEmotionFlow } from './HeroEmotionFlow'
 import { ServiceExperienceSection } from './ServiceExperienceSection'
 import { BrowserScrollPreview } from './BrowserScrollPreview'
+import { RoleContributionBar } from './RoleContributionBar'
 import './CaseStudyTemplate.scss'
 
 const SECTIONS: ReadonlyArray<{
@@ -545,28 +547,18 @@ export function CaseStudyTemplate({
               <ul className="case-study__role-list" role="list" aria-label="My role details">
                 {content.myRole.roles.map((role) => (
                   <li key={role.title} className="case-study__role-item">
-                    <h3 className="case-study__role-title">{role.title}</h3>
+                    <h3 className="case-study__role-title">
+                      {role.title}
+                      <span className={`role-tag role-tag--${role.tag}`}>
+                        {CASE_STUDY_ROLE_TAG_LABELS[role.tag]}
+                      </span>
+                    </h3>
                     <p className="case-study__role-detail">{role.detail}</p>
+                    <RoleContributionBar tag={role.tag} level={role.level} />
                   </li>
                 ))}
               </ul>
 
-              <div className="case-study__contribution" aria-label="Contribution summary">
-                {content.myRole.contributions.map((item) => (
-                  <div key={item.label} className="case-study__contribution-item">
-                    <div className="case-study__contribution-label-row">
-                      <span>{item.label}</span>
-                      <strong>{item.percentage}%</strong>
-                    </div>
-                    <progress
-                      className="case-study__contribution-track"
-                      value={item.percentage}
-                      max={100}
-                      aria-label={`${item.label} 참여도 ${item.percentage}%`}
-                    />
-                  </div>
-                ))}
-              </div>
             </div>
           </CaseStudyBlock>
         ) : null}

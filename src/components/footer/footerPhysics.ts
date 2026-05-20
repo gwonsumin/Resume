@@ -122,15 +122,18 @@ export function mountFooterPhysics(
 
   Matter.Composite.add(engine.world, [floor, ceiling, leftWall, rightWall, ...dynamics, mouseConstraint])
 
-  container.style.cursor = 'grab'
+  const useNativeFooterCursor = !document.body.classList.contains('custom-cursor-enabled')
+  if (useNativeFooterCursor) {
+    container.style.cursor = 'grab'
+  }
   /* touch-action:none 이면 푸터에서 시작하는 세로 스와이프 스크롤이 막힘 */
   container.style.touchAction = 'pan-y'
 
   const onGrab = () => {
-    container.style.cursor = 'grabbing'
+    if (useNativeFooterCursor) container.style.cursor = 'grabbing'
   }
   const onRelease = () => {
-    container.style.cursor = 'grab'
+    if (useNativeFooterCursor) container.style.cursor = 'grab'
   }
   container.addEventListener('pointerdown', onGrab)
   window.addEventListener('pointerup', onRelease)
