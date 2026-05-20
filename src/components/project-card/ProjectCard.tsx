@@ -85,7 +85,7 @@ export function ProjectCard({
       )}
       <h3 className="project-card__title">{title}</h3>
       <div className="project-card__header">
-        <span className="project-card__label">{visual.label}</span>
+        <span className="project-card__label case-badge">{visual.label}</span>
         <span className="project-card__status">{visual.meta}</span>
       </div>
       <div className="project-card__content">

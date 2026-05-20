@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
-import './BackToTop.scss'
 import cardClip from '../../assets/icons/BackToTop-cardClip.svg'
-
-const SCROLL_THRESHOLD_PX = 360
+import { FLOATING_CONTROLS_SCROLL_THRESHOLD_PX } from '../../constants/floatingUi'
+import './BackToTop.scss'
 
 export function BackToTop() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
-      setVisible(window.scrollY > SCROLL_THRESHOLD_PX)
+      setVisible(window.scrollY > FLOATING_CONTROLS_SCROLL_THRESHOLD_PX)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })

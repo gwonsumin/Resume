@@ -24,50 +24,49 @@
 .project-card__link,
 .project-grid__coming,
 .archive-record,
-.toolkit-table {
+.toolkit-table,
+.toolkit-capsule,
+.archive-deck__card-surface {
   position: relative;
-  background: var(--editorial-paper);
-  border: var(--border-editorial);
-  border-radius: var(--radius-editorial);
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
   box-shadow: var(--shadow-editorial);
-  transition:
-    transform var(--card-duration) var(--card-ease),
-    background-color var(--card-duration) var(--card-ease),
-    border-color var(--card-duration) var(--card-ease);
+  transition: var(--hover-transition);
 }
 
-.about-photo__frame,
-.archive-record,
-.toolkit-table {
-  border-radius: var(--radius-editorial-lg);
-}
-
-.about-career-card--foundation {
-  background: var(--color-background);
-}
-
-.about-career-card--experience {
-  background: var(--editorial-paper);
+.archive-deck__card-surface {
+  background:
+    linear-gradient(135deg, var(--deck-accent-soft, rgb(255 120 93 / 0.18)) 0%, transparent 52%),
+    var(--card-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.75);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .about-career-card:hover,
+  .toolkit-capsule:hover,
   .about-quick-info:hover,
+  .about-career-card:hover,
   .about-photo__frame:hover,
+  .project-card:hover .project-card__link,
   .project-card__link:hover,
   .project-grid__coming:hover,
-  .archive-record:hover,
-  .toolkit-table:hover {
-    transform: translateY(var(--card-hover-lift));
-    border-color: var(--hover-border);
-    background: var(--hover-paper-tint);
-    box-shadow: var(--shadow-editorial);
+  .toolkit-table:hover,
+  .archive-deck__card--top:hover .archive-deck__card-surface {
+    background-color: var(--card-hover-bg);
+    border-color: var(--card-hover-border-color);
   }
 
-  .project-card__link:hover .project-card__label {
+  .archive-deck__card--top:hover .archive-deck__card-surface {
+    background:
+      linear-gradient(135deg, var(--deck-accent-soft, rgb(255 120 93 / 0.18)) 0%, transparent 52%),
+      var(--card-hover-bg);
+  }
+
+  /* Flourish — Case Study badge only */
+  .project-card:hover .case-badge,
+  .project-card__link:hover .case-badge {
     border-style: solid;
-    border-color: var(--project-accent, var(--color-primary));
-    color: var(--project-accent, var(--color-primary));
+    border-color: #b86a4e;
   }
 }
 
@@ -78,21 +77,10 @@
   .project-card__link,
   .project-grid__coming,
   .archive-record,
-  .toolkit-table {
-    transition: border-color var(--card-duration) ease,
-      background-color var(--card-duration) ease;
-  }
-
-  @media (hover: hover) and (pointer: fine) {
-    .about-career-card:hover,
-    .about-quick-info:hover,
-    .about-photo__frame:hover,
-    .project-card__link:hover,
-    .project-grid__coming:hover,
-    .archive-record:hover,
-    .toolkit-table:hover {
-      transform: none;
-    }
+  .toolkit-table,
+  .toolkit-capsule,
+  .archive-deck__card-surface {
+    transition: var(--hover-transition);
   }
 }
 
@@ -145,4 +133,19 @@
   border: 0;
   border-top: 1px dashed var(--editorial-stitch);
   margin: 0;
+}
+
+/* 와시·클립·토마토 등 스크랩북 데코 — 형태 유지 그림자 */
+.about-photo__sticker,
+.hero__tomato,
+.hero__washi,
+.hero__open-tag,
+.about-quick-info::before,
+.toolkit-table__tape,
+.toolkit-table__clip,
+.about-career-card__clip,
+.project-card__clip,
+.archive-deck__pin,
+.back-to-top__clip {
+  filter: var(--editorial-sticker-shadow);
 }

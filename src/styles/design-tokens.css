@@ -11,9 +11,14 @@
   --layout-max-width: 90rem; /* wide / 1440px */
 
   /* Vertical rhythm — issue tempo */
-  --vr-grand: clamp(120px, 12vw, 160px);
-  --vr-section: clamp(72px, 6.8vw, 96px);
-  --vr-quiet: clamp(40px, 4vw, 56px);
+  --vr-grand: 160px;
+  --vr-section: 96px;
+  --vr-quiet: 56px;
+
+  /* Unified card chrome */
+  --card-bg: #fff8ec;
+  --card-border: 1px solid #d4c9b8;
+  --card-radius: 12px;
 
   /* Hero → About 전환에만 쓰는 큰 세로 여백 */
   --section-padding-block-hero-about: var(--vr-grand);
@@ -47,11 +52,16 @@
   --border-editorial: var(--border-editorial-width) solid rgb(59 47 47 / 0.22);
   --shadow-editorial: 0 2px 0 rgb(59 47 47 / 0.08);
   --shadow-editorial-hover: var(--shadow-editorial);
+  /* PNG·스티커 데코 — box-shadow 대신 filter만 사용 */
+  --editorial-sticker-shadow: drop-shadow(1px 2px 3px rgb(0 0 0 / 0.18));
   --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-duration: 260ms;
-  --card-hover-lift: -1px;
-  --hover-paper-tint: color-mix(in srgb, var(--editorial-cream) 32%, var(--editorial-paper));
-  --hover-border: color-mix(in srgb, var(--color-primary) 36%, rgb(59 47 47 / 0.28));
+  /* Unified hover language — cards & capsules */
+  --card-hover-bg: #fff0dc;
+  --card-hover-border-color: #c4a882;
+  --hover-transition: background-color 0.2s ease, border-color 0.2s ease;
+  --hover-paper-tint: var(--card-hover-bg);
+  --hover-border: var(--card-hover-border-color);
   --font-hand-ko: "Gaegu", "Apple SD Gothic Neo", cursive;
   --font-hand-en: "Caveat", "Gaegu", cursive;
   --font-mono: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas,

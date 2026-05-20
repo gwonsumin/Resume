@@ -26,17 +26,6 @@ const TOOLKIT_ROWS = [
   },
 ] as const;
 
-const CAPSULE_RADII = [
-  "999px 18px 20px 999px",
-  "20px 999px 999px 18px",
-  "999px 22px 18px 999px",
-  "18px 999px 999px 22px",
-  "999px 20px 22px 999px",
-  "22px 999px 999px 20px",
-  "999px 18px 20px 999px",
-  "20px 999px 999px 18px",
-] as const;
-
 function filterRowSkills(
   categories: readonly Skill["category"][],
 ): Skill[] {
@@ -45,22 +34,19 @@ function filterRowSkills(
   );
 }
 
-function ToolCapsule({
-  skill,
-  index,
-}: {
-  skill: Skill;
-  index: number;
-}) {
-  const style = {
-    "--capsule-radius": CAPSULE_RADII[index % CAPSULE_RADII.length],
+function ToolCapsule({ skill }: { skill: Skill }) {
+  const capsuleStyle = {
+    "--capsule-level": skill.level,
   } as CSSProperties;
 
   return (
-    <li className="toolkit-capsule" style={style}>
-      <span className="toolkit-capsule__tab" aria-hidden="true">
-        <span className="toolkit-capsule__tab-inner" />
-      </span>
+    <li
+      className="toolkit-capsule"
+      data-level={skill.level}
+      style={capsuleStyle}
+    >
+      <span className="toolkit-capsule__fill" aria-hidden="true" />
+      <span className="toolkit-capsule__tab" aria-hidden="true" />
       <span className="toolkit-capsule__body">
         {skill.icon ? (
           <img
@@ -73,9 +59,9 @@ function ToolCapsule({
         <span className="toolkit-capsule__name">{skill.name}</span>
         <span
           className="toolkit-capsule__tag"
-          aria-label={`${skill.name} 사용 빈도 ${skill.frequency}`}
+          aria-label={`${skill.name} 사용 빈도 ${skill.freq}`}
         >
-          {skill.frequency}
+          {skill.freq}
         </span>
       </span>
     </li>
@@ -107,8 +93,8 @@ function ToolkitRow({
         </div>
       </div>
       <ul className="toolkit-table__capsules" role="list">
-        {items.map((skill, index) => (
-          <ToolCapsule key={skill.id} skill={skill} index={index} />
+        {items.map((skill) => (
+          <ToolCapsule key={skill.id} skill={skill} />
         ))}
       </ul>
     </div>
@@ -124,7 +110,7 @@ export function Skills() {
       <ul className="toolkit-table__screen-reader-list" role="list">
         {skills.map((skill) => (
           <li key={skill.id}>
-            {skill.name} 사용 빈도 {skill.frequency}
+            {skill.name} 사용 빈도 {skill.freq}
           </li>
         ))}
       </ul>

@@ -1,6 +1,7 @@
 import profilePhoto from "../../assets/images/profile-photo.png";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import aboutTitleIcon from "../../assets/about/about-title.svg";
+import careerCardClip from "../../assets/about/career-card-clip.svg";
 import { Reveal } from "../reveal/Reveal";
 import "./About.scss";
 
@@ -200,7 +201,14 @@ function CareerCardHeader({
 function FoundationCard() {
   return (
     <article className="about-career-card about-career-card--foundation">
-      <span className="about-career-card__clip" aria-hidden="true" />
+      <img
+        src={careerCardClip}
+        alt=""
+        className="about-career-card__clip"
+        width={18}
+        height={32}
+        aria-hidden="true"
+      />
       <CareerCardHeader {...CAREER_CARDS[0]} />
       <div className="about-foundation-groups">
         {FOUNDATION_GROUPS.map((group) => (
@@ -229,6 +237,14 @@ function FoundationCard() {
 function ExperienceCard() {
   return (
     <article className="about-career-card about-career-card--experience">
+      <img
+        src={careerCardClip}
+        alt=""
+        className="about-career-card__clip"
+        width={18}
+        height={32}
+        aria-hidden="true"
+      />
       <CareerCardHeader {...CAREER_CARDS[1]} />
       <div className="about-experience-sections">
         {EXPERIENCE_SECTIONS.map((section) => (

@@ -1,6 +1,5 @@
 .project-card {
   --project-accent: var(--color-primary);
-  --project-paper: var(--editorial-paper);
 
   position: relative;
   margin: 0;
@@ -21,10 +20,6 @@
   display: grid;
   gap: 16px;
   grid-template-columns: minmax(0, 1fr);
-  /*
-    모바일: 비주얼 → 타이틀 → 메타(라벨/상태) → 본문
-    태블릿+: 기존 데스크톱 순서 = 비주얼 → 메타 → 타이틀 → 본문
-  */
   grid-template-areas:
     "visual"
     "title"
@@ -37,7 +32,6 @@
   padding: clamp(16px, 2.5vw, 22px);
   color: inherit;
   text-decoration: none;
-  background: var(--project-paper);
   cursor: pointer;
 }
 
@@ -60,9 +54,9 @@
 
 .project-card__clip {
   position: absolute;
-  top: -22px;
+  top: -16px;
   left: 18px;
-  width: 32px;
+  width: 28px;
   height: auto;
   z-index: 3;
   opacity: 0.78;
@@ -161,11 +155,15 @@
 
 .project-card__label {
   padding: 4px 8px;
-  background: rgb(255 244 235 / 0.65);
-  border: 1px dashed var(--editorial-stitch-strong);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #b86a4e;
+  background: transparent;
+  border: 1px dashed #b86a4e;
   border-radius: 4px;
   transition:
     border-color var(--card-duration) var(--card-ease),
+    border-style var(--card-duration) var(--card-ease),
     color var(--card-duration) var(--card-ease);
 }
 
@@ -479,9 +477,9 @@
     background: rgb(255 244 235 / 0.95);
   }
 
-  /* 상단 종이 클립이 음수 top으로 카드 간 시각 간섭 줄이기 */
   .project-card__clip {
-    top: -8px;
+    top: -12px;
+    width: 26px;
   }
 }
 

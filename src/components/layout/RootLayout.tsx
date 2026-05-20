@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { BackToTop } from '../back-to-top/BackToTop'
+import { FloatingControls } from '../floating-controls/FloatingControls'
 import { CustomCursor } from '../cursor/CustomCursor'
 import { Footer } from '../footer/Footer'
 import { Header } from '../header/Header'
@@ -41,7 +41,7 @@ export function RootLayout({ siteTitle }: RootLayoutProps) {
           <Outlet />
         </main>
         <Footer siteTitle={siteTitle} />
-        <BackToTop />
+        <FloatingControls />
       </div>
     </RevealReadyProvider>
   )

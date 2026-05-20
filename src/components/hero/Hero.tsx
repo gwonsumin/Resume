@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
+import { RESUME_FILENAME, RESUME_HREF } from "../../config/assets";
 import { useRevealReady } from "../reveal/RevealReadyContext";
 import heroChr from "../../assets/images/heroChr.png";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import "./Hero.scss";
 
 const HERO_EMAIL = "gsum212@gmail.com";
+
+function HeroResumeBtn({ placement }: { placement: "masthead" | "footer" }) {
+  return (
+    <a
+      href={RESUME_HREF}
+      download={RESUME_FILENAME}
+      className={`hero-resume-btn hero-resume-btn--${placement}`}
+    >
+      RESUME
+    </a>
+  );
+}
 
 export function Hero() {
   const revealReady = useRevealReady();
@@ -53,7 +66,10 @@ export function Hero() {
           <header className="hero__masthead">
             <p className="hero__label-ko">오늘의 상태노트</p>
             <p className="hero__label-mono">STATE NOTES BY SUMIN</p>
-            <p className="hero__label-vol">Vol. 04 · 2026 봄호</p>
+            <div className="hero__masthead-meta">
+              <p className="hero__label-vol">Vol. 04 · 2026 봄호</p>
+              <HeroResumeBtn placement="masthead" />
+            </div>
           </header>
 
           <div className="hero__main">
@@ -116,10 +132,13 @@ export function Hero() {
           </div>
 
           <footer className="hero__footer">
-            <p className="hero__diary">
-              오늘의 메모 · 따뜻한 톤이 잘 어울리는 봄 · 천천히 읽어주세요 ·
-              토마토는 매일 신선합니다
-            </p>
+            <div className="hero__diary-row">
+              <p className="hero__diary">
+                오늘의 메모 · 따뜻한 톤이 잘 어울리는 봄 · 천천히 읽어주세요 ·
+                토마토는 매일 신선합니다
+              </p>
+              <HeroResumeBtn placement="footer" />
+            </div>
             <p className="hero__diary-meta">NO. 2026-04 · SEOUL</p>
 
             <nav className="hero__continue" aria-label="포트폴리오 바로가기">

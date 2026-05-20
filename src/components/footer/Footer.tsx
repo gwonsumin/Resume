@@ -19,14 +19,13 @@ import passPortfolioQr from "../../assets/contact/pass/portfolio-qr.png";
 import passProfileCharacter from "../../assets/contact/pass/profile-character.svg";
 import passTomatoSymbol from "../../assets/contact/pass/tomato-symbol.svg";
 import passValidatedStamp from "../../assets/contact/pass/validated-stamp.svg";
+import { RESUME_HREF } from "../../config/assets";
 import { mountFooterPhysics, type FooterPhysicsSpec } from "./footerPhysics";
 import { Reveal } from "../reveal/Reveal";
 
 type FooterProps = {
   siteTitle: string;
 };
-
-const RESUME_HREF = `${import.meta.env.BASE_URL}assets/files/KwonSumin-Resume.pdf`;
 
 const EMAIL = "gsum212@gmail.com";
 /** 카드·링크용 표기 */
