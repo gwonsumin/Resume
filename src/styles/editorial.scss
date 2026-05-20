@@ -84,6 +84,16 @@
   }
 }
 
+.section-eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: #b86a4e;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
 .section-header__issue {
   display: flex;
   flex-wrap: wrap;

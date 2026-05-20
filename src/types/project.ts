@@ -1,3 +1,19 @@
+/** Case study header — team row below project tags. */
+export type CaseStudyTeamInfo =
+  | {
+      kind: 'team'
+      teamCount: number
+      /** Overrides `project.period` on the case study header when set. */
+      periodLabel?: string
+      myRoleBadge: string
+    }
+  | {
+      kind: 'solo'
+      /** Falls back to `project.period` (same copy as the home project card). */
+      periodLabel?: string
+      myRoleBadge: string
+    }
+
 export type ProjectPreview = {
   id: string
   title: string
@@ -12,6 +28,8 @@ export type ProjectPreview = {
   period?: string
   /** Optional role summary shown in card meta. */
   role?: string
+  /** Team / period / role badge row on the case study page header. */
+  caseStudyTeamInfo?: CaseStudyTeamInfo
   /** Memo-card treatment for the project showcase card. */
   visual: {
     label: string

@@ -37,6 +37,7 @@
   --color-background: #fff4eb;
   --color-line: #3b2f2f;
   --color-text: #3b2f2f;
+  --color-text-primary: var(--color-text);
   --color-text-muted: rgb(59 47 47 / 0.72);
   --color-surface: #fffaf5;
   --color-surface-soft: #fff8f2;

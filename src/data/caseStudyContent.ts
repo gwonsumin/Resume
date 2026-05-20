@@ -263,43 +263,49 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     },
     myRole: {
       summary: p(
-        "권수민은 4주 동안 프로젝트 전 구간을 리드하며 문제 정의부터 화면 구현까지 하나의 UX 의사결정 체계로 연결했습니다.",
+        "5명 팀 프로젝트에서 AI 채팅 UX, 주문/결제 흐름 디자인, 프론트엔드 일부 구간을 주도적으로 담당했습니다.",
         "기능 나열이 아니라 선택 흐름 설계를 기준으로 화면 우선순위를 정리해, 사용자의 결정 부담을 줄이는 방향으로 프로젝트를 완성했습니다.",
       ),
       roles: [
         {
           title: "UX Flow Design",
           tag: "lead",
+          level: 100,
           detail:
             "1-2주차에 묻기 → 좁히기 → 비교하기 → 저장하기 → 구매하기 여정을 핵심 흐름으로 정의하고, 화면 우선순위를 이 순서에 맞췄습니다.",
         },
         {
           title: "AI Chat Interaction Design",
           tag: "lead",
+          level: 100,
           detail:
             "질문과 응답이 반복될수록 후보가 압축되는 대화 구조를 설계해, 재입력 없이도 판단을 이어갈 수 있도록 만들었습니다.",
         },
         {
           title: "Core Screen UI Design",
-          tag: "lead",
+          tag: "collab",
+          level: 60,
           detail:
             "2-3주차에 메인, 후보 목록, 상세 화면의 정보 계층과 액션 리듬을 통일해 비교 판단 정보가 빠르게 읽히도록 구성했습니다.",
         },
         {
           title: "Purchase Flow UX Design",
           tag: "lead",
+          level: 100,
           detail:
             "저장한 후보가 구매 단계로 자연스럽게 이어지도록 전환 흐름을 정리하고, 단계별 상태 피드백을 명확히 설계했습니다.",
         },
         {
           title: "Design System Direction",
-          tag: "lead",
+          tag: "collab",
+          level: 60,
           detail:
             "컴포넌트와 상태 표현 규칙을 문서화해 화면 간 해석 오차를 줄이고 선택 흐름의 일관성을 확보했습니다.",
         },
         {
           title: "React Frontend Collaboration",
           tag: "collab",
+          level: 55,
           detail:
             "3-4주차에 React 화면 일부를 직접 구현하며 UX 의도를 상태/컴포넌트 단위로 정렬해 디자인-개발 간 간극을 줄였습니다.",
         },
@@ -336,9 +342,9 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "결과적으로 GOREON은 기능 소개형 쇼핑몰이 아니라, 선택 흐름을 설계한 UX 사례로 읽히도록 정리되었습니다.",
     ),
     learnings: p(
-      "대화형 인터랙션은 기술 요소 자체보다 사용자 판단 흐름 안에 배치될 때 더 분명한 UX 가치를 만든다는 점을 배웠습니다.",
-      "또한 커머스 UX에서는 기능 수를 늘리는 것보다 질문-압축-비교-저장-구매 흐름을 끊기지 않게 연결하는 구조가 핵심임을 확인했습니다.",
-      "이전에 TONE 프로젝트와 다른 색감을 사용하면서 목적에 따라 더 효과적인 디자인을 완성시킬 수 있다는 것을 배웠습니다.",
+      "AI 기반 대화형 인터랙션을 UX 흐름 안에 자연스럽게 녹이는 것이 어려웠습니다. 기능으로서의 AI가 아니라 사용자의 판단을 돕는 맥락으로 배치하는 기준이 처음에는 명확하지 않았기 때문입니다.",
+      "질문-압축-비교-저장-구매로 이어지는 흐름을 먼저 정의하고, AI 채팅을 그 흐름의 시작점으로 설계하는 방식으로 접근하며 방향을 잡았습니다.",
+      "대화형 인터랙션은 기술 요소 자체보다 사용자 판단 흐름 안에 배치될 때 더 분명한 UX 가치를 만든다는 것과, 커머스 맥락에서는 감성보다 판단 효율이 우선임을 배웠습니다.",
     ),
     serviceExperience: {
       title: "실제 서비스 체험",
@@ -346,6 +352,11 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
         "GOREON은 반응형 환경에 맞춰 설계한 전자기기 추천 및 비교 서비스입니다.",
         "질문 시작 화면부터 조건 정리, 후보 추천, 상세 비교, 저장, 구매 전환까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
       ),
+      demoVideos: {
+        layout: "dual",
+        desktop: { src: goreonPublic("GOREON-demo-pc.mp4"), label: "DESKTOP" },
+        mobile: { src: goreonPublic("GOREON-demo-mobile.mp4"), label: "MOBILE" },
+      },
       mobileNotice:
         "데스크톱과 모바일 화면에 모두 대응한 반응형 서비스이므로 원하는 기기 환경에서 확인할 수 있습니다.",
       serviceLinks: GOREON_SERVICE_LINKS,
@@ -399,39 +410,44 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     },
     myRole: {
       summary: p(
-        "TONE 프로젝트에서는 기능 단위 작업 나열이 아니라, 사용자의 감정 기록 경험이 끊기지 않도록 핵심 경험 흐름을 설계하고 구현 연결까지 담당했다.",
-        "UX Flow 설계부터 UI 시스템 정리, 프로토타입 인터랙션 검증, Vue 기반 프론트 협업까지 하나의 경험 언어로 이어지도록 역할을 수행했다.",
+        "5명 팀 프로젝트에서 UX 설계부터 UI 디자인 시스템, 프로토타입까지 디자인 전 구간을 주도적으로 담당했습니다.",
+        "UX Flow 설계부터 UI 시스템 정리, 프로토타입 인터랙션 검증, Vue 기반 프론트 협업까지 하나의 경험 언어로 이어지도록 역할을 수행했습니다.",
       ),
       roles: [
         {
           title: "UX Flow Design",
           tag: "lead",
+          level: 100,
           detail:
-            "감정 선택 → 톤 기록 → 플레이리스트 추천 → 캘린더 아카이브로 이어지는 메인 여정을 설계하고, 각 단계의 전환 맥락을 정리했다.",
+            "감정 선택 → 톤 기록 → 플레이리스트 추천 → 캘린더 아카이브로 이어지는 메인 여정을 설계하고, 각 단계의 전환 맥락을 정리했습니다.",
         },
         {
           title: "UI Design System",
           tag: "lead",
+          level: 100,
           detail:
-            "컬러-감정 매핑 규칙과 컴포넌트 기준을 통일해 일관된 화면 리듬을 만들고, 기록 경험의 인지 부담을 줄였다.",
+            "컬러-감정 매핑 규칙과 컴포넌트 기준을 통일해 일관된 화면 리듬을 만들고, 기록 경험의 인지 부담을 줄였습니다.",
         },
         {
-          title: "Prototype Interaction",
+          title: "Prototype Inspection",
           tag: "lead",
+          level: 100,
           detail:
-            "감정 선택/기록/저장 인터랙션을 프로토타입으로 검증해 핵심 태스크의 완료 흐름이 자연스럽게 연결되도록 다듬었다.",
+            "감정 선택/기록/저장 인터랙션을 프로토타입으로 검증해 핵심 태스크의 완료 흐름이 자연스럽게 연결되도록 다듬었습니다.",
         },
         {
           title: "Main Experience Flow",
           tag: "lead",
+          level: 100,
           detail:
-            "탐색 중심 음악 서비스가 아닌 감정 아카이브 중심 서비스로 경험 프레이밍을 전환하고 주요 화면 우선순위를 정의했다.",
+            "탐색 중심 음악 서비스가 아닌 감정 아카이브 중심 서비스로 경험 프레이밍을 전환하고 주요 화면 우선순위를 정의했습니다.",
         },
         {
-          title: "Frontend Collaboration (Vue)",
+          title: "Frontend Collaboration",
           tag: "collab",
+          level: 40,
           detail:
-            "Vue 기반 화면 구현 구조를 개발 관점으로 함께 맞추며 상태 흐름과 UI 의도를 정렬해 디자인-구현 간 간극을 줄였다.",
+            "Vue 기반 화면 구현 구조를 개발 관점으로 함께 맞추며 상태 흐름과 UI 의도를 정렬해 디자인-구현 간 간극을 줄였습니다.",
         },
       ],
     },
@@ -506,9 +522,9 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "사용자는 날짜를 다시 열어보며 그날의 색과 음악을 함께 회상할 수 있고, 기록 행위 자체가 서비스 재방문 동기가 되도록 경험을 구성했다.",
     ),
     learnings: p(
-      "감정을 기반으로 한 UX 설계에서 '기록 경험'이 사용자 몰입을 높인다는 것을 이해했다.",
-      "또한 사용자가 자신의 상태를 표현할 수 있는 인터페이스가 제이처 기반 추천보다 먼저 설계되어야 한다는 점을 배웠다.",
-      "특히 '기록'이라는 행동이 단순 기능이 아니라 사용자의 경험을 지속시키는 핵심 요소라는 것을 느꼈다.",
+      "감정을 기반으로 한 UX 설계에서 '기록 경험'이 사용자 몰입을 높인다는 것을 구조로 증명하기가 어려웠습니다. 감정은 기능처럼 측정 기준이 없었기 때문입니다.",
+      "사용자가 상태를 표현하는 인터페이스를 피처 추천보다 먼저 설계하는 순서로 접근했고, 캘린더와 팔레트 로그를 저장 공간이 아닌 감정 아카이브로 재프레이밍하며 방향을 잡았습니다.",
+      "'기록'이라는 행동이 단순 기능이 아니라 사용자의 경험을 지속시키는 핵심 요소라는 것을 배웠습니다.",
     ),
     serviceExperience: {
       title: "실제 서비스 체험",
@@ -516,6 +532,10 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
         "TONE은 모바일 환경에 최적화된 감정 기반 음악 추천 서비스입니다.",
         "오늘의 컬러 추천부터 플레이리스트 재생, 저장, 캘린더 기록까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
       ),
+      demoVideos: {
+        layout: "side-by-side",
+        src: tonePublic("TONE-demo.mp4"),
+      },
       mobileNotice:
         "모바일 기준으로 설계된 서비스이므로 모바일 기기 또는 브라우저 모바일 뷰에서 확인하는 것을 권장합니다.",
       serviceLinks: TONE_SERVICE_LINKS,
@@ -547,43 +567,49 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     },
     myRole: {
       summary: p(
-        "개인 프로젝트로 기획, UI 디자인, 퍼블리싱, PHP 개발, MySQL 연동, 서버 배포까지 전 과정을 담당했습니다.",
-        "기능 구현 나열이 아닌 UX 의사결정 단위로 역할을 구분해, 정보 구조 설계부터 운영형 게시판까지 하나의 경험 흐름으로 완성했습니다.",
+        "기획부터 디자인, 개발, 배포까지 전 구간을 단독으로 진행한 개인 프로젝트입니다.",
+        "UX 의사결정 단위로 역할을 구분해 정보 구조 설계부터 운영형 게시판까지 하나의 경험 흐름으로 완성했습니다.",
       ),
       roles: [
         {
           title: "UX Planning",
           tag: "lead",
+          level: 95,
           detail:
             "지점·프로그램·공간·뉴스 정보를 방문 목적 기준으로 재분류하고 핵심 탐색 흐름을 정의했습니다.",
         },
         {
           title: "Information Architecture",
           tag: "lead",
+          level: 95,
           detail:
             "메인에서 주요 콘텐츠를 먼저 확인하고, 프로그램·공지 상세로 자연스럽게 이동할 수 있도록 메뉴 구조와 콘텐츠 우선순위를 정리했습니다.",
         },
         {
           title: "UI Design",
           tag: "lead",
+          level: 95,
           detail:
             "문화 콘텐츠의 분위기를 유지하면서도 섹션 구성과 카드형 콘텐츠 표현이 명확하게 읽히도록 편집 리듬을 설계했습니다.",
         },
         {
           title: "Publishing",
-          tag: "collab",
+          tag: "lead",
+          level: 90,
           detail:
             "HTML, CSS, JavaScript, jQuery를 활용해 메인·서브 페이지를 구현하고 화면 전환과 콘텐츠 노출 흐름을 맞췄습니다.",
         },
         {
           title: "PHP Development",
-          tag: "support",
+          tag: "lead",
+          level: 85,
           detail:
             "PHP와 MySQL로 공지사항 CRUD 게시판과 이미지 업로드 기능을 직접 구현했습니다.",
         },
         {
           title: "Deploy",
           tag: "lead",
+          level: 90,
           detail:
             "Dothome 서버와 FileZilla로 실제 접속 가능한 웹사이트를 배포하고 운영 환경에서 기능을 검증했습니다.",
         },
@@ -615,8 +641,9 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       "정적 리브랜딩에 그치지 않고 PHP/MySQL 게시판과 실서버 배포까지 연결해 운영 가능한 문화 플랫폼으로 완성했습니다.",
     ),
     learnings: p(
-      "GOREON이 AI 기반 UX를 탐구하고, TONE이 감정 인터랙션을 설계하기 이전에—상상마당은 브랜드와 공간을 UX 구조로 해석하는 foundation 작업이었습니다.",
-      "리브랜딩에서도 시각적 변화보다 사용자의 탐색 방식과 운영자의 관리 흐름이 함께 설계되어야 한다는 것, PHP/MySQL로 화면·데이터·배포가 연결되는 웹 서비스의 기본 구조를 몸소 경험했습니다.",
+      "설계부터 배포까지 혼자 진행한 첫 프로젝트였기 때문에, 디자인 결정과 개발 구현을 동시에 판단해야 하는 상황이 처음에는 낯설고 버거웠습니다.",
+      "기능 단위로 작게 나눠 구현하고, 각 화면이 실제 데이터와 연결되는 흐름을 먼저 정의하는 방식으로 방향을 잡았습니다.",
+      "리브랜딩에서도 시각적 변화보다 사용자의 탐색 방식과 운영자의 관리 흐름이 함께 설계되어야 한다는 것, 그리고 화면·데이터·배포가 하나로 연결될 때 비로소 서비스가 완성된다는 것을 배웠습니다.",
     ),
     serviceExperience: {
       title: "Platform Experience",
@@ -666,32 +693,32 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       ],
     },
     sectionImageLayout: {
-      solution: 'row',
-      result: 'row',
+      solution: "row",
+      result: "row",
     },
     sectionImages: {
       solution: [
         {
-          src: ssmPublic('sangsangmadang-board.png'),
-          alt: '상상마당 게시판 화면',
+          src: ssmPublic("sangsangmadang-board.png"),
+          alt: "상상마당 게시판 화면",
         },
         {
-          src: ssmPublic('sangsangmadang-login.png'),
-          alt: '상상마당 로그인 화면',
+          src: ssmPublic("sangsangmadang-login.png"),
+          alt: "상상마당 로그인 화면",
         },
         {
-          src: ssmPublic('sangsangmadang-mypage.png'),
-          alt: '상상마당 마이페이지 화면',
+          src: ssmPublic("sangsangmadang-mypage.png"),
+          alt: "상상마당 마이페이지 화면",
         },
       ],
       result: [
         {
-          src: ssmPublic('sangsangmadang-admin1.png'),
-          alt: '상상마당 관리자 화면 1',
+          src: ssmPublic("sangsangmadang-admin1.png"),
+          alt: "상상마당 관리자 화면 1",
         },
         {
-          src: ssmPublic('sangsangmadang-admin2.png'),
-          alt: '상상마당 관리자 화면 2',
+          src: ssmPublic("sangsangmadang-admin2.png"),
+          alt: "상상마당 관리자 화면 2",
         },
       ],
     },

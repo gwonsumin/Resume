@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from 'react'
 import { createPortal } from 'react-dom'
-import type { ProjectPreview } from '../../types/project'
+import type { CaseStudyTeamInfo, ProjectPreview } from '../../types/project'
 import {
   CASE_STUDY_ROLE_TAG_LABELS,
   type CaseStudyBrowserScrollPreview,
@@ -23,6 +23,21 @@ import { ServiceExperienceSection } from './ServiceExperienceSection'
 import { BrowserScrollPreview } from './BrowserScrollPreview'
 import { RoleContributionBar } from './RoleContributionBar'
 import './CaseStudyTemplate.scss'
+
+const CASE_STUDY_BLOCK_EYEBROWS = {
+  myRole: 'MY ROLE · CONTRIBUTION',
+  serviceExperience: 'LIVE · VALIDATION',
+  intro: 'OVERVIEW · PROJECT',
+  problem: 'PROBLEM · DEFINE',
+  insight: 'INSIGHT · RESEARCH',
+  iaUserFlow: 'UX FLOW · STRUCTURE',
+  solution: 'SOLUTION · DESIGN',
+  uiDesign: 'UI · DESIGN',
+  result: 'RESULT · IMPACT',
+  learnings: 'REFLECTION · LEARNING',
+  uxFlowEditorial: 'UX FLOW · STRUCTURE',
+  prototype: 'PROTOTYPE · VALIDATION',
+} as const
 
 const SECTIONS: ReadonlyArray<{
   key: keyof Pick<
@@ -38,15 +53,21 @@ const SECTIONS: ReadonlyArray<{
   >
   domId: string
   title: string
+  eyebrow: string
 }> = [
-  { key: 'intro', domId: 'intro', title: '소개' },
-  { key: 'problem', domId: 'problem', title: '문제 정의' },
-  { key: 'insight', domId: 'insight', title: '인사이트' },
-  { key: 'iaUserFlow', domId: 'ia-user-flow', title: 'IA / 사용자 흐름' },
-  { key: 'solution', domId: 'solution', title: '해결 전략' },
-  { key: 'uiDesign', domId: 'ui-design', title: 'UI 디자인' },
-  { key: 'result', domId: 'result', title: '결과' },
-  { key: 'learnings', domId: 'learnings', title: '회고' },
+  { key: 'intro', domId: 'intro', title: '소개', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.intro },
+  { key: 'problem', domId: 'problem', title: '문제 정의', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.problem },
+  { key: 'insight', domId: 'insight', title: '인사이트', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.insight },
+  {
+    key: 'iaUserFlow',
+    domId: 'ia-user-flow',
+    title: 'IA / 사용자 흐름',
+    eyebrow: CASE_STUDY_BLOCK_EYEBROWS.iaUserFlow,
+  },
+  { key: 'solution', domId: 'solution', title: '해결 전략', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.solution },
+  { key: 'uiDesign', domId: 'ui-design', title: 'UI 디자인', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.uiDesign },
+  { key: 'result', domId: 'result', title: '결과', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.result },
+  { key: 'learnings', domId: 'learnings', title: '회고', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.learnings },
 ]
 
 type CaseStudyTemplateProps = {
@@ -82,24 +103,116 @@ function CaseStudyFigure({
   )
 }
 
+function CaseStudyTeamInfoRow({
+  info,
+  projectPeriod,
+}: {
+  info: CaseStudyTeamInfo
+  projectPeriod?: string
+}) {
+  const periodDisplay = info.periodLabel ?? projectPeriod
+
+  return (
+    <div className="team-info-row" aria-label="프로젝트 팀 정보">
+      {info.kind === 'solo' ? (
+        <span className="team-info-solo-badge">SOLO PROJECT</span>
+      ) : (
+        <p className="team-info-item">
+          <span className="team-info-label">Team</span>
+          <span className="team-info-value">{info.teamCount}명</span>
+        </p>
+      )}
+      <p className="team-info-item">
+        <span className="team-info-label">Period</span>
+        <span className="team-info-value">{periodDisplay}</span>
+      </p>
+      <p className="team-info-item team-info-item--role">
+        <span className="team-info-label">My Role</span>
+        <span className="my-role-badge">{info.myRoleBadge}</span>
+      </p>
+    </div>
+  )
+}
+
+function CaseStudyHeroLinkRow({
+  project,
+  onDeployClick,
+}: {
+  project: ProjectPreview
+  onDeployClick: (event: MouseEvent<HTMLAnchorElement>) => void
+}) {
+  const links = [
+    project.deployUrl
+      ? {
+          key: 'deploy',
+          href: project.deployUrl,
+          label: 'LIVE SITE ↗',
+          ariaLabel: `${project.title} 배포 사이트 새 탭에서 열기`,
+          onClick: onDeployClick,
+        }
+      : null,
+    project.githubUrl
+      ? {
+          key: 'github',
+          href: project.githubUrl,
+          label: 'GITHUB ↗',
+          ariaLabel: `${project.title} GitHub 저장소 열기`,
+        }
+      : null,
+    project.proposalUrl
+      ? {
+          key: 'proposal',
+          href: project.proposalUrl,
+          label: '제안서 ↗',
+          ariaLabel: `${project.title} 제안서 PDF 열기`,
+        }
+      : null,
+  ].filter((item): item is NonNullable<typeof item> => item !== null)
+
+  if (!links.length) return null
+
+  return (
+    <div className="case-study__hero-link-row" aria-label="프로젝트 외부 링크">
+      {links.map((link) => (
+        <a
+          key={link.key}
+          className="live-site-btn"
+          href={link.href}
+          target="_blank"
+          rel="noreferrer noopener"
+          onClick={link.onClick}
+          aria-label={link.ariaLabel}
+        >
+          {link.label}
+        </a>
+      ))}
+    </div>
+  )
+}
+
 function CaseStudyBlock({
   id,
   title,
+  eyebrow,
   children,
 }: {
   id: string
   title: string
+  eyebrow?: string
   children: ReactNode
 }) {
   return (
     <section
-      className="case-study__block"
+      className="case-study__block section-card"
       id={id}
       aria-labelledby={`${id}-heading`}
     >
-      <h2 className="case-study__block-title" id={`${id}-heading`}>
-        {title}
-      </h2>
+      <div className="case-study__block-heading">
+        {eyebrow ? <span className="section-eyebrow">{eyebrow}</span> : null}
+        <h2 className="case-study__block-title" id={`${id}-heading`}>
+          {title}
+        </h2>
+      </div>
       <div className="case-study__block-main">{children}</div>
     </section>
   )
@@ -154,24 +267,6 @@ function lightboxAnchorForListEl(el: HTMLDivElement | null): { left: number; top
     left: clampCaseStudy(cx, m, w - m),
     top: clampCaseStudy(cy, m, h - m),
   }
-}
-
-function CaseStudyHeroExternalGlyph({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width={12}
-      height={12}
-      viewBox="0 0 24 24"
-      aria-hidden="true"
-      focusable="false"
-    >
-      <path
-        fill="currentColor"
-        d="M19 19H5V5h7V3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"
-      />
-    </svg>
-  )
 }
 
 function CaseStudySectionImageList({
@@ -358,8 +453,8 @@ export function CaseStudyTemplate({
   const uxFlowEditorial = content.uxFlowEditorial
   const prototypeAnchorKey: (typeof SECTIONS)[number]['key'] = isToneCase ? 'result' : 'iaUserFlow'
   const usedProgramsBlock = (
-    <div className="case-study__programs" aria-label="프로젝트 사용 프로그램">
-      <span className="case-study__programs-label">Used Programs</span>
+    <div className="case-study__programs" aria-label="Tech stack">
+      <span className="case-study__programs-label">Tech Stack</span>
       <ul className="case-study__tags case-study__tags--programs" role="list">
         {project.techStack.map((tool) => (
           <li key={tool} className="case-study__tags-tool">
@@ -380,10 +475,12 @@ export function CaseStudyTemplate({
         content.serviceExperience?.title ??
         '실서비스 검증'
       }
+      eyebrow={CASE_STUDY_BLOCK_EYEBROWS.serviceExperience}
     >
       {content.serviceExperience ? (
         <ServiceExperienceSection
           description={content.serviceExperience.description}
+          demoVideos={content.serviceExperience.demoVideos}
           mobileNotice={content.serviceExperience.mobileNotice}
           secondaryBandLabel={content.serviceExperience.secondaryBandLabel}
           serviceLinks={content.serviceExperience.serviceLinks}
@@ -424,94 +521,62 @@ export function CaseStudyTemplate({
     </CaseStudyBlock>
   )
 
-  const heroDeployUrl = project.deployUrl
   const onHeroDeployClick = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
-      if (!heroDeployUrl) return
-      handleProjectDeployClick(event, heroDeployUrl, project.deployWindow)
+      if (!project.deployUrl) return
+      handleProjectDeployClick(event, project.deployUrl, project.deployWindow)
     },
-    [heroDeployUrl, project.deployWindow],
+    [project.deployUrl, project.deployWindow],
   )
-
-  const heroDeployControl =
-    heroDeployUrl ? (
-      <a
-        className="case-study__hero-deploy-link"
-        href={heroDeployUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        onClick={onHeroDeployClick}
-        aria-label={`${project.title} 배포 사이트 새 탭에서 열기`}
-      >
-        <span className="case-study__hero-deploy-link-text">Live site</span>
-        <CaseStudyHeroExternalGlyph className="case-study__hero-deploy-link-icon" />
-      </a>
-    ) : null
-
-  const wrapCaseStudyHero = (inner: ReactNode) =>
-    heroDeployControl ? (
-      <div className="case-study__hero-with-deploy">
-        {inner}
-        {heroDeployControl}
-      </div>
-    ) : (
-      inner
-    )
 
   return (
     <article className={`case-study${isToneCase ? ' case-study--tone' : ''}`} lang="en">
       <header className="case-study__header">
         {hasStaggeredHero && staggeredScreens ? (
-          wrapCaseStudyHero(
-            <HeroEmotionFlow variant="header" screens={staggeredScreens} loading="eager" />,
-          )
+          <HeroEmotionFlow variant="header" screens={staggeredScreens} loading="eager" />
         ) : hasHero ? (
           heroDesktop && heroMobile ? (
-            wrapCaseStudyHero(
-              <div className="case-study__hero-poster" aria-label="대표 화면">
-                <div className="case-study__hero-poster-canvas">
-                  <CaseStudyFigure
-                    src={heroDesktop}
-                    alt={content.media?.hero?.desktopAlt ?? ''}
-                    variant="heroPosterMain"
-                    loading="eager"
-                  />
-                  <CaseStudyFigure
-                    src={heroMobile}
-                    alt={content.media?.hero?.mobileAlt ?? ''}
-                    variant="heroPosterInset"
-                    loading="lazy"
-                  />
-                </div>
-              </div>,
-            )
+            <div className="case-study__hero-poster" aria-label="대표 화면">
+              <div className="case-study__hero-poster-canvas">
+                <CaseStudyFigure
+                  src={heroDesktop}
+                  alt={content.media?.hero?.desktopAlt ?? ''}
+                  variant="heroPosterMain"
+                  loading="eager"
+                />
+                <CaseStudyFigure
+                  src={heroMobile}
+                  alt={content.media?.hero?.mobileAlt ?? ''}
+                  variant="heroPosterInset"
+                  loading="lazy"
+                />
+              </div>
+            </div>
           ) : (
-            wrapCaseStudyHero(
-              <div
-                className={
-                  heroSingleColumn
-                    ? 'case-study__hero-visuals case-study__hero-visuals--single'
-                    : 'case-study__hero-visuals'
-                }
-              >
-                {heroDesktop ? (
-                  <CaseStudyFigure
-                    src={heroDesktop}
-                    alt={content.media?.hero?.desktopAlt ?? ''}
-                    variant={heroMobile ? 'hero' : 'heroLead'}
-                    loading="eager"
-                  />
-                ) : null}
-                {heroMobile ? (
-                  <CaseStudyFigure
-                    src={heroMobile}
-                    alt={content.media?.hero?.mobileAlt ?? ''}
-                    variant="heroCompact"
-                    loading={heroDesktop ? 'lazy' : 'eager'}
-                  />
-                ) : null}
-              </div>,
-            )
+            <div
+              className={
+                heroSingleColumn
+                  ? 'case-study__hero-visuals case-study__hero-visuals--single'
+                  : 'case-study__hero-visuals'
+              }
+            >
+              {heroDesktop ? (
+                <CaseStudyFigure
+                  src={heroDesktop}
+                  alt={content.media?.hero?.desktopAlt ?? ''}
+                  variant={heroMobile ? 'hero' : 'heroLead'}
+                  loading="eager"
+                />
+              ) : null}
+              {heroMobile ? (
+                <CaseStudyFigure
+                  src={heroMobile}
+                  alt={content.media?.hero?.mobileAlt ?? ''}
+                  variant="heroCompact"
+                  loading={heroDesktop ? 'lazy' : 'eager'}
+                />
+              ) : null}
+            </div>
           )
         ) : null}
         <>
@@ -519,6 +584,7 @@ export function CaseStudyTemplate({
             <span>{project.visual.label}</span>
             <span>{project.visual.meta}</span>
           </div>
+          <CaseStudyHeroLinkRow project={project} onDeployClick={onHeroDeployClick} />
           <h1 className="case-study__title" id={titleId}>
             {project.title}
           </h1>
@@ -528,13 +594,23 @@ export function CaseStudyTemplate({
               <li key={tag}>{tag}</li>
             ))}
           </ul>
+          {project.caseStudyTeamInfo ? (
+            <CaseStudyTeamInfoRow
+              info={project.caseStudyTeamInfo}
+              projectPeriod={project.period}
+            />
+          ) : null}
           {usedProgramsBlock}
         </>
       </header>
 
       <div className="case-study__body">
         {content.myRole ? (
-          <CaseStudyBlock id={`${baseId}-my-role`} title="내 역할">
+          <CaseStudyBlock
+            id={`${baseId}-my-role`}
+            title="내 역할"
+            eyebrow={CASE_STUDY_BLOCK_EYEBROWS.myRole}
+          >
             <div className="case-study__my-role">
               <div className="case-study__my-role-summary">
                 {renderCaseStudyBody(content.myRole.summary).map((line) => (
@@ -546,7 +622,7 @@ export function CaseStudyTemplate({
 
               <ul className="case-study__role-list" role="list" aria-label="My role details">
                 {content.myRole.roles.map((role) => (
-                  <li key={role.title} className="case-study__role-item">
+                  <li key={role.title} className="case-study__role-item role-card">
                     <h3 className="case-study__role-title">
                       {role.title}
                       <span className={`role-tag role-tag--${role.tag}`}>
@@ -558,13 +634,11 @@ export function CaseStudyTemplate({
                   </li>
                 ))}
               </ul>
-
             </div>
           </CaseStudyBlock>
         ) : null}
-        {!isToneCase ? serviceExperienceBlock : null}
 
-        {SECTIONS.map(({ key, domId, title }) => {
+        {SECTIONS.map(({ key, domId, title, eyebrow }) => {
           const sectionFigure = content.media?.sectionFigures?.[key]
           const sectionTitle = content.sectionTitles?.[key] ?? title
           const toneFigurePresentation =
@@ -581,8 +655,9 @@ export function CaseStudyTemplate({
           const sectionImageLayout = content.sectionImageLayout?.[key] ?? 'stack'
 
           return (
-            <div key={key} className="case-study__section-stack">
-              <CaseStudyBlock id={`${baseId}-${domId}`} title={sectionTitle}>
+            <Fragment key={key}>
+              <div className="case-study__section-stack">
+              <CaseStudyBlock id={`${baseId}-${domId}`} title={sectionTitle} eyebrow={eyebrow}>
                 {toneFigureSplit && sectionFigure ? (
                   <div className="case-study__split-body case-study__split-body--tone">
                     <div className="case-study__split-body-copy">
@@ -614,7 +689,11 @@ export function CaseStudyTemplate({
                 <CaseStudySectionImageList images={sectionImages} layout={sectionImageLayout} />
               </CaseStudyBlock>
               {key === 'iaUserFlow' && uxFlowEditorial ? (
-                <CaseStudyBlock id={`${baseId}-ux-flow-editorial`} title={uxFlowEditorial.title}>
+                <CaseStudyBlock
+                  id={`${baseId}-ux-flow-editorial`}
+                  title={uxFlowEditorial.title}
+                  eyebrow={CASE_STUDY_BLOCK_EYEBROWS.uxFlowEditorial}
+                >
                   <ol className="case-study__ux-flow-editorial" role="list" aria-label="핵심 사용자 경험 흐름">
                     {uxFlowEditorial.steps.map((step, index) => (
                       <li key={step} className="case-study__ux-flow-step">
@@ -630,7 +709,11 @@ export function CaseStudyTemplate({
                 </CaseStudyBlock>
               ) : null}
               {key === prototypeAnchorKey && content.prototype ? (
-                <CaseStudyBlock id={`${baseId}-prototype`} title="프로토타입 검증">
+                <CaseStudyBlock
+                  id={`${baseId}-prototype`}
+                  title="프로토타입 검증"
+                  eyebrow={CASE_STUDY_BLOCK_EYEBROWS.prototype}
+                >
                   {prototypeHasVisualSplit ? (
                     <div
                       className={
@@ -771,10 +854,11 @@ export function CaseStudyTemplate({
                   )}
                 </CaseStudyBlock>
               ) : null}
-            </div>
+              </div>
+              {key === 'intro' && content.serviceExperience ? serviceExperienceBlock : null}
+            </Fragment>
           )
         })}
-        {isToneCase ? serviceExperienceBlock : null}
       </div>
     </article>
   )

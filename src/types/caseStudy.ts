@@ -62,11 +62,25 @@ export type CaseStudyServiceLink = {
   tier?: 'primary' | 'secondary'
 }
 
+export type CaseStudyServiceDemoVideos =
+  | {
+      layout: 'dual'
+      desktop: { src: string; label?: string }
+      mobile: { src: string; label?: string }
+    }
+  | {
+      /** Description prose sits left; video right (TONE). */
+      layout: 'side-by-side'
+      src: string
+    }
+
 export type CaseStudyServiceExperience = {
   title: string
   description: CaseStudyBody
   serviceLinks: readonly CaseStudyServiceLink[]
   verificationPoints: readonly string[]
+  /** Autoplay demo clips — video only, no mockup frame. */
+  demoVideos?: CaseStudyServiceDemoVideos
   /** Shown above demo credentials when credentials exist. */
   testAccountLead?: string
   /** Optional callout (e.g. mobile viewport recommendation). */
