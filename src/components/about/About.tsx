@@ -280,7 +280,7 @@ export function About() {
     <div className="about-layout">
       <div className="about-layout__top">
         <Reveal staggerIndex={0} staggerMs={108} durationMs={760}>
-          <article className="about-summary">
+          <article className="about-summary about-text-block">
             <p className="about-summary__intro">
               사용자의 맥락을 이해하고 자연스럽게 선택할 수 있는 경험 흐름을
               설계합니다.
@@ -293,6 +293,12 @@ export function About() {
                 </li>
               ))}
             </ul>
+            <div className="about-diary-note">
+              <div className="note-label">오늘의 메모</div>
+              <div className="note-text">
+                디자인은 결국 사람의 선택을 돕는 일이라고 생각합니다.
+              </div>
+            </div>
           </article>
         </Reveal>
 

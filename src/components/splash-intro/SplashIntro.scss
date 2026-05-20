@@ -1,7 +1,8 @@
 /* Splash intro — z-layering: bg 0, liquid 1, content 2 */
 :root {
   --splash-coral: #ff785d;
-  --splash-canvas: #f7f7f5;
+  --splash-cream: #fff8ec;
+  --splash-tomato: #e8614a;
   /* Figma: liquid pill / shell stroke */
   --splash-toggle-liquid: #e15b47;
   --splash-toggle-well: #ededed;
@@ -78,13 +79,22 @@ body.splash-intro-active {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-color: var(--splash-canvas);
+  background-color: var(--splash-cream);
   pointer-events: none;
 }
 
 .splash-intro--exiting .splash-intro__bg {
-  background-color: var(--splash-coral);
-  transition: background-color 0.55s var(--splash-fill-ease);
+  animation: splash-bg-hero-handoff 0.3s ease forwards;
+}
+
+@keyframes splash-bg-hero-handoff {
+  from {
+    background-color: var(--splash-tomato);
+  }
+
+  to {
+    background-color: var(--splash-cream);
+  }
 }
 
 /* Full-viewport liquid — 주조 #FF785D, 상단 흰 띠 없음; 실루엣은 SVG wave */

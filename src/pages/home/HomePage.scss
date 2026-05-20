@@ -46,18 +46,8 @@
   border: 0;
 }
 
-.home > #archive.content-section .section-lede {
-  color: rgb(59 47 47 / 0.62);
-}
-
-/* Archive 레드 + ArchiveBoard(.archive-record)와 같은 1120폭·좌우 패딩으로 정렬 */
-.home > #archive.content-section .section-lede {
-  width: min(100%, 1120px);
-  max-width: min(100%, 1120px);
-  margin-inline: auto;
-  margin-bottom: clamp(20px, 3vw, 32px);
-  padding-inline: clamp(16px, 2.8vw, 28px);
-  box-sizing: border-box;
+.home > #archive.content-section .archive-record {
+  margin-top: var(--vr-quiet);
 }
 
 .project-filters {
