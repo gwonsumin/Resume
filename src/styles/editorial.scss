@@ -1,0 +1,151 @@
+/* State Notes · Tomato Market Issue — shared editorial language */
+
+.content-section:not(.home__hero-section):not(#about) {
+  border-top: 1px dashed var(--editorial-stitch);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--editorial-cream) 88%, transparent) 0%,
+    transparent clamp(32px, 5vw, 56px)
+  );
+}
+
+#skills.content-section {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--editorial-cream) 72%, var(--color-background)) 0%,
+    var(--color-background) clamp(40px, 6vw, 72px)
+  );
+}
+
+/* —— Unified market card surface + hover —— */
+.about-career-card,
+.about-quick-info,
+.about-photo__frame,
+.project-card__link,
+.project-grid__coming,
+.archive-record,
+.toolkit-table,
+.toolkit-capsule,
+.archive-deck__card-surface {
+  position: relative;
+  background: var(--card-bg);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-editorial);
+  transition: var(--hover-transition);
+}
+
+.archive-deck__card-surface {
+  background:
+    linear-gradient(135deg, var(--deck-accent-soft, rgb(255 120 93 / 0.18)) 0%, transparent 52%),
+    var(--card-bg);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.75);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .toolkit-capsule:hover,
+  .about-quick-info:hover,
+  .about-career-card:hover,
+  .about-photo__frame:hover,
+  .project-card:hover .project-card__link,
+  .project-card__link:hover,
+  .project-grid__coming:hover,
+  .toolkit-table:hover,
+  .archive-deck__card--top:hover .archive-deck__card-surface {
+    background-color: var(--card-hover-bg);
+    border-color: var(--card-hover-border-color);
+  }
+
+  .archive-deck__card--top:hover .archive-deck__card-surface {
+    background:
+      linear-gradient(135deg, var(--deck-accent-soft, rgb(255 120 93 / 0.18)) 0%, transparent 52%),
+      var(--card-hover-bg);
+  }
+
+  /* Flourish — Case Study badge only */
+  .project-card:hover .case-badge,
+  .project-card__link:hover .case-badge {
+    border-style: solid;
+    border-color: #b86a4e;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-career-card,
+  .about-quick-info,
+  .about-photo__frame,
+  .project-card__link,
+  .project-grid__coming,
+  .archive-record,
+  .toolkit-table,
+  .toolkit-capsule,
+  .archive-deck__card-surface {
+    transition: var(--hover-transition);
+  }
+}
+
+.section-header__issue {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35em 0.75em;
+  margin: 0 0 8px;
+}
+
+.section-header__vol {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-header__hand {
+  color: rgb(59 47 47 / 0.82);
+  font-family: var(--font-hand-ko);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.section-header__catalog {
+  margin: clamp(14px, 2vw, 18px) 0 0;
+  color: rgb(59 47 47 / 0.52);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.editorial-card {
+  background: var(--editorial-paper);
+  border: var(--border-editorial);
+  border-radius: var(--radius-editorial);
+  box-shadow: var(--shadow-editorial);
+}
+
+.editorial-stitch {
+  border: 0;
+  border-top: 1px dashed var(--editorial-stitch);
+  margin: 0;
+}
+
+/* 와시·클립·토마토 등 스크랩북 데코 — 형태 유지 그림자 */
+.about-photo__sticker,
+.hero__tomato,
+.hero__washi,
+.hero__open-tag,
+.about-quick-info::before,
+.toolkit-table__tape,
+.toolkit-table__clip,
+.about-career-card__clip,
+.project-card__clip,
+.archive-deck__pin,
+.back-to-top__clip {
+  filter: var(--editorial-sticker-shadow);
+}

@@ -1,10 +1,8 @@
 /* 원형 FAB — 스크롤 후 표시, 카드클립 아이콘은 소형으로만 사용 */
 .back-to-top {
   pointer-events: none;
-  position: fixed;
-  right: clamp(0.75rem, 3vw, 1.15rem);
-  bottom: clamp(0.75rem, 3vw, 1.25rem);
-  z-index: 55;
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;

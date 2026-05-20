@@ -35,7 +35,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     period: '2026.03 - 2026.04 (약 4주)',
     role: 'UX Flow Design · UI Design · Prototype · Frontend Collaboration',
     visual: {
-      label: 'Case log 01',
+      label: '01',
       meta: 'AI Commerce',
       variant: 'coral',
     },
@@ -57,7 +57,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     period: '2026.02 - 2026.03 (약 7주)',
     role: 'UX Flow Design · UI Design System · Prototype · Vue Frontend Collaboration',
     visual: {
-      label: 'Case log 02',
+      label: '02',
       meta: 'Emotion Archive',
       variant: 'teal',
     },
@@ -98,7 +98,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     period: '2026.01 - 2026.02 (약 4주)',
     role: 'UX Research · UX Flow Design · UI Design · Frontend Implementation',
     visual: {
-      label: 'Case log 03',
+      label: '03',
       meta: 'Cultural Platform',
       variant: 'ink',
     },

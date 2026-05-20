@@ -262,7 +262,7 @@
 }
 
 .site-footer__pass-scene:focus-visible {
-  border-radius: 16px;
+  border-radius: var(--radius-editorial);
   outline: 2px solid #0aa5a5;
   outline-offset: 4px;
 }
@@ -1231,7 +1231,7 @@ button.site-footer__pass-action {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 12px;
     margin-top: 0.15rem;
   }
 
@@ -1243,7 +1243,7 @@ button.site-footer__pass-action {
     min-height: 44px;
     padding: 10px 16px;
     margin: 0;
-    width: fit-content;
+    width: 100%;
     max-width: 100%;
     font-family: "Satoshi", var(--font-family-base);
     font-size: 0.82rem;

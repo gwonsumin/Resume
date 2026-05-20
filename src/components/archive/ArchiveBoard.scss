@@ -3,12 +3,32 @@
   max-width: 1120px;
   margin: 0 auto;
   padding: clamp(22px, 3.8vw, 40px) clamp(16px, 2.8vw, 28px);
-  background: #fff4eb;
-  border: 2px solid rgb(59 47 47 / 0.14);
-  border-radius: 24px;
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.72),
-    0 16px 40px rgb(59 47 47 / 0.04);
+}
+
+.archive-deck__pin {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  z-index: 3;
+  width: 14px;
+  height: 14px;
+  background: #c87060;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(1px 1px 2px rgb(0 0 0 / 0.2));
+  pointer-events: none;
+}
+
+.archive-deck__pin::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  margin-left: -1px;
+  background: #8a5a50;
+  border-radius: 1px;
 }
 
 .archive-columns {
@@ -42,11 +62,11 @@
 
 .archive-column__title {
   margin: 0 0 6px;
-  font-family: "Satoshi", var(--font-family-base);
-  font-size: clamp(0.72rem, 1.6vw, 0.82rem);
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: clamp(0.62rem, 1.4vw, 0.72rem);
+  font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
@@ -113,10 +133,10 @@
   padding: 0;
   margin: 0;
   border: 0;
-  border-radius: 18px;
+  border-radius: var(--card-radius);
   cursor: pointer;
-  background: #fffdf8;
-  overflow: hidden;
+  background: var(--card-bg);
+  overflow: visible;
   box-shadow: 0 10px 28px rgb(59 47 47 / 0.07);
   transition:
     transform var(--archive-deck-duration) var(--archive-deck-ease),
@@ -132,14 +152,8 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  border: 2px solid #3b2f2f;
-  background:
-    linear-gradient(135deg, var(--deck-accent-soft, rgb(255 120 93 / 0.18)) 0%, transparent 52%),
-    #fffdf8;
-  box-shadow:
-    0 0 0 1px rgb(59 47 47 / 0.04),
-    inset 0 1px 0 rgb(255 255 255 / 0.75);
   pointer-events: none;
+  overflow: hidden;
 }
 
 .archive-deck__card--incoming .archive-deck__card-surface {
@@ -152,7 +166,7 @@
   display: block;
   width: 100%;
   aspect-ratio: 4 / 4.85;
-  border-radius: calc(18px - 2px);
+  border-radius: calc(var(--card-radius) - 1px);
   overflow: hidden;
   pointer-events: none;
 }
@@ -272,8 +286,9 @@
   .archive-deck__btn--next:hover:not(:disabled) {
     color: #fffdf8;
     background: #ff785d;
-    transform: translateY(-2px);
-    box-shadow: 3px 5px 0 rgb(10 165 165 / 0.22);
+    transform: translateY(-1px);
+    border-color: var(--editorial-ink);
+    box-shadow: 3px 4px 0 rgb(255 120 93 / 0.18);
   }
 }
 
@@ -308,7 +323,6 @@
 
 @media (max-width: 55.99rem) {
   .archive-record {
-    border-radius: 18px;
     padding: 18px 14px;
   }
 

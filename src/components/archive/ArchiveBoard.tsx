@@ -186,6 +186,7 @@ function ArchiveColumnStack({ column, reducedMotion, autoPaused, onOpenCard }: A
               } as CSSProperties
             }
           >
+            <span className="archive-deck__pin" aria-hidden="true" />
             <span className="archive-deck__card-surface" aria-hidden="true" />
             <span className="archive-deck__thumb-wrap archive-deck__thumb-wrap--solo">
               <img
@@ -225,6 +226,7 @@ function ArchiveColumnStack({ column, reducedMotion, autoPaused, onOpenCard }: A
               disabled={!isTop || interactionLocked}
               aria-label={`${card.title} 기록 크게 보기`}
             >
+              <span className="archive-deck__pin" aria-hidden="true" />
               <span className="archive-deck__card-surface" aria-hidden="true" />
               <span className="archive-deck__thumb-wrap archive-deck__thumb-wrap--solo">
                 <img

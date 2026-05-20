@@ -8,6 +8,8 @@ type SectionProps = {
   label?: string;
   meta?: string;
   subtitle?: string;
+  handNote?: string;
+  catalogStamp?: string;
   headerAction?: ReactNode;
   children: ReactNode;
   className?: string;
@@ -20,6 +22,8 @@ export function Section({
   label,
   meta,
   subtitle,
+  handNote,
+  catalogStamp,
   headerAction,
   children,
   className,
@@ -34,6 +38,8 @@ export function Section({
       title={title}
       meta={meta}
       subtitle={subtitle}
+      handNote={handNote}
+      catalogStamp={catalogStamp}
       action={headerAction}
       enableReveal={revealHeader}
     />

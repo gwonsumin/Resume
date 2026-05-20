@@ -14,8 +14,9 @@
 .home > #about.content-section {
   position: relative;
   margin-top: calc(var(--space-16) * -1);
+  border-top: 0;
   /* 히어로 이후에만 큰 브레이크 — 다른 섹션은 Section 기본(--section-padding-y)만 사용 */
-  padding-top: calc(var(--section-padding-block-hero-about) + var(--space-16));
+  padding-top: calc(var(--section-padding-block-hero-about) + var(--space-8));
 }
 
 .home > #about.content-section::before {
@@ -63,29 +64,37 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin: 0 0 clamp(18px, 2.8vw, 28px);
+  margin: 0 0 clamp(32px, 3.6vw, 40px);
 }
 
 .project-filters__pill {
   margin: 0;
   padding: 10px 18px;
-  color: #3b2f2f;
-  font-size: 0.84rem;
-  font-weight: 600;
+  color: var(--editorial-ink);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
   line-height: 1;
-  letter-spacing: 0.01em;
-  background: #fffdf8;
-  border: 1.5px solid #3b2f2f;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: var(--editorial-paper);
+  border: var(--border-editorial);
   border-radius: 999px;
+  box-shadow: var(--shadow-editorial);
   cursor: pointer;
   transition:
-    background-color 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
+    background-color var(--card-duration) var(--card-ease),
+    color var(--card-duration) var(--card-ease),
+    border-color var(--card-duration) var(--card-ease),
+    transform var(--card-duration) var(--card-ease);
 }
 
-.project-filters__pill:hover {
-  transform: translateY(-1px);
+@media (hover: hover) and (pointer: fine) {
+  .project-filters__pill:hover:not(.project-filters__pill--active) {
+    transform: translateY(-1px);
+    border-color: var(--hover-border);
+    background: var(--hover-paper-tint);
+  }
 }
 
 .project-filters__pill--active {
@@ -107,7 +116,7 @@
 .project-grid {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 4px 0 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--grid-gap-editorial-mobile);
@@ -162,19 +171,19 @@
   display: grid;
   gap: 10px;
   padding: clamp(18px, 2.8vw, 24px);
-  color: #3b2f2f;
-  background: #fffaf5;
-  border: 1px dashed rgb(59 47 47 / 0.36);
-  border-radius: 6px;
+  color: var(--editorial-ink);
+  border-style: dashed;
+  border-color: var(--editorial-stitch-strong);
 }
 
 .project-grid__coming-label {
   margin: 0;
   color: rgb(59 47 47 / 0.6);
-  font-size: 0.66rem;
-  font-weight: 700;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
   line-height: 1;
-  letter-spacing: 0.09em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -203,7 +212,7 @@
 @media (max-width: 48rem) {
   .project-filters {
     gap: 8px;
-    margin-bottom: 20px;
+    margin-bottom: clamp(28px, 7vw, 32px);
   }
 
   .project-filters__pill {

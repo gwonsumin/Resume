@@ -7,9 +7,13 @@ type SectionHeaderProps = {
   title: ReactNode;
   meta?: string;
   subtitle?: string;
+  handNote?: string;
+  catalogStamp?: string;
   action?: ReactNode;
   enableReveal?: boolean;
 };
+
+const DEFAULT_CATALOG_STAMP = "BY SUMIN · ✿ OPEN TODAY";
 
 export function SectionHeader({
   id,
@@ -17,11 +21,21 @@ export function SectionHeader({
   title,
   meta,
   subtitle,
+  handNote,
+  catalogStamp = DEFAULT_CATALOG_STAMP,
   action,
   enableReveal = false,
 }: SectionHeaderProps) {
+  const issue = (
+    <p className="section-header__issue">
+      <span className="section-header__vol">Vol. 04</span>
+      {handNote ? <span className="section-header__hand">{handNote}</span> : null}
+    </p>
+  );
+
   const primary = (
     <>
+      {issue}
       <p className="section-header__label">{label}</p>
       <div className="section-header__title-row">
         <h2 id={id} className="section-header__title">
@@ -33,10 +47,11 @@ export function SectionHeader({
   );
 
   const secondary =
-    meta || subtitle ? (
+    meta || subtitle || catalogStamp ? (
       <>
         {meta ? <p className="section-header__meta">{meta}</p> : null}
         {subtitle ? <p className="section-header__subtitle">{subtitle}</p> : null}
+        <p className="section-header__catalog">{catalogStamp}</p>
       </>
     ) : null;
 
