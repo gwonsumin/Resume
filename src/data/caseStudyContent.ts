@@ -269,41 +269,40 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       roles: [
         {
           title: "UX Flow Design",
+          tag: "lead",
           detail:
             "1-2주차에 묻기 → 좁히기 → 비교하기 → 저장하기 → 구매하기 여정을 핵심 흐름으로 정의하고, 화면 우선순위를 이 순서에 맞췄습니다.",
         },
         {
           title: "AI Chat Interaction Design",
+          tag: "lead",
           detail:
             "질문과 응답이 반복될수록 후보가 압축되는 대화 구조를 설계해, 재입력 없이도 판단을 이어갈 수 있도록 만들었습니다.",
         },
         {
           title: "Core Screen UI Design",
+          tag: "lead",
           detail:
             "2-3주차에 메인, 후보 목록, 상세 화면의 정보 계층과 액션 리듬을 통일해 비교 판단 정보가 빠르게 읽히도록 구성했습니다.",
         },
         {
           title: "Purchase Flow UX Design",
+          tag: "lead",
           detail:
             "저장한 후보가 구매 단계로 자연스럽게 이어지도록 전환 흐름을 정리하고, 단계별 상태 피드백을 명확히 설계했습니다.",
         },
         {
           title: "Design System Direction",
+          tag: "lead",
           detail:
             "컴포넌트와 상태 표현 규칙을 문서화해 화면 간 해석 오차를 줄이고 선택 흐름의 일관성을 확보했습니다.",
         },
         {
           title: "React Frontend Collaboration",
+          tag: "collab",
           detail:
             "3-4주차에 React 화면 일부를 직접 구현하며 UX 의도를 상태/컴포넌트 단위로 정렬해 디자인-개발 간 간극을 줄였습니다.",
         },
-      ],
-      contributions: [
-        { label: "프로젝트 전 구간 관여", percentage: 100 },
-        { label: "디자인팀 리딩", percentage: 100 },
-        { label: "UX Flow / IA 설계", percentage: 90 },
-        { label: "핵심 UI 설계", percentage: 90 },
-        { label: "프론트 구현", percentage: 40 },
       ],
     },
     problem: p(
@@ -406,34 +405,34 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       roles: [
         {
           title: "UX Flow Design",
+          tag: "lead",
           detail:
             "감정 선택 → 톤 기록 → 플레이리스트 추천 → 캘린더 아카이브로 이어지는 메인 여정을 설계하고, 각 단계의 전환 맥락을 정리했다.",
         },
         {
           title: "UI Design System",
+          tag: "lead",
           detail:
             "컬러-감정 매핑 규칙과 컴포넌트 기준을 통일해 일관된 화면 리듬을 만들고, 기록 경험의 인지 부담을 줄였다.",
         },
         {
           title: "Prototype Interaction",
+          tag: "lead",
           detail:
             "감정 선택/기록/저장 인터랙션을 프로토타입으로 검증해 핵심 태스크의 완료 흐름이 자연스럽게 연결되도록 다듬었다.",
         },
         {
           title: "Main Experience Flow",
+          tag: "lead",
           detail:
             "탐색 중심 음악 서비스가 아닌 감정 아카이브 중심 서비스로 경험 프레이밍을 전환하고 주요 화면 우선순위를 정의했다.",
         },
         {
           title: "Frontend Collaboration (Vue)",
+          tag: "collab",
           detail:
             "Vue 기반 화면 구현 구조를 개발 관점으로 함께 맞추며 상태 흐름과 UI 의도를 정렬해 디자인-구현 간 간극을 줄였다.",
         },
-      ],
-      contributions: [
-        { label: "기획", percentage: 80 },
-        { label: "디자인", percentage: 100 },
-        { label: "프론트 구현", percentage: 50 },
       ],
     },
     problem: p(
@@ -554,42 +553,40 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       roles: [
         {
           title: "UX Planning",
+          tag: "lead",
           detail:
             "지점·프로그램·공간·뉴스 정보를 방문 목적 기준으로 재분류하고 핵심 탐색 흐름을 정의했습니다.",
         },
         {
           title: "Information Architecture",
+          tag: "lead",
           detail:
             "메인에서 주요 콘텐츠를 먼저 확인하고, 프로그램·공지 상세로 자연스럽게 이동할 수 있도록 메뉴 구조와 콘텐츠 우선순위를 정리했습니다.",
         },
         {
           title: "UI Design",
+          tag: "lead",
           detail:
             "문화 콘텐츠의 분위기를 유지하면서도 섹션 구성과 카드형 콘텐츠 표현이 명확하게 읽히도록 편집 리듬을 설계했습니다.",
         },
         {
           title: "Publishing",
+          tag: "collab",
           detail:
             "HTML, CSS, JavaScript, jQuery를 활용해 메인·서브 페이지를 구현하고 화면 전환과 콘텐츠 노출 흐름을 맞췄습니다.",
         },
         {
           title: "PHP Development",
+          tag: "support",
           detail:
             "PHP와 MySQL로 공지사항 CRUD 게시판과 이미지 업로드 기능을 직접 구현했습니다.",
         },
         {
           title: "Deploy",
+          tag: "lead",
           detail:
             "Dothome 서버와 FileZilla로 실제 접속 가능한 웹사이트를 배포하고 운영 환경에서 기능을 검증했습니다.",
         },
-      ],
-      contributions: [
-        { label: "기획", percentage: 100 },
-        { label: "UX / IA 설계", percentage: 100 },
-        { label: "UI 디자인", percentage: 100 },
-        { label: "퍼블리싱", percentage: 100 },
-        { label: "PHP / MySQL 구현", percentage: 100 },
-        { label: "배포", percentage: 100 },
       ],
     },
     problem: p(

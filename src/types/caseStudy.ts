@@ -96,20 +96,33 @@ type CaseStudyPrototype = {
   }[]
 }
 
+/** Participation level shown as inline role tag in "내 역할". */
+export type CaseStudyRoleTag = 'lead' | 'collab' | 'support'
+
+export const CASE_STUDY_ROLE_TAG_LABELS: Record<CaseStudyRoleTag, string> = {
+  lead: '주도적으로',
+  collab: '협업으로',
+  support: '보조로',
+}
+
+/** Default contribution bar width (%) by role tag. */
+export const CASE_STUDY_ROLE_TAG_DEFAULT_LEVEL: Record<CaseStudyRoleTag, number> = {
+  lead: 90,
+  collab: 55,
+  support: 25,
+}
+
 type CaseStudyRoleItem = {
   title: string
   detail: string
-}
-
-type CaseStudyContribution = {
-  label: string
-  percentage: number
+  tag: CaseStudyRoleTag
+  /** Optional bar width override (0–100). Defaults from tag when omitted. */
+  level?: number
 }
 
 type CaseStudyMyRole = {
   summary: CaseStudyBody
   roles: readonly CaseStudyRoleItem[]
-  contributions: readonly CaseStudyContribution[]
 }
 
 type CaseStudyHeroNarrative = {
