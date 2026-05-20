@@ -7,7 +7,6 @@ import { ProjectCard } from "../../components/project-card/ProjectCard";
 import { Reveal } from "../../components/reveal/Reveal";
 import { Section } from "../../components/section/Section";
 import { Skills } from "../../components/skills/Skills";
-import { home } from "../../data/home";
 import { selectedProjects } from "../../data/projects";
 import "./HomePage.scss";
 
@@ -220,9 +219,6 @@ export function HomePage() {
         subtitle="작은 관찰과 기록이 쌓여 경험 설계로 이어집니다."
         revealHeader
       >
-        <Reveal delay={80} staggerIndex={0} staggerMs={100} durationMs={740}>
-          <p className="section-lede">{home.archive}</p>
-        </Reveal>
         <ArchiveBoard />
       </Section>
     </div>
