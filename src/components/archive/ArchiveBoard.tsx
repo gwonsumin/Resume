@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
-import { archiveColumns } from "../../data/archiveData";
-import type {
-  ArchiveColumnData,
-  ArchiveFastener,
-  ArchiveRecordCard,
+import {
+  archiveCardRotationDeg,
+  archiveColumns,
+  type ArchiveColumnData,
+  type ArchiveFastener,
+  type ArchiveRecordCard,
 } from "../../data/archiveData";
+import { useImageRatio } from "../../hooks/useImageRatio";
 import { ArchiveModal } from "./ArchiveModal";
 import "./ArchiveBoard.scss";
 
@@ -14,23 +16,22 @@ import "./ArchiveBoard.scss";
 /* -------------------------------------------------------------------------- */
 
 const CARD_W = 225;
-const CARD_H = 300;
 const CARD_GAP = 27; // between cards
 const SHELF_PAD_X = 30;
 
 /** i번째 카드의 셸프 내부 절대 위치 */
-function slotFor(i: number) {
+function slotFor(i: number, cardId: string) {
   return {
     x: SHELF_PAD_X + i * (CARD_W + CARD_GAP),
     y: [30, 50, 35, 55][i % 4],
-    rot: [-3, 2, -2, 3][i % 4],
+    rot: archiveCardRotationDeg(cardId),
   };
 }
 
 const FASTENER_LABEL: Record<ArchiveFastener, string> = {
-  pin: "핀으로 고정 · pinned",
-  tape: "와시테이프로 붙임 · taped",
-  clip: "클립으로 끼움 · clipped",
+  pin: "PINNED",
+  tape: "TAPED",
+  clip: "CLIPPED",
 };
 
 /* -------------------------------------------------------------------------- */
@@ -86,6 +87,7 @@ type PinnedCardProps = {
   fastener: ArchiveFastener;
   accentColor: string;
   isHovered: boolean;
+  isOpen: boolean;
   onHover: () => void;
   onLeave: () => void;
   onOpen: () => void;
@@ -97,24 +99,34 @@ function PinnedCard({
   fastener,
   accentColor,
   isHovered,
+  isOpen,
   onHover,
   onLeave,
   onOpen,
 }: PinnedCardProps) {
-  const slot = slotFor(slotIndex);
-  const style: CSSProperties = {
+  const slot = slotFor(slotIndex, card.id);
+  const primaryTag = card.tags[0];
+  const { variant, onLoad, imgRef } = useImageRatio();
+  const style = {
     left: slot.x,
     top: slot.y,
     width: CARD_W,
-    height: CARD_H,
-    transform: `rotate(${slot.rot}deg)${isHovered ? " translateY(-6px) scale(1.03)" : ""}`,
-    zIndex: isHovered ? 10 : 1,
-  };
+    height: "auto",
+    transform: `rotate(${slot.rot}deg)`,
+    zIndex: isHovered || isOpen ? 10 : 1,
+    "--pin-accent": accentColor,
+  } as CSSProperties;
 
   return (
     <button
       type="button"
-      className={`archive-pin${isHovered ? " is-hovered" : ""}`}
+      className={[
+        "archive-pin",
+        isHovered ? "is-hovered" : "",
+        isOpen ? "is-open" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
       style={style}
       onPointerEnter={onHover}
       onPointerLeave={onLeave}
@@ -126,23 +138,26 @@ function PinnedCard({
       <Fastener kind={fastener} color={accentColor} />
 
       <span className="archive-pin__matte">
-        <img
-          className="archive-pin__image"
-          src={card.mainImage}
-          alt={card.imageAlt}
-          loading="lazy"
-          decoding="async"
-          draggable={false}
-        />
+        <span className={`archive-pin__image-wrap archive-pin__image-wrap--${variant}`}>
+          <img
+            ref={imgRef}
+            className="archive-pin__image"
+            src={card.mainImage}
+            alt={card.imageAlt}
+            loading="lazy"
+            decoding="async"
+            draggable={false}
+            onLoad={onLoad}
+          />
+        </span>
+        <span className="archive-pin__sticky" aria-hidden="true">
+          {card.memo}
+        </span>
         <span className="archive-pin__caption">
           <span className="archive-pin__caption-title">{card.title}</span>
+          {primaryTag ? <span className="archive-pin__tag">{primaryTag}</span> : null}
           <span className="archive-pin__caption-meta">{card.year}</span>
         </span>
-      </span>
-
-      <span className="archive-pin__note" aria-hidden="true">
-        {card.memo}
-        <span className="archive-pin__note-meta">{card.category}</span>
       </span>
     </button>
   );
@@ -153,12 +168,12 @@ function PinnedCard({
 /* -------------------------------------------------------------------------- */
 
 function ComingSoonSlot({ slotIndex, fastener }: { slotIndex: number; fastener: ArchiveFastener }) {
-  const slot = slotFor(slotIndex);
+  const slot = slotFor(slotIndex, `coming-soon-${slotIndex}`);
   const style: CSSProperties = {
     left: slot.x,
     top: slot.y,
     width: CARD_W,
-    height: CARD_H,
+    height: "auto",
     transform: `rotate(${slot.rot}deg)`,
   };
   return (
@@ -190,12 +205,10 @@ type TabProps = {
 };
 
 function CategoryTab({ column, active, onClick }: TabProps) {
-  const style: CSSProperties = { "--tab-color": column.accentColor } as CSSProperties;
   return (
     <button
       type="button"
       className={`archive-tab${active ? " is-active" : ""}`}
-      style={style}
       onClick={onClick}
       role="tab"
       aria-selected={active}
@@ -343,6 +356,9 @@ export function ArchiveBoard() {
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
+        <p className="archive-board__strip-nav" aria-hidden="true">
+          ← → · NAVIGATE
+        </p>
         <div
           key={activeColumn.id}
           className="archive-board__track"
@@ -362,6 +378,7 @@ export function ArchiveBoard() {
               fastener={activeColumn.fastener}
               accentColor={activeColumn.accentColor}
               isHovered={hoverIdx === i && !dragging}
+              isOpen={openIdx === i}
               onHover={() => setHoverIdx(i)}
               onLeave={() =>
                 setHoverIdx((h) => (h === i ? null : h))
@@ -385,19 +402,15 @@ export function ArchiveBoard() {
           <div className="archive-board__fade archive-board__fade--left" aria-hidden="true" />
         )}
 
-        {/* drag hint */}
-        {overflows && dragX > maxScroll + 4 && (
-          <div className="archive-board__drag-hint" aria-hidden="true">
-            ← DRAG
-          </div>
-        )}
       </div>
 
       {/* Foot row */}
       <div className="archive-board__foot">
-        <span>HOVER · NOTE</span>
-        <span>CLICK · OPEN {overflows ? "· DRAG · SCROLL" : ""}</span>
-        <span>← → · NAVIGATE &nbsp;·&nbsp; ESC · CLOSE</span>
+        <span className="archive-board__foot-group">HOVER · NOTE</span>
+        <span className="archive-board__foot-group archive-board__foot-group--center">
+          CLICK · DRAG · SCROLL
+        </span>
+        <span className="archive-board__foot-group archive-board__foot-group--end">ESC · CLOSE</span>
       </div>
 
       {openIdx !== null && (
