@@ -5,8 +5,6 @@ import heroChr from "../../assets/images/heroChr.png";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import "./Hero.scss";
 
-const HERO_EMAIL = "gsum212@gmail.com";
-
 function HeroResumeBtn({ placement }: { placement: "masthead" | "footer" }) {
   return (
     <a
@@ -57,10 +55,10 @@ export function Hero() {
 
         <div className="hero__layout">
           <header className="hero__masthead">
-            <p className="hero__label-ko">오늘의 상태노트</p>
-            <p className="hero__label-mono">STATE NOTES BY SUMIN</p>
+            <p className="hero__label-ko">UX · UI PORTFOLIO</p>
+            <p className="hero__label-mono">STATE NOTES BY SUMIN · SEOUL</p>
             <div className="hero__masthead-meta">
-              <p className="hero__label-vol">Vol. 04 · 2026 봄호</p>
+              <p className="hero__label-vol">Vol. 04 · Selected Work</p>
               <HeroResumeBtn placement="masthead" />
             </div>
           </header>
@@ -97,15 +95,17 @@ export function Hero() {
                   <span className="hero__byline-sep" aria-hidden="true">
                     ·
                   </span>
-                  <span className="hero__byline-role">UX/UI · FRONTEND</span>
-                  <span className="hero__byline-hand">by</span>
+                  <span className="hero__byline-role">UX/UI Designer · Frontend</span>
                 </p>
                 <p className="hero__byline-meta">
-                  OPEN · STUDIO &amp; AGENCY · MAY 2026
+                  PROBLEM · FLOW · INTERFACE · BUILD
                 </p>
               </div>
 
-              <p className="hero__greeting">안녕하세요, 권수민입니다 :)</p>
+              <p className="hero__lede">
+                사용자 문제를 정의하고, 경험 흐름을 설계하며, 디자인과 구현을
+                연결합니다.
+              </p>
             </div>
 
             <aside className="hero__sticker" aria-label="오늘의 마스코트">
@@ -137,32 +137,40 @@ export function Hero() {
           <footer className="hero__footer">
             <div className="hero__diary-row">
               <p className="hero__diary">
-                오늘의 메모 · 따뜻한 톤이 잘 어울리는 봄 · 천천히 읽어주세요 ·
-                토마토는 매일 신선합니다
+                문제 정의에서 인터페이스 구현까지, 하나의 경험 흐름으로
+                연결하는 작업 기록입니다.
               </p>
               <HeroResumeBtn placement="footer" />
             </div>
             <p className="hero__diary-meta">NO. 2026-04 · SEOUL</p>
 
             <nav className="hero__continue" aria-label="포트폴리오 바로가기">
-              <a className="hero__continue-link hero__continue-link--primary" href="#about">
-                ↓ CONTINUE · ABOUT
+              <a
+                className="hero__continue-link hero__continue-link--primary"
+                href="#case-study"
+              >
+                ↓ VIEW CASE STUDIES
               </a>
-              <a className="hero__continue-link" href="#case-study">
-                04 CASE STUDIES
+              <a
+                className="hero__continue-link hero__continue-link--secondary"
+                href="#about"
+              >
+                ABOUT
               </a>
               <span className="hero__continue-sep" aria-hidden="true">
                 ·
               </span>
               <a className="hero__continue-link" href="#archive">
-                23 ARCHIVE PIECES
+                ARCHIVE
               </a>
               <span className="hero__continue-sep" aria-hidden="true">
                 ·
               </span>
-              <span className="hero__continue-note">1 HAND</span>
-              <a className="hero__continue-link" href={`mailto:${HERO_EMAIL}`}>
-                {HERO_EMAIL.toUpperCase()}
+              <a
+                className="hero__continue-link hero__continue-link--contact"
+                href="#contact"
+              >
+                CONTACT
               </a>
             </nav>
           </footer>

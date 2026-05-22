@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { CaseStudyServiceDemoVideos } from '../../types/caseStudy'
+import { useBodyScrollLock } from '../../utils/useBodyScrollLock'
 
 type ServiceExperienceDemoVideosProps = {
   demoVideos: CaseStudyServiceDemoVideos
@@ -52,6 +53,8 @@ function VideoThumbnailCard({
 }
 
 function VideoModal({ src, onClose }: { src: string; onClose: () => void }) {
+  useBodyScrollLock(true)
+
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()

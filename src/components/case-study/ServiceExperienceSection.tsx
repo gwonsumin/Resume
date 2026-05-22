@@ -173,14 +173,14 @@ export function ServiceExperienceSection({
       {isSideBySideDemo && demoVideos ? (
         <div className="tone-demo-wrap">
           <div className="tone-demo-text">
-            <CaseStudyProse body={description} />
+            <CaseStudyProse body={description} variant="result" />
           </div>
           <ServiceExperienceDemoVideos demoVideos={demoVideos} />
         </div>
       ) : (
         <>
           {demoVideos ? <ServiceExperienceDemoVideos demoVideos={demoVideos} /> : null}
-          <CaseStudyProse body={description} />
+          <CaseStudyProse body={description} variant="result" />
         </>
       )}
       <div className="case-study__service-experience-stack">

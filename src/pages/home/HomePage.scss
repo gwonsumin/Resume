@@ -46,16 +46,6 @@
   border: 0;
 }
 
-.home > #archive.content-section .section-header__meta {
-  margin-top: 4px;
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  color: #ff785d;
-  border-bottom: 1px solid rgba(255, 120, 93, 0.4);
-  padding-bottom: 6px;
-  display: inline-block;
-}
-
 .home > #archive.content-section .archive-board {
   margin-top: var(--vr-quiet);
 }
@@ -149,10 +139,6 @@
 }
 
 @media (min-width: 48rem) {
-  #case-study .project-grid__item .project-card__link {
-    min-height: 608px;
-  }
-
   .project-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: var(--grid-gap-editorial-tablet);

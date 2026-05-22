@@ -17,7 +17,8 @@ import {
   type CaseStudySectionFigure,
 } from '../../types/caseStudy'
 import { handleProjectDeployClick } from '../../utils/handleProjectDeployClick'
-import { CaseStudyProse, renderCaseStudyBody } from './CaseStudyProse'
+import { useBodyScrollLock } from '../../utils/useBodyScrollLock'
+import { CaseStudyProse, type CaseStudyProseVariant } from './CaseStudyProse'
 import { HeroEmotionFlow } from './HeroEmotionFlow'
 import { ServiceExperienceSection } from './ServiceExperienceSection'
 import { BrowserScrollPreview } from './BrowserScrollPreview'
@@ -54,20 +55,22 @@ const SECTIONS: ReadonlyArray<{
   domId: string
   title: string
   eyebrow: string
+  proseVariant: CaseStudyProseVariant
 }> = [
-  { key: 'intro', domId: 'intro', title: '소개', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.intro },
-  { key: 'problem', domId: 'problem', title: '문제 정의', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.problem },
-  { key: 'insight', domId: 'insight', title: '인사이트', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.insight },
+  { key: 'intro', domId: 'intro', title: '소개', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.intro, proseVariant: 'default' },
+  { key: 'problem', domId: 'problem', title: '문제 정의', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.problem, proseVariant: 'problem' },
+  { key: 'insight', domId: 'insight', title: '인사이트', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.insight, proseVariant: 'insight' },
   {
     key: 'iaUserFlow',
     domId: 'ia-user-flow',
     title: 'IA / 사용자 흐름',
     eyebrow: CASE_STUDY_BLOCK_EYEBROWS.iaUserFlow,
+    proseVariant: 'decision',
   },
-  { key: 'solution', domId: 'solution', title: '해결 전략', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.solution },
-  { key: 'uiDesign', domId: 'ui-design', title: 'UI 디자인', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.uiDesign },
-  { key: 'result', domId: 'result', title: '결과', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.result },
-  { key: 'learnings', domId: 'learnings', title: '회고', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.learnings },
+  { key: 'solution', domId: 'solution', title: '해결 전략', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.solution, proseVariant: 'decision' },
+  { key: 'uiDesign', domId: 'ui-design', title: 'UI 디자인', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.uiDesign, proseVariant: 'default' },
+  { key: 'result', domId: 'result', title: '결과', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.result, proseVariant: 'result' },
+  { key: 'learnings', domId: 'learnings', title: '회고', eyebrow: CASE_STUDY_BLOCK_EYEBROWS.learnings, proseVariant: 'default' },
 ]
 
 type CaseStudyTemplateProps = {
@@ -194,16 +197,20 @@ function CaseStudyBlock({
   id,
   title,
   eyebrow,
+  modifier,
   children,
 }: {
   id: string
   title: string
   eyebrow?: string
+  modifier?: string
   children: ReactNode
 }) {
+  const modifierClass = modifier ? ` case-study__block--${modifier}` : ''
+
   return (
     <section
-      className="case-study__block section-card"
+      className={`case-study__block section-card${modifierClass}`}
       id={id}
       aria-labelledby={`${id}-heading`}
     >
@@ -308,6 +315,8 @@ function CaseStudySectionImageList({
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [lightbox, closeLightbox])
+
+  useBodyScrollLock(Boolean(lightbox))
 
   if (!images?.length) return null
 
@@ -476,6 +485,7 @@ export function CaseStudyTemplate({
         '실서비스 검증'
       }
       eyebrow={CASE_STUDY_BLOCK_EYEBROWS.serviceExperience}
+      modifier="verification"
     >
       {content.serviceExperience ? (
         <ServiceExperienceSection
@@ -495,6 +505,7 @@ export function CaseStudyTemplate({
               content.livePreview?.description ??
               'Open the current build or project note when a public preview is available.'
             }
+            variant="result"
           />
           {livePreviewFigure ? (
             <CaseStudyFigure
@@ -609,14 +620,11 @@ export function CaseStudyTemplate({
             id={`${baseId}-my-role`}
             title="내 역할"
             eyebrow={CASE_STUDY_BLOCK_EYEBROWS.myRole}
+            modifier="my-role"
           >
             <div className="case-study__my-role">
               <div className="case-study__my-role-summary">
-                {renderCaseStudyBody(content.myRole.summary).map((line) => (
-                  <p key={line} className="case-study__paragraph">
-                    {line}
-                  </p>
-                ))}
+                <CaseStudyProse body={content.myRole.summary} variant="default" />
               </div>
 
               <ul className="case-study__role-list" role="list" aria-label="My role details">
@@ -637,7 +645,7 @@ export function CaseStudyTemplate({
           </CaseStudyBlock>
         ) : null}
 
-        {SECTIONS.map(({ key, domId, title, eyebrow }) => {
+        {SECTIONS.map(({ key, domId, title, eyebrow, proseVariant }) => {
           const sectionFigure = content.media?.sectionFigures?.[key]
           const sectionTitle = content.sectionTitles?.[key] ?? title
           const toneFigurePresentation =
@@ -656,11 +664,11 @@ export function CaseStudyTemplate({
           return (
             <Fragment key={key}>
               <div className="case-study__section-stack">
-              <CaseStudyBlock id={`${baseId}-${domId}`} title={sectionTitle} eyebrow={eyebrow}>
+              <CaseStudyBlock id={`${baseId}-${domId}`} title={sectionTitle} eyebrow={eyebrow} modifier={key}>
                 {toneFigureSplit && sectionFigure ? (
                   <div className="case-study__split-body case-study__split-body--tone">
                     <div className="case-study__split-body-copy">
-                      <CaseStudyProse body={content[key]} />
+                      <CaseStudyProse body={content[key]} variant={proseVariant} />
                     </div>
                     <div className="case-study__split-body-media">
                       <CaseStudyFigure
@@ -673,7 +681,7 @@ export function CaseStudyTemplate({
                   </div>
                 ) : (
                   <>
-                    <CaseStudyProse body={content[key]} />
+                    <CaseStudyProse body={content[key]} variant={proseVariant} />
                     {sectionFigure ? (
                       <CaseStudyFigure
                         src={sectionFigure.src}
@@ -727,6 +735,7 @@ export function CaseStudyTemplate({
                             content.prototype.description ??
                             'Prototype links and interaction notes are collected here.'
                           }
+                          variant="result"
                         />
                       </div>
                       <div className="case-study__split-body-media">
@@ -818,6 +827,7 @@ export function CaseStudyTemplate({
                           content.prototype.description ??
                           'Prototype links and interaction notes are collected here.'
                         }
+                        variant="result"
                       />
                       {prototypeLinks.length > 0 &&
                       !(
