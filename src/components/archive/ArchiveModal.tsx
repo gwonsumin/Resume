@@ -1,5 +1,6 @@
 import { useEffect, type CSSProperties } from "react";
 import type { ArchiveColumnData, ArchiveRecordCard } from "../../data/archiveData";
+import { useImageRatio } from "../../hooks/useImageRatio";
 import "./ArchiveModal.scss";
 
 type ArchiveModalProps = {
@@ -31,10 +32,95 @@ export function ArchiveModal({
     return () => window.removeEventListener("keydown", handler);
   }, [onClose, onPrev, onNext]);
 
+  const { variant, onLoad: heroOnLoad, imgRef: heroRef } = useImageRatio();
+  const isLandscape = variant === "landscape";
+
   // year stamp text — try to derive "2024" / "SPR" tokens; falls back gracefully
   const yearTokens = item.year.split(/\s+/).slice(0, 2);
 
-  const details = item.detailImages?.length ? item.detailImages : [item.mainImage];
+  const details = item.detailImages ?? [];
+
+  const stamp = (
+    <div
+      className="archive-modal__stamp"
+      aria-hidden="true"
+      style={{ borderColor: column.accentColor, color: column.accentColor }}
+    >
+      <span>KEPT</span>
+      {yearTokens.map((t) => (
+        <span key={t}>{t}</span>
+      ))}
+    </div>
+  );
+
+  const detailsContent = details.length > 0 && (
+    <>
+      <p className="archive-modal__section-label">DETAILS · {details.length}</p>
+      <div
+        className="archive-modal__details"
+        style={
+          {
+            gridTemplateColumns: `repeat(${Math.min(details.length, 3)}, 1fr)`,
+          } as CSSProperties
+        }
+      >
+        {details.map((src, i) => (
+          <div className="archive-modal__detail" key={i}>
+            <img src={src} alt={`${item.title} 디테일 ${i + 1}`} />
+          </div>
+        ))}
+      </div>
+    </>
+  );
+
+  const madeWithContent = (
+    <>
+      {item.tool && (
+        <>
+          <p className="archive-modal__section-label">MADE WITH</p>
+          <p className="archive-modal__body">{item.tool}</p>
+        </>
+      )}
+      {item.format && (
+        <>
+          <p className="archive-modal__section-label">FORMAT</p>
+          <p className="archive-modal__body">{item.format}</p>
+        </>
+      )}
+    </>
+  );
+
+  const tagsContent = item.tags.length > 0 && (
+    <>
+      <p className="archive-modal__section-label">TAGS</p>
+      <ul className="archive-modal__tags">
+        {item.tags.map((tag) => (
+          <li key={tag}>{tag}</li>
+        ))}
+      </ul>
+    </>
+  );
+
+  const nav = (
+    <nav className="archive-modal__nav" aria-label="작품 사이 이동">
+      <button type="button" className="archive-modal__nav-btn" onClick={onPrev}>
+        ← PREV
+      </button>
+      <p className="archive-modal__counter" aria-live="polite">
+        <span style={{ color: column.accentColor }}>
+          {String(position).padStart(2, "0")}
+        </span>
+        <span>/ {String(total).padStart(2, "0")}</span>
+      </p>
+      <button
+        type="button"
+        className="archive-modal__nav-btn archive-modal__nav-btn--filled"
+        onClick={onNext}
+      >
+        NEXT →
+      </button>
+    </nav>
+  );
 
   return (
     <div
@@ -43,117 +129,109 @@ export function ArchiveModal({
       onClick={onClose}
     >
       <div
-        className="archive-modal__spread"
+        className={`archive-modal__spread${isLandscape ? " archive-modal__spread--ls" : ""}`}
         role="dialog"
         aria-modal="true"
         aria-labelledby={`archive-modal-title-${item.id}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Left page — hero */}
-        <section
-          className="archive-modal__page archive-modal__page--left"
-          aria-label="작품"
-        >
-          <p className="archive-modal__eyebrow" style={{ color: column.accentColor }}>
-            {column.columnTitle}
-          </p>
-          <h2
-            className="archive-modal__title"
-            id={`archive-modal-title-${item.id}`}
-          >
-            {item.title}
-          </h2>
-          <p className="archive-modal__meta">
-            {item.year} {item.tags.length > 0 && `· ${item.tags.join(" · ")}`}
-          </p>
-
-          <div className="archive-modal__hero-wrap">
-            <img
-              className="archive-modal__hero"
-              src={item.mainImage}
-              alt={item.imageAlt}
-            />
-            <div
-              className="archive-modal__stamp"
-              aria-hidden="true"
-              style={{ borderColor: column.accentColor, color: column.accentColor }}
+        {isLandscape ? (
+          /* ── Landscape: image on top, two-column text below ── */
+          <>
+            <section
+              className="archive-modal__page archive-modal__page--ls-hero"
+              aria-label="작품"
             >
-              <span>KEPT</span>
-              {yearTokens.map((t) => (
-                <span key={t}>{t}</span>
-              ))}
-            </div>
-          </div>
-
-          <p className="archive-modal__hand">{item.memo}</p>
-        </section>
-
-        {/* Binding gutter */}
-        <div className="archive-modal__binding" aria-hidden="true" />
-
-        {/* Right page — notes */}
-        <section
-          className="archive-modal__page archive-modal__page--right"
-          aria-label="노트와 디테일"
-        >
-          <p className="archive-modal__section-label">NOTES &amp; DETAILS</p>
-
-          <p className="archive-modal__body">{item.memo}</p>
-
-          {details.length > 0 && (
-            <>
-              <p className="archive-modal__section-label">DETAILS · {details.length}</p>
-              <div
-                className="archive-modal__details"
-                style={
-                  {
-                    gridTemplateColumns: `repeat(${Math.min(details.length, 3)}, 1fr)`,
-                  } as CSSProperties
-                }
-              >
-                {details.map((src, i) => (
-                  <div className="archive-modal__detail" key={i}>
-                    <img src={src} alt={`${item.title} 디테일 ${i + 1}`} />
-                  </div>
-                ))}
+              <div className="archive-modal__hero-wrap">
+                <img
+                  ref={heroRef}
+                  className="archive-modal__hero archive-modal__hero--ls"
+                  src={item.mainImage}
+                  alt={item.imageAlt}
+                  onLoad={heroOnLoad}
+                />
+                {stamp}
               </div>
-            </>
-          )}
+            </section>
 
-          {item.tags.length > 0 && (
-            <>
-              <p className="archive-modal__section-label">TAGS</p>
-              <ul className="archive-modal__tags">
-                {item.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </ul>
-            </>
-          )}
+            <div className="archive-modal__binding archive-modal__binding--h" aria-hidden="true" />
 
-          <nav className="archive-modal__nav" aria-label="작품 사이 이동">
-            <button
-              type="button"
-              className="archive-modal__nav-btn"
-              onClick={onPrev}
+            <section
+              className="archive-modal__page archive-modal__page--ls-body"
+              aria-label="노트와 디테일"
             >
-              ← PREV
-            </button>
-            <p className="archive-modal__counter" aria-live="polite">
-              <span style={{ color: column.accentColor }}>
-                {String(position).padStart(2, "0")}
-              </span>
-              <span>/ {String(total).padStart(2, "0")}</span>
-            </p>
-            <button
-              type="button"
-              className="archive-modal__nav-btn archive-modal__nav-btn--filled"
-              onClick={onNext}
+              <div className="archive-modal__ls-cols">
+                <div className="archive-modal__ls-col">
+                  <p className="archive-modal__eyebrow" style={{ color: column.accentColor }}>
+                    {column.columnTitle}
+                  </p>
+                  <h2
+                    className="archive-modal__title"
+                    id={`archive-modal-title-${item.id}`}
+                  >
+                    {item.title}
+                  </h2>
+                  <p className="archive-modal__meta">
+                    {item.year} {item.tags.length > 0 && `· ${item.tags.join(" · ")}`}
+                  </p>
+                  <p className="archive-modal__hand">{item.memo}</p>
+                </div>
+                <div className="archive-modal__ls-col archive-modal__ls-col--right">
+                  {detailsContent}
+                  {madeWithContent}
+                  {tagsContent}
+                  {nav}
+                </div>
+              </div>
+            </section>
+          </>
+        ) : (
+          /* ── Portrait / Square: existing two-page spread ── */
+          <>
+            <section
+              className="archive-modal__page archive-modal__page--left"
+              aria-label="작품"
             >
-              NEXT →
-            </button>
-          </nav>
-        </section>
+              <p className="archive-modal__eyebrow" style={{ color: column.accentColor }}>
+                {column.columnTitle}
+              </p>
+              <h2
+                className="archive-modal__title"
+                id={`archive-modal-title-${item.id}`}
+              >
+                {item.title}
+              </h2>
+              <p className="archive-modal__meta">
+                {item.year} {item.tags.length > 0 && `· ${item.tags.join(" · ")}`}
+              </p>
+
+              <div className="archive-modal__hero-wrap">
+                <img
+                  ref={heroRef}
+                  className="archive-modal__hero"
+                  src={item.mainImage}
+                  alt={item.imageAlt}
+                  onLoad={heroOnLoad}
+                />
+                {stamp}
+              </div>
+
+              <p className="archive-modal__hand">{item.memo}</p>
+            </section>
+
+            <div className="archive-modal__binding" aria-hidden="true" />
+
+            <section
+              className="archive-modal__page archive-modal__page--right"
+              aria-label="노트와 디테일"
+            >
+              {detailsContent}
+              {madeWithContent}
+              {tagsContent}
+              {nav}
+            </section>
+          </>
+        )}
 
         <button
           type="button"

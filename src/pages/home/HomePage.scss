@@ -46,6 +46,16 @@
   border: 0;
 }
 
+.home > #archive.content-section .section-header__meta {
+  margin-top: 4px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  color: #ff785d;
+  border-bottom: 1px solid rgba(255, 120, 93, 0.4);
+  padding-bottom: 6px;
+  display: inline-block;
+}
+
 .home > #archive.content-section .archive-board {
   margin-top: var(--vr-quiet);
 }
