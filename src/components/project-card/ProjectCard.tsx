@@ -150,7 +150,8 @@ export function ProjectCard({
         </div>
       </div>
       <span className="project-card__reveal" aria-hidden="true">
-        View Case Study
+        <span className="ui-hint--desktop">View Case Study</span>
+        <span className="ui-hint--touch">TAP TO VIEW</span>
       </span>
     </>
   )

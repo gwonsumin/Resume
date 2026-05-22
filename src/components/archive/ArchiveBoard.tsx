@@ -89,8 +89,8 @@ type PinnedCardProps = {
   accentColor: string;
   isHovered: boolean;
   isOpen: boolean;
-  onHover: () => void;
-  onLeave: () => void;
+  onHover?: () => void;
+  onLeave?: () => void;
   onOpen: () => void;
 };
 
@@ -116,6 +116,7 @@ function PinnedCard({
     transform: `rotate(${slot.rot}deg)`,
     zIndex: isHovered || isOpen ? 10 : 1,
     "--pin-accent": accentColor,
+    "--pin-rot": `${slot.rot}deg`,
   } as CSSProperties;
 
   return (
@@ -170,13 +171,14 @@ function PinnedCard({
 
 function ComingSoonSlot({ slotIndex, fastener }: { slotIndex: number; fastener: ArchiveFastener }) {
   const slot = slotFor(slotIndex, `coming-soon-${slotIndex}`);
-  const style: CSSProperties = {
+  const style = {
     left: slot.x,
     top: slot.y,
     width: CARD_W,
     height: "auto",
     transform: `rotate(${slot.rot}deg)`,
-  };
+    "--pin-rot": `${slot.rot}deg`,
+  } as CSSProperties;
   return (
     <div className="archive-pin archive-pin--coming-soon" style={style} aria-label="곧 추가될 예정">
       <Fastener kind={fastener} color="" ghost />
@@ -226,10 +228,15 @@ function CategoryTab({ column, active, onClick }: TabProps) {
 /* Main board                                                                 */
 /* -------------------------------------------------------------------------- */
 
+const NATIVE_SCROLL_MQ = "(max-width: 63.99rem)";
+
 export function ArchiveBoard() {
   const [activeId, setActiveId] = useState<string>(archiveColumns[0]!.id);
   const [hoverIdx, setHoverIdx] = useState<number | null>(null);
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [useNativeScroll, setUseNativeScroll] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia(NATIVE_SCROLL_MQ).matches : false,
+  );
 
   const activeColumn = useMemo(
     () => archiveColumns.find((c) => c.id === activeId) ?? archiveColumns[0]!,
@@ -243,6 +250,14 @@ export function ArchiveBoard() {
   const [dragging, setDragging] = useState(false);
   const didDragRef = useRef(false);
   const dragStartRef = useRef({ x: 0, y: 0, startDragX: 0 });
+
+  useEffect(() => {
+    const mq = window.matchMedia(NATIVE_SCROLL_MQ);
+    const syncNativeScroll = () => setUseNativeScroll(mq.matches);
+    syncNativeScroll();
+    mq.addEventListener("change", syncNativeScroll);
+    return () => mq.removeEventListener("change", syncNativeScroll);
+  }, []);
 
   useEffect(() => {
     if (!shelfRef.current) return;
@@ -260,14 +275,15 @@ export function ArchiveBoard() {
   const totalSlots = activeColumn.cards.length + (activeColumn.showComingSoon ? 1 : 0);
   const innerWidth = SHELF_PAD_X + (totalSlots - 1) * (CARD_W + CARD_GAP) + CARD_W + SHELF_PAD_X;
   const overflows = shelfW > 0 && innerWidth > shelfW;
-  const maxScroll = overflows ? shelfW - innerWidth : 0;
+  const useDragScroll = overflows && !useNativeScroll;
+  const maxScroll = useDragScroll ? shelfW - innerWidth : 0;
   const clamp = useCallback(
     (v: number) => Math.max(maxScroll, Math.min(0, v)),
     [maxScroll],
   );
 
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!overflows) return;
+    if (!useDragScroll) return;
     if (e.button !== 0) return;
     setDragging(true);
     didDragRef.current = false;
@@ -339,27 +355,37 @@ export function ArchiveBoard() {
       {/* Shelf */}
       <div
         ref={shelfRef}
-        className={`archive-board__shelf${overflows ? " is-scrollable" : ""}${dragging ? " is-dragging" : ""}`}
+        className={[
+          "archive-board__shelf",
+          useDragScroll ? " is-scrollable" : "",
+          dragging ? " is-dragging" : "",
+          useNativeScroll ? " is-native-scroll" : "",
+        ]
+          .filter(Boolean)
+          .join(" ")}
         id={`archive-shelf-${activeColumn.id}`}
         role="tabpanel"
         aria-labelledby={`archive-tab-${activeColumn.id}`}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
+        onPointerDown={useDragScroll ? onPointerDown : undefined}
+        onPointerMove={useDragScroll ? onPointerMove : undefined}
+        onPointerUp={useDragScroll ? onPointerUp : undefined}
+        onPointerCancel={useDragScroll ? onPointerUp : undefined}
       >
         <p className="archive-board__strip-nav" aria-hidden="true">
-          ← → · NAVIGATE
+          <span className="ui-hint--desktop">← → · NAVIGATE</span>
+          <span className="ui-hint--touch">SWIPE · SCROLL</span>
         </p>
         <div
           key={activeColumn.id}
           className="archive-board__track"
           style={
-            {
-              width: innerWidth,
-              transform: `translateX(${dragX}px)`,
-              transition: dragging ? "none" : undefined,
-            } as CSSProperties
+            useNativeScroll
+              ? undefined
+              : ({
+                  width: innerWidth,
+                  transform: `translateX(${dragX}px)`,
+                  transition: dragging ? "none" : undefined,
+                } as CSSProperties)
           }
         >
           {activeColumn.cards.map((card, i) => (
@@ -369,11 +395,13 @@ export function ArchiveBoard() {
               slotIndex={i}
               fastener={activeColumn.fastener}
               accentColor={activeColumn.accentColor}
-              isHovered={hoverIdx === i && !dragging}
+              isHovered={!useNativeScroll && hoverIdx === i && !dragging}
               isOpen={openIdx === i}
-              onHover={() => setHoverIdx(i)}
-              onLeave={() =>
-                setHoverIdx((h) => (h === i ? null : h))
+              onHover={useNativeScroll ? undefined : () => setHoverIdx(i)}
+              onLeave={
+                useNativeScroll
+                  ? undefined
+                  : () => setHoverIdx((h) => (h === i ? null : h))
               }
               onOpen={() => openCard(i)}
             />
@@ -387,10 +415,10 @@ export function ArchiveBoard() {
         </div>
 
         {/* fade edges */}
-        {overflows && dragX > maxScroll + 4 && (
+        {useDragScroll && dragX > maxScroll + 4 && (
           <div className="archive-board__fade archive-board__fade--right" aria-hidden="true" />
         )}
-        {overflows && dragX < -4 && (
+        {useDragScroll && dragX < -4 && (
           <div className="archive-board__fade archive-board__fade--left" aria-hidden="true" />
         )}
 
@@ -398,11 +426,18 @@ export function ArchiveBoard() {
 
       {/* Foot row */}
       <div className="archive-board__foot">
-        <span className="archive-board__foot-group">HOVER · NOTE</span>
-        <span className="archive-board__foot-group archive-board__foot-group--center">
-          CLICK · DRAG · SCROLL
+        <span className="archive-board__foot-group">
+          <span className="ui-hint--desktop">HOVER · NOTE</span>
+          <span className="ui-hint--touch">SWIPE · TAP</span>
         </span>
-        <span className="archive-board__foot-group archive-board__foot-group--end">ESC · CLOSE</span>
+        <span className="archive-board__foot-group archive-board__foot-group--center">
+          <span className="ui-hint--desktop">CLICK · DRAG · SCROLL</span>
+          <span className="ui-hint--touch">SCROLL</span>
+        </span>
+        <span className="archive-board__foot-group archive-board__foot-group--end">
+          <span className="ui-hint--desktop">ESC · CLOSE</span>
+          <span className="ui-hint--touch">CLOSE</span>
+        </span>
       </div>
 
       {openIdx !== null && (

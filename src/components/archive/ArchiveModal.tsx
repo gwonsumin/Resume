@@ -242,7 +242,8 @@ export function ArchiveModal({
           ×
         </button>
         <span className="archive-modal__close-hint" aria-hidden="true">
-          ESC · CLOSE
+          <span className="ui-hint--desktop">ESC · CLOSE</span>
+          <span className="ui-hint--touch">CLOSE</span>
         </span>
       </div>
     </div>

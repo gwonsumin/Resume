@@ -73,6 +73,12 @@ html.scroll-snap-home {
   scroll-padding-top: 72px;
 }
 
+@media (max-width: 44rem) {
+  html.scroll-snap-home {
+    scroll-padding-top: 64px;
+  }
+}
+
 html.scroll-snap-home .home > #hero.content-section,
 html.scroll-snap-home .home > #about.content-section {
   scroll-snap-align: start;
