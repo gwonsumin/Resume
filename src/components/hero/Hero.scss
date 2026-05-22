@@ -490,6 +490,10 @@
     padding-bottom: clamp(64px, 12vw, 96px);
   }
 
+  .hero__layout {
+    min-height: clamp(480px, 72dvh, 820px);
+  }
+
   .hero__stage {
     min-height: 0;
     padding-inline: clamp(18px, 5vw, 32px);
@@ -498,7 +502,7 @@
   .hero__main {
     grid-template-columns: minmax(0, 1fr) clamp(180px, 30vw, 240px);
     align-items: end;
-    min-height: clamp(320px, 48vh, 440px);
+    min-height: clamp(320px, 48dvh, 440px);
     gap: clamp(16px, 3vw, 24px);
   }
 
@@ -598,17 +602,8 @@
     display: inline;
   }
 
-  .hero__title {
-    font-size: clamp(1.95rem, 8.6vw, 2.5rem);
-  }
-
-  .hero__byline-primary {
-    font-size: clamp(14px, 3.8vw, 15px);
-  }
-
   .hero__lede {
     max-width: none;
-    font-size: clamp(14px, 3.8vw, 15px);
   }
 
   .hero__open-tag {
@@ -637,7 +632,7 @@
   }
 
   .hero__stage {
-    min-height: clamp(460px, calc(100vh - 280px), 620px);
+    min-height: clamp(460px, calc(100dvh - 280px), 620px);
   }
 
   .hero__main {

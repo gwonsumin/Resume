@@ -335,11 +335,6 @@
     pointer-events: none;
   }
 
-  &.is-hovered &__sticky,
-  &.is-open &__sticky {
-    opacity: 1;
-  }
-
   &__tag {
     align-self: flex-start;
     font-family: var(--archive-mono);
@@ -362,17 +357,6 @@
     letter-spacing: 0.1em;
   }
 
-  &.is-hovered &__matte,
-  &.is-open &__matte {
-    box-shadow:
-      0 18px 32px rgba(31, 26, 23, 0.28),
-      0 4px 8px rgba(31, 26, 23, 0.16);
-  }
-
-  &.is-hovered .archive-pin__fastener:not(.is-ghost),
-  &.is-open .archive-pin__fastener:not(.is-ghost) {
-    opacity: 1;
-  }
 }
 
 /* ---------- Fastener ----------------------------------------------------- */
@@ -496,6 +480,151 @@
     letter-spacing: 0.16em;
     color: var(--archive-ink-3);
     text-transform: uppercase;
+  }
+}
+
+/* ---------- Mobile / tablet: native horizontal scroll -------------------- */
+@media (max-width: 63.99rem) {
+  .archive-board {
+    overflow: visible;
+  }
+
+  .archive-board__shelf.is-native-scroll {
+    height: auto;
+    min-height: clamp(400px, 112vw, 500px);
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--page-padding-x);
+    scroll-padding-block: clamp(24px, 5vw, 32px) clamp(32px, 6vw, 48px);
+    touch-action: pan-x;
+    scrollbar-width: none;
+    cursor: default;
+    user-select: auto;
+    padding: clamp(24px, 5vw, 32px) var(--page-padding-x) clamp(32px, 6vw, 48px);
+    container-type: inline-size;
+    container-name: archive-shelf;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &.is-scrollable {
+      cursor: default;
+    }
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-board__strip-nav {
+    top: clamp(28px, 5.5vw, 36px);
+    right: calc(var(--page-padding-x) + 4px);
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-board__track {
+    position: relative;
+    inset: auto;
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(18px, 4.5vw, 24px);
+    width: max-content;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    padding-right: calc(var(--page-padding-x) + 24px);
+    transform: none !important;
+    transition: none;
+    animation: none;
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-pin,
+  .archive-board__shelf.is-native-scroll .archive-pin--coming-soon {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    flex: 0 0 min(78cqw, 330px);
+    width: min(78cqw, 330px) !important;
+    max-width: 330px;
+    overflow: visible;
+    padding-top: 18px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    transform: rotate(var(--pin-rot, 0deg)) !important;
+    transition-duration: 0.14s;
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-pin__matte {
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-pin__image {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-pin__fastener--pin {
+    top: 10px;
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-pin__fastener--tape {
+    top: 8px;
+  }
+
+  .archive-board__shelf.is-native-scroll .archive-pin__fastener--clip {
+    top: 2px;
+  }
+
+  .archive-board__tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    touch-action: pan-x;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .archive-tab {
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+
+  .archive-board__foot {
+    row-gap: 8px;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .archive-pin.is-hovered .archive-pin__sticky,
+  .archive-pin.is-open .archive-pin__sticky {
+    opacity: 1;
+  }
+
+  .archive-pin.is-hovered .archive-pin__matte,
+  .archive-pin.is-open .archive-pin__matte {
+    box-shadow:
+      0 18px 32px rgba(31, 26, 23, 0.28),
+      0 4px 8px rgba(31, 26, 23, 0.16);
+  }
+
+  .archive-pin.is-hovered .archive-pin__fastener:not(.is-ghost),
+  .archive-pin.is-open .archive-pin__fastener:not(.is-ghost) {
+    opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .archive-pin:active .archive-pin__matte {
+    box-shadow:
+      0 12px 22px rgba(31, 26, 23, 0.22),
+      0 3px 6px rgba(31, 26, 23, 0.14);
+  }
+
+  .archive-pin:active .archive-pin__fastener:not(.is-ghost) {
+    opacity: 1;
   }
 }
 

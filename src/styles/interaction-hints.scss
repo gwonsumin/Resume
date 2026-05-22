@@ -1,0 +1,13 @@
+/* Desktop vs touch interaction copy — hide irrelevant hints on coarse pointers */
+
+@media (hover: none), (pointer: coarse) {
+  .ui-hint--desktop {
+    display: none !important;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ui-hint--touch {
+    display: none !important;
+  }
+}

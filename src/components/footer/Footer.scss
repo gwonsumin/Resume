@@ -1036,9 +1036,8 @@ button.site-footer__pass-action {
       clamp(88px, 14vw, 132px);
   }
 
-  /* 우측 인트로: 한 화면에 맞춰 타이포 축소 */
+  /* 우측 인트로: 모바일 hierarchy는 mobile-typography.scss */
   .footer-shape-panel .site-footer__lead {
-    font-size: clamp(1.6rem, 6.8vw, 2.35rem);
     padding-left: clamp(0.5rem, 2.8vw, 0.9rem);
   }
 
