@@ -97,6 +97,13 @@
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .project-filters__pill:active:not(.project-filters__pill--active) {
+    border-color: var(--hover-border);
+    background: var(--hover-paper-tint);
+  }
+}
+
 .project-filters__pill--active {
   color: #fff4eb;
   background: #ff785d;

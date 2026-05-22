@@ -21,12 +21,12 @@
   visibility: hidden;
   transform: translateY(8px);
   transition:
-    opacity 0.2s ease,
-    transform 0.2s ease,
-    visibility 0.2s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background-color 0.18s ease;
+    opacity var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease),
+    visibility var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-fast) var(--motion-ease),
+    box-shadow var(--motion-duration-fast) var(--motion-ease),
+    background-color var(--motion-duration-fast) var(--motion-ease);
 }
 
 .back-to-top--visible {
@@ -36,12 +36,19 @@
   transform: translateY(0);
 }
 
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .back-to-top--visible:hover,
   .back-to-top--visible:focus-visible {
     transform: translateY(-2px);
     border-color: rgb(10 165 165 / 0.28);
     box-shadow: 0 2px 10px rgb(59 47 47 / 0.1);
+    background: var(--color-surface-soft, #fff8f2);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .back-to-top--visible:active {
+    border-color: rgb(10 165 165 / 0.28);
     background: var(--color-surface-soft, #fff8f2);
   }
 }
@@ -78,7 +85,6 @@
       visibility 0.15s ease;
   }
 
-  .back-to-top--visible:hover,
   .back-to-top--visible:focus-visible {
     transform: translateY(0);
   }

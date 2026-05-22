@@ -36,6 +36,8 @@
 /* ---------- Board container ---------------------------------------------- */
 .archive-board {
   position: relative;
+  min-width: 0;
+  max-width: 100%;
   font-family: var(--archive-sans);
   color: var(--archive-ink-1);
 }

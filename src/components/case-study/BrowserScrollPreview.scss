@@ -58,8 +58,14 @@
   will-change: transform;
 }
 
-.bsp:hover .bsp__scroll {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .bsp:hover .bsp__scroll {
+    animation-play-state: paused;
+  }
+
+  .bsp:hover .bsp__fade {
+    opacity: 0;
+  }
 }
 
 .bsp__page {
@@ -82,11 +88,19 @@
     rgb(250 247 243 / 0.38) 48%,
     transparent 100%
   );
-  transition: opacity 0.45s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease);
 }
 
-.bsp:hover .bsp__fade {
-  opacity: 0;
+@media (hover: none), (pointer: coarse) {
+  .bsp:active .bsp__scroll,
+  .bsp:focus-within .bsp__scroll {
+    animation-play-state: paused;
+  }
+
+  .bsp:active .bsp__fade,
+  .bsp:focus-within .bsp__fade {
+    opacity: 0;
+  }
 }
 
 @keyframes bsp-auto-scroll {

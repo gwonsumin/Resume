@@ -261,6 +261,12 @@
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .toolkit-capsule:active .toolkit-capsule__fill {
+    width: calc(var(--capsule-level) * 1%);
+  }
+}
+
 @media (max-width: 47.99rem) {
   .toolkit-table {
     padding: 22px 16px 20px;

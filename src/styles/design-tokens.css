@@ -57,10 +57,18 @@
   --editorial-sticker-shadow: drop-shadow(1px 2px 3px rgb(0 0 0 / 0.18));
   --card-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --card-duration: 260ms;
+  /* Motion — duration & easing (single source) */
+  --motion-ease: var(--card-ease);
+  --motion-duration-fast: 180ms;
+  --motion-duration-base: var(--card-duration);
+  --motion-duration-reveal: 720ms;
+  --motion-duration-page: 420ms;
   /* Unified hover language — cards & capsules */
   --card-hover-bg: #fff0dc;
   --card-hover-border-color: #c4a882;
-  --hover-transition: background-color 0.2s ease, border-color 0.2s ease;
+  --hover-transition:
+    background-color var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease);
   --hover-paper-tint: var(--card-hover-bg);
   --hover-border: var(--card-hover-border-color);
   --font-hand-ko: "Gaegu", "Apple SD Gothic Neo", cursive;

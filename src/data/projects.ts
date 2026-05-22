@@ -1,10 +1,8 @@
+import { projectPublicUrl } from "../config/assets";
 import { ROUTES } from "../config/routes";
 import type { ProjectPreview } from "../types/project";
 
 const PDF_BASE_PATH = `${import.meta.env.BASE_URL}assets/files`;
-
-const tonePublicThumb = (file: string) =>
-  `${import.meta.env.BASE_URL}projects/tone/${file}`;
 
 /** GOREON production origin (no trailing slash) — shared with case study deep links. */
 export const GOREON_DEPLOY_ORIGIN = "https://goreon.vercel.app" as const;
@@ -47,7 +45,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     proposalUrl: `${PDF_BASE_PATH}/GOREON-Proposal.pdf`,
     demoTestId: "test@test.com",
     demoTestPassword: "123123123",
-    thumbnailSrc: `${import.meta.env.BASE_URL}projects/goreon/goreon-thumbnail.png`,
+    thumbnailSrc: projectPublicUrl("goreon", "goreon-thumbnail.png"),
     caseStudyTeamInfo: {
       kind: "team",
       teamCount: 5,
@@ -76,18 +74,18 @@ export const selectedProjects: readonly ProjectPreview[] = [
     githubUrl: "https://github.com/gwonsumin/TONE",
     deployUrl: TONE_DEPLOY_ORIGIN,
     deployWindow: { width: 430, height: 850, name: "TONEPreview" },
-    thumbnailSrc: `${import.meta.env.BASE_URL}projects/tone/tone-thumbnail-02.png`,
+    thumbnailSrc: projectPublicUrl("tone", "tone-thumbnail-02.png"),
     heroStaggeredScreens: {
       left: {
-        src: tonePublicThumb("tone-thumbnail-01.png"),
+        src: projectPublicUrl("tone", "tone-thumbnail-01.png"),
         alt: "감정 흐름 첫 단계 — 하루의 톤을 고르기 전 화면",
       },
       center: {
-        src: tonePublicThumb("tone-thumbnail-02.png"),
+        src: projectPublicUrl("tone", "tone-thumbnail-02.png"),
         alt: "중심 화면 — 선택한 감정 톤에서 음악으로 이어지는 플레이어",
       },
       right: {
-        src: tonePublicThumb("tone-thumbnail-03.png"),
+        src: projectPublicUrl("tone", "tone-thumbnail-03.png"),
         alt: "흐름의 연속 — 같은 날의 감정을 이어 받는 다음 장면",
       },
     },
@@ -119,7 +117,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     to: ROUTES.caseStudySangsangmadang,
     githubUrl: "https://github.com/gwonsumin/sangsangmadang-rebranding",
     deployUrl: `${SANGSANGMADANG_DEPLOY_ORIGIN}/`,
-    thumbnailSrc: `${import.meta.env.BASE_URL}projects/sangsangmadang/sangsangmadang-thumbnail.png`,
+    thumbnailSrc: projectPublicUrl("sangsangmadang", "sangsangmadang-thumbnail.png"),
     demoTestId: "test",
     demoTestPassword: "1234",
     caseStudyTeamInfo: {

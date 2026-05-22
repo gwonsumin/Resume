@@ -2,20 +2,12 @@ import type {
   CaseStudyContent,
   CaseStudyServiceLink,
 } from "../types/caseStudy";
+import { projectPublicUrl } from "../config/assets";
 import {
   GOREON_DEPLOY_ORIGIN,
   SANGSANGMADANG_DEPLOY_ORIGIN,
   TONE_DEPLOY_ORIGIN,
 } from "./projects";
-
-const goreonPublic = (file: string) =>
-  `${import.meta.env.BASE_URL}projects/goreon/${file}`;
-
-const tonePublic = (file: string) =>
-  `${import.meta.env.BASE_URL}projects/tone/${file}`;
-
-const ssmPublic = (file: string) =>
-  `${import.meta.env.BASE_URL}projects/sangsangmadang/${file}`;
 
 function p(...lines: string[]): readonly string[] {
   return lines;
@@ -335,8 +327,8 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       demoVideos: {
         layout: "split",
         videos: [
-          { src: goreonPublic("GOREON-demo-pc.mp4"), label: "DESKTOP", ariaLabel: "데스크톱 서비스 데모 영상" },
-          { src: goreonPublic("GOREON-demo-mobile.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
+          { src: projectPublicUrl("goreon","GOREON-demo-pc.mp4"), label: "DESKTOP", ariaLabel: "데스크톱 서비스 데모 영상" },
+          { src: projectPublicUrl("goreon","GOREON-demo-mobile.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
         ],
       },
       mobileNotice:
@@ -359,12 +351,12 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     },
     media: {
       hero: {
-        desktopSrc: goreonPublic("goreon-detail-thumbnail.png"),
+        desktopSrc: projectPublicUrl("goreon","goreon-detail-thumbnail.png"),
         desktopAlt: "GOREON 케이스 스터디 대표 비주얼",
       },
       prototype: {
-        desktopSrc: goreonPublic("goreon-prototype-desktop.png"),
-        mobileSrc: goreonPublic("goreon-prototype-mobile.png"),
+        desktopSrc: projectPublicUrl("goreon","goreon-prototype-desktop.png"),
+        mobileSrc: projectPublicUrl("goreon","goreon-prototype-mobile.png"),
         desktopAlt: "GOREON PC 프로토타입 화면",
         mobileAlt: "GOREON 모바일 프로토타입 화면",
       },
@@ -460,31 +452,31 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       hero: {
         staggeredScreens: {
           left: {
-            src: tonePublic("tone-thumbnail-01.png"),
+            src: projectPublicUrl("tone","tone-thumbnail-01.png"),
             alt: "감정 흐름 첫 단계 — 하루의 톤을 고르기 전 화면",
           },
           center: {
-            src: tonePublic("tone-thumbnail-02.png"),
+            src: projectPublicUrl("tone","tone-thumbnail-02.png"),
             alt: "중심 화면 — 선택한 감정 톤에서 음악으로 이어지는 플레이어",
           },
           right: {
-            src: tonePublic("tone-thumbnail-03.png"),
+            src: projectPublicUrl("tone","tone-thumbnail-03.png"),
             alt: "흐름의 연속 — 같은 날의 감정을 이어 받는 다음 장면",
           },
         },
       },
       prototype: {
-        mobileSrc: tonePublic("tone-prototype-mobile.png"),
+        mobileSrc: projectPublicUrl("tone","tone-prototype-mobile.png"),
         mobileAlt: "TONE 모바일 Figma 프로토타입 목업",
       },
       sectionFigures: {
         solution: {
-          src: tonePublic("tone-palette.png"),
+          src: projectPublicUrl("tone","tone-palette.png"),
           alt: "오늘의 상태를 고르기 위한 감정 컬러 선택 화면",
           presentation: "palette",
         },
         uiDesign: {
-          src: tonePublic("tone-player.png"),
+          src: projectPublicUrl("tone","tone-player.png"),
           alt: "Color Tone이 Sound Tone으로 전환되는 플레이어 몰입 화면",
           presentation: "player",
         },
@@ -516,7 +508,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       demoVideos: {
         layout: "split",
         videos: [
-          { src: tonePublic("TONE-demo.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
+          { src: projectPublicUrl("tone","TONE-demo.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
         ],
       },
       mobileNotice:
@@ -533,7 +525,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     ),
     media: {
       hero: {
-        desktopSrc: ssmPublic("sangsangmadang-thumbnail.png"),
+        desktopSrc: projectPublicUrl("sangsangmadang","sangsangmadang-thumbnail.png"),
         desktopAlt: "상상마당 케이스 스터디 대표 비주얼",
       },
     },
@@ -644,7 +636,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
           title: "Main page · scroll preview",
           pages: [
             {
-              src: ssmPublic("sangsangmadang-main-full.png"),
+              src: projectPublicUrl("sangsangmadang","sangsangmadang-main-full.png"),
               alt: "상상마당 메인 페이지 전체",
             },
           ],
@@ -655,7 +647,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
           title: "Program structure · scroll preview",
           pages: [
             {
-              src: ssmPublic("sangsangmadang-program-full.png"),
+              src: projectPublicUrl("sangsangmadang","sangsangmadang-program-full.png"),
               alt: "상상마당 프로그램 페이지 전체",
             },
           ],
@@ -666,7 +658,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
           title: "Detail page · scroll preview",
           pages: [
             {
-              src: ssmPublic("sangsangmadang-detail-full.png"),
+              src: projectPublicUrl("sangsangmadang","sangsangmadang-detail-full.png"),
               alt: "상상마당 상세 페이지 전체",
             },
           ],
@@ -680,25 +672,25 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
     sectionImages: {
       solution: [
         {
-          src: ssmPublic("sangsangmadang-board.png"),
+          src: projectPublicUrl("sangsangmadang","sangsangmadang-board.png"),
           alt: "상상마당 게시판 화면",
         },
         {
-          src: ssmPublic("sangsangmadang-login.png"),
+          src: projectPublicUrl("sangsangmadang","sangsangmadang-login.png"),
           alt: "상상마당 로그인 화면",
         },
         {
-          src: ssmPublic("sangsangmadang-mypage.png"),
+          src: projectPublicUrl("sangsangmadang","sangsangmadang-mypage.png"),
           alt: "상상마당 마이페이지 화면",
         },
       ],
       result: [
         {
-          src: ssmPublic("sangsangmadang-admin1.png"),
+          src: projectPublicUrl("sangsangmadang","sangsangmadang-admin1.png"),
           alt: "상상마당 관리자 화면 1",
         },
         {
-          src: ssmPublic("sangsangmadang-admin2.png"),
+          src: projectPublicUrl("sangsangmadang","sangsangmadang-admin2.png"),
           alt: "상상마당 관리자 화면 2",
         },
       ],

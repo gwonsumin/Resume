@@ -422,8 +422,15 @@
   color: rgba(59, 47, 47, 0.84);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .about-summary__keywords li:hover {
+    background: rgba(59, 47, 47, 0.08);
+    border-color: var(--about-line);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .about-summary__keywords li:active {
     background: rgba(59, 47, 47, 0.08);
     border-color: var(--about-line);
   }
