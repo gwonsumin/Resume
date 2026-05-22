@@ -135,14 +135,15 @@
   border-bottom-right-radius: 6px;
   box-shadow: inset 0 8px 14px -8px rgba(31, 26, 23, 0.1);
   overflow: hidden;
-  touch-action: pan-y;
+  touch-action: auto;
   user-select: none;
 
   &.is-scrollable {
     cursor: grab;
   }
-  &.is-dragging {
+  &.is-scrollable.is-dragging {
     cursor: grabbing;
+    touch-action: none;
   }
 }
 

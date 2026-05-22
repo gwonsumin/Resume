@@ -66,21 +66,29 @@ body {
   }
 }
 
-/* 홈만: 세로 스크롤을 섹션 근처에서 부드럽게 정렬 (mandatory보다 부드러움) */
+/* 홈만: 섹션 근처에서만 가볍게 정렬 — 긴 editorial 구간은 snap-stop 없이 통과 */
 html.scroll-snap-home {
   scroll-snap-type: y proximity;
   /* sticky header 높이와 맞춤 */
   scroll-padding-top: 72px;
 }
 
-html.scroll-snap-home .home > .content-section {
+html.scroll-snap-home .home > #hero.content-section,
+html.scroll-snap-home .home > #about.content-section {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
+}
+
+html.scroll-snap-home .home > #skills.content-section,
+html.scroll-snap-home .home > #case-study.content-section,
+html.scroll-snap-home .home > #archive.content-section {
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
 }
 
 html.scroll-snap-home .site-footer {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
+  scroll-snap-stop: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -88,7 +96,11 @@ html.scroll-snap-home .site-footer {
     scroll-snap-type: none;
   }
 
-  html.scroll-snap-home .home > .content-section,
+  html.scroll-snap-home .home > #hero.content-section,
+  html.scroll-snap-home .home > #about.content-section,
+  html.scroll-snap-home .home > #skills.content-section,
+  html.scroll-snap-home .home > #case-study.content-section,
+  html.scroll-snap-home .home > #archive.content-section,
   html.scroll-snap-home .site-footer {
     scroll-snap-align: unset;
     scroll-snap-stop: normal;

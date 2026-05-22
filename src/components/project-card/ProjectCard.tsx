@@ -17,6 +17,7 @@ export function ProjectCard({
   subDescription,
   period,
   role,
+  tags,
   visual,
   to,
   githubUrl,
@@ -38,6 +39,7 @@ export function ProjectCard({
         .filter(Boolean)
         .slice(0, 4)
     : []
+  const outcomeTags = tags.slice(0, 4)
 
   const handleDeployClick = useCallback(
     (event: MouseEvent<HTMLAnchorElement>) => {
@@ -87,18 +89,38 @@ export function ProjectCard({
       <div className="project-card__header">
         <span className="project-card__label case-badge">{visual.label}</span>
         <span className="project-card__status">{visual.meta}</span>
+        {period ? (
+          <span className="project-card__period">{period}</span>
+        ) : null}
       </div>
       <div className="project-card__content">
-        <p className="project-card__description">{shortDescription}</p>
-        {period ? <p className="project-card__period">작업 기간 {period}</p> : null}
+        <div className="project-card__field project-card__field--problem">
+          <span className="project-card__field-label">Problem</span>
+          <p className="project-card__description">{shortDescription}</p>
+        </div>
         {roleTags.length > 0 ? (
-          <ul className="project-card__roles" role="list" aria-label="Role tags">
-            {roleTags.map((tag) => (
-              <li key={tag} className="project-card__tag">
-                {tag}
-              </li>
-            ))}
-          </ul>
+          <div className="project-card__field project-card__field--role">
+            <span className="project-card__field-label">Role</span>
+            <ul className="project-card__roles" role="list" aria-label="Role">
+              {roleTags.map((tag) => (
+                <li key={tag} className="project-card__tag">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        {outcomeTags.length > 0 ? (
+          <div className="project-card__field project-card__field--outcome">
+            <span className="project-card__field-label">Outcome</span>
+            <ul className="project-card__outcomes" role="list" aria-label="Outcome">
+              {outcomeTags.map((tag) => (
+                <li key={tag} className="project-card__outcome-tag">
+                  {tag}
+                </li>
+              ))}
+            </ul>
+          </div>
         ) : null}
         <div className="project-card__demo-creds" aria-label="데모 접속 정보">
           <div className="project-card__demo-row">
@@ -128,7 +150,7 @@ export function ProjectCard({
         </div>
       </div>
       <span className="project-card__reveal" aria-hidden="true">
-        View case study
+        View Case Study
       </span>
     </>
   )

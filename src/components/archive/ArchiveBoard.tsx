@@ -8,6 +8,7 @@ import {
   type ArchiveRecordCard,
 } from "../../data/archiveData";
 import { useImageRatio } from "../../hooks/useImageRatio";
+import { useBodyScrollLock } from "../../utils/useBodyScrollLock";
 import { ArchiveModal } from "./ArchiveModal";
 import "./ArchiveBoard.scss";
 
@@ -241,7 +242,7 @@ export function ArchiveBoard() {
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
   const didDragRef = useRef(false);
-  const dragStartRef = useRef({ x: 0, startDragX: 0 });
+  const dragStartRef = useRef({ x: 0, y: 0, startDragX: 0 });
 
   useEffect(() => {
     if (!shelfRef.current) return;
@@ -270,7 +271,7 @@ export function ArchiveBoard() {
     if (e.button !== 0) return;
     setDragging(true);
     didDragRef.current = false;
-    dragStartRef.current = { x: e.clientX, startDragX: dragX };
+    dragStartRef.current = { x: e.clientX, y: e.clientY, startDragX: dragX };
     // NOTE: setPointerCapture is intentionally NOT called here.
     // Calling it during pointerdown suppresses all compatibility mouse events
     // (mouseup, click), which prevents button onClick handlers from firing.
@@ -279,7 +280,8 @@ export function ArchiveBoard() {
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (!dragging) return;
     const dx = e.clientX - dragStartRef.current.x;
-    if (Math.abs(dx) > 4) {
+    const dy = e.clientY - dragStartRef.current.y;
+    if (Math.abs(dx) > 4 && Math.abs(dx) > Math.abs(dy)) {
       if (!didDragRef.current) {
         // Capture only on the first frame past threshold so drag stays smooth
         // even when pointer leaves the shelf.
@@ -287,6 +289,7 @@ export function ArchiveBoard() {
       }
       didDragRef.current = true;
     }
+    if (!didDragRef.current) return;
     setDragX(clamp(dragStartRef.current.startDragX + dx));
   };
   const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
@@ -316,18 +319,7 @@ export function ArchiveBoard() {
       return (curr + delta + n) % n;
     });
 
-  /* ---------- lock body scroll while modal open ---------- */
-  useEffect(() => {
-    if (openIdx === null) return;
-    const prevBody = document.body.style.overflow;
-    const prevHtml = document.documentElement.style.overflow;
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prevBody;
-      document.documentElement.style.overflow = prevHtml;
-    };
-  }, [openIdx]);
+  useBodyScrollLock(openIdx !== null);
 
   return (
     <div className="archive-board">

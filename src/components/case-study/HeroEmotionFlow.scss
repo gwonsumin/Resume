@@ -8,12 +8,12 @@
   gap: clamp(10px, 2.4vw, 24px);
   justify-self: center;
   margin-inline: auto;
-  width: min(100%, 620px);
+  width: min(100%, 540px);
   padding:
     clamp(6px, 2vw, 14px)
     clamp(4px, 2vw, 12px)
     clamp(14px, 2.8vw, 26px);
-  filter: drop-shadow(0 20px 28px rgb(59 47 47 / 0.05));
+  filter: drop-shadow(0 16px 22px rgb(59 47 47 / 0.04));
 }
 
 .case-study__hero-emotion-screen {
@@ -32,22 +32,22 @@
 
 .case-study__hero-emotion-screen--center {
   align-self: flex-start;
-  width: clamp(126px, 33vw, 236px);
+  width: clamp(112px, 28vw, 208px);
   z-index: 2;
 }
 
 .case-study__hero-emotion-screen--center img {
-  max-height: min(62vh, 560px);
+  max-height: min(48vh, 460px);
 }
 
 .case-study__hero-emotion-screen--side {
-  width: clamp(104px, 26vw, 184px);
+  width: clamp(92px, 22vw, 160px);
   margin-top: clamp(18px, 4.2vw, 44px);
   z-index: 1;
 }
 
 .case-study__hero-emotion-screen--side img {
-  max-height: min(46vh, 372px);
+  max-height: min(38vh, 320px);
 }
 
 .case-study__hero-emotion-flow--compact {
