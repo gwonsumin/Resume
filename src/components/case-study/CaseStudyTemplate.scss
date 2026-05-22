@@ -246,12 +246,19 @@
   border: 1px dashed #b86a4e;
   border-radius: 4px;
   transition:
-    border-style 0.15s ease,
-    background 0.15s ease;
+    border-style var(--motion-duration-fast) var(--motion-ease),
+    background var(--motion-duration-fast) var(--motion-ease);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .live-site-btn:hover {
+    border-style: solid;
+    background: rgb(184 106 78 / 0.06);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .live-site-btn:active {
     border-style: solid;
     background: rgb(184 106 78 / 0.06);
   }
@@ -423,11 +430,17 @@
   font: inherit;
   color: inherit;
   border-radius: 4px;
-  transition: opacity 0.2s ease;
+  transition: opacity var(--motion-duration-base) var(--motion-ease);
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .case-study__section-image-trigger:hover {
+    opacity: 0.9;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .case-study__section-image-trigger:active {
     opacity: 0.9;
   }
 }
@@ -509,12 +522,20 @@
   line-height: 1;
   cursor: pointer;
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
+    background var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease);
 }
 
-.case-study__image-lightbox__close:hover {
-  background: rgb(59 47 47 / 0.95);
+@media (hover: hover) and (pointer: fine) {
+  .case-study__image-lightbox__close:hover {
+    background: rgb(59 47 47 / 0.95);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .case-study__image-lightbox__close:active {
+    background: rgb(59 47 47 / 0.95);
+  }
 }
 
 .case-study__image-lightbox__close:focus-visible {
@@ -699,8 +720,8 @@
   color: inherit;
   cursor: pointer;
   transition:
-    opacity 0.22s ease,
-    transform 0.22s ease;
+    opacity var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease);
 }
 
 .case-study__proto-entry:focus-visible {
@@ -709,10 +730,17 @@
   border-radius: 2px;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .case-study__proto-entry:hover {
     opacity: 0.9;
     transform: translateY(-4px);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .case-study__proto-entry:active {
+    opacity: 0.9;
+    transform: translateY(-2px);
   }
 }
 
@@ -775,8 +803,8 @@
   text-decoration-color: rgb(59 47 47 / 0.26);
   text-underline-offset: 3px;
   transition:
-    opacity 0.22s ease,
-    transform 0.22s ease;
+    opacity var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease);
 }
 
 .case-study__text-link:focus-visible {
@@ -790,10 +818,17 @@
   opacity: 0.7;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .case-study__text-link:hover {
     opacity: 0.88;
     transform: translateY(-4px);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .case-study__text-link:active {
+    opacity: 0.88;
+    transform: translateY(-2px);
   }
 }
 
@@ -1096,7 +1131,17 @@
     pointer-events: none;
   }
 
-  &:hover .demo-video-thumb__play {
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .demo-video-thumb:hover .demo-video-thumb__play {
+    background: var(--tomato, #e55348);
+    scale: 1.05;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .demo-video-thumb__card:active .demo-video-thumb__play {
     background: var(--tomato, #e55348);
     scale: 1.05;
   }
@@ -1114,7 +1159,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s, scale 0.15s;
+  transition:
+    background var(--motion-duration-fast) var(--motion-ease),
+    scale var(--motion-duration-fast) var(--motion-ease);
 }
 
 .video-modal-overlay {
@@ -1141,7 +1188,16 @@
   padding: 4px 8px;
   opacity: 0.85;
 
-  &:hover {
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .video-modal-close:hover {
+    opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .video-modal-close:active {
     opacity: 1;
   }
 }
@@ -1388,7 +1444,7 @@
   outline-offset: 2px;
 }
 
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .case-study__service-link:hover {
     border-color: rgb(59 47 47 / 0.44);
     background: rgb(255 255 255 / 0.96);
@@ -1405,6 +1461,27 @@
   }
 
   .case-study__service-link:hover .case-study__service-link-icon {
+    color: rgb(59 47 47 / 0.62);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .case-study__service-link:active {
+    border-color: rgb(59 47 47 / 0.44);
+    background: rgb(255 255 255 / 0.96);
+  }
+
+  .case-study__service-link--featured:active {
+    border-color: rgb(255 120 93 / 0.72);
+    background: rgb(255 120 93 / 0.1);
+  }
+
+  .case-study__service-link--tier-secondary:active {
+    border-color: rgb(59 47 47 / 0.34);
+    background: rgb(255 253 248 / 0.92);
+  }
+
+  .case-study__service-link:active .case-study__service-link-icon {
     color: rgb(59 47 47 / 0.62);
   }
 }
@@ -1487,7 +1564,11 @@
   background: #ff785d;
   border: 1px solid rgb(255 120 93 / 0.7);
   border-radius: 16px;
-  transition: all 0.25s ease-in-out;
+  transition:
+    color var(--motion-duration-base) var(--motion-ease),
+    background var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease),
+    transform var(--motion-duration-base) var(--motion-ease);
 }
 
 .case-study__button::after {
@@ -1495,18 +1576,32 @@
   display: inline-block;
   line-height: 1;
   transform: translateX(0);
-  transition: transform 0.25s ease-in-out;
+  transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 
-.case-study__button:hover {
-  color: #fff4eb;
-  background: #ff8a6f;
-  border-color: rgb(255 138 111 / 0.88);
-  transform: translateY(-2px);
+@media (hover: hover) and (pointer: fine) {
+  .case-study__button:hover {
+    color: #fff4eb;
+    background: #ff8a6f;
+    border-color: rgb(255 138 111 / 0.88);
+    transform: translateY(-2px);
+  }
+
+  .case-study__button:hover::after {
+    transform: translateX(5px);
+  }
 }
 
-.case-study__button:hover::after {
-  transform: translateX(5px);
+@media (hover: none), (pointer: coarse) {
+  .case-study__button:active {
+    color: #fff4eb;
+    background: #ff8a6f;
+    border-color: rgb(255 138 111 / 0.88);
+  }
+
+  .case-study__button:active::after {
+    transform: translateX(3px);
+  }
 }
 
 .case-study__button:focus-visible {
@@ -1661,7 +1756,7 @@
     transition: none;
   }
 
-  @media (hover: hover) {
+  @media (hover: hover) and (pointer: fine) {
     .case-study__proto-entry:hover,
     .case-study__text-link:hover {
       transform: none;

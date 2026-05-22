@@ -15,8 +15,8 @@
   background: transparent;
   border-bottom: 1px dashed var(--color-primary);
   transition:
-    background-color 240ms ease,
-    border-color 240ms ease;
+    background-color var(--motion-duration-base) var(--motion-ease),
+    border-color var(--motion-duration-base) var(--motion-ease);
 }
 
 .site-header__inner {
@@ -94,13 +94,21 @@
   border: none;
   border-bottom: 2px solid transparent;
   transition:
-    border-color 0.15s ease,
-    color 0.15s ease;
+    border-color var(--motion-duration-fast) var(--motion-ease),
+    color var(--motion-duration-fast) var(--motion-ease);
 }
 
-.site-nav__link:hover {
-  color: #e8614a;
-  text-decoration: none;
+@media (hover: hover) and (pointer: fine) {
+  .site-nav__link:hover {
+    color: #e8614a;
+    text-decoration: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .site-nav__link:active {
+    color: #e8614a;
+  }
 }
 
 .site-nav__link--active {

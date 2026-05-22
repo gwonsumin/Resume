@@ -27,8 +27,8 @@ body {
 
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 420ms;
-    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: var(--motion-duration-page);
+    animation-timing-function: var(--motion-ease);
   }
 
   ::view-transition-old(root) {

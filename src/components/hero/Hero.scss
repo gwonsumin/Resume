@@ -401,6 +401,13 @@
   }
 }
 
+@media (hover: none), (pointer: coarse) {
+  .hero-resume-btn:active {
+    background: rgb(184 106 78 / 0.06);
+    border-style: solid;
+  }
+}
+
 .hero__tomato {
   position: absolute;
   z-index: 0;

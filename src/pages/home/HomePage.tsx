@@ -165,22 +165,27 @@ export function HomePage() {
         subtitle="문제를 정의하고, 사용자의 흐름을 설계하며, 실제 인터페이스로 연결한 작업들입니다."
         revealHeader
       >
-        <Reveal delay={110} staggerIndex={0} staggerMs={100} durationMs={760}>
-          <div className="project-filters" aria-label="Project categories">
-            {PROJECT_FILTERS.map((filter) => {
-              const isActive = activeFilter === filter;
-              return (
-                <button
-                  key={filter}
-                  type="button"
-                  className={`project-filters__pill${isActive ? " project-filters__pill--active" : ""}`}
-                  onClick={() => setActiveFilter(filter)}
-                >
-                  {filter}
-                </button>
-              );
-            })}
-          </div>
+        <Reveal
+          delay={110}
+          staggerIndex={0}
+          staggerMs={100}
+          durationMs={760}
+          className="project-filters"
+          aria-label="Project categories"
+        >
+          {PROJECT_FILTERS.map((filter) => {
+            const isActive = activeFilter === filter;
+            return (
+              <button
+                key={filter}
+                type="button"
+                className={`project-filters__pill${isActive ? " project-filters__pill--active" : ""}`}
+                onClick={() => setActiveFilter(filter)}
+              >
+                {filter}
+              </button>
+            );
+          })}
         </Reveal>
         <ul className="project-grid" role="list">
           {projectGridItems.map((item, index) => (
