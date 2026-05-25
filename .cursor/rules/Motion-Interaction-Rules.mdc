@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+
+Motion & Interaction Rules:
+- Interactions must support UX meaning
+- Avoid decorative-only animations
+- Keep all motion subtle and purposeful
+- Avoid excessive hover effects or looping animations
+- Prioritize readability and focus over visual effects
