@@ -13,10 +13,20 @@
   height: 72px;
   color: var(--color-text);
   background: transparent;
+  transition: background-color var(--motion-duration-base) var(--motion-ease);
+}
+
+.site-header::after {
+  position: absolute;
+  right: auto;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
   border-bottom: 1px dashed var(--color-primary);
-  transition:
-    background-color var(--motion-duration-base) var(--motion-ease),
-    border-color var(--motion-duration-base) var(--motion-ease);
+  pointer-events: none;
+  content: "";
+  transform: translateX(-50%);
+  transition: border-color var(--motion-duration-base) var(--motion-ease);
 }
 
 .site-header__inner {
@@ -32,7 +42,10 @@
 
 .site-header--scrolled {
   background: rgb(255 244 235 / 0.94);
-  border-bottom: 1px dashed rgb(59 47 47 / 0.24);
+}
+
+.site-header--scrolled::after {
+  border-bottom-color: rgb(59 47 47 / 0.24);
 }
 
 .site-header__brand {

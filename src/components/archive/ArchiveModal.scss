@@ -5,8 +5,11 @@
   &__backdrop {
     position: fixed;
     inset: 0;
-    z-index: 100;
-    background: rgba(31, 26, 23, 0.55);
+    z-index: 10000;
+    width: 100vw;
+    height: 100dvh;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.42);
     backdrop-filter: blur(2px);
     display: flex;
     align-items: center;
@@ -18,7 +21,7 @@
   &__spread {
     position: relative;
     width: min(1100px, 100%);
-    max-height: min(90dvh, 90vh);
+    max-height: 100dvh;
     display: flex;
     background: var(--archive-paper, #fff8ec);
     box-shadow: 0 40px 80px rgba(0, 0, 0, 0.4);
@@ -390,16 +393,13 @@
     padding:
       max(12px, env(safe-area-inset-top, 0px))
       max(12px, env(safe-area-inset-right, 0px))
-      calc(env(safe-area-inset-bottom, 0px) + 120px)
+      calc(env(safe-area-inset-bottom, 0px) + 132px)
       max(12px, env(safe-area-inset-left, 0px));
   }
 
   .archive-modal__spread {
     flex-direction: column;
-    max-height: min(
-      95dvh,
-      calc(100dvh - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px) - 24px)
-    );
+    max-height: 100dvh;
   }
 
   .archive-modal__binding {
@@ -418,7 +418,7 @@
 
   .archive-modal__nav {
     position: fixed;
-    z-index: 110;
+    z-index: 10010;
     bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
     left: max(16px, env(safe-area-inset-left, 0px));
     right: max(16px, env(safe-area-inset-right, 0px));
@@ -428,7 +428,7 @@
   }
 
   .archive-modal__close {
-    z-index: 111;
+    z-index: 10011;
     top: max(12px, env(safe-area-inset-top, 0px));
     right: max(12px, env(safe-area-inset-right, 0px));
   }

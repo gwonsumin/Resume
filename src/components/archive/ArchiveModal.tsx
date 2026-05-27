@@ -1,4 +1,5 @@
 import { useEffect, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 import type { ArchiveColumnData, ArchiveRecordCard } from "../../data/archiveData";
 import { useImageRatio } from "../../hooks/useImageRatio";
 import "./ArchiveModal.scss";
@@ -122,7 +123,7 @@ export function ArchiveModal({
     </nav>
   );
 
-  return (
+  const modal = (
     <div
       className="archive-modal__backdrop"
       role="presentation"
@@ -248,4 +249,8 @@ export function ArchiveModal({
       </div>
     </div>
   );
+
+  if (typeof document === "undefined") return null;
+
+  return createPortal(modal, document.body);
 }
