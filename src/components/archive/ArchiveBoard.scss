@@ -491,18 +491,21 @@
 
   .archive-board__shelf.is-native-scroll {
     height: auto;
-    min-height: clamp(400px, 112vw, 500px);
+    min-height: clamp(390px, 108vw, 500px);
     overflow-x: auto;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--page-padding-x);
+    scroll-padding-inline: calc(var(--page-padding-x) + 18px);
     scroll-padding-block: clamp(24px, 5vw, 32px) clamp(32px, 6vw, 48px);
     touch-action: pan-x;
     scrollbar-width: none;
     cursor: default;
     user-select: auto;
-    padding: clamp(24px, 5vw, 32px) var(--page-padding-x) clamp(32px, 6vw, 48px);
+    padding:
+      clamp(28px, 5.5vw, 36px)
+      calc(var(--page-padding-x) + 18px)
+      clamp(36px, 7vw, 56px);
     container-type: inline-size;
     container-name: archive-shelf;
 
@@ -525,12 +528,12 @@
     inset: auto;
     display: flex;
     align-items: flex-start;
-    gap: clamp(18px, 4.5vw, 24px);
+    gap: clamp(16px, 4vw, 24px);
     width: max-content;
     min-width: 0;
     height: auto;
     padding: 0;
-    padding-right: calc(var(--page-padding-x) + 24px);
+    padding-right: calc(var(--page-padding-x) + 18px);
     transform: none !important;
     transition: none;
     animation: none;
@@ -541,8 +544,8 @@
     position: relative;
     left: auto !important;
     top: auto !important;
-    flex: 0 0 min(78cqw, 330px);
-    width: min(78cqw, 330px) !important;
+    flex: 0 0 min(74cqw, 330px);
+    width: min(74cqw, 330px) !important;
     max-width: 330px;
     overflow: visible;
     padding-top: 18px;
@@ -595,6 +598,14 @@
     font-size: 9px;
     letter-spacing: 0.1em;
   }
+
+  .archive-board .ui-hint--desktop {
+    display: none !important;
+  }
+
+  .archive-board .ui-hint--touch {
+    display: inline !important;
+  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -617,6 +628,10 @@
 }
 
 @media (hover: none), (pointer: coarse) {
+  .archive-board__shelf.is-native-scroll .archive-pin__sticky {
+    display: none;
+  }
+
   .archive-pin:active .archive-pin__matte {
     box-shadow:
       0 12px 22px rgba(31, 26, 23, 0.22),
