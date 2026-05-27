@@ -622,7 +622,10 @@
   }
 
   .hero__continue-link--primary {
-    font-size: clamp(10px, 2.8vw, 11px);
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 14px;
   }
 }
 

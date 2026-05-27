@@ -123,18 +123,19 @@
 #case-study .project-grid__item {
   display: flex;
   flex-direction: column;
+  align-self: start;
   min-height: 0;
 }
 
 #case-study .project-grid__item > .project-card {
-  flex: 1;
+  flex: 0 1 auto;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
 #case-study .project-grid__item > .project-grid__coming {
-  flex: 1;
+  flex: 0 1 auto;
   min-height: 0;
 }
 

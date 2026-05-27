@@ -1187,10 +1187,10 @@ button.site-footer__pass-action {
   }
 }
 
-/* —— 모바일(≤767px)만: 복합 푸터 대신 텍스트·링크 단순 패널 —— */
-@media (max-width: 767px) {
+/* —— 모바일(≤768px)만: 복합 푸터 대신 텍스트·링크 단순 패널 —— */
+@media (max-width: 48rem) {
   .site-footer {
-    padding: 0 0 clamp(1.25rem, 5vw, 2rem);
+    padding: 0 0 calc(clamp(1.25rem, 5vw, 2rem) + env(safe-area-inset-bottom, 0px));
     overflow-x: hidden;
   }
 
@@ -1209,7 +1209,7 @@ button.site-footer__pass-action {
     margin: 0 auto;
     padding: clamp(1.85rem, 7vw, 2.65rem)
       clamp(18px, 5vw, 26px)
-      clamp(2rem, 7vw, 2.85rem);
+      calc(clamp(2.25rem, 8vw, 3.25rem) + env(safe-area-inset-bottom, 0px));
     background: #3b2f2f;
     color: #fff4eb;
     text-align: left;
@@ -1220,8 +1220,9 @@ button.site-footer__pass-action {
     padding: 0;
     align-self: flex-start;
     font-family: "Satoshi", var(--font-family-base);
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     font-weight: 700;
+    line-height: 1.35;
     letter-spacing: 0.14em;
     color: #ff785d;
   }
@@ -1229,9 +1230,9 @@ button.site-footer__pass-action {
   .site-footer__mobile-lead {
     margin: 0;
     max-width: 36rem;
-    font-size: clamp(0.93rem, 3.9vw, 1.02rem);
+    font-size: clamp(1rem, 4.1vw, 1.12rem);
     font-weight: 500;
-    line-height: 1.65;
+    line-height: 1.5;
     letter-spacing: -0.01em;
     color: rgb(255 244 235 / 0.94);
     word-break: keep-all;
@@ -1256,9 +1257,9 @@ button.site-footer__pass-action {
     width: 100%;
     max-width: 100%;
     font-family: "Satoshi", var(--font-family-base);
-    font-size: 0.82rem;
+    font-size: 0.875rem;
     font-weight: 700;
-    line-height: 1.25;
+    line-height: 1.35;
     letter-spacing: 0.04em;
     color: #fff4eb;
     text-decoration: none;
@@ -1279,7 +1280,7 @@ button.site-footer__pass-action {
   .site-footer__mobile-meta {
     margin: clamp(0.35rem, 2vw, 0.65rem) 0 0;
     font-family: "Satoshi", var(--font-family-base);
-    font-size: 0.76rem;
+    font-size: 0.875rem;
     font-weight: 600;
     line-height: 1.45;
     letter-spacing: 0.03em;
@@ -1290,7 +1291,7 @@ button.site-footer__pass-action {
   .site-footer__mobile-copy {
     margin: 0;
     font-family: "Satoshi", var(--font-family-base);
-    font-size: 0.72rem;
+    font-size: 0.875rem;
     font-weight: 500;
     line-height: 1.45;
     color: rgb(255 244 235 / 0.48);
