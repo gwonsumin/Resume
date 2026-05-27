@@ -77,17 +77,17 @@ function getFooterPassTouchFlipSnapshot() {
   );
 }
 
-/** 767px 미만: 단순 푸터만 표시 · 물리/패스 카드 DOM은 유지하되 패널은 CSS로 숨김 */
+/** 768px 이하: 단순 푸터만 표시 · 물리/패스 카드 DOM은 유지하되 패널은 CSS로 숨김 */
 function subscribeFooterNarrowViewport(cb: () => void) {
   if (typeof window === "undefined") return () => {};
-  const mq = window.matchMedia("(max-width: 767px)");
+  const mq = window.matchMedia("(max-width: 48rem)");
   mq.addEventListener("change", cb);
   return () => mq.removeEventListener("change", cb);
 }
 
 function getFooterNarrowViewportSnapshot() {
   if (typeof window === "undefined") return false;
-  return window.matchMedia("(max-width: 767px)").matches;
+  return window.matchMedia("(max-width: 48rem)").matches;
 }
 
 function FooterNamePass() {
@@ -595,7 +595,7 @@ export function Footer({ siteTitle }: FooterProps) {
             className="site-footer__mobile-link"
             href={`mailto:${EMAIL}`}
           >
-            Email
+            {EMAIL}
           </a>
           <a
             className="site-footer__mobile-link"
