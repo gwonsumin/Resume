@@ -45,7 +45,7 @@
       </p>
     </td>
     <td width="50%" valign="top">
-      <img src="public/projects/tone/tone-thumbnail-01.png" alt="TONE mobile mood and music mockup" width="100%" style="aspect-ratio: 16 / 10; object-fit: cover; object-position: center;" />
+      <img src="public/projects/tone/tone-thumbnail-01.png" alt="TONE mobile mood and music mockup" width="50%" style="aspect-ratio: 16 / 10; object-fit: cover; object-position: center;" />
       <br />
       <h3>TONE</h3>
       <p>감정 컬러와 음악 추천을 연결해 하루의 상태를 기록하는<br />모바일 뮤직 플랫폼</p>
