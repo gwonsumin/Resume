@@ -24,7 +24,7 @@
 
 단순 UI 구현이 아닌, UX 흐름과 인터페이스 구조 설계를 중심으로 만들어졌습니다.
 
-> *"State Interface — 사용자가 어느 상태에 있는지를 감지하고, 그 흐름을 선택의 구조로 전환한다."*
+> _"State Interface — 사용자가 어느 상태에 있는지를 감지하고, 그 흐름을 선택의 구조로 전환한다."_
 
 ---
 
@@ -32,37 +32,55 @@
 
 <table>
   <tr>
-    <td width="50%">
-      <img src="public/projects/goreon/goreon-hero-desktop.png" alt="GOREON" width="100%" />
+    <td width="50%" valign="top">
+      <img src="public/projects/goreon/goreon-detail-thumbnail.png" alt="GOREON AI recommendation and comparison UI" width="100%" style="aspect-ratio: 16 / 10; object-fit: cover;" />
       <br />
-      <h3>🌿 GOREON</h3>
-      <p>부동산 정보 비대칭 문제를 해결하는 AI 기반 임장 서비스. 현장 데이터와 AI 분석을 결합해 실수요자 중심의 의사결정 흐름을 설계했습니다.</p>
-      <code>UX Research · Service Design · AI Interface</code>
+      <h3>GOREON</h3>
+      <p>AI 추천과 비교 흐름으로 복잡한 전자기기 선택 과정을 줄이는<br />커머스 UX 프로젝트</p>
+      <p>
+        <code>AI Recommendation</code>
+        <code>E-commerce</code>
+        <code>UX/UI Design</code>
+        <code>Frontend</code>
+      </p>
     </td>
-    <td width="50%">
-      <img src="public/projects/tone/tone-thumbnail-01.png" alt="TONE" width="100%" />
+    <td width="50%" valign="top">
+      <img src="public/projects/tone/tone-thumbnail-01.png" alt="TONE mobile mood and music mockup" width="100%" style="aspect-ratio: 16 / 10; object-fit: cover; object-position: center;" />
       <br />
-      <h3>🎵 TONE</h3>
-      <p>감정과 컨텍스트 기반의 음악 추천 서비스. 사용자의 현재 상태를 감지하고, 그에 맞는 음악 흐름을 큐레이션합니다.</p>
-      <code>Emotional UX · Interaction Design · Mobile</code>
+      <h3>TONE</h3>
+      <p>감정 컬러와 음악 추천을 연결해 하루의 상태를 기록하는<br />모바일 뮤직 플랫폼</p>
+      <p>
+        <code>Emotion Record</code>
+        <code>Music Platform</code>
+        <code>UX/UI</code>
+        <code>Mobile</code>
+      </p>
     </td>
   </tr>
   <tr>
-    <td width="50%">
-      <img src="public/projects/sangsangmadang/sangsangmadang-hero-desktop.png" alt="Sangsangmadang" width="100%" />
+    <td width="50%" valign="top">
+      <img src="public/projects/sangsangmadang/sangsangmadang-thumbnail.png" alt="Sangsangmadang browser mockup" width="100%" style="aspect-ratio: 16 / 10; object-fit: cover;" />
       <br />
-      <h3>🏢 상상마당</h3>
-      <p>KT&G 상상마당 문화예술 공간 서비스 리디자인. 정보 구조 재설계와 어드민 시스템 UX 개선을 통해 운영 효율과 사용자 경험을 동시에 향상시켰습니다.</p>
-      <code>Information Architecture · Admin UX · Redesign</code>
+      <h3>Sangsangmadang</h3>
+      <p>문화예술 공간의 탐색 구조와 운영 흐름을 재정리한<br />웹 서비스 리디자인 프로젝트</p>
+      <p>
+        <code>Redesign</code>
+        <code>Branding</code>
+        <code>UX/UI Design</code>
+        <code>Frontend</code>
+      </p>
     </td>
     <td width="50%" valign="top">
-      <br /><br />
-      <h3>📁 Deliverables</h3>
-      <ul>
-        <li><a href="public/assets/files/GOREON-Proposal.pdf">GOREON Proposal PDF</a></li>
-        <li><a href="public/assets/files/TONE-Proposal.pdf">TONE Proposal PDF</a></li>
-        <li><a href="public/assets/files/KwonSumin-Resume.pdf">이력서 / Resume PDF</a></li>
-      </ul>
+      <img src="public/projects/loopin/loopin-thumbnail.png" alt="LoopIn dashboard and learning flow UI" width="100%" style="aspect-ratio: 16 / 10; object-fit: cover;" />
+      <br />
+      <h3>LoopIn</h3>
+      <p>학습 흐름과 몰입 경험을 연결하는<br />AI 기반 EduTech 플랫폼</p>
+      <p>
+        <code>EduTech</code>
+        <code>UX/UI Design</code>
+        <code>AI Learning</code>
+        <code>Dashboard UX</code>
+      </p>
     </td>
   </tr>
 </table>
@@ -105,6 +123,7 @@
 </table>
 
 **Typography**
+
 - `Satoshi` — 영문 주력 (Bold · Medium · Regular)
 - `Inter` — 영문 보조
 - `Pretendard` — 한글
@@ -113,14 +132,14 @@
 
 ## Tech Stack
 
-| Category | Stack |
-|---|---|
-| Framework | React 19 + TypeScript 6 |
-| Build Tool | Vite 8 |
-| Styling | SCSS (Module 기반) |
-| Routing | React Router v7 |
-| Physics | Matter.js (Hero 인터랙션) |
-| Deploy | GitHub Pages |
+| Category   | Stack                     |
+| ---------- | ------------------------- |
+| Framework  | React 19 + TypeScript 6   |
+| Build Tool | Vite 8                    |
+| Styling    | SCSS (Module 기반)        |
+| Routing    | React Router v7           |
+| Physics    | Matter.js (Hero 인터랙션) |
+| Deploy     | GitHub Pages              |
 
 ---
 
