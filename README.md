@@ -82,25 +82,25 @@
     <td>Main / Accent</td>
     <td><code>--color-main</code></td>
     <td><code>#FF785D</code></td>
-    <td><img src="https://via.placeholder.com/60x20/FF785D/FF785D.png" alt="#FF785D" /></td>
+    <td><img src="assets/readme/colors/coral.svg" alt="#FF785D" /></td>
   </tr>
   <tr>
     <td>Point / Teal</td>
     <td><code>--color-point</code></td>
     <td><code>#0AA5A5</code></td>
-    <td><img src="https://via.placeholder.com/60x20/0AA5A5/0AA5A5.png" alt="#0AA5A5" /></td>
+    <td><img src="assets/readme/colors/mint.svg" alt="#0AA5A5" /></td>
   </tr>
   <tr>
     <td>Background</td>
     <td><code>--color-bg</code></td>
     <td><code>#FFF4EB</code></td>
-    <td><img src="https://via.placeholder.com/60x20/FFF4EB/FFF4EB.png" alt="#FFF4EB" /></td>
+    <td><img src="assets/readme/colors/cream.svg" alt="#FFF4EB" /></td>
   </tr>
   <tr>
     <td>Line / Text</td>
     <td><code>--color-line</code></td>
     <td><code>#3B2F2F</code></td>
-    <td><img src="https://via.placeholder.com/60x20/3B2F2F/3B2F2F.png" alt="#3B2F2F" /></td>
+    <td><img src="assets/readme/colors/brown.svg" alt="#3B2F2F" /></td>
   </tr>
 </table>
 
