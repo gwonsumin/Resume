@@ -871,7 +871,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       demoVideos: {
         layout: "split",
         videos: [
-          { src: projectPublicUrl("loopin", "LOOPIN-demo-pc.MP4"), label: "DESKTOP", ariaLabel: "데스크톱 서비스 데모 영상" },
+          { src: projectPublicUrl("loopin", "LOOPIN-demo-pc.mp4"), label: "DESKTOP", ariaLabel: "데스크톱 서비스 데모 영상" },
           { src: projectPublicUrl("loopin", "LOOPIN-demo-mobile.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
         ],
       },
