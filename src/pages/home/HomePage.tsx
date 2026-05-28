@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { About } from "../../components/about/About";
 import { ArchiveBoard } from "../../components/archive/ArchiveBoard";
@@ -39,6 +39,14 @@ type ProjectGridItem =
 export function HomePage() {
   const navigate = useNavigate();
   const [activeFilter, setActiveFilter] = useState<ProjectFilter>("All");
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const projectGridRef = useRef<HTMLUListElement>(null);
+  const isDraggingRef = useRef(false);
+  const hasDraggedRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragScrollLeftRef = useRef(0);
 
   const filteredProjects = useMemo(() => {
     if (activeFilter === "All") {
@@ -100,6 +108,76 @@ export function HomePage() {
 
     return mapped;
   }, [activeFilter, filteredProjects]);
+
+  useEffect(() => {
+    const el = projectGridRef.current;
+    if (!el) return;
+    const update = () => {
+      setCanScrollPrev(el.scrollLeft > 4);
+      setCanScrollNext(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
+    };
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [projectGridItems]);
+
+  const handleFilterChange = (filter: ProjectFilter) => {
+    setActiveFilter(filter);
+    setCanScrollPrev(false);
+    if (projectGridRef.current) {
+      projectGridRef.current.scrollLeft = 0;
+    }
+  };
+
+  const scrollPrev = () => {
+    const el = projectGridRef.current;
+    if (!el) return;
+    const item = el.querySelector<HTMLElement>("li");
+    el.scrollBy({ left: -(item ? item.offsetWidth + 24 : 360), behavior: "smooth" });
+  };
+
+  const scrollNext = () => {
+    const el = projectGridRef.current;
+    if (!el) return;
+    const item = el.querySelector<HTMLElement>("li");
+    el.scrollBy({ left: item ? item.offsetWidth + 24 : 360, behavior: "smooth" });
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLUListElement>) => {
+    const el = projectGridRef.current;
+    if (!el) return;
+    isDraggingRef.current = true;
+    hasDraggedRef.current = false;
+    dragStartXRef.current = e.pageX - el.offsetLeft;
+    dragScrollLeftRef.current = el.scrollLeft;
+    el.classList.add("project-grid--dragging");
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLUListElement>) => {
+    if (!isDraggingRef.current || !projectGridRef.current) return;
+    e.preventDefault();
+    const el = projectGridRef.current;
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - dragStartXRef.current) * 1.2;
+    if (Math.abs(walk) > 4) hasDraggedRef.current = true;
+    el.scrollLeft = dragScrollLeftRef.current - walk;
+  };
+
+  const stopDragging = () => {
+    isDraggingRef.current = false;
+    projectGridRef.current?.classList.remove("project-grid--dragging");
+  };
+
+  const handleClickCapture = (e: React.MouseEvent<HTMLUListElement>) => {
+    if (hasDraggedRef.current) {
+      e.stopPropagation();
+      hasDraggedRef.current = false;
+    }
+  };
 
   const navigateWithPageTransition = (to: string) => {
     const transitionDocument = document as Document & {
@@ -180,39 +258,68 @@ export function HomePage() {
                 key={filter}
                 type="button"
                 className={`project-filters__pill${isActive ? " project-filters__pill--active" : ""}`}
-                onClick={() => setActiveFilter(filter)}
+                onClick={() => handleFilterChange(filter)}
               >
                 {filter}
               </button>
             );
           })}
         </Reveal>
-        <ul className="project-grid" role="list">
+        <div className="project-grid-wrapper">
+          <button
+            type="button"
+            className="project-grid-nav__btn project-grid-nav__btn--prev"
+            onClick={scrollPrev}
+            disabled={!canScrollPrev}
+            aria-label="이전 프로젝트"
+            tabIndex={-1}
+          >
+            ←
+          </button>
+          <ul
+            className="project-grid"
+            ref={projectGridRef}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={stopDragging}
+            onMouseLeave={stopDragging}
+            onClickCapture={handleClickCapture}
+          >
           {projectGridItems.map((item, index) => (
-            <Reveal
-              key={item.id}
-              as="li"
-              className="project-grid__item"
-              delay={150}
-              staggerIndex={index}
-              staggerMs={105}
-              durationMs={780}
-            >
-              {item.type === "project" ? (
-                <ProjectCard
-                  {...item.project}
-                  onOpenCaseStudy={() => openCaseStudyPage(item.project.id)}
-                />
-              ) : (
-                <article className="project-grid__coming" aria-label="프로젝트 준비중 안내">
-                  <p className="project-grid__coming-label">Case log</p>
-                  <h3 className="project-grid__coming-title">{item.title}</h3>
-                  <p className="project-grid__coming-description">{item.description}</p>
-                </article>
-              )}
-            </Reveal>
+            <li key={item.id} className="project-grid__item">
+              <Reveal
+                delay={150}
+                staggerIndex={index}
+                staggerMs={105}
+                durationMs={780}
+              >
+                {item.type === "project" ? (
+                  <ProjectCard
+                    {...item.project}
+                    onOpenCaseStudy={() => openCaseStudyPage(item.project.id)}
+                  />
+                ) : (
+                  <div className="project-grid__coming">
+                    <p className="project-grid__coming-label">Case log</p>
+                    <h3 className="project-grid__coming-title">{item.title}</h3>
+                    <p className="project-grid__coming-description">{item.description}</p>
+                  </div>
+                )}
+              </Reveal>
+            </li>
           ))}
-        </ul>
+          </ul>
+          <button
+            type="button"
+            className="project-grid-nav__btn project-grid-nav__btn--next"
+            onClick={scrollNext}
+            disabled={!canScrollNext}
+            aria-label="다음 프로젝트"
+            tabIndex={-1}
+          >
+            →
+          </button>
+        </div>
       </Section>
 
       <Section

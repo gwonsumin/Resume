@@ -113,11 +113,38 @@
 .project-grid {
   list-style: none;
   margin: 0;
-  padding: 4px 0 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--grid-gap-editorial-mobile);
-  align-items: stretch;
+  padding: 20px 0 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: visible;
+  scroll-snap-type: x mandatory;
+  gap: clamp(16px, 2vw, 24px);
+  align-items: start;
+}
+
+.project-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.project-grid__item {
+  margin: 0;
+  min-width: 0;
+  flex: 0 0 clamp(260px, 80vw, 340px);
+  scroll-snap-align: start;
+}
+
+@media (min-width: 48rem) {
+  .project-grid__item {
+    flex: 0 0 clamp(300px, 44vw, 420px);
+  }
+}
+
+@media (min-width: 64rem) {
+  .project-grid__item {
+    flex: 0 0 clamp(320px, 29vw, 440px);
+  }
 }
 
 #case-study .project-grid__item {
@@ -139,25 +166,64 @@
   min-height: 0;
 }
 
-@media (min-width: 48rem) {
-  .project-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--grid-gap-editorial-tablet);
-    row-gap: var(--grid-gap-editorial-tablet);
-  }
+.project-grid-wrapper {
+  position: relative;
 }
 
-@media (min-width: 64rem) {
-  .project-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: var(--grid-gap-editorial-desktop);
-    row-gap: var(--grid-gap-editorial-desktop);
-  }
+.project-grid-nav__btn {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  color: var(--editorial-ink);
+  background: var(--editorial-paper);
+  border: var(--border-editorial);
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+  cursor: pointer;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 
-.project-grid__item {
-  margin: 0;
-  min-width: 0;
+.project-grid-nav__btn--prev {
+  left: -20px;
+}
+
+.project-grid-nav__btn--next {
+  right: -20px;
+}
+
+.project-grid-nav__btn:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .project-grid-nav__btn {
+    display: flex;
+  }
+
+  .project-grid-nav__btn:not(:disabled):hover {
+    transform: translateY(-50%) scale(1.08);
+  }
+
+  .project-grid {
+    cursor: grab;
+  }
+
+  .project-grid--dragging {
+    cursor: grabbing;
+    -webkit-user-select: none;
+    user-select: none;
+  }
 }
 
 .project-grid__coming {

@@ -152,8 +152,10 @@ export const selectedProjects: readonly ProjectPreview[] = [
       variant: "teal",
     },
     to: ROUTES.caseStudyLoopin,
-    githubUrl: "https://github.com/gwonsumin/loop-in",
-    deployUrl: `${LOOPIN_DEPLOY_ORIGIN}/`,
+    githubUrl: "https://github.com/gwonsumin/LoopIn",
+    deployUrl: "https://loop-in-mu.vercel.app/",
+    demoTestId: "test@loopin.kr",
+    demoTestPassword: "loopin1234",
     thumbnailSrc: projectPublicUrl("loopin", "loopin-thumbnail.png"),
     caseStudyTeamInfo: {
       kind: "solo",

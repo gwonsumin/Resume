@@ -73,7 +73,7 @@
   min-width: 0;
   margin-bottom: clamp(2px, 0.5vw, 4px);
   /* GOREON 썸네일 기준 레퍼런스: 446×248 */
-  aspect-ratio: 2.12 / 1;
+  aspect-ratio: 16 / 9;
   line-height: 0;
   overflow: hidden;
 }
@@ -129,7 +129,8 @@
   width: 100%;
   height: 100%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  object-position: center center;
   transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 .project-card__header {
