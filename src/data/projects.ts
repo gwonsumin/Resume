@@ -14,6 +14,9 @@ export const TONE_DEPLOY_ORIGIN = "https://toneapp.dothome.co.kr" as const;
 export const SANGSANGMADANG_DEPLOY_ORIGIN =
   "https://gsumin8327.dothome.co.kr" as const;
 
+/** LoopIn production origin (no trailing slash) — shared with case study deep links. */
+export const LOOPIN_DEPLOY_ORIGIN = "https://loop-in-mu.vercel.app" as const;
+
 export const selectedProjects: readonly ProjectPreview[] = [
   {
     id: "goreon",
@@ -123,6 +126,39 @@ export const selectedProjects: readonly ProjectPreview[] = [
     caseStudyTeamInfo: {
       kind: "solo",
       myRoleBadge: "FULL STACK DESIGN · DEV",
+    },
+  },
+  {
+    id: "loopin",
+    title: "LoopIn",
+    description:
+      "직무 학습 자료를 발견 → 저장 → 이어가기 흐름으로 연결하는 탐색 중심 EduTech 플랫폼",
+    subDescription:
+      "검색 중심 기존 학습 플랫폼의 한계를 탐색 UX로 재설계. My Loop 아카이브, Learn View 독립 레이아웃, Flow 커스텀 큐레이션으로 학습 흐름을 끊김 없이 연결",
+    techStack: [
+      "Next.js",
+      "TanStack Query",
+      "MongoDB",
+      "shadcn/ui",
+      "Tailwind CSS",
+      "Figma",
+    ],
+    tags: ["UX/UI Design", "EduTech", "Information Architecture", "Frontend"],
+    period: "2025 포트폴리오 프로젝트",
+    role: "UX Flow Design · UI Design · Frontend Implementation",
+    visual: {
+      label: "04",
+      meta: "EduTech Platform",
+      variant: "teal",
+    },
+    to: ROUTES.caseStudyLoopin,
+    githubUrl: "https://github.com/gwonsumin/loop-in",
+    deployUrl: `${LOOPIN_DEPLOY_ORIGIN}/`,
+    thumbnailSrc: projectPublicUrl("loopin", "loopin-thumbnail.png"),
+    caseStudyTeamInfo: {
+      kind: "solo",
+      periodLabel: "2025 · 포트폴리오",
+      myRoleBadge: "UX DESIGN · IA · FRONTEND",
     },
   },
 ];
