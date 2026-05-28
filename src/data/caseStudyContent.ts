@@ -5,6 +5,7 @@ import type {
 import { projectPublicUrl } from "../config/assets";
 import {
   GOREON_DEPLOY_ORIGIN,
+  LOOPIN_DEPLOY_ORIGIN,
   SANGSANGMADANG_DEPLOY_ORIGIN,
   TONE_DEPLOY_ORIGIN,
 } from "./projects";
@@ -130,6 +131,49 @@ const TONE_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
       "검색 화면에서 자연어 기반 컬러 플레이리스트 추천 흐름을 확인할 수 있습니다.",
     href: `${TONE_DEPLOY_ORIGIN}/search`,
     type: "mobile-preview",
+  },
+];
+
+const LOOPIN_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
+  {
+    label: "Home",
+    title: "탐색 시작 화면",
+    href: `${LOOPIN_DEPLOY_ORIGIN}/`,
+    featured: true,
+    description:
+      "브랜드 Hero와 Continue Your Loop CTA, Learning Flows 큐레이션이 배치된 탐색 진입점을 확인할 수 있습니다.",
+  },
+  {
+    label: "Explore",
+    title: "검색 및 필터 화면",
+    href: `${LOOPIN_DEPLOY_ORIGIN}/resources`,
+    featured: true,
+    description:
+      "SearchOverlay 진입, 자료 유형·난이도·소요 시간 기반 필터, 결과 그리드 구조를 확인할 수 있습니다.",
+  },
+  {
+    label: "Learn View",
+    title: "독립 학습 화면",
+    href: `${LOOPIN_DEPLOY_ORIGIN}/resources/1/learn`,
+    featured: true,
+    description:
+      "헤더/푸터 없는 학습 전용 레이아웃, 진행률 바, Flow 컨텍스트 배너, 완료 CTA 흐름을 확인할 수 있습니다.",
+  },
+  {
+    label: "My Loop",
+    title: "개인 학습 아카이브",
+    href: `${LOOPIN_DEPLOY_ORIGIN}/my-loop`,
+    featured: false,
+    description:
+      "저장 수·이어본 수·완료 수 통계, 이어 학습 중 탭, 커스텀 Flow 큐레이션 기능을 확인할 수 있습니다.",
+  },
+  {
+    label: "Flows",
+    title: "큐레이션 학습 경로",
+    href: `${LOOPIN_DEPLOY_ORIGIN}/flows`,
+    featured: false,
+    description:
+      "카드 플립 인터랙션과 Flow 저장 UX, 순서대로 이어 학습하는 경로 구조를 확인할 수 있습니다.",
   },
 ];
 
@@ -694,6 +738,146 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
           alt: "상상마당 관리자 화면 2",
         },
       ],
+    },
+  }),
+  loopin: makeCaseStudy("LoopIn", {
+    intro: p(
+      "LoopIn은 직무 학습 자료의 탐색 경험을 재설계한 EduTech 포트폴리오 프로젝트입니다.",
+      "발견 → 저장 → 이어가기 흐름을 끊김 없이 연결해, 학습 시작보다 탐색과 지속에 집중한 UX를 설계했습니다.",
+    ),
+    sectionTitles: {
+      problem: "Problem",
+      insight: "Insight",
+      iaUserFlow: "IA / User Flow",
+      solution: "Key UX Decisions",
+      result: "Service Experience",
+      learnings: "Learnings",
+    },
+    myRole: {
+      summary: p(
+        "기획부터 디자인, 프론트엔드 구현까지 전 구간을 단독으로 진행한 개인 프로젝트입니다.",
+        "탐색 UX 설계를 중심으로 정보 구조, 화면 설계, Next.js App Router 기반 구현까지 하나의 경험 흐름으로 완성했습니다.",
+      ),
+      roles: [
+        {
+          title: "UX Flow Design",
+          tag: "lead",
+          level: 100,
+          detail:
+            "검색 → 저장 → 이어 학습으로 이어지는 순환 흐름을 설계하고, 각 화면이 다음 액션을 명확히 안내하는 구조를 정의했습니다.",
+        },
+        {
+          title: "Information Architecture",
+          tag: "lead",
+          level: 100,
+          detail:
+            "홈·탐색·자료 상세·My Loop·마이페이지 5개 축으로 IA를 구성하고, Learn View를 독립 레이아웃으로 분리해 학습 집중 경험을 설계했습니다.",
+        },
+        {
+          title: "UI Design System",
+          tag: "lead",
+          level: 95,
+          detail:
+            "자료 카드 메타정보 구조(유형·난이도·소요시간·저장수)와 컴포넌트 체계를 정의해 탐색 판단 정보가 일관되게 읽히도록 구성했습니다.",
+        },
+        {
+          title: "Next.js Frontend",
+          tag: "lead",
+          level: 90,
+          detail:
+            "App Router 중첩 레이아웃으로 Learn View 독립 레이아웃을 구현하고, TanStack Query 캐싱·localStorage 혼용 전략으로 UX 반응성을 확보했습니다.",
+        },
+        {
+          title: "Interaction Design",
+          tag: "lead",
+          level: 85,
+          detail:
+            "SearchOverlay 반응형 동작, 진행률 자동 적산, Flow 컨텍스트 배너, 완료 후 CTA 인터랙션을 구현했습니다.",
+        },
+      ],
+    },
+    problem: p(
+      "대부분의 학습 플랫폼은 콘텐츠 소비 이후 경험은 잘 설계하지만, 무엇을 배울지 결정하는 탐색 과정은 단순한 검색창과 카테고리 나열로 처리합니다.",
+      "결과적으로 사용자는 저장하지 않으면 잊어버리고, 어디까지 학습했는지 파악하기 어렵고, 관련 자료를 발견해도 흐름으로 연결되지 않아 단발로 끝나는 경험을 반복합니다.",
+    ),
+    insight: p(
+      "문제의 핵심은 콘텐츠의 양이 아니라, 탐색 → 저장 → 이어가기 사이의 흐름이 끊긴 구조에 있었습니다.",
+      "학습 콘텐츠 자체보다 탐색과 이어가기 경험을 설계하는 것이 사용자의 학습 지속성을 높일 수 있다고 판단했습니다.",
+    ),
+    iaUserFlow: p(
+      "사용자는 Hero에서 탐색 동기를 얻고, SearchOverlay를 통해 자료를 발견하며, My Loop에 저장해 개인 아카이브를 구성합니다.",
+      "저장된 자료는 Learn View에서 독립적인 학습 공간으로 이어지고, Flow 큐레이션을 통해 순서 있는 학습 경로로 묶입니다.",
+      "완료 후에는 다음 자료 또는 My Loop로 자연스럽게 연결되어 탐색 → 저장 → 학습의 순환 구조가 완성됩니다.",
+    ),
+    uxFlowEditorial: {
+      title: "학습 흐름의 순환",
+      steps: ["발견합니다", "저장합니다", "이어갑니다", "완료합니다"],
+    },
+    solution: p(
+      "Hero에 검색창 대신 브랜드 경험을 배치하고 검색은 SearchOverlay로 분리해, 첫 방문 사용자가 서비스를 먼저 인지한 뒤 탐색으로 연결되도록 했습니다.",
+      "My Loop는 단순 북마크가 아닌 진행률·완료 상태·통계를 추적하는 학습 아카이브로 설계하고, 커스텀 Flow로 자료를 큐레이션 경로로 묶어 순서대로 학습할 수 있도록 구성했습니다.",
+      "Learn View는 헤더/푸터 없는 독립 레이아웃으로 학습에 집중하도록 만들고, 완료 버튼을 통한 명시적 완료 액션으로 완료 경험을 의미있게 설계했습니다.",
+    ),
+    uiDesign: p(
+      "자료 카드에는 유형·난이도·예상 소요 시간·저장 수를 우선 배치해 탐색 단계에서 선택 판단이 빠르게 이루어지도록 정보 계층을 구성했습니다.",
+      "SearchOverlay는 모바일에서 fullscreen, 데스크탑에서 centered modal로 동작하며 ESC 닫기·스크롤 잠금·최근 검색어 연동까지 완성했습니다.",
+    ),
+    result: p(
+      "탐색 → 저장 → 이어 학습의 순환 구조를 완성해, 단발 소비로 끝나던 학습 경험을 지속 가능한 아카이브 경험으로 재설계했습니다.",
+      "Next.js App Router 중첩 레이아웃, TanStack Query 캐싱, localStorage 혼용 전략으로 UX 의도를 기술 구조로 뒷받침했습니다.",
+    ),
+    learnings: p(
+      "탐색 UX는 정보 구조 설계가 전부라는 것을 경험했습니다. 검색 → 저장 → 이어 학습 흐름이 끊기지 않으려면 각 페이지가 다음 액션을 명확히 제시해야 했고, 이 순환 구조를 의식적으로 설계했습니다.",
+      "localStorage는 강력하지만 키 네이밍 규칙과 로그아웃 시 초기화 로직 설계가 필수임을 배웠습니다.",
+      "디자인 시스템 일관성이 개발 속도를 올린다는 것도 확인했습니다. 초반 컴포넌트 규칙 정의 덕분에 후반 polish 수정 범위가 예측 가능했습니다.",
+    ),
+    media: {
+      hero: {
+        desktopSrc: projectPublicUrl("loopin", "loopin-thumbnail.png"),
+        desktopAlt: "LoopIn 케이스 스터디 대표 비주얼",
+      },
+      sectionFigures: {
+        iaUserFlow: {
+          src: projectPublicUrl("loopin", "loopin-flow.png"),
+          alt: "Learning Flows 큐레이션 경로 화면",
+        },
+        uiDesign: {
+          src: projectPublicUrl("loopin", "loopin-learn-view.png"),
+          alt: "Learn View 독립 학습 레이아웃 화면",
+        },
+      },
+    },
+    sectionImages: {
+      solution: [
+        {
+          src: projectPublicUrl("loopin", "loopin-search.png"),
+          alt: "SearchOverlay 탐색 화면",
+        },
+        {
+          src: projectPublicUrl("loopin", "loopin-my-loop.png"),
+          alt: "My Loop 개인 학습 아카이브 화면",
+        },
+      ],
+    },
+    sectionImageLayout: {
+      solution: "row",
+    },
+    serviceExperience: {
+      title: "실제 서비스 체험",
+      description: p(
+        "LoopIn은 반응형 환경에 맞춰 설계한 탐색 중심 EduTech 플랫폼입니다.",
+        "자료 탐색부터 저장, Learn View 학습, Flow 큐레이션, My Loop 아카이브까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
+      ),
+      demoVideos: {
+        layout: "split",
+        videos: [
+          { src: projectPublicUrl("loopin", "LOOPIN-demo-pc.MP4"), label: "DESKTOP", ariaLabel: "데스크톱 서비스 데모 영상" },
+          { src: projectPublicUrl("loopin", "LOOPIN-demo-mobile.mp4"), label: "MOBILE", ariaLabel: "모바일 서비스 데모 영상" },
+        ],
+      },
+      mobileNotice:
+        "데스크탑과 모바일 화면에 모두 대응한 반응형 서비스이므로 원하는 기기 환경에서 확인할 수 있습니다.",
+      serviceLinks: LOOPIN_SERVICE_LINKS,
     },
   }),
 };
