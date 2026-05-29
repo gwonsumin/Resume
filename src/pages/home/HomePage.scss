@@ -286,3 +286,11 @@
     font-size: 0.78rem;
   }
 }
+
+@media (max-width: 47.99rem) {
+  .project-grid .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
