@@ -17,6 +17,8 @@ export const SANGSANGMADANG_DEPLOY_ORIGIN =
 /** LoopIn production origin (no trailing slash) — shared with case study deep links. */
 export const LOOPIN_DEPLOY_ORIGIN = "https://loop-in-mu.vercel.app" as const;
 
+const LOOPIN_PERIOD_LABEL = "2026.05 · 약 3주";
+
 export const selectedProjects: readonly ProjectPreview[] = [
   {
     id: "goreon",
@@ -144,7 +146,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       "Figma",
     ],
     tags: ["UX/UI Design", "EduTech", "Information Architecture", "Frontend"],
-    period: "2025 포트폴리오 프로젝트",
+    period: LOOPIN_PERIOD_LABEL,
     role: "UX Flow Design · UI Design · Frontend Implementation",
     visual: {
       label: "04",
@@ -159,7 +161,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     thumbnailSrc: projectPublicUrl("loopin", "loopin-thumbnail.png"),
     caseStudyTeamInfo: {
       kind: "solo",
-      periodLabel: "2025 · 포트폴리오",
+      periodLabel: LOOPIN_PERIOD_LABEL,
       myRoleBadge: "UX DESIGN · IA · FRONTEND",
     },
   },
