@@ -208,6 +208,7 @@ export function HomePage() {
 
       <Section
         id="about"
+        volNumber={1}
         label="ABOUT · PROFILE"
         handNote="소개 기록"
         meta="ISSUE 01 · SEOUL · STATE NOTES"
@@ -224,6 +225,7 @@ export function HomePage() {
 
       <Section
         id="skills"
+        volNumber={2}
         label="SKILLS · TOOL DRAWER"
         handNote="도구 서랍"
         title="디자인과 구현을 연결하는 도구들"
@@ -236,6 +238,7 @@ export function HomePage() {
 
       <Section
         id="case-study"
+        volNumber={3}
         label="CASE STUDY · CATALOG"
         handNote="케이스 카탈로그"
         meta="04 CASES · SELECTED WORK"
@@ -324,6 +327,7 @@ export function HomePage() {
 
       <Section
         id="archive"
+        volNumber={4}
         label="ARCHIVE · PIECES"
         handNote="아카이브 조각"
         meta="23 PIECES · OBSERVATION LOG"

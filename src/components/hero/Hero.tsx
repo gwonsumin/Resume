@@ -74,7 +74,7 @@ export function Hero() {
                   </span>
                   <span className="hero__title-line">흐름으로 설계합니다.</span>
                 </span>
-                <span className="hero__title-set hero__title-set--mobile">
+                <span className="hero__title-set hero__title-set--mobile" aria-hidden="true">
                   <span className="hero__title-line">
                     사용자의{" "}
                     <span className="hero__marker">상태</span>

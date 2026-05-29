@@ -26,7 +26,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     description:
       "AI 기반 전자기기 쇼핑에서 사용자의 상황을 이해하고 더 쉬운 선택을 돕는 추천 경험",
     subDescription:
-      "복잡한 스펙과 비교 과정에서 발생하는 사용자의 선택 부담을 줄이기 위해, AI 대화 기반 추천과 비교 구조를 결합한 쇼핑 서비스",
+      "AI 대화로 조건을 정리하고, 비교 구조로 선택 부담을 줄이는 전자기기 추천 쇼핑 서비스",
     techStack: [
       "React",
       "Redux Toolkit",
@@ -63,6 +63,8 @@ export const selectedProjects: readonly ProjectPreview[] = [
     title: "TONE",
     description:
       "TONE은 팬톤 컬러 기반의 데일리 톤과 플레이리스트를 제공하고, 사용자가 하루의 감정을 색과 음악으로 기록할 수 있도록 설계한 모바일 뮤직 플랫폼입니다.",
+    subDescription:
+      "팬톤 컬러 기반 Daily Tone과 플레이리스트로 하루의 감정을 색과 음악으로 기록하는 앱",
     techStack: ["Vue", "Pinia", "PHP", "MySQL", "OpenAI API", "Cloudflare R2"],
     tags: ["UX/UI", "Vue", "PHP", "Emotion Record", "Music Platform"],
     period: "2026.02 - 2026.03 (약 7주)",
@@ -99,7 +101,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     caseStudyTeamInfo: {
       kind: "team",
       teamCount: 4,
-      periodLabel: "2026.02 ~ 2026.03 · 48일",
+      periodLabel: "2026.02 ~ 2026.03 · 49일",
       myRoleBadge: "UX DESIGN · UI SYSTEM · PROTOTYPE",
     },
   },
@@ -109,7 +111,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     description:
       "공간 경험을 웹에서 탐색 가능한 흐름으로 재구성한 문화 플랫폼 UX 리디자인 프로젝트",
     subDescription:
-      "브랜드 아이덴티티와 사용자 경험이 분리되어 있던 기존 웹사이트를 사용자 탐색 흐름과 콘텐츠 구조 중심으로 재설계해 더 직관적인 공간 경험을 제공",
+      "사용자 탐색 흐름과 콘텐츠 구조 중심으로 재설계한 문화 공간 브랜드 웹사이트 UX 리디자인",
     techStack: ["HTML + CSS", "JavaScript", "jQuery", "PHP", "MySQL"],
     tags: ["UX/UI Design", "Branding", "Redesign", "Frontend"],
     period: "2026.01 - 2026.02 (약 4주)",
@@ -136,7 +138,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
     description:
       "직무 학습 자료를 발견 → 저장 → 이어가기 흐름으로 연결하는 탐색 중심 EduTech 플랫폼",
     subDescription:
-      "검색 중심 기존 학습 플랫폼의 한계를 탐색 UX로 재설계. My Loop 아카이브, Learn View 독립 레이아웃, Flow 커스텀 큐레이션으로 학습 흐름을 끊김 없이 연결",
+      "발견 → 저장 → 이어가기 흐름으로 연결하는 탐색 중심 직무 학습 EduTech 플랫폼",
     techStack: [
       "Next.js",
       "TanStack Query",
