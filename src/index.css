@@ -76,6 +76,7 @@ html.scroll-snap-home {
 @media (max-width: 44rem) {
   html.scroll-snap-home {
     scroll-padding-top: 64px;
+    scroll-snap-type: none;
   }
 }
 
