@@ -11,6 +11,7 @@ type SectionHeaderProps = {
   catalogStamp?: string;
   action?: ReactNode;
   enableReveal?: boolean;
+  volNumber?: number;
 };
 
 const DEFAULT_CATALOG_STAMP = "BY SUMIN · ✿ OPEN TODAY";
@@ -25,10 +26,11 @@ export function SectionHeader({
   catalogStamp = DEFAULT_CATALOG_STAMP,
   action,
   enableReveal = false,
+  volNumber,
 }: SectionHeaderProps) {
   const issue = (
     <p className="section-header__issue">
-      <span className="section-header__vol">Vol. 04</span>
+      <span className="section-header__vol">Vol. {volNumber ?? "04"}</span>
       {handNote ? <span className="section-header__hand">{handNote}</span> : null}
     </p>
   );

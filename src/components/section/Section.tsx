@@ -14,6 +14,7 @@ type SectionProps = {
   children: ReactNode;
   className?: string;
   revealHeader?: boolean;
+  volNumber?: number;
 };
 
 export function Section({
@@ -28,6 +29,7 @@ export function Section({
   children,
   className,
   revealHeader = false,
+  volNumber,
 }: SectionProps) {
   const sectionClass = ["content-section", className].filter(Boolean).join(" ");
   const headingId = `${id}-heading`;
@@ -42,6 +44,7 @@ export function Section({
       catalogStamp={catalogStamp}
       action={headerAction}
       enableReveal={revealHeader}
+      volNumber={volNumber}
     />
   ) : null;
 

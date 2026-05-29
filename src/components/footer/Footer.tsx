@@ -29,7 +29,7 @@ type FooterProps = {
 
 const EMAIL = "gsum212@gmail.com";
 /** 카드·링크용 표기 */
-const PHONE_DISPLAY = "82 + 10-8327-8238";
+const PHONE_DISPLAY = "+82 10-8327-8238";
 const PHONE_TEL = "+821083278238";
 const GITHUB_HREF = "https://github.com/gwonsumin";
 const INSTAGRAM_GSUM = "https://www.instagram.com/gsum_00/";

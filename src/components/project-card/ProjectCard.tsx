@@ -95,7 +95,7 @@ export function ProjectCard({
       </div>
       <div className="project-card__content">
         <div className="project-card__field project-card__field--problem">
-          <span className="project-card__field-label">Problem</span>
+          <span className="project-card__field-label">Project</span>
           <p className="project-card__description">{shortDescription}</p>
         </div>
         {roleTags.length > 0 ? (

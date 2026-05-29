@@ -14,7 +14,7 @@ const ABOUT_KEYWORDS = [
 const QUICK_INFO = [
   { label: "ROLE", value: "UX/UI Designer" },
   { label: "EMAIL", value: "gsum212@gmail.com" },
-  { label: "PHONE", value: "82+01-8327-8238" },
+  { label: "PHONE", value: "+82 10-8327-8238" },
 ] as const;
 
 const FOUNDATION_GROUPS = [
