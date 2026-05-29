@@ -742,7 +742,7 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
   }),
   loopin: makeCaseStudy("LoopIn", {
     intro: p(
-      "LoopIn은 직무 학습 자료의 탐색 경험을 재설계한 EduTech 포트폴리오 프로젝트입니다.",
+      "LoopIn은 2026년 5월 약 3주 동안 직무 학습 자료의 탐색 경험을 재설계한 EduTech 프로젝트입니다.",
       "발견 → 저장 → 이어가기 흐름을 끊김 없이 연결해, 학습 시작보다 탐색과 지속에 집중한 UX를 설계했습니다.",
     ),
     sectionTitles: {
