@@ -448,6 +448,27 @@
       right: max(16px, env(safe-area-inset-right, 0px));
     }
   }
+
+  .archive-modal__hero {
+    max-height: 35dvh;
+  }
+
+  .archive-modal__page {
+    padding: 20px 20px;
+
+    &--right {
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 80px);
+    }
+  }
+
+  .archive-modal__hand {
+    font-size: 15px;
+    margin-top: 10px;
+  }
+
+  .archive-modal__title {
+    font-size: 22px;
+  }
 }
 
 /* Reduced motion */

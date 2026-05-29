@@ -330,7 +330,7 @@ export function HomePage() {
         volNumber={4}
         label="ARCHIVE · PIECES"
         handNote="아카이브 조각"
-        meta="23 PIECES · OBSERVATION LOG"
+        meta="12 PIECES · OBSERVATION LOG"
         title="ARCHIVE"
         subtitle="작은 관찰과 기록이 쌓여 경험 설계로 이어집니다."
         revealHeader

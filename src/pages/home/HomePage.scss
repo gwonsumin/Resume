@@ -114,6 +114,7 @@
   list-style: none;
   margin: 0;
   padding: 20px 0 20px;
+  padding-right: clamp(20px, 5vw, 40px);
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -131,7 +132,7 @@
 .project-grid__item {
   margin: 0;
   min-width: 0;
-  flex: 0 0 clamp(260px, 80vw, 340px);
+  flex: 0 0 clamp(260px, 75vw, 320px);
   scroll-snap-align: start;
 }
 

@@ -262,7 +262,7 @@
 }
 
 @media (hover: none), (pointer: coarse) {
-  .toolkit-capsule:active .toolkit-capsule__fill {
+  .toolkit-capsule .toolkit-capsule__fill {
     width: calc(var(--capsule-level) * 1%);
   }
 }
