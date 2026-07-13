@@ -13,10 +13,17 @@ type RootLayoutProps = {
 }
 
 export function RootLayout({ siteTitle }: RootLayoutProps) {
-  const [splashOpen, setSplashOpen] = useState(true)
   const { pathname } = useLocation()
+  const [splashOpen, setSplashOpen] = useState(() => {
+    const alreadySeen = sessionStorage.getItem('splash-seen') === '1'
+    if (alreadySeen || pathname !== '/') {
+      return false
+    }
+    return true
+  })
 
   const handleSplashComplete = useCallback(() => {
+    sessionStorage.setItem('splash-seen', '1')
     setSplashOpen(false)
   }, [])
 
