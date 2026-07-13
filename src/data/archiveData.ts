@@ -2,6 +2,7 @@ import backThenCoral from "../assets/archive/BackThenTingsILiked-coral.png";
 import backThenMint from "../assets/archive/BackThenTingsILiked-mint.png";
 import christmasNutcracker from "../assets/archive/ChristmasNutcracker.png";
 import exhibitionWall from "../assets/archive/Exhibition Wall.png";
+import exhibitionWallFull from "../assets/archive/Exhibition Wall-full.png";
 import floatingState from "../assets/archive/Floating State.png";
 import floatingStateWall from "../assets/archive/Floating State-Wall.png";
 import gardenWalker from "../assets/archive/GardenWalker.png";
@@ -26,6 +27,8 @@ export type ArchiveRecordCard = {
   year: string;
   memo: string;
   mainImage: string;
+  /** ArchiveModal hero처럼 mainImage보다 큰 표시가 필요할 때만 사용하는 고해상도 버전 */
+  mainImageFull?: string;
   detailImages?: string[];
   tags: string[];
   imageAlt: string;
@@ -103,6 +106,7 @@ export const archiveColumns: ArchiveColumnData[] = [
         year: "2024",
         memo: "전시 당일, 벽에 나란히 걸린 순간.",
         mainImage: exhibitionWall,
+        mainImageFull: exhibitionWallFull,
         tags: ["Exhibition", "Venue"],
         imageAlt: "전시 벽면과 두 포스터",
         accentColor: coral,

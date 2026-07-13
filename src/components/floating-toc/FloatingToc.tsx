@@ -2,6 +2,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FLOATING_CONTROLS_SCROLL_THRESHOLD_PX } from "../../constants/floatingUi";
 import { ROUTES } from "../../config/routes";
+import {
+  getHeaderHeight,
+  scrollToSection as scrollToSectionUtil,
+} from "../../utils/scrollToSection";
 import "./FloatingToc.scss";
 
 const TOC_SECTIONS = [
@@ -12,11 +16,6 @@ const TOC_SECTIONS = [
   { id: "archive", label: "Archive" },
   { id: "contact", label: "Contact" },
 ] as const;
-
-function getHeaderHeight() {
-  const header = document.querySelector(".site-header");
-  return header instanceof HTMLElement ? header.offsetHeight : 0;
-}
 
 export function FloatingToc() {
   const location = useLocation();
@@ -37,21 +36,7 @@ export function FloatingToc() {
         return;
       }
 
-      const target = document.getElementById(sectionId);
-      if (!target) return;
-
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const top =
-        target.getBoundingClientRect().top +
-        window.scrollY -
-        getHeaderHeight() -
-        16;
-
-      window.scrollTo({
-        top: Math.max(top, 0),
-        behavior: reduce ? "auto" : "smooth",
-      });
-
+      scrollToSectionUtil(sectionId);
       activeSectionRef.current = sectionId;
       setActiveSection(sectionId);
       setOpen(false);

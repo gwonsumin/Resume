@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { skills, type Skill } from "./skillsData";
 import "./Skills.scss";
 
@@ -28,9 +28,12 @@ const TOOLKIT_ROWS = [
 
 function filterRowSkills(
   categories: readonly Skill["category"][],
+  showAll: boolean,
 ): Skill[] {
-  return skills.filter((skill) =>
-    (categories as readonly string[]).includes(skill.category),
+  return skills.filter(
+    (skill) =>
+      (categories as readonly string[]).includes(skill.category) &&
+      (showAll || skill.featured),
   );
 }
 
@@ -102,6 +105,9 @@ function ToolkitRow({
 }
 
 export function Skills() {
+  const [showAll, setShowAll] = useState(false);
+  const hiddenCount = skills.filter((skill) => !skill.featured).length;
+
   return (
     <div className="toolkit-table">
       <span className="toolkit-table__tape" aria-hidden="true" />
@@ -127,10 +133,21 @@ export function Skills() {
             label={row.label}
             handLabel={row.handLabel}
             pinRotate={row.pinRotate}
-            items={filterRowSkills(row.categories)}
+            items={filterRowSkills(row.categories, showAll)}
           />
         ))}
       </div>
+
+      {hiddenCount > 0 ? (
+        <button
+          type="button"
+          className="toolkit-table__toggle"
+          aria-expanded={showAll}
+          onClick={() => setShowAll((prev) => !prev)}
+        >
+          {showAll ? "접기" : `더보기 +${hiddenCount}`}
+        </button>
+      ) : null}
     </div>
   );
 }

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { RESUME_FILENAME, RESUME_HREF } from "../../config/assets";
 import { useRevealReady } from "../reveal/RevealReadyContext";
+import { scrollToSection } from "../../utils/scrollToSection";
 import heroChr from "../../assets/images/heroChr.png";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import "./Hero.scss";
@@ -15,6 +16,13 @@ function HeroResumeBtn({ placement }: { placement: "masthead" | "footer" }) {
       RESUME
     </a>
   );
+}
+
+function onContinueLinkClick(sectionId: string) {
+  return (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    scrollToSection(sectionId);
+  };
 }
 
 export function Hero() {
@@ -103,7 +111,7 @@ export function Hero() {
               </div>
 
               <p className="hero__lede">
-                사용자 문제를 정의하고, 경험 흐름을 설계하며, 디자인과 구현을
+                문제를 정의하고 경험 흐름을 설계하며, 디자인과 구현을 하나로
                 연결합니다.
               </p>
             </div>
@@ -137,8 +145,7 @@ export function Hero() {
           <footer className="hero__footer">
             <div className="hero__diary-row">
               <p className="hero__diary">
-                문제 정의에서 인터페이스 구현까지, 하나의 경험 흐름으로
-                연결하는 작업 기록입니다.
+                전체 이력은 이력서에서 더 자세히 확인하실 수 있어요.
               </p>
               <HeroResumeBtn placement="footer" />
             </div>
@@ -151,27 +158,35 @@ export function Hero() {
               >
                 ↓ VIEW CASE STUDIES
               </a>
-              <a
-                className="hero__continue-link hero__continue-link--secondary"
-                href="#about"
-              >
-                ABOUT
-              </a>
-              <span className="hero__continue-sep" aria-hidden="true">
-                ·
-              </span>
-              <a className="hero__continue-link" href="#archive">
-                ARCHIVE
-              </a>
-              <span className="hero__continue-sep" aria-hidden="true">
-                ·
-              </span>
-              <a
-                className="hero__continue-link hero__continue-link--contact"
-                href="#contact"
-              >
-                CONTACT
-              </a>
+              <div className="hero__continue-secondary">
+                <a
+                  className="hero__continue-link hero__continue-link--secondary"
+                  href="#about"
+                  onClick={onContinueLinkClick("about")}
+                >
+                  ABOUT
+                </a>
+                <span className="hero__continue-sep" aria-hidden="true">
+                  ·
+                </span>
+                <a
+                  className="hero__continue-link"
+                  href="#archive"
+                  onClick={onContinueLinkClick("archive")}
+                >
+                  ARCHIVE
+                </a>
+                <span className="hero__continue-sep" aria-hidden="true">
+                  ·
+                </span>
+                <a
+                  className="hero__continue-link hero__continue-link--contact"
+                  href="#contact"
+                  onClick={onContinueLinkClick("contact")}
+                >
+                  CONTACT
+                </a>
+              </div>
             </nav>
           </footer>
         </div>

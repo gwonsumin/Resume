@@ -32,6 +32,8 @@ export type Skill = {
   level: number;
   icon?: string;
   category: "frontend" | "styling" | "design" | "tool";
+  /** true면 TOOLKIT TABLE 1차 노출에 포함, 나머지는 "더보기" 토글로 노출 */
+  featured?: boolean;
 };
 
 export const skills: Skill[] = [
@@ -42,6 +44,7 @@ export const skills: Skill[] = [
     level: 95,
     icon: figmaLogo,
     category: "design",
+    featured: true,
   },
   {
     id: "photoshop",
@@ -82,6 +85,7 @@ export const skills: Skill[] = [
     level: 80,
     icon: reactLogo,
     category: "frontend",
+    featured: true,
   },
   {
     id: "javascript",
@@ -114,6 +118,7 @@ export const skills: Skill[] = [
     level: 65,
     icon: nextjsLogo,
     category: "frontend",
+    featured: true,
   },
   {
     id: "nodejs",
@@ -154,6 +159,7 @@ export const skills: Skill[] = [
     level: 90,
     icon: cssLogo,
     category: "styling",
+    featured: true,
   },
   {
     id: "scss",
@@ -171,6 +177,7 @@ export const skills: Skill[] = [
     level: 80,
     icon: githubLogo,
     category: "tool",
+    featured: true,
   },
   {
     id: "render",
@@ -195,6 +202,7 @@ export const skills: Skill[] = [
     level: 80,
     icon: notionLogo,
     category: "tool",
+    featured: true,
   },
   {
     id: "chatgpt",

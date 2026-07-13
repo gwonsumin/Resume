@@ -98,6 +98,12 @@ html.scroll-snap-home .site-footer {
   scroll-snap-stop: normal;
 }
 
+/* nav 클릭으로 인한 프로그래매틱 smooth scroll 도중 snap이 애니메이션을 가로채
+   중간 섹션(예: About)에서 멈추는 문제를 막기 위해 스크롤 중에는 잠시 snap을 끈다 */
+html.scroll-snap-suspended {
+  scroll-snap-type: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html.scroll-snap-home {
     scroll-snap-type: none;
