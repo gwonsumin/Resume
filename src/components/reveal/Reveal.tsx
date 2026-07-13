@@ -82,7 +82,25 @@ export function Reveal({
       return;
     }
 
-    return attachRevealObserver(node, setIsVisible, once);
+    let timeoutId: number | undefined = window.setTimeout(() => {
+      timeoutId = undefined;
+      setIsVisible(true);
+    }, 1200);
+
+    const handleVisible = (v: boolean) => {
+      if (v && timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+        timeoutId = undefined;
+      }
+      setIsVisible(v);
+    };
+
+    const detach = attachRevealObserver(node, handleVisible, once);
+
+    return () => {
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      detach();
+    };
   }, [node, once, revealReady]);
 
   const totalDelay = delay + staggerIndex * staggerMs;
@@ -148,7 +166,25 @@ export function useScrollReveal(options: UseScrollRevealOptions = {}) {
       return;
     }
 
-    return attachRevealObserver(node, setIsVisible, once);
+    let timeoutId: number | undefined = window.setTimeout(() => {
+      timeoutId = undefined;
+      setIsVisible(true);
+    }, 1200);
+
+    const handleVisible = (v: boolean) => {
+      if (v && timeoutId !== undefined) {
+        window.clearTimeout(timeoutId);
+        timeoutId = undefined;
+      }
+      setIsVisible(v);
+    };
+
+    const detach = attachRevealObserver(node, handleVisible, once);
+
+    return () => {
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      detach();
+    };
   }, [node, once, revealReady]);
 
   return { ref, isVisible };
