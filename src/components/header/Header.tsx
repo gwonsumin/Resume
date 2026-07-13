@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoDefault from "../../assets/logo/logo-default.svg";
 import { ROUTES } from "../../config/routes";
+import { scrollToSection } from "../../utils/scrollToSection";
 import "./Header.scss";
 
 type HeaderProps = {
@@ -23,20 +24,6 @@ export function Header({ siteTitle }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("hero");
   const activeSectionRef = useRef<string>("hero");
-
-  const scrollToSection = (sectionId: string, smooth: boolean) => {
-    const target = document.getElementById(sectionId);
-    if (!target) return;
-
-    const headerHeight = headerRef.current?.offsetHeight ?? 0;
-    const top =
-      target.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
-
-    window.scrollTo({
-      top: Math.max(top, 0),
-      behavior: smooth ? "smooth" : "auto",
-    });
-  };
 
   useEffect(() => {
     activeSectionRef.current = activeSection;
@@ -116,7 +103,7 @@ export function Header({ siteTitle }: HeaderProps) {
     const sectionId = location.hash.replace("#", "");
 
     window.requestAnimationFrame(() => {
-      scrollToSection(sectionId, true);
+      scrollToSection(sectionId);
       activeSectionRef.current = sectionId;
       setActiveSection(sectionId);
     });
@@ -130,7 +117,7 @@ export function Header({ siteTitle }: HeaderProps) {
       return;
     }
 
-    scrollToSection(sectionId, true);
+    scrollToSection(sectionId);
     activeSectionRef.current = sectionId;
     setActiveSection(sectionId);
   };

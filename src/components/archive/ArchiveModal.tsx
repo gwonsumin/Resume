@@ -35,6 +35,7 @@ export function ArchiveModal({
 
   const { variant, onLoad: heroOnLoad, imgRef: heroRef } = useImageRatio();
   const isLandscape = variant === "landscape";
+  const heroSrc = item.mainImageFull ?? item.mainImage;
 
   // year stamp text — try to derive "2024" / "SPR" tokens; falls back gracefully
   const yearTokens = item.year.split(/\s+/).slice(0, 2);
@@ -147,7 +148,7 @@ export function ArchiveModal({
                 <img
                   ref={heroRef}
                   className="archive-modal__hero archive-modal__hero--ls"
-                  src={item.mainImage}
+                  src={heroSrc}
                   alt={item.imageAlt}
                   onLoad={heroOnLoad}
                 />
@@ -210,7 +211,7 @@ export function ArchiveModal({
                 <img
                   ref={heroRef}
                   className="archive-modal__hero"
-                  src={item.mainImage}
+                  src={heroSrc}
                   alt={item.imageAlt}
                   onLoad={heroOnLoad}
                 />

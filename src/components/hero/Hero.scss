@@ -363,8 +363,16 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.35em 0.55em;
+  row-gap: 0.35em;
   margin: 0;
+}
+
+.hero__continue-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35em 0.55em;
+  margin-left: clamp(24px, 3vw, 32px);
 }
 
 .hero__continue-link,
@@ -568,6 +576,10 @@
   }
 
   .hero__continue {
+    row-gap: 0.3em;
+  }
+
+  .hero__continue-secondary {
     gap: 0.3em 0.45em;
   }
 }
