@@ -23,29 +23,6 @@
   pointer-events: none;
 }
 
-.toolkit-table__clip {
-  position: absolute;
-  top: -6px;
-  right: clamp(20px, 4vw, 40px);
-  z-index: 2;
-  width: 14px;
-  height: 28px;
-  border: 2px solid rgb(59 47 47 / 0.35);
-  border-radius: 2px;
-  background: linear-gradient(180deg, #fff 0%, #e8e0d6 100%);
-  transform: rotate(12deg);
-  pointer-events: none;
-}
-
-.toolkit-table__clip::after {
-  content: "";
-  position: absolute;
-  inset: 5px 3px auto;
-  height: 8px;
-  border-radius: 50%;
-  background: rgb(59 47 47 / 0.12);
-}
-
 .toolkit-table__screen-reader-list {
   position: absolute;
   width: 1px;
@@ -198,7 +175,7 @@
   align-items: stretch;
   min-width: clamp(132px, 12.5vw, 172px);
   overflow: hidden;
-  border: 1px dashed #d4b8a0;
+  border: 1px solid #d4b8a0;
   border-radius: 10px;
   background: #fff8ec;
   transform: none;
@@ -307,11 +284,6 @@
   .toolkit-table__tape {
     width: 48px;
     height: 14px;
-  }
-
-  .toolkit-table__clip {
-    top: -10px;
-    right: 10px;
   }
 
   .toolkit-table__capsules {
