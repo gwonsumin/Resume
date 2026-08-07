@@ -111,7 +111,6 @@ export function Skills() {
   return (
     <div className="toolkit-table">
       <span className="toolkit-table__tape" aria-hidden="true" />
-      <span className="toolkit-table__clip" aria-hidden="true" />
 
       <ul className="toolkit-table__screen-reader-list" role="list">
         {skills.map((skill) => (
