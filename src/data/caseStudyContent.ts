@@ -7,6 +7,7 @@ import {
   GOREON_DEPLOY_ORIGIN,
   LOOPIN_DEPLOY_ORIGIN,
   SANGSANGMADANG_DEPLOY_ORIGIN,
+  TAEMIN_DEPLOY_ORIGIN,
   TONE_DEPLOY_ORIGIN,
 } from "./projects";
 
@@ -233,6 +234,24 @@ const SANGSANGMADANG_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
     type: "external",
     description:
       "콘텐츠를 올리고 다듬는 운영자의 입구로, 사용자에게 보이는 탐색 구조 뒤쪽에서 플랫폼이 어떻게 돌아가는지 보여 줍니다.",
+  },
+];
+
+const TAEMIN_SERVICE_LINKS: readonly CaseStudyServiceLink[] = [
+  {
+    label: "Home",
+    title: "메인 포스터",
+    href: `${TAEMIN_DEPLOY_ORIGIN}/`,
+    featured: true,
+    description: "투어 로고와 메인 비주얼이 노출되는 진입 화면입니다.",
+  },
+  {
+    label: "Tour Dates",
+    title: "투어 일정",
+    href: `${TAEMIN_DEPLOY_ORIGIN}/#tour-dates`,
+    featured: true,
+    description:
+      "Asia/North America/Latin America 지역 필터로 도시별 공연 일정을 탐색하는 화면입니다.",
   },
 ];
 
@@ -880,6 +899,108 @@ const caseStudies: Readonly<Record<string, CaseStudyContent>> = {
       testAccountLead:
         "테스트 계정으로 로그인한 뒤 저장·Learn View·Flow 큐레이션·My Loop 아카이브 흐름을 이어 확인할 수 있습니다.",
       serviceLinks: LOOPIN_SERVICE_LINKS,
+    },
+  }),
+  taemin: makeCaseStudy("TAEMIN World Tour <LiMiNaL>", {
+    intro: p(
+      "TAEMIN World Tour <LiMiNaL>은 태민의 2026-27 월드투어 공식 사이트로, 클라이언트가 개발자 개입 없이 콘텐츠를 직접 운영할 수 있는 구조 설계가 핵심 과제였던 외주 프로젝트입니다.",
+      "디자인부터 Next.js 프론트엔드 구현, 데이터 운영 구조 설계까지 전 과정을 단독으로 진행했습니다.",
+    ),
+    myRole: {
+      summary: p(
+        "UX 설계, UI 디자인, 프론트엔드 구현, 데이터 연동 구조 설계까지 전 구간을 단독으로 진행한 외주 프로젝트입니다.",
+        "비개발자 클라이언트가 안전하게 콘텐츠를 운영할 수 있는 구조를 만드는 데 초점을 맞췄습니다.",
+      ),
+      roles: [
+        {
+          title: "UX Flow Design",
+          tag: "lead",
+          level: 90,
+          detail:
+            "참고 사이트(serenadesandbodyrollstour.com)의 정보 구조를 분석해 투어 탐색 흐름을 설계했습니다.",
+        },
+        {
+          title: "UI Design",
+          tag: "lead",
+          level: 90,
+          detail:
+            "투어 비주얼의 무드를 유지하면서 지역·일정 정보의 판독성을 우선한 화면을 디자인했습니다.",
+        },
+        {
+          title: "Next.js Frontend",
+          tag: "lead",
+          level: 95,
+          detail:
+            "App Router · TypeScript · Tailwind로 기존 구조 최소 수정 원칙에 따라 구현했습니다.",
+        },
+        {
+          title: "Data Sync Architecture",
+          tag: "lead",
+          level: 95,
+          detail:
+            "구글시트 CSV를 papaparse로 파싱하고 zod로 검증, 실패 시 fallback 데이터로 전환되는 무중단 구조를 직접 설계·구현했습니다.",
+        },
+      ],
+    },
+    problem: p(
+      "클라이언트는 비개발자이며 예산·일정상 별도 관리자 페이지(CMS) 구축이 불가능한 조건이었습니다.",
+      "런칭 이후에도 공연 일정 등 콘텐츠를 클라이언트가 직접 수정해야 하는데, 코드 배포 없이 데이터만 바꿀 수 있는 구조가 필요했습니다.",
+    ),
+    insight: p(
+      "클라이언트가 매번 개발자에게 문의해야 하는 구조는 유지보수 비용과 응답 지연을 만들고, 결국 정보 최신성이 떨어져 투어 홍보 효과를 해칩니다.",
+      "동시에 외부 데이터 소스(구글시트)에 의존하는 구조는 형식 오류나 네트워크 이슈로 사이트 전체가 깨질 위험을 안고 있어, '쉬운 운영'과 '안정성'을 동시에 설계해야 했습니다.",
+    ),
+    iaUserFlow: p(
+      "사용자는 메인에서 투어 로고와 비주얼을 먼저 확인하고, Tour Dates 앵커로 이동해 지역 필터(ALL/Asia/North America/Latin America)로 도시별 일정을 탐색합니다.",
+      "일정이 미확정인 도시는 'Coming Soon'으로 노출되며, 구글시트 값이 갱신되면 코드 배포 없이 즉시 반영됩니다.",
+    ),
+    solution: p(
+      "관리자 모드 없이 구글시트 CSV를 데이터 소스로 채택해, 클라이언트가 익숙한 스프레드시트로 콘텐츠를 운영할 수 있도록 했습니다.",
+      "papaparse로 CSV를 파싱하고 zod 스키마로 런타임 검증해 시트 입력 실수를 차단했으며, 데이터 fetch 실패 시 최근 검증된 fallback 데이터로 자동 대체되는 구조를 만들어 실서비스 무중단을 확보했습니다.",
+    ),
+    uiDesign: p(
+      "지역 필터 탭과 도시별 카드로 정보 밀도를 조절해, 확정 일정과 'Coming Soon' 상태가 한눈에 구분되도록 구성했습니다.",
+      "투어 브랜드 무드(다크 톤, 레드 포인트 로고)를 유지하면서 일정 정보의 가독성을 우선한 레이아웃을 설계했습니다.",
+    ),
+    result: p(
+      "클라이언트가 개발자 개입 없이 시트 수정만으로 콘텐츠를 업데이트할 수 있는 운영 구조를 완성했습니다.",
+      "zod 검증 + fallback 구조로 데이터 이슈가 발생해도 사이트가 무중단으로 노출되는 것을 확인했습니다.",
+    ),
+    learnings: p(
+      "디자인 결정과 데이터 안정성 설계를 동시에 판단해야 하는 외주 특성상, 화려한 기능보다 '깨지지 않는 구조'가 실무에서 더 중요하다는 것을 배웠습니다.",
+      "비개발자 클라이언트를 위한 운영 구조 설계는 UX 설계 역량과 프론트엔드 구현 역량이 함께 있을 때 더 견고하게 완성된다는 것을 확인했습니다.",
+    ),
+    media: {
+      hero: {
+        desktopSrc: projectPublicUrl("taemin", "taemin-thumbnail.png"),
+        desktopAlt: "TAEMIN World Tour <LiMiNaL> 케이스 스터디 대표 비주얼",
+      },
+      sectionFigures: {
+        iaUserFlow: {
+          src: projectPublicUrl("taemin", "taemin-tour-dates.png"),
+          alt: "Tour Dates 지역 필터(ALL/Asia/North America/Latin America) 탐색 화면",
+        },
+        uiDesign: {
+          src: projectPublicUrl("taemin", "taemin-coming-soon.png"),
+          alt: "확정 일정 카드와 Coming Soon 카드가 함께 보이는 화면",
+        },
+      },
+    },
+    sectionImages: {
+      solution: [
+        {
+          src: projectPublicUrl("taemin", "taemin-sheet-source.png"),
+          alt: "클라이언트가 운영하는 구글시트 데이터 구조 (민감 정보 마스킹)",
+        },
+      ],
+    },
+    serviceExperience: {
+      title: "실제 서비스 체험",
+      description: p(
+        "TAEMIN World Tour <LiMiNaL>은 관리자 페이지 없이 구글시트 데이터 연동만으로 운영되는 공식 투어 사이트입니다.",
+        "투어 일정 탐색부터 지역 필터링까지 이어지는 핵심 UX 흐름을 실제 배포 화면에서 확인할 수 있습니다.",
+      ),
+      serviceLinks: TAEMIN_SERVICE_LINKS,
     },
   }),
 };

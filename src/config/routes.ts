@@ -6,4 +6,5 @@ export const ROUTES = {
   caseStudyTone: '/case-study/tone',
   caseStudySangsangmadang: '/case-study/sangsangmadang',
   caseStudyLoopin: '/case-study/loopin',
+  caseStudyTaemin: '/case-study/taemin',
 } as const
