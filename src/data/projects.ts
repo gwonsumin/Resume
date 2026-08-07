@@ -17,6 +17,9 @@ export const SANGSANGMADANG_DEPLOY_ORIGIN =
 /** LoopIn production origin (no trailing slash) — shared with case study deep links. */
 export const LOOPIN_DEPLOY_ORIGIN = "https://loop-in-mu.vercel.app" as const;
 
+/** TAEMIN World Tour <LiMiNaL> official site origin (no trailing slash). */
+export const TAEMIN_DEPLOY_ORIGIN = "https://taemintour.com" as const;
+
 const LOOPIN_PERIOD_LABEL = "2026.05 · 약 3주";
 
 export const selectedProjects: readonly ProjectPreview[] = [
@@ -124,7 +127,10 @@ export const selectedProjects: readonly ProjectPreview[] = [
     to: ROUTES.caseStudySangsangmadang,
     githubUrl: "https://github.com/gwonsumin/sangsangmadang-rebranding",
     deployUrl: `${SANGSANGMADANG_DEPLOY_ORIGIN}/`,
-    thumbnailSrc: projectPublicUrl("sangsangmadang", "sangsangmadang-thumbnail.png"),
+    thumbnailSrc: projectPublicUrl(
+      "sangsangmadang",
+      "sangsangmadang-thumbnail.png",
+    ),
     demoTestId: "test",
     demoTestPassword: "1234",
     caseStudyTeamInfo: {
@@ -165,6 +171,42 @@ export const selectedProjects: readonly ProjectPreview[] = [
       kind: "solo",
       periodLabel: LOOPIN_PERIOD_LABEL,
       myRoleBadge: "UX DESIGN · IA · FRONTEND",
+    },
+  },
+  {
+    id: "taemin",
+    title: "TAEMIN World Tour <LiMiNaL>",
+    description:
+      "태민의 2026-27 월드투어 공식 사이트. 비개발자 클라이언트가 구글시트만으로 투어 일정을 직접 운영할 수 있도록 설계·구현했습니다.",
+    subDescription:
+      "관리자 페이지 없이 구글시트 연동만으로 운영되는 아티스트 월드투어 공식 사이트",
+    techStack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "papaparse",
+      "zod",
+      "Google Sheets",
+    ],
+    tags: [
+      "UX/UI Design",
+      "Frontend Development",
+      "Official Tour Site",
+      "No-CMS Architecture",
+    ],
+    period: "2026.07 ~ 2026.08 · 12일",
+    role: "UX Flow Design · UI Design · Next.js Frontend · Data Sync Architecture",
+    visual: {
+      label: "05",
+      meta: "Tour Site",
+      variant: "ink",
+    },
+    to: ROUTES.caseStudyTaemin,
+    deployUrl: `${TAEMIN_DEPLOY_ORIGIN}/`,
+    thumbnailSrc: projectPublicUrl("taemin", "taemin-thumbnail.png"),
+    caseStudyTeamInfo: {
+      kind: "solo",
+      myRoleBadge: "UX DESIGN · FRONTEND · DATA ARCHITECTURE",
     },
   },
 ];
