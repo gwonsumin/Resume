@@ -76,11 +76,15 @@
   aspect-ratio: 16 / 9;
   line-height: 0;
   overflow: hidden;
+  transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 
 .project-card__visual--thumb {
   display: grid;
   place-items: center;
+  /* 실제 썸네일 원본 비율(4068×2268 = 113:63)과 정확히 맞춰 contain/cover
+     구분 없이 레터박스(배경 여백) 없이 꽉 차게 만든다. */
+  aspect-ratio: 113 / 63;
 }
 
 .project-card__visual--emotion-flow {
@@ -94,7 +98,6 @@
   width: 100%;
   max-width: 100%;
   max-height: 100%;
-  transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 
 .project-card__visual--emotion-flow .case-study__hero-emotion-flow--compact .case-study__hero-emotion-screen--center {
@@ -129,9 +132,9 @@
   width: 100%;
   height: 100%;
   max-height: 100%;
+  /* 박스 비율(113:63)이 원본 썸네일 비율과 동일해 cover여도 크롭이 없다. */
   object-fit: cover;
   object-position: center center;
-  transition: transform var(--motion-duration-base) var(--motion-ease);
 }
 .project-card__header {
   grid-area: meta;
@@ -365,8 +368,11 @@
     color: var(--project-accent);
   }
 
-  .project-card__link:hover .project-card__visual-img,
-  .project-card__link:hover .project-card__visual--emotion-flow .case-study__hero-emotion-flow {
+  /* overflow:hidden 클리핑 경계를 가진 .project-card__visual 자체를 확대한다.
+     이미지(또는 내부 요소)만 키우면 이미 100%로 꽉 찬 콘텐츠가 고정된
+     경계 밖으로 밀려나 잘려 보인다. 클리핑 박스를 통째로 키우면 이미
+     맞춰진 콘텐츠가 잘림 없이 그대로 확대돼 보인다. */
+  .project-card__link:hover .project-card__visual {
     transform: scale(1.015);
   }
 
