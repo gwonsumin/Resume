@@ -83,6 +83,21 @@
       </p>
     </td>
   </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="public/projects/taemin/taemin-thumbnail.png" alt="TAEMIN World Tour LiMiNaL official site mockup" width="100%" style="aspect-ratio: 16 / 10; object-fit: cover;" />
+      <br />
+      <h3>TAEMIN World Tour &lt;LiMiNaL&gt;</h3>
+      <p>비개발자도 구글시트 연동만으로 투어 일정을 직접 운영할 수 있는<br />아티스트 월드투어 공식 사이트</p>
+      <p>
+        <code>Official Tour Site</code>
+        <code>No-CMS Architecture</code>
+        <code>UX/UI Design</code>
+        <code>Frontend</code>
+      </p>
+    </td>
+    <td width="50%" valign="top"></td>
+  </tr>
 </table>
 
 ---
