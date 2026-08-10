@@ -22,6 +22,8 @@ export type ProjectPreview = {
   subDescription?: string
   /** Technology/tool categories used for project filtering. */
   techStack: readonly string[]
+  /** Primary stack category for the home filter pills (e.g. 'React', 'Vue', 'Next.js'). */
+  category: string
   /** Role and/or short labels, shown as tags. */
   tags: readonly string[]
   /** Optional project period shown in card meta. */

@@ -40,6 +40,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       "Figma",
     ],
     tags: ["UX/UI Design", "AI Recommendation", "E-commerce", "Frontend"],
+    category: "React",
     period: "2026.03 - 2026.04 (약 4주)",
     role: "UX Flow Design · UI Design · Prototype · Frontend Collaboration",
     visual: {
@@ -70,6 +71,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       "팬톤 컬러 기반 Daily Tone과 플레이리스트로 하루의 감정을 색과 음악으로 기록하는 앱",
     techStack: ["Vue", "Pinia", "PHP", "MySQL", "OpenAI API", "Cloudflare R2"],
     tags: ["UX/UI", "Vue", "PHP", "Emotion Record", "Music Platform"],
+    category: "Vue",
     period: "2026.02 - 2026.03 (약 7주)",
     role: "UX Flow Design · UI Design System · Prototype · Vue Frontend Collaboration",
     visual: {
@@ -117,6 +119,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       "사용자 탐색 흐름과 콘텐츠 구조 중심으로 재설계한 문화 공간 브랜드 웹사이트 UX 리디자인",
     techStack: ["HTML + CSS", "JavaScript", "jQuery", "PHP", "MySQL"],
     tags: ["UX/UI Design", "Branding", "Redesign", "Frontend"],
+    category: "HTML/CSS",
     period: "2026.01 - 2026.02 (약 4주)",
     role: "UX Research · UX Flow Design · UI Design · Frontend Implementation",
     visual: {
@@ -154,6 +157,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       "Figma",
     ],
     tags: ["UX/UI Design", "EduTech", "Information Architecture", "Frontend"],
+    category: "Next.js",
     period: LOOPIN_PERIOD_LABEL,
     role: "UX Flow Design · UI Design · Frontend Implementation",
     visual: {
@@ -194,6 +198,7 @@ export const selectedProjects: readonly ProjectPreview[] = [
       "Official Tour Site",
       "No-CMS Architecture",
     ],
+    category: "Next.js",
     period: "2026.07 ~ 2026.08 · 12일",
     role: "UX Flow Design · UI Design · Next.js Frontend · Data Sync Architecture",
     visual: {
