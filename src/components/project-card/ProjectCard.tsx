@@ -122,32 +122,34 @@ export function ProjectCard({
             </ul>
           </div>
         ) : null}
-        <div className="project-card__demo-creds" aria-label="데모 접속 정보">
-          <div className="project-card__demo-row">
-            <span className="project-card__demo-label">테스트 ID</span>
-            <span
-              className={
-                demoTestId
-                  ? 'project-card__demo-value'
-                  : 'project-card__demo-value project-card__demo-value--placeholder'
-              }
-            >
-              {demoTestId ?? '—'}
-            </span>
+        {demoTestId || demoTestPassword ? (
+          <div className="project-card__demo-creds" aria-label="데모 접속 정보">
+            <div className="project-card__demo-row">
+              <span className="project-card__demo-label">테스트 ID</span>
+              <span
+                className={
+                  demoTestId
+                    ? 'project-card__demo-value'
+                    : 'project-card__demo-value project-card__demo-value--placeholder'
+                }
+              >
+                {demoTestId ?? '—'}
+              </span>
+            </div>
+            <div className="project-card__demo-row">
+              <span className="project-card__demo-label">비밀번호</span>
+              <span
+                className={
+                  demoTestPassword
+                    ? 'project-card__demo-value'
+                    : 'project-card__demo-value project-card__demo-value--placeholder'
+                }
+              >
+                {demoTestPassword ?? '—'}
+              </span>
+            </div>
           </div>
-          <div className="project-card__demo-row">
-            <span className="project-card__demo-label">비밀번호</span>
-            <span
-              className={
-                demoTestPassword
-                  ? 'project-card__demo-value'
-                  : 'project-card__demo-value project-card__demo-value--placeholder'
-              }
-            >
-              {demoTestPassword ?? '—'}
-            </span>
-          </div>
-        </div>
+        ) : null}
       </div>
       <span className="project-card__reveal" aria-hidden="true">
         <span className="ui-hint--desktop">View Case Study</span>

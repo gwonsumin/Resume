@@ -12,10 +12,10 @@ import "./HomePage.scss";
 
 const PROJECT_FILTERS = [
   "All",
-  "React + Vue",
-  "PHP + MySQL",
-  "HTML + CSS",
-  "Next.js + MongoDB",
+  "React",
+  "Vue",
+  "HTML/CSS",
+  "Next.js",
 ] as const;
 
 type ProjectFilter = (typeof PROJECT_FILTERS)[number];
@@ -53,27 +53,7 @@ export function HomePage() {
       return selectedProjects;
     }
 
-    if (activeFilter === "React + Vue") {
-      return selectedProjects.filter(
-        (project) => project.techStack.includes("React") || project.techStack.includes("Vue"),
-      );
-    }
-
-    if (activeFilter === "PHP + MySQL") {
-      return selectedProjects.filter(
-        (project) => project.techStack.includes("PHP") && project.techStack.includes("MySQL"),
-      );
-    }
-
-    if (activeFilter === "Next.js + MongoDB") {
-      return selectedProjects.filter(
-        (project) =>
-          project.techStack.includes("MongoDB") &&
-          (project.techStack.includes("Next.js") || project.techStack.includes("Node.js")),
-      );
-    }
-
-    return selectedProjects.filter((project) => project.techStack.includes(activeFilter));
+    return selectedProjects.filter((project) => project.category === activeFilter);
   }, [activeFilter]);
 
   const projectGridItems = useMemo<ProjectGridItem[]>(() => {

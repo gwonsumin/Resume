@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { FloatingControls } from '../floating-controls/FloatingControls'
 import { CustomCursor } from '../cursor/CustomCursor'
@@ -6,6 +6,7 @@ import { Footer } from '../footer/Footer'
 import { Header } from '../header/Header'
 import { RevealReadyProvider } from '../reveal/RevealReadyContext'
 import { SplashIntro } from '../splash-intro/SplashIntro'
+import { trackPageview } from '../../utils/analytics'
 import './RootLayout.scss'
 
 type RootLayoutProps = {
@@ -33,6 +34,16 @@ export function RootLayout({ siteTitle }: RootLayoutProps) {
     return () => {
       document.documentElement.classList.remove('scroll-snap-home')
     }
+  }, [pathname])
+
+  const isFirstPathnameRef = useRef(true)
+  useEffect(() => {
+    // Skip the initial mount: gtag.js already fires a page_view for the first load.
+    if (isFirstPathnameRef.current) {
+      isFirstPathnameRef.current = false
+      return
+    }
+    trackPageview(pathname)
   }, [pathname])
 
   return (
