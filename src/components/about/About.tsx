@@ -1,4 +1,4 @@
-import profilePhoto from "../../assets/images/profile-photo.png";
+import profilePhoto from "../../assets/images/profile-photo.jpg";
 import tomatoSticker from "../../assets/icons/tomatoIcon-sticker-ver.svg";
 import aboutTitleIcon from "../../assets/about/about-title.svg";
 import careerCardClip from "../../assets/about/career-card-clip.svg";
