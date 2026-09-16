@@ -424,8 +424,8 @@
 
 @media (hover: hover) and (pointer: fine) {
   .about-summary__keywords li:hover {
-    background: rgba(59, 47, 47, 0.08);
-    border-color: var(--about-line);
+    border-color: rgb(59 47 47 / 0.18);
+    background-color: rgba(59, 47, 47, 0.1);
   }
 }
 

@@ -238,8 +238,8 @@
   line-height: 1.72;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow-wrap: break-word;
   word-break: keep-all;
@@ -441,7 +441,7 @@
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 47.99rem) {
   .project-card {
     gap: clamp(28px, 6.5vw, 40px);
   }

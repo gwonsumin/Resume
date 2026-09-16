@@ -417,6 +417,18 @@
     background: rgb(184 106 78 / 0.06);
     border-style: solid;
   }
+
+  .hero__continue-link:hover {
+    color: var(--hero-ink);
+    opacity: 1;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .hero__continue-link--primary:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
 }
 
 @media (hover: none), (pointer: coarse) {
