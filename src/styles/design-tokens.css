@@ -78,7 +78,7 @@
   --font-serif: "Noto Serif KR", "Apple SD Gothic Neo", "Batang", serif;
 
   /* Typography */
-  --font-family-base: 'Inter', 'Pretendard', 'Segoe UI', sans-serif;
+  --font-family-base: 'Satoshi', 'Pretendard', 'Apple SD Gothic Neo', system-ui, sans-serif;
   /*
     Hierarchy: heading > body 최소 1rem(16px) ≥ caption
     --font-size-h1 / --font-size-h2: clamp 플루이드 상한은 기존 타이포 스케일과 동일

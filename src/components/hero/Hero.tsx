@@ -155,6 +155,7 @@ export function Hero() {
               <a
                 className="hero__continue-link hero__continue-link--primary"
                 href="#case-study"
+                onClick={onContinueLinkClick("case-study")}
               >
                 ↓ VIEW CASE STUDIES
               </a>
