@@ -408,6 +408,61 @@ function CaseStudySectionImageList({
   )
 }
 
+function CaseStudyUxFlow({ steps }: { steps: readonly string[] }) {
+  const listRef = useRef<HTMLOListElement>(null)
+  const [edges, setEdges] = useState({ atStart: true, atEnd: true })
+
+  useEffect(() => {
+    const list = listRef.current
+    if (!list) return
+    const update = () => {
+      const atStart = list.scrollLeft <= 1
+      const atEnd = list.scrollLeft >= list.scrollWidth - list.clientWidth - 1
+      setEdges((prev) =>
+        prev.atStart === atStart && prev.atEnd === atEnd ? prev : { atStart, atEnd },
+      )
+    }
+    update()
+    list.addEventListener('scroll', update, { passive: true })
+    const observer = new ResizeObserver(update)
+    observer.observe(list)
+    return () => {
+      list.removeEventListener('scroll', update)
+      observer.disconnect()
+    }
+  }, [])
+
+  return (
+    <div
+      className={[
+        'case-study__ux-flow-wrap',
+        edges.atStart ? 'is-at-start' : '',
+        edges.atEnd ? 'is-at-end' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+    >
+      <ol
+        ref={listRef}
+        className="case-study__ux-flow-editorial"
+        role="list"
+        aria-label="핵심 사용자 경험 흐름"
+      >
+        {steps.map((step, index) => (
+          <li key={step} className="case-study__ux-flow-step">
+            <span className="case-study__ux-flow-step-label">{step}</span>
+            {index < steps.length - 1 ? (
+              <span className="case-study__ux-flow-step-arrow" aria-hidden="true">
+                →
+              </span>
+            ) : null}
+          </li>
+        ))}
+      </ol>
+    </div>
+  )
+}
+
 export function CaseStudyTemplate({
   project,
   content,
@@ -701,18 +756,7 @@ export function CaseStudyTemplate({
                   title={uxFlowEditorial.title}
                   eyebrow={CASE_STUDY_BLOCK_EYEBROWS.uxFlowEditorial}
                 >
-                  <ol className="case-study__ux-flow-editorial" role="list" aria-label="핵심 사용자 경험 흐름">
-                    {uxFlowEditorial.steps.map((step, index) => (
-                      <li key={step} className="case-study__ux-flow-step">
-                        <span className="case-study__ux-flow-step-label">{step}</span>
-                        {index < uxFlowEditorial.steps.length - 1 ? (
-                          <span className="case-study__ux-flow-step-arrow" aria-hidden="true">
-                            →
-                          </span>
-                        ) : null}
-                      </li>
-                    ))}
-                  </ol>
+                  <CaseStudyUxFlow steps={uxFlowEditorial.steps} />
                 </CaseStudyBlock>
               ) : null}
               {key === prototypeAnchorKey && content.prototype ? (

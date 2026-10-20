@@ -169,6 +169,36 @@
 
 .project-grid-wrapper {
   position: relative;
+  --project-grid-nav-gutter: 44px;
+  --project-grid-fade: 8%;
+}
+
+/* 좌우 가장자리 fade — 스크롤 가능한 방향에만 적용 (첫 카드 가림 방지) */
+.project-grid {
+  --fade-start: 0%;
+  --fade-end: 0%;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    #000 var(--fade-start),
+    #000 calc(100% - var(--fade-end)),
+    transparent 100%
+  );
+}
+
+.project-grid-wrapper.can-scroll-prev .project-grid {
+  --fade-start: var(--project-grid-fade);
+}
+
+.project-grid-wrapper.can-scroll-next .project-grid {
+  --fade-end: var(--project-grid-fade);
 }
 
 .project-grid-nav__btn {
@@ -177,29 +207,29 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
-  width: 40px;
-  height: 40px;
+  width: var(--project-grid-nav-gutter);
+  height: 64px;
   padding: 0;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1;
   color: var(--editorial-ink);
-  background: var(--editorial-paper);
-  border: var(--border-editorial);
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.12);
+  background: none;
+  border: 0;
   cursor: pointer;
   transition:
-    opacity 0.18s ease,
-    transform 0.18s ease;
+    opacity var(--motion-duration-fast) var(--motion-ease),
+    transform var(--motion-duration-fast) var(--motion-ease);
 }
 
 .project-grid-nav__btn--prev {
-  left: -20px;
+  left: 0;
 }
 
 .project-grid-nav__btn--next {
-  right: -20px;
+  right: 0;
 }
 
 .project-grid-nav__btn:disabled {
@@ -207,13 +237,27 @@
   pointer-events: none;
 }
 
+.project-grid-nav__btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
 @media (hover: hover) and (pointer: fine) {
+  /* 버튼을 카드 영역 바깥 거터에 배치 */
+  .project-grid-wrapper {
+    padding-inline: var(--project-grid-nav-gutter);
+  }
+
   .project-grid-nav__btn {
     display: flex;
   }
 
-  .project-grid-nav__btn:not(:disabled):hover {
-    transform: translateY(-50%) scale(1.08);
+  .project-grid-nav__btn--prev:not(:disabled):hover {
+    transform: translateY(-50%) translateX(-3px);
+  }
+
+  .project-grid-nav__btn--next:not(:disabled):hover {
+    transform: translateY(-50%) translateX(3px);
   }
 
   .project-grid {
@@ -265,7 +309,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-filters__pill {
+  .project-filters__pill,
+  .project-grid-nav__btn {
     transition: none;
   }
 }

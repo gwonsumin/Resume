@@ -19,12 +19,13 @@ import "./ArchiveBoard.scss";
 const CARD_W = 225;
 const CARD_GAP = 27; // between cards
 const SHELF_PAD_X = 30;
+const SHELF_PAD_TOP = 28; // 우측 상단 NAVIGATE 힌트 아래 여백
 
 /** i번째 카드의 셸프 내부 절대 위치 */
 function slotFor(i: number, cardId: string) {
   return {
     x: SHELF_PAD_X + i * (CARD_W + CARD_GAP),
-    y: [30, 50, 35, 55][i % 4],
+    y: SHELF_PAD_TOP + [30, 50, 35, 55][i % 4]!,
     rot: archiveCardRotationDeg(cardId),
   };
 }
@@ -243,6 +244,19 @@ export function ArchiveBoard() {
     [activeId],
   );
 
+  /* ---------- tab select: sticky header 아래로 탭 상단이 잘리면 다시 보이게 ---------- */
+  const tabsRef = useRef<HTMLDivElement | null>(null);
+  const selectTab = (id: string) => {
+    setActiveId(id);
+    const tabs = tabsRef.current;
+    if (!tabs) return;
+    const offset = parseFloat(getComputedStyle(tabs).scrollMarginTop) || 0;
+    if (tabs.getBoundingClientRect().top < offset) {
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      tabs.scrollIntoView({ block: "start", behavior: reduceMotion ? "auto" : "smooth" });
+    }
+  };
+
   /* ---------- drag-to-scroll ---------- */
   const shelfRef = useRef<HTMLDivElement | null>(null);
   const [shelfW, setShelfW] = useState(0);
@@ -325,7 +339,7 @@ export function ArchiveBoard() {
   /* ---------- modal nav ---------- */
   const openCard = (i: number) => {
     if (didDragRef.current) return;
-    setOpenIdx(i);
+    setOpenIdx((curr) => (curr === i ? null : i));
   };
   const closeModal = () => setOpenIdx(null);
   const navigateRel = (delta: number) =>
@@ -340,13 +354,13 @@ export function ArchiveBoard() {
   return (
     <div className="archive-board">
       {/* Tabs */}
-      <div className="archive-board__tabs" role="tablist" aria-label="아카이브 카테고리">
+      <div ref={tabsRef} className="archive-board__tabs" role="tablist" aria-label="아카이브 카테고리">
         {archiveColumns.map((col) => (
           <CategoryTab
             key={col.id}
             column={col}
             active={col.id === activeId}
-            onClick={() => setActiveId(col.id)}
+            onClick={() => selectTab(col.id)}
           />
         ))}
         <p className="archive-board__fastener-hint">{FASTENER_LABEL[activeColumn.fastener]}</p>
@@ -372,7 +386,12 @@ export function ArchiveBoard() {
         onPointerCancel={useDragScroll ? onPointerUp : undefined}
       >
         <p className="archive-board__strip-nav" aria-hidden="true">
-          <span className="ui-hint--desktop">← → · NAVIGATE</span>
+          <span className="ui-hint--desktop archive-board__strip-nav-hint">
+            <span className="archive-board__strip-nav-key">←</span>
+            <span className="archive-board__strip-nav-key">→</span>
+            <span className="archive-board__strip-nav-sep">·</span>
+            <span>NAVIGATE</span>
+          </span>
           <span className="ui-hint--touch">SWIPE · SCROLL</span>
         </p>
         <div

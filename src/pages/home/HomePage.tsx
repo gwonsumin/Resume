@@ -248,7 +248,15 @@ export function HomePage() {
             );
           })}
         </Reveal>
-        <div className="project-grid-wrapper">
+        <div
+          className={[
+            "project-grid-wrapper",
+            canScrollPrev ? "can-scroll-prev" : "",
+            canScrollNext ? "can-scroll-next" : "",
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
           <button
             type="button"
             className="project-grid-nav__btn project-grid-nav__btn--prev"
@@ -257,7 +265,7 @@ export function HomePage() {
             aria-label="이전 프로젝트"
             tabIndex={-1}
           >
-            ←
+            ‹
           </button>
           <ul
             className="project-grid"
@@ -300,7 +308,7 @@ export function HomePage() {
             aria-label="다음 프로젝트"
             tabIndex={-1}
           >
-            →
+            ›
           </button>
         </div>
       </Section>

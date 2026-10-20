@@ -10,8 +10,8 @@ body {
 @media (hover: hover) and (pointer: fine) {
   :root {
     /* Hotspot tuned to keep click point visually centered. */
-    --cursor-default: url("../assets/cursor/Default-cousor.svg") 54 10, auto;
-    --cursor-hover: url("../assets/cursor/Hover-cousor.svg") 24 14, pointer;
+    --cursor-default: url("../assets/cursor/Default-cursor.svg") 54 10, auto;
+    --cursor-hover: url("../assets/cursor/Hover-cursor.svg") 24 14, pointer;
   }
 
   :where(

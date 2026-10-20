@@ -57,6 +57,7 @@ export function ProjectCard({
   ].filter((link): link is { label: string; href: string } => Boolean(link.href))
 
   const hasQuickLinks = Boolean(deployUrl) || otherQuickLinks.length > 0
+  const hasAnyDemoCreds = Boolean(demoTestId || demoTestPassword)
 
   const cardInner = (
     <>
@@ -122,7 +123,7 @@ export function ProjectCard({
             </ul>
           </div>
         ) : null}
-        {demoTestId || demoTestPassword ? (
+        {hasAnyDemoCreds ? (
           <div className="project-card__demo-creds" aria-label="데모 접속 정보">
             <div className="project-card__demo-row">
               <span className="project-card__demo-label">테스트 ID</span>
@@ -133,7 +134,7 @@ export function ProjectCard({
                     : 'project-card__demo-value project-card__demo-value--placeholder'
                 }
               >
-                {demoTestId ?? '—'}
+                {demoTestId || '—'}
               </span>
             </div>
             <div className="project-card__demo-row">
@@ -145,7 +146,7 @@ export function ProjectCard({
                     : 'project-card__demo-value project-card__demo-value--placeholder'
                 }
               >
-                {demoTestPassword ?? '—'}
+                {demoTestPassword || '—'}
               </span>
             </div>
           </div>
