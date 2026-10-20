@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import defaultCursor from "../../assets/cursor/Default-cousor.svg";
-import hoverCursor from "../../assets/cursor/Hover-cousor.svg";
+import defaultCursor from "../../assets/cursor/Default-cursor.svg";
+import hoverCursor from "../../assets/cursor/Hover-cursor.svg";
 import "./CustomCursor.scss";
 
 const INTERACTIVE_SELECTOR = [

@@ -213,7 +213,7 @@
 
 .team-info-label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 0.625rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #9b7b5c;
@@ -228,7 +228,7 @@
 
 .team-info-solo-badge {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #b86a4e;
@@ -239,7 +239,7 @@
 
 .my-role-badge {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 0.625rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #b86a4e;
@@ -1035,6 +1035,39 @@
   gap: clamp(20px, 2.6vw, 28px);
 }
 
+.case-study__ux-flow-wrap {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.case-study__ux-flow-wrap::before,
+.case-study__ux-flow-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40px;
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity var(--motion-duration-fast) var(--motion-ease);
+}
+
+.case-study__ux-flow-wrap.is-at-start::before,
+.case-study__ux-flow-wrap.is-at-end::after {
+  opacity: 0;
+}
+
+.case-study__ux-flow-wrap::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--card-bg, #fff4eb), transparent);
+}
+
+.case-study__ux-flow-wrap::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--card-bg, #fff4eb), transparent);
+}
+
 .case-study__ux-flow-editorial {
   display: flex;
   flex-wrap: nowrap;
@@ -1151,7 +1184,7 @@
 .role-tag {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: 0.625rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 2px 8px;
@@ -1491,9 +1524,9 @@
   border: 1.5px solid rgb(59 47 47 / 0.28);
   border-radius: 18px;
   transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease;
+    border-color var(--motion-duration-fast) var(--motion-ease),
+    background-color var(--motion-duration-fast) var(--motion-ease),
+    color var(--motion-duration-fast) var(--motion-ease);
 }
 
 .case-study__service-link--featured {
@@ -1535,7 +1568,7 @@
   flex-shrink: 0;
   margin-top: 2px;
   color: rgb(59 47 47 / 0.48);
-  transition: color 0.2s ease;
+  transition: color var(--motion-duration-fast) var(--motion-ease);
 }
 
 .case-study__service-link-desc {
