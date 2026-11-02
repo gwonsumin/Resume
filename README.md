@@ -185,7 +185,7 @@ Resume/
 │
 └── src/
     ├── assets/
-    │   ├── images/        # heroChr, profile-photo
+    │   ├── images/        # heroChr, profileImg
     │   ├── icons/         # tomato icon variants
     │   ├── shapes/        # SVG 도형 (hero, footer, mask)
     │   ├── cursor/        # 커스텀 커서 SVG
